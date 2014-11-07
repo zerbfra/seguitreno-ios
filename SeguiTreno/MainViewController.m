@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Francesco Zerbinati. All rights reserved.
 //
 
-#import "MainView.h"
+#import "MainViewController.h"
 
-@implementation MainView
+@implementation MainViewController
 
 /*
  
