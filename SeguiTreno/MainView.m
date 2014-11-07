@@ -11,6 +11,7 @@
 @implementation MainView
 
 /*
+ 
 int yourDOW = [[[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit
                                                fromDate:yourDate] weekday];
 if (yourDOW == 2) { ... }     // Sun = 1, Sat = 7, 0 = unico
