@@ -1,0 +1,20 @@
+//
+//  DBHelper.h
+//  PriceRadar
+//
+//  Created by Francesco Zerbinati on 14/04/14.
+//  Copyright (c) 2014 Francesco. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@interface DBHelper : NSObject
+
+@property (nonatomic,strong) FMDatabaseQueue *queue;
+
++ (DBHelper *)sharedInstance;
+
+
+-(NSMutableArray*) executeSQLStatement:(NSString*)stmt;
+
+@end
