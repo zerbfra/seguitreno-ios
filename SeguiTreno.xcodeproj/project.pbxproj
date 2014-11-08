@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1304EB201A0D0B0900C2DC12 /* Viaggio.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304EB1F1A0D0B0900C2DC12 /* Viaggio.m */; };
 		135CC3B61A0A1F3B0074D079 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B51A0A1F3B0074D079 /* main.m */; };
 		135CC3B91A0A1F3B0074D079 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B81A0A1F3B0074D079 /* AppDelegate.m */; };
 		135CC3BF1A0A1F3B0074D079 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135CC3BD1A0A1F3B0074D079 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 		135CC3DE1A0A1F6D0074D079 /* FZDatepickerDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3DC1A0A1F6D0074D079 /* FZDatepickerDateView.m */; };
 		13650BB41A0A5F14000F2F51 /* NewTrainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13650BB31A0A5F14000F2F51 /* NewTrainController.m */; };
 		137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86CF1A0CB65E00D31838 /* MainViewController.m */; };
+		137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */; };
 		13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */; };
 		13D01EDC1A0B888000BDCD05 /* MultiSelectSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EDB1A0B887F00BDCD05 /* MultiSelectSegmentedControl.m */; };
 		13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */; };
@@ -25,6 +27,7 @@
 		13D01EEE1A0BC3B300BDCD05 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE91A0BC3B300BDCD05 /* FMResultSet.m */; };
 		13D01EF21A0BC3D800BDCD05 /* DBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EF11A0BC3D800BDCD05 /* DBHelper.m */; };
 		13D01EF51A0BC43900BDCD05 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D01EF41A0BC43900BDCD05 /* libsqlite3.dylib */; };
+		13D829C01A0CBA00008433E6 /* SoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D829BF1A0CBA00008433E6 /* SoluzioneTableViewCell.m */; };
 		13DA1CD21A0A360F00AE6160 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DA1CD11A0A360F00AE6160 /* APIClient.m */; };
 		13FF514C1A0BC650005A8409 /* seguitreno.db in Resources */ = {isa = PBXBuildFile; fileRef = 13D01EF71A0BC47C00BDCD05 /* seguitreno.db */; };
 		13FF514F1A0BCD59005A8409 /* SearchStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */; };
@@ -43,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1304EB1E1A0D0B0900C2DC12 /* Viaggio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Viaggio.h; sourceTree = "<group>"; };
+		1304EB1F1A0D0B0900C2DC12 /* Viaggio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Viaggio.m; sourceTree = "<group>"; };
 		135CC3B01A0A1F3B0074D079 /* SeguiTreno.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeguiTreno.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135CC3B41A0A1F3B0074D079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		135CC3B51A0A1F3B0074D079 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -62,6 +67,8 @@
 		13650BB31A0A5F14000F2F51 /* NewTrainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTrainController.m; sourceTree = "<group>"; };
 		137D86CE1A0CB65E00D31838 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		137D86CF1A0CB65E00D31838 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		137D86D41A0CB9A900D31838 /* SoluzioneViaggioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoluzioneViaggioViewController.h; path = ../SoluzioneViaggioViewController.h; sourceTree = "<group>"; };
+		137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoluzioneViaggioViewController.m; path = ../SoluzioneViaggioViewController.m; sourceTree = "<group>"; };
 		13D01ED71A0B706200BDCD05 /* RMDateSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDateSelectionViewController.h; sourceTree = "<group>"; };
 		13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDateSelectionViewController.m; sourceTree = "<group>"; };
 		13D01EDA1A0B887F00BDCD05 /* MultiSelectSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiSelectSegmentedControl.h; sourceTree = "<group>"; };
@@ -81,6 +88,8 @@
 		13D01EF11A0BC3D800BDCD05 /* DBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBHelper.m; sourceTree = "<group>"; };
 		13D01EF41A0BC43900BDCD05 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		13D01EF71A0BC47C00BDCD05 /* seguitreno.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = seguitreno.db; sourceTree = "<group>"; };
+		13D829BE1A0CBA00008433E6 /* SoluzioneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoluzioneTableViewCell.h; sourceTree = "<group>"; };
+		13D829BF1A0CBA00008433E6 /* SoluzioneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoluzioneTableViewCell.m; sourceTree = "<group>"; };
 		13DA1CD01A0A360F00AE6160 /* APIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
 		13DA1CD11A0A360F00AE6160 /* APIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		13FF514D1A0BCD59005A8409 /* SearchStazioneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchStazioneViewController.h; sourceTree = "<group>"; };
@@ -194,6 +203,9 @@
 				13650BB31A0A5F14000F2F51 /* NewTrainController.m */,
 				13FF514D1A0BCD59005A8409 /* SearchStazioneViewController.h */,
 				13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */,
+				137D86D41A0CB9A900D31838 /* SoluzioneViaggioViewController.h */,
+				137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */,
+				13D829C11A0CBA07008433E6 /* Custom cells */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -269,6 +281,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		13D829C11A0CBA07008433E6 /* Custom cells */ = {
+			isa = PBXGroup;
+			children = (
+				13D829BE1A0CBA00008433E6 /* SoluzioneTableViewCell.h */,
+				13D829BF1A0CBA00008433E6 /* SoluzioneTableViewCell.m */,
+			);
+			name = "Custom cells";
+			sourceTree = "<group>";
+		};
 		13DA1CD31A0A361700AE6160 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -294,6 +315,8 @@
 				13FF51511A0BE88A005A8409 /* Treno.m */,
 				13FF51531A0BE898005A8409 /* Stazione.h */,
 				13FF51541A0BE898005A8409 /* Stazione.m */,
+				1304EB1E1A0D0B0900C2DC12 /* Viaggio.h */,
+				1304EB1F1A0D0B0900C2DC12 /* Viaggio.m */,
 			);
 			name = Model;
 			path = ..;
@@ -411,10 +434,13 @@
 				13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */,
 				135CC3DE1A0A1F6D0074D079 /* FZDatepickerDateView.m in Sources */,
 				13D01EEB1A0BC3B300BDCD05 /* FMDatabaseAdditions.m in Sources */,
+				137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */,
+				1304EB201A0D0B0900C2DC12 /* Viaggio.m in Sources */,
 				137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */,
 				13FF514F1A0BCD59005A8409 /* SearchStazioneViewController.m in Sources */,
 				13D01EF21A0BC3D800BDCD05 /* DBHelper.m in Sources */,
 				13650BB41A0A5F14000F2F51 /* NewTrainController.m in Sources */,
+				13D829C01A0CBA00008433E6 /* SoluzioneTableViewCell.m in Sources */,
 				13D01EDC1A0B888000BDCD05 /* MultiSelectSegmentedControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

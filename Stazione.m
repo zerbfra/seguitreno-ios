@@ -57,6 +57,10 @@
     
 }
 
+-(NSString*) cleanId {
+    return [self.idStazione substringFromIndex:1];
+}
+
 
 
 @end

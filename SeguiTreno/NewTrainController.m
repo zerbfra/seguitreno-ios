@@ -26,12 +26,13 @@
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(close:)];
     
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveTrain:)];
-    self.navigationItem.leftBarButtonItem = closeButton;
     
+    self.navigationItem.leftBarButtonItem = closeButton;
     self.navigationItem.rightBarButtonItem = saveButton;
     
     self.view.backgroundColor = BACKGROUND_COLOR;
     
+    self.treno = [[Treno alloc] init];
     
     self.settimanaRipetizioni.delegate = self;
     
@@ -43,19 +44,21 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     
-    if(self.stazioneP.nome == nil) self.stazionePartenza.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
-    else self.stazionePartenza.detailTextLabel.text = self.stazioneP.nome;
+    if(self.treno.stazioneP.nome == nil) self.stazionePartenza.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
+    else self.stazionePartenza.detailTextLabel.text = self.treno.stazioneP.nome;
     
-    if(self.stazioneA.nome == nil) self.stazioneDestinazione.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
-    else self.stazioneDestinazione.detailTextLabel.text = self.stazioneA.nome;
+    if(self.treno.stazioneA.nome == nil) self.stazioneDestinazione.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
+    else self.stazioneDestinazione.detailTextLabel.text = self.treno.stazioneA.nome;
     
 }
 
 - (void) impostaStazioneP:(Stazione *) stazioneP {
-    self.stazioneP = stazioneP;
+    // imposto sull'oggetto stazione P
+    self.treno.stazioneP = stazioneP;
 }
 - (void) impostaStazioneA:(Stazione *)stazioneA {
-    self.stazioneA = stazioneA;
+    // imposto sull'oggetto stazione A
+    self.treno.stazioneA = stazioneA;
 }
 
 
@@ -64,9 +67,10 @@
     NSDate *today = [NSDate date];
     [format setDateStyle:NSDateFormatterFullStyle];
     [format setTimeStyle:NSDateFormatterNoStyle];
-    
+
     self.dataViaggio.detailTextLabel.text = [format stringFromDate:today];
-    
+    // imposto sull'oggetto dataviaggio a oggi (per ora)
+    self.treno.dataViaggio = today;
     
 }
 
@@ -110,6 +114,8 @@
         [format setDateStyle:NSDateFormatterFullStyle];
         dateString = [format stringFromDate:aDate];
         self.dataViaggio.detailTextLabel.text = dateString;
+        
+        
     } else {
         [format setDateStyle:NSDateFormatterShortStyle];
         dateString = [format stringFromDate:aDate];
@@ -119,7 +125,10 @@
         
     }
     
-    [self.tableView reloadData];
+    // imposto data viaggio effettivamente selezionata
+    self.treno.dataViaggio = aDate;
+    
+    //[self.tableView reloadData];
     
 }
 
@@ -146,7 +155,14 @@
         [self openDateSelectionController:indexPath];
     }
     
+    if(indexPath.section == 1 && indexPath.row == 1) {
+        [self performSegueWithIdentifier:@"selezionaTreno" sender:nil];
+    }
+    
+    
     if(indexPath.section == 3) [self openDateSelectionController:indexPath];
+    
+    
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -206,8 +222,15 @@
         SearchStazioneViewController *destination = (SearchStazioneViewController*)[segue destinationViewController];
         destination.delegate = self;
         destination.settaDestinazione = [sender tag];
-
         
+    }
+    
+    if([segue.identifier  isEqual: @"selezionaTreno"]) {
+        
+        SoluzioneViaggioViewController *destination = (SoluzioneViaggioViewController*) [segue destinationViewController];
+        destination.delegate = self;
+        destination.trenoQuery = self.treno;
+
         
     }
     

@@ -21,6 +21,8 @@
 
 #import "Stazione.h"
 #import "Treno.h"
+#import "Viaggio.h"
+
 #endif
 
 #define COLOR_WITH_RGB(r,g,b)       [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
@@ -29,7 +31,7 @@
 #define BACKGROUND_COLOR            [UIColor colorWithRed:247.0/255.0f green:247.0/255.0f blue:247.0/255.0f alpha:1.0f]
 #define GREEN                       [UIColor colorWithRed:136.0/255.0f green:196.0/255.0f blue:37.0/255.0f alpha:1.0f]
 
-#define BaseURLString @"http://192.168.0.128:8888/trenitalia_api/"
+#define BaseURLString @"http://localhost:8888/trenitalia_api/"
 
 
 

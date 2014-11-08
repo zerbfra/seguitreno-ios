@@ -11,6 +11,7 @@
 #import "MultiSelectSegmentedControl.h"
 
 #import "SearchStazioneViewController.h"
+#import "SoluzioneViaggioViewController.h"
 
 
 @interface NewTrainController : UITableViewController <RMDateSelectionViewControllerDelegate,UIActionSheetDelegate,MultiSelectSegmentedControlDelegate,SearchStazioneDelegate>
@@ -28,8 +29,10 @@
 
 @property (weak, nonatomic) IBOutlet MultiSelectSegmentedControl *settimanaRipetizioni;
 
-@property (strong, nonatomic)   Stazione    *stazioneP;
-@property (strong,nonatomic)    Stazione    *stazioneA;
+//@property (strong, nonatomic)   Stazione    *stazioneP;
+//@property (strong,nonatomic)    Stazione    *stazioneA;
+
+@property (strong,nonatomic)    Treno       *treno;
 
 @property (nonatomic) BOOL refresh;
 

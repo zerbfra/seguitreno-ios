@@ -56,7 +56,7 @@
                                                     
                                                     if (!error) {
                                                         NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
-                                                        
+                                                        //NSLog(@"Response: %@", [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
                                                         if (httpResp.statusCode == 200) {
                                                             NSError *jsonParsingError = nil;
                                                             NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParsingError];
@@ -65,6 +65,7 @@
                                                                 [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
                                                             });
                                                             if(!jsonParsingError) {
+                                                                
                                                                     NSString *status = [jsonDict objectForKey:@"status"];
                                                                     // se non ho errore nello status passo l'object response
                                                                     if(![status isEqualToString:@"error"]) {

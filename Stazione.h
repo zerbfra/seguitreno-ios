@@ -19,5 +19,6 @@
 
 -(NSArray*) elencoStazioni;
 -(void) formattaNome;
+-(NSString*) cleanId;
 
 @end
