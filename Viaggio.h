@@ -18,5 +18,11 @@
 
 @property (nonatomic,strong) NSArray    *tragitto;
 
+-(NSUInteger) numeroCambi;
+-(NSDate*) orarioArrivo;
+-(NSDate*) orarioPartenza;
+
+-(NSString*) mostraOrario:(NSDate*) date;
+-(NSString*) mostraData:(NSDate*) date;
 
 @end

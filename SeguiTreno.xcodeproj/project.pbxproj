@@ -18,6 +18,7 @@
 		13650BB41A0A5F14000F2F51 /* NewTrainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13650BB31A0A5F14000F2F51 /* NewTrainController.m */; };
 		137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86CF1A0CB65E00D31838 /* MainViewController.m */; };
 		137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */; };
+		137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */; };
 		13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */; };
 		13D01EDC1A0B888000BDCD05 /* MultiSelectSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EDB1A0B887F00BDCD05 /* MultiSelectSegmentedControl.m */; };
 		13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */; };
@@ -69,6 +70,8 @@
 		137D86CF1A0CB65E00D31838 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		137D86D41A0CB9A900D31838 /* SoluzioneViaggioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoluzioneViaggioViewController.h; path = ../SoluzioneViaggioViewController.h; sourceTree = "<group>"; };
 		137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoluzioneViaggioViewController.m; path = ../SoluzioneViaggioViewController.m; sourceTree = "<group>"; };
+		137F4DEA1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DettaglioSoluzioneViewController.h; sourceTree = "<group>"; };
+		137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioSoluzioneViewController.m; sourceTree = "<group>"; };
 		13D01ED71A0B706200BDCD05 /* RMDateSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDateSelectionViewController.h; sourceTree = "<group>"; };
 		13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDateSelectionViewController.m; sourceTree = "<group>"; };
 		13D01EDA1A0B887F00BDCD05 /* MultiSelectSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiSelectSegmentedControl.h; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 				13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */,
 				137D86D41A0CB9A900D31838 /* SoluzioneViaggioViewController.h */,
 				137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */,
+				137F4DEA1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.h */,
+				137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */,
 				13D829C11A0CBA07008433E6 /* Custom cells */,
 			);
 			name = Views;
@@ -432,6 +437,7 @@
 				13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */,
 				135CC3B61A0A1F3B0074D079 /* main.m in Sources */,
 				13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */,
+				137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */,
 				135CC3DE1A0A1F6D0074D079 /* FZDatepickerDateView.m in Sources */,
 				13D01EEB1A0BC3B300BDCD05 /* FMDatabaseAdditions.m in Sources */,
 				137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */,

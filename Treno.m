@@ -10,4 +10,15 @@
 
 @implementation Treno
 
+@synthesize categoria = _categoria;
+
+-(void) setCategoria:(NSString *)categoria {
+    
+    if([categoria isEqualToString:@""]) {
+        _categoria = @"REG";
+    } else {
+        _categoria = categoria;
+    }
+}
+
 @end

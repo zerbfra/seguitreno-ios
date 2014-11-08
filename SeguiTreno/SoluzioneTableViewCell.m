@@ -32,44 +32,24 @@
     self.stazioneP.text = self.soluzione.origine.nome;
     self.stazioneA.text = self.soluzione.destinazione.nome;
     
-    NSUInteger cambi = [self.soluzione.tragitto count]-1;
-    
-    self.orarioP.text = [self formattaTimestamp:[self.soluzione.tragitto[0] objectForKey:@"orarioPartenza"]];
-    self.orarioA.text = [self formattaTimestamp:[self.soluzione.tragitto[cambi] objectForKey:@"orarioArrivo"]];
+    NSUInteger cambi = [self.soluzione numeroCambi];
+
+    self.orarioP.text = [self.soluzione mostraOrario:[self.soluzione orarioPartenza]];
+    self.orarioA.text = [self.soluzione mostraOrario:[self.soluzione orarioArrivo]];
     
     if(cambi == 0) {
         // nessun cambio
-    
-        self.soluzioneTreno.text = [self.soluzione.tragitto[0] objectForKey:@"numero"];
-        NSLog(@"%@",self.soluzione.origine.nome);
-        if([[self.soluzione.tragitto[0] objectForKey:@"categoria"] isEqualToString:@""]) {
-            self.soluzioneTreno.text = [NSString stringWithFormat:@"%@ %@",@"REG",[self.soluzione.tragitto[0] objectForKey:@"numero"]];
-        } else {
-            self.soluzioneTreno.text = [NSString stringWithFormat:@"%@ %@",[self.soluzione.tragitto[0] objectForKey:@"categoria"],[self.soluzione.tragitto[0] objectForKey:@"numero"]];
-        }
+        Treno *primo = self.soluzione.tragitto[0];
+        self.soluzioneTreno.text = [NSString stringWithFormat:@"%@ %@",primo.categoria,primo.numero ];
         
     } else {
-        
-        
-        if(cambi == 1) self.soluzioneTreno.text = [NSString stringWithFormat:@"Soluzione con %lu cambio",cambi] ;
-        else self.soluzioneTreno.text = [NSString stringWithFormat:@"Soluzione con %lu cambi",cambi] ;
-        
-        
-        
+        if(cambi == 1) self.soluzioneTreno.text = [NSString stringWithFormat:@"Soluzione con %lu cambio",cambi];
+        else self.soluzioneTreno.text = [NSString stringWithFormat:@"Soluzione con %lu cambi",cambi];
+
     }
     
 }
 
--(NSString*) formattaTimestamp:(NSString*) ts {
-    NSTimeInterval _interval = [ts doubleValue];
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:_interval];
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-    timeFormatter.dateFormat = @"HH:mm";
-    
-    NSString *dateString = [timeFormatter stringFromDate: date];
-    
-    return dateString;
-}
 
 
 @end

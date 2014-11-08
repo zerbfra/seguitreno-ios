@@ -22,8 +22,8 @@
 @property (nonatomic) NSDate *inizioRipetizione;
 @property (nonatomic) NSDate *fineRipetizione;
 
-@property (strong,nonatomic) NSDate *orarioPartenza;
-@property (strong,nonatomic) NSDate *orarioArrivo;
+@property  NSTimeInterval orarioPartenza;
+@property  NSTimeInterval orarioArrivo;
 
 @property (strong,nonatomic) NSString *stazioneUltimoRilevamento;
 @property (strong,nonatomic) NSDate *oraUltimoRilevamento;
