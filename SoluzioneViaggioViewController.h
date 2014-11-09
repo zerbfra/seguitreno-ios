@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol SoluzioneViaggioDelegate <NSObject>
-- (void) impostaTreno:(Treno *) trenoSelezionato;
-@end
 
 @interface SoluzioneViaggioViewController : UITableViewController
 
@@ -18,6 +15,6 @@
 
 @property (strong,nonatomic) Treno *trenoQuery;
 
-@property (weak, nonatomic) id <SoluzioneViaggioDelegate> delegate;
+@property (weak, nonatomic) id delegateNext;
 
 @end

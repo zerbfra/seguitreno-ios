@@ -12,6 +12,7 @@
 
 #import "SearchStazioneViewController.h"
 #import "SoluzioneViaggioViewController.h"
+#import "DettaglioSoluzioneViewController.h"
 
 
 @interface NewTrainController : UITableViewController <RMDateSelectionViewControllerDelegate,UIActionSheetDelegate,MultiSelectSegmentedControlDelegate,SearchStazioneDelegate,SoluzioneViaggioDelegate>
@@ -29,8 +30,7 @@
 
 @property (weak, nonatomic) IBOutlet MultiSelectSegmentedControl *settimanaRipetizioni;
 
-//@property (strong, nonatomic)   Stazione    *stazioneP;
-//@property (strong,nonatomic)    Stazione    *stazioneA;
+@property (strong,nonatomic)    Viaggio     *viaggio;
 
 @property (strong,nonatomic)    Treno       *treno;
 

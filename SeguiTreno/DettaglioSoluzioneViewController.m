@@ -28,10 +28,24 @@
     
     self.numeroCambi.text = [NSString stringWithFormat:@"%lu",[self.soluzione numeroCambi]];
     
+    //self.navigationItem.rightBarButtonItem = self.;
+    
+   
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Usa" style:UIBarButtonItemStyleDone target:self action:@selector(confirmSolution:)];
+    
+    self.navigationItem.rightBarButtonItem = doneButton;
+
+    
     
     
 }
 
+-(void)confirmSolution:(id) sender {
+    NSLog(@"Salvataggio soluzione");
+    [self.delegate impostaSoluzione:self.soluzione];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

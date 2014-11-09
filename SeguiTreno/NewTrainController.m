@@ -32,6 +32,8 @@
     
     self.view.backgroundColor = BACKGROUND_COLOR;
     
+    // CAMBIARE TRENO CON SOLUZIONE VIAGGIO
+    
     self.treno = [[Treno alloc] init];
     
     self.settimanaRipetizioni.delegate = self;
@@ -39,6 +41,7 @@
     [self setDate];
     self.refresh = true;
     
+    self.soluzioneViaggio.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
     
 }
 
@@ -61,16 +64,20 @@
     self.treno.stazioneA = stazioneA;
 }
 
+- (void) impostaSoluzione:(Viaggio *) soluzioneSelezionata {
+    // imposto sull'oggetto stazione P
+    self.viaggio = soluzioneSelezionata;
+    
+    self.soluzioneViaggio.detailTextLabel.text =  [self.viaggio mostraOrario:self.viaggio.orarioPartenza];
+    self.dataViaggio.detailTextLabel.text = [self formattaData:self.viaggio.orarioPartenza conOrario:NO eGiorno:YES];
+}
+
 
 -(void) setDate {
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    NSDate *today = [NSDate date];
-    [format setDateStyle:NSDateFormatterFullStyle];
-    [format setTimeStyle:NSDateFormatterNoStyle];
-
-    self.dataViaggio.detailTextLabel.text = [format stringFromDate:today];
+    
+    self.dataViaggio.detailTextLabel.text = [self formattaData:nil conOrario:NO eGiorno:YES];
     // imposto sull'oggetto dataviaggio a oggi (per ora)
-    self.treno.dataViaggio = today;
+    self.treno.dataViaggio = [NSDate date];
     
 }
 
@@ -94,6 +101,7 @@
     dateSelectionVC.tintColor = GREEN;
     
     //You can access the actual UIDatePicker via the datePicker property
+    
     dateSelectionVC.datePicker.datePickerMode = UIDatePickerModeDate;
     dateSelectionVC.datePicker.minuteInterval = 5;
     dateSelectionVC.datePicker.minimumDate = [NSDate date];
@@ -106,36 +114,49 @@
 #pragma mark - RMDAteSelectionViewController Delegates
 - (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
     
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    [format setTimeStyle:NSDateFormatterNoStyle];
-    NSString *dateString;
-    
     if(vc.senderIndex.section == 1) {
-        [format setDateStyle:NSDateFormatterFullStyle];
-        dateString = [format stringFromDate:aDate];
-        self.dataViaggio.detailTextLabel.text = dateString;
+        
+        self.dataViaggio.detailTextLabel.text = [self formattaData:aDate conOrario:NO eGiorno:YES];
         
         
     } else {
-        [format setDateStyle:NSDateFormatterShortStyle];
-        dateString = [format stringFromDate:aDate];
+        NSString *dateString = [self formattaData:aDate conOrario:NO eGiorno:NO];
         if(vc.senderIndex.row == 0) self.inizioRipetizione.detailTextLabel.text = dateString;
         else self.fineRipetizione.detailTextLabel.text = dateString;
         
         
     }
     
-    // imposto data viaggio effettivamente selezionata
+    // imposto data viaggio effettivamente selezionata alla mezzanotte (in modo da avere i treni di tutta la giornata)
+    NSCalendar *gregorian = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *dateComponents = [gregorian components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:aDate];
+    
+    aDate = [gregorian dateFromComponents:dateComponents];
+    
+    
     self.treno.dataViaggio = aDate;
     
-    //[self.tableView reloadData];
     
+}
+
+-(NSString*) formattaData:(NSDate*) aDate conOrario:(BOOL) vediora eGiorno:(BOOL) vedigiorno {
+    
+    if(aDate == nil) aDate = [NSDate date];
+    
+    NSString *dateString;
+    NSDateFormatter *format = [[NSDateFormatter alloc] init];
+    if(vedigiorno)[format setDateStyle:NSDateFormatterFullStyle];
+    else [format setDateStyle:NSDateFormatterShortStyle];
+    if(vediora) [format setTimeStyle:NSDateFormatterShortStyle];
+    else [format setTimeStyle:NSDateFormatterNoStyle];
+    
+    dateString = [format stringFromDate:aDate];
+    
+    return dateString;
 }
 
 - (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {
     //NSLog(@"Date selection was canceled");
-    
-    
     
 }
 
@@ -218,7 +239,7 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if([segue.identifier  isEqual: @"selezionaStazione"]) {
-
+        
         SearchStazioneViewController *destination = (SearchStazioneViewController*)[segue destinationViewController];
         destination.delegate = self;
         destination.settaDestinazione = [sender tag];
@@ -227,10 +248,9 @@
     
     if([segue.identifier  isEqual: @"selezionaTreno"]) {
         
-        SoluzioneViaggioViewController *destination = (SoluzioneViaggioViewController*) [segue destinationViewController];
-        destination.delegate = self;
-        destination.trenoQuery = self.treno;
-
+            SoluzioneViaggioViewController *destination = (SoluzioneViaggioViewController*) [segue destinationViewController];
+            destination.delegateNext = self;
+            destination.trenoQuery = self.treno;        
         
     }
     

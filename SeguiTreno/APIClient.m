@@ -56,7 +56,7 @@
                                                     
                                                     if (!error) {
                                                         NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
-                                                        NSLog(@"Response: %@", [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+                                                        //NSLog(@"Response: %@", [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
                                                         if (httpResp.statusCode == 200) {
                                                             NSError *jsonParsingError = nil;
                                                             NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParsingError];

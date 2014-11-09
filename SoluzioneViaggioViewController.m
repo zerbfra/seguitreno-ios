@@ -33,9 +33,10 @@
 -(void) trovaSoluzioniTreno {
     
     NSNumber *ts = [NSNumber numberWithDouble:[self.trenoQuery.dataViaggio timeIntervalSince1970]];
+    //NSLog(@"%@",ts);
     
     [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.trenoQuery.stazioneP cleanId],@"arrivo":[self.trenoQuery.stazioneA cleanId],@"data":ts} completion:^(NSArray *response) {
-        NSLog(@"Response: %@", response);
+        //NSLog(@"Response: %@", response);
         
         
         for (NSDictionary *solDict in response) {
@@ -151,7 +152,9 @@
     if([segue.identifier  isEqual: @"dettaglioSoluzione"]) {
         
         DettaglioSoluzioneViewController *destination = (DettaglioSoluzioneViewController*)[segue destinationViewController];
+        NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
 
+        destination.delegate = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
         destination.soluzione = senderCell.soluzione;
         
     }

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SoluzioneViaggioDelegate <NSObject>
+- (void) impostaSoluzione:(Viaggio *) soluzioneSelezionata;
+@end
+
 @interface DettaglioSoluzioneViewController : UITableViewController
 
 @property (nonatomic,strong) Viaggio *soluzione;
@@ -22,5 +26,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *durataSoluzione;
 
 //@property (strong,nonatomic) NSMutableArray *treni;
+@property (weak, nonatomic) id <SoluzioneViaggioDelegate> delegate;
 
 @end
