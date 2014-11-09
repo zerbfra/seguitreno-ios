@@ -58,4 +58,16 @@
     return dateString;
 }
 
+-(NSArray*) jsonCompatibile {
+    
+    NSMutableArray *numeriTreno = [[NSMutableArray alloc] init];
+
+    for(Treno* treno in self.tragitto) {
+        
+        [numeriTreno addObject:treno.numero];
+    }
+    
+    return (NSArray*)numeriTreno;
+}
+
 @end

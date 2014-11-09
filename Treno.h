@@ -18,7 +18,7 @@
 
 @property (strong,nonatomic) NSDate   *dataViaggio;
 
-@property (nonatomic) NSInteger *ripetizione;  // Sun = 1, Sat = 7, 0 = unico
+@property (nonatomic) NSInteger ripetizione;  // Sun = 1, Sat = 7, 0 = unico
 @property (nonatomic) NSDate *inizioRipetizione;
 @property (nonatomic) NSDate *fineRipetizione;
 
@@ -34,6 +34,12 @@
 @property (nonatomic) BOOL soppresso;
 
 @property (strong,nonatomic) NSArray *fermate;
+
+-(NSString*) mostraOrario:(NSDate*) date;
+-(NSString*) mostraData:(NSDate*) date;
+
+-(NSDate*) datePartenza;
+-(NSDate*) dateArrivo;
 
 
 @end

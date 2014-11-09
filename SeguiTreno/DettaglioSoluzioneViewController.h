@@ -21,4 +21,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *numeroCambi;
 @property (weak, nonatomic) IBOutlet UILabel *durataSoluzione;
 
+//@property (strong,nonatomic) NSMutableArray *treni;
+
 @end

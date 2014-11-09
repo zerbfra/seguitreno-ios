@@ -34,13 +34,11 @@
     
     NSNumber *ts = [NSNumber numberWithDouble:[self.trenoQuery.dataViaggio timeIntervalSince1970]];
     
-    [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.trenoQuery.stazioneP cleanId],@"arrivo":[self.trenoQuery.stazioneA cleanId],@"data":ts} completion:^(NSDictionary *responseDict) {
-        //NSLog(@"Response: %@", responseDict);
-        
-        //NSMutableDictionary *fetched = [[NSMutableDictionary alloc] init]; // uso Trenitrovati
+    [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.trenoQuery.stazioneP cleanId],@"arrivo":[self.trenoQuery.stazioneA cleanId],@"data":ts} completion:^(NSArray *response) {
+        NSLog(@"Response: %@", response);
         
         
-        for (NSDictionary *solDict in responseDict) {
+        for (NSDictionary *solDict in response) {
             
             Viaggio  *soluzione = [[Viaggio alloc] init];
             
@@ -67,6 +65,16 @@
                 treno.orarioArrivo = [[trenoDict objectForKey:@"orarioArrivo"] doubleValue];
                 treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
                 treno.categoria = [trenoDict objectForKey:@"categoria"];
+                
+                Stazione *stazioneP = [[Stazione alloc] init];
+                stazioneP.nome = [trenoDict objectForKey:@"origine"];
+                
+                Stazione *stazioneA = [[Stazione alloc] init];
+                stazioneA.nome = [trenoDict objectForKey:@"destinazione"];
+                
+                
+                treno.stazioneP = stazioneP;
+                treno.stazioneA = stazioneA;
 
                 [tmpTragitto addObject:treno];
             }

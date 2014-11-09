@@ -7,6 +7,7 @@
 //
 
 #import "DettaglioSoluzioneViewController.h"
+#import "DettaglioSoluzioneTableViewCell.h"
 
 @interface DettaglioSoluzioneViewController ()
 
@@ -28,7 +29,9 @@
     self.numeroCambi.text = [NSString stringWithFormat:@"%lu",[self.soluzione numeroCambi]];
     
     
+    
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -38,69 +41,149 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    // Una sezione per ogni cambio
+    return [self.soluzione.tragitto count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//#warning Incomplete method implementation.
+    //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 1;
 }
 
-/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70.0f;
+}
+
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    DettaglioSoluzioneTableViewCell *cell = (DettaglioSoluzioneTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cellTreno" forIndexPath:indexPath];
     
+    //cell.treno = [self.treni objectAtIndex:indexPath.section];
+    cell.treno = [self.soluzione.tragitto objectAtIndex:indexPath.section];
+    
+    
+    cell.stazioneP.text = cell.treno.stazioneP.nome;
+    cell.stazioneA.text = cell.treno.stazioneA.nome;
+    
+    cell.orarioP.text = [cell.treno mostraOrario:[cell.treno datePartenza]];
+    cell.orarioA.text = [cell.treno mostraOrario:[cell.treno dateArrivo]];
     // Configure the cell...
     
     return cell;
 }
-*/
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    
+    Treno *tmp = self.soluzione.tragitto[section];
+    
+    return [NSString stringWithFormat:@"Treno %@",tmp.numero];
+}
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ -(void) getDatiTreni {
+ 
+ 
+ NSArray *numeriTreno = [self.soluzione jsonCompatibile];
+ 
+ [[APIClient sharedClient] requestWithPath:@"trovaTreniTratta" andParams:@{@"tratta":numeriTreno,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSArray *response) {
+ NSLog(@"Response: %@", response);
+ 
+ 
+ //NSDictionary *trenoDict = [response objectAtIndex:0];
+ NSInteger index = 0;
+ 
+ for(NSDictionary *trenoDict in response) {
+ 
+ Treno *resp = [self.soluzione.tragitto objectAtIndex:index];
+ 
+ 
+ resp.numero = resp.numero;//[trenoDict objectForKey:@"numero"];
+ 
+ Stazione *stazioneP = [[Stazione alloc] init];
+ //stazioneP.idStazione = resp.stazioneP.idStazione;//[trenoDict objectForKey:@"idOrigine"];
+ stazioneP.nome = resp.stazioneP.nome; //[trenoDict objectForKey:@"origine"];
+ 
+ Stazione *stazioneA = [[Stazione alloc] init];
+ //stazioneA.idStazione = [trenoDict objectForKey:@"idDestinazione"];
+ stazioneA.nome = resp.stazioneA.nome; //[trenoDict objectForKey:@"destinazione"];
+ 
+ [stazioneP formattaNome];
+ [stazioneA formattaNome];
+ 
+ resp.stazioneP = stazioneP;
+ resp.stazioneA = stazioneA;
+ 
+ resp.compDurata = [trenoDict objectForKey:@"compDurata"];
+ 
+ resp.orarioArrivo =  resp.orarioArrivo; //[[trenoDict objectForKey:@"orarioArrivo"] doubleValue];
+ resp.orarioPartenza = resp.orarioPartenza; //[[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
+ resp.categoria = [trenoDict objectForKey:@"categoria"];
+ 
+ 
+ 
+ [self.treni addObject:resp];
+ index++;
+ }
+ NSLog(@"TRENI: %@",self.treni);
+ [self.tableView reloadData];
+ 
+ }];
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
 
 /*
-#pragma mark - Navigation
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -35,8 +35,8 @@
 
 +(APIClient *)sharedClient;
 
--(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters completion:(void (^)(NSDictionary *))completion;
--(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters withTimeout:(int) timeout completion:(void (^)(NSDictionary *))completion;
+-(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters completion:(void (^)(NSArray *))completion;
+-(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters withTimeout:(int) timeout completion:(void (^)(NSArray *))completion;
 
 -(void) genericJSONRequestWithURL:(NSString*)urlString withTimeout:(int) timeout completion:(void (^)(NSArray *))completion;
 

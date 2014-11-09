@@ -19,6 +19,7 @@
 		137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86CF1A0CB65E00D31838 /* MainViewController.m */; };
 		137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */; };
 		137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */; };
+		137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */; };
 		13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */; };
 		13D01EDC1A0B888000BDCD05 /* MultiSelectSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EDB1A0B887F00BDCD05 /* MultiSelectSegmentedControl.m */; };
 		13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */; };
@@ -72,6 +73,8 @@
 		137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoluzioneViaggioViewController.m; path = ../SoluzioneViaggioViewController.m; sourceTree = "<group>"; };
 		137F4DEA1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DettaglioSoluzioneViewController.h; sourceTree = "<group>"; };
 		137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioSoluzioneViewController.m; sourceTree = "<group>"; };
+		137F4DED1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DettaglioSoluzioneTableViewCell.h; sourceTree = "<group>"; };
+		137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioSoluzioneTableViewCell.m; sourceTree = "<group>"; };
 		13D01ED71A0B706200BDCD05 /* RMDateSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDateSelectionViewController.h; sourceTree = "<group>"; };
 		13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDateSelectionViewController.m; sourceTree = "<group>"; };
 		13D01EDA1A0B887F00BDCD05 /* MultiSelectSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiSelectSegmentedControl.h; sourceTree = "<group>"; };
@@ -291,6 +294,8 @@
 			children = (
 				13D829BE1A0CBA00008433E6 /* SoluzioneTableViewCell.h */,
 				13D829BF1A0CBA00008433E6 /* SoluzioneTableViewCell.m */,
+				137F4DED1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.h */,
+				137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */,
 			);
 			name = "Custom cells";
 			sourceTree = "<group>";
@@ -447,6 +452,7 @@
 				13D01EF21A0BC3D800BDCD05 /* DBHelper.m in Sources */,
 				13650BB41A0A5F14000F2F51 /* NewTrainController.m in Sources */,
 				13D829C01A0CBA00008433E6 /* SoluzioneTableViewCell.m in Sources */,
+				137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */,
 				13D01EDC1A0B888000BDCD05 /* MultiSelectSegmentedControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

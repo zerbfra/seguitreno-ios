@@ -439,11 +439,57 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="fzj-CO-TRT">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellTreno" rowHeight="70" id="fzj-CO-TRT" customClass="DettaglioSoluzioneTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fzj-CO-TRT" id="gkR-vY-DsZ">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16:27" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pil-sW-PQh">
+                                            <rect key="frame" x="524" y="13" width="52" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="b75-ob-Uzn"/>
+                                                <constraint firstAttribute="width" constant="52" id="iwl-Ee-CMb"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Milano Lambrate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ssY-Qf-uDy">
+                                            <rect key="frame" x="18" y="8" width="269" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mantova" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s2u-dN-slW">
+                                            <rect key="frame" x="18" y="40" width="269" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18:20" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opy-2E-EMb">
+                                            <rect key="frame" x="524" y="40" width="52" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="52" id="m0e-Iv-Lsh"/>
+                                                <constraint firstAttribute="height" constant="21" id="mfs-sB-YBi"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="opy-2E-EMb" firstAttribute="top" secondItem="Pil-sW-PQh" secondAttribute="bottom" constant="6" id="93H-Te-wS5"/>
+                                        <constraint firstItem="Pil-sW-PQh" firstAttribute="top" secondItem="gkR-vY-DsZ" secondAttribute="top" constant="13" id="ezP-eG-ICJ"/>
+                                        <constraint firstAttribute="trailing" secondItem="Pil-sW-PQh" secondAttribute="trailing" constant="24" id="q6p-P0-13V"/>
+                                        <constraint firstAttribute="trailing" secondItem="opy-2E-EMb" secondAttribute="trailing" constant="24" id="zBK-Rc-zFj"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="orarioA" destination="opy-2E-EMb" id="f0h-Ws-MZW"/>
+                                    <outlet property="orarioP" destination="Pil-sW-PQh" id="KLl-vp-z8e"/>
+                                    <outlet property="stazioneA" destination="s2u-dN-slW" id="ypc-wN-JZ7"/>
+                                    <outlet property="stazioneP" destination="ssY-Qf-uDy" id="46S-1L-UKg"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

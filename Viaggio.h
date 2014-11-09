@@ -25,4 +25,6 @@
 -(NSString*) mostraOrario:(NSDate*) date;
 -(NSString*) mostraData:(NSDate*) date;
 
+-(NSArray*) jsonCompatibile;
+
 @end

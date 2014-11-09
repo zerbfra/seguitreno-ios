@@ -21,13 +21,13 @@
 }
 
 
--(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters completion:(void (^)(NSDictionary *))completion {
+-(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters completion:(void (^)(NSArray *))completion {
     [self requestWithPath:path andParams:parameters withTimeout:20 completion:completion];
 }
 
 
 
--(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters withTimeout:(int) timeout completion:(void (^)(NSDictionary *))completion {
+-(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters withTimeout:(int) timeout completion:(void (^)(NSArray *))completion {
     
     // aggiungo l'estensione
     NSString *phpFile = path;
@@ -56,7 +56,7 @@
                                                     
                                                     if (!error) {
                                                         NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
-                                                        //NSLog(@"Response: %@", [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
+                                                        NSLog(@"Response: %@", [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding]);
                                                         if (httpResp.statusCode == 200) {
                                                             NSError *jsonParsingError = nil;
                                                             NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParsingError];

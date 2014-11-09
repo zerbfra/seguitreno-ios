@@ -14,7 +14,7 @@
 #import "SoluzioneViaggioViewController.h"
 
 
-@interface NewTrainController : UITableViewController <RMDateSelectionViewControllerDelegate,UIActionSheetDelegate,MultiSelectSegmentedControlDelegate,SearchStazioneDelegate>
+@interface NewTrainController : UITableViewController <RMDateSelectionViewControllerDelegate,UIActionSheetDelegate,MultiSelectSegmentedControlDelegate,SearchStazioneDelegate,SoluzioneViaggioDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *stazionePartenza;
