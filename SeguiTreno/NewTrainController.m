@@ -34,7 +34,8 @@
     
     // CAMBIARE TRENO CON SOLUZIONE VIAGGIO
     
-    self.treno = [[Treno alloc] init];
+    //self.treno = [[Treno alloc] init];
+    self.viaggio = [[Viaggio alloc] init];
     
     self.settimanaRipetizioni.delegate = self;
     
@@ -47,21 +48,21 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     
-    if(self.treno.stazioneP.nome == nil) self.stazionePartenza.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
-    else self.stazionePartenza.detailTextLabel.text = self.treno.stazioneP.nome;
+    if(self.viaggio.origine.nome == nil) self.stazionePartenza.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
+    else self.stazionePartenza.detailTextLabel.text = self.viaggio.origine.nome;
     
-    if(self.treno.stazioneA.nome == nil) self.stazioneDestinazione.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
-    else self.stazioneDestinazione.detailTextLabel.text = self.treno.stazioneA.nome;
+    if(self.viaggio.destinazione.nome == nil) self.stazioneDestinazione.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
+    else self.stazioneDestinazione.detailTextLabel.text = self.viaggio.destinazione.nome;
     
 }
 
 - (void) impostaStazioneP:(Stazione *) stazioneP {
     // imposto sull'oggetto stazione P
-    self.treno.stazioneP = stazioneP;
+    self.viaggio.origine = stazioneP;
 }
 - (void) impostaStazioneA:(Stazione *)stazioneA {
     // imposto sull'oggetto stazione A
-    self.treno.stazioneA = stazioneA;
+    self.viaggio.destinazione = stazioneA;
 }
 
 - (void) impostaSoluzione:(Viaggio *) soluzioneSelezionata {
@@ -76,8 +77,8 @@
 -(void) setDate {
     
     self.dataViaggio.detailTextLabel.text = [self formattaData:nil conOrario:NO eGiorno:YES];
-    // imposto sull'oggetto dataviaggio a oggi (per ora)
-    self.treno.dataViaggio = [NSDate date];
+    // imposto sull'oggetto dataviaggio a oggi (esattamente alla mezza)
+    self.viaggio.data = [self creaData];
     
 }
 
@@ -127,16 +128,24 @@
         
     }
     
+
+    
+    
+    self.viaggio.data = [self creaData];
+    
+    
+}
+
+-(NSDate*) creaData {
     // imposto data viaggio effettivamente selezionata alla mezzanotte (in modo da avere i treni di tutta la giornata)
+    
+    NSDate *aDate = [NSDate date];
+    
     NSCalendar *gregorian = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents *dateComponents = [gregorian components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:aDate];
     
     aDate = [gregorian dateFromComponents:dateComponents];
-    
-    
-    self.treno.dataViaggio = aDate;
-    
-    
+    return aDate;
 }
 
 -(NSString*) formattaData:(NSDate*) aDate conOrario:(BOOL) vediora eGiorno:(BOOL) vedigiorno {
@@ -250,7 +259,7 @@
         
             SoluzioneViaggioViewController *destination = (SoluzioneViaggioViewController*) [segue destinationViewController];
             destination.delegateNext = self;
-            destination.trenoQuery = self.treno;        
+            destination.query = self.viaggio;
         
     }
     

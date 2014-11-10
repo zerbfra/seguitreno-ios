@@ -61,9 +61,6 @@
                                                             NSError *jsonParsingError = nil;
                                                             NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParsingError];
                                                             
-                                                            dispatch_async(dispatch_get_main_queue(), ^{
-                                                                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-                                                            });
                                                             if(!jsonParsingError) {
                                                                 
                                                                     NSString *status = [jsonDict objectForKey:@"status"];
@@ -84,6 +81,10 @@
                                                         // HANDLE ERROR //
                                                         TRC_ERR(@"Error with the request %@",error);
                                                     }
+                                                    
+                                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                                        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                                                    });
                                                     
                                                 }];
     

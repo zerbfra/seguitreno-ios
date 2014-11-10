@@ -32,7 +32,7 @@
 
 @property (strong,nonatomic)    Viaggio     *viaggio;
 
-@property (strong,nonatomic)    Treno       *treno;
+//@property (strong,nonatomic)    Treno       *treno;
 
 @property (nonatomic) BOOL refresh;
 

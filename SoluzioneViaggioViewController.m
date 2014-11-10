@@ -32,10 +32,10 @@
 
 -(void) trovaSoluzioniTreno {
     
-    NSNumber *ts = [NSNumber numberWithDouble:[self.trenoQuery.dataViaggio timeIntervalSince1970]];
+    NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
     //NSLog(@"%@",ts);
     
-    [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.trenoQuery.stazioneP cleanId],@"arrivo":[self.trenoQuery.stazioneA cleanId],@"data":ts} completion:^(NSArray *response) {
+    [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.query.origine cleanId],@"arrivo":[self.query.destinazione cleanId],@"data":ts} completion:^(NSArray *response) {
         //NSLog(@"Response: %@", response);
         
         
@@ -46,8 +46,8 @@
             Stazione *origine = [[Stazione alloc] init];
             Stazione *destinazione = [[Stazione alloc] init];
             
-            origine.idStazione            = [self.trenoQuery.stazioneP cleanId];
-            destinazione.idStazione       = [self.trenoQuery.stazioneA cleanId];
+            origine.idStazione            = [self.query.origine cleanId];
+            destinazione.idStazione       = [self.query.destinazione cleanId];
             
             origine.nome      = [solDict objectForKey:@"origine"];
             destinazione.nome = [solDict objectForKey:@"destinazione"];
@@ -108,20 +108,81 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     // Return the number of sections.
-    return 1;
+    
+    // prima delle 6
+    // tra le 6 e le 9
+    // tra le 9 e le 12
+    // tra le 12 e le 15
+    // tra le 15 e le 18
+    // tra le 18 e le 00
+    return 6;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.soluzioniPossibili count];
+    
+    NSInteger numero;
+    
+    switch (section) {
+        case 0:
+            numero = [self numerosoluzioniTraOra:0 e:6];
+            break;
+        case 1:
+            numero = [self numerosoluzioniTraOra:6 e:9];
+            break;
+        case 2:
+            numero = [self numerosoluzioniTraOra:9 e:12];
+            break;
+        case 3:
+            numero = [self numerosoluzioniTraOra:12 e:15];
+            break;
+        case 4:
+            numero = [self numerosoluzioniTraOra:15 e:18];
+            break;
+        case 5:
+            numero = [self numerosoluzioniTraOra:18 e:24];
+            break;
+        
+        default:
+            break;
+    }
+    
+    return numero;
 }
+
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SoluzioneTableViewCell *cell = (SoluzioneTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"soluzioneViaggio" forIndexPath:indexPath];
     
     // Configure the cell...
-    cell.soluzione = [self.soluzioniPossibili objectAtIndex:indexPath.row];
+    NSArray *soluzioniSezione;
+    
+    switch (indexPath.section) {
+        case 0:
+            soluzioniSezione = [self soluzioniTraOra:0 e:6];
+            break;
+        case 1:
+            soluzioniSezione =[self soluzioniTraOra:6 e:9];
+            break;
+        case 2:
+            soluzioniSezione =[self soluzioniTraOra:9 e:12];
+            break;
+        case 3:
+            soluzioniSezione =[self soluzioniTraOra:12 e:15];
+            break;
+        case 4:
+            soluzioniSezione =[self soluzioniTraOra:15 e:18];
+            break;
+        case 5:
+            soluzioniSezione =[self soluzioniTraOra:18 e:24];
+            break;
+            
+        default:
+            break;
+    }
+    
+    cell.soluzione = [soluzioniSezione objectAtIndex:indexPath.row];
     
     [cell disegna];
     
@@ -133,10 +194,105 @@
     return 120.0f;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sezione;
+    
+    // prima delle 6
+    // tra le 6 e le 9
+    // tra le 9 e le 12
+    // tra le 12 e le 15
+    // tra le 15 e le 18
+    // tra le 18 e le 00
+    
+    switch (section) {
+        case 0:
+            sezione = @"Prima delle 6";
+            break;
+        case 1:
+            sezione = @"Tra le 6 e le 9";
+            break;
+        case 2:
+            sezione = @"Tra le 9 e le 12";
+            break;
+        case 3:
+            sezione = @"Tra le 12 e le 15";
+            break;
+        case 4:
+            sezione = @"Tra le 15 e le 18";
+            break;
+        case 5:
+            sezione = @"Dopo le 18";
+            break;
+            
+        default:
+            break;
+    }
+    return sezione;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self performSegueWithIdentifier:@"dettaglioSoluzione" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
     
+}
+
+#pragma mark - Funzioni ausiliari per le date e soluzioni viaggio
+
+
+-(NSArray*)soluzioniTraOra:(NSInteger) inizio e:(NSInteger) fine {
+    
+    NSDate *dataInizio = [self todayAt:inizio];
+    NSDate *dataFine = [self todayAt:fine];
+    
+    NSMutableArray *viaggiCompresi = [[NSMutableArray alloc] init];
+    
+    for(Viaggio* soluzione in self.soluzioniPossibili) {
+        NSDate *partenza = [soluzione orarioPartenza];
+        
+        if([self date:partenza isBetweenDate:dataInizio andDate:dataFine]) [viaggiCompresi addObject:soluzione];
+    }
+    return viaggiCompresi;
+}
+
+-(NSInteger)numerosoluzioniTraOra:(NSInteger) inizio e:(NSInteger) fine {
+    
+    NSDate *dataInizio = [self todayAt:inizio];
+    NSDate *dataFine = [self todayAt:fine];
+    
+    NSInteger viaggiCompresi = 0;
+    
+    for(Viaggio* soluzione in self.soluzioniPossibili) {
+        NSDate *partenza = [soluzione orarioPartenza];
+        
+        if([self date:partenza isBetweenDate:dataInizio andDate:dataFine]) viaggiCompresi++;
+    }
+    return viaggiCompresi;
+}
+
+
+
+- (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate
+{
+    if ([date compare:beginDate] == NSOrderedAscending)
+        return NO;
+    
+    if ([date compare:endDate] == NSOrderedDescending)
+        return NO;
+    
+    return YES;
+}
+
+-(NSDate*) todayAt:(NSInteger) hour {
+    NSCalendar* myCalendar = [NSCalendar currentCalendar];
+    NSDateComponents* components = [myCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+                                                 fromDate:[NSDate date]];
+    [components setHour: hour];
+    [components setMinute: 0];
+    [components setSecond: 0];
+    NSDate *myDate = [myCalendar dateFromComponents:components];
+    
+    return myDate;
 }
 
 

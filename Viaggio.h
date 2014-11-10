@@ -13,7 +13,7 @@
 
 @property (nonatomic,strong) Stazione  *origine;
 @property (nonatomic,strong) Stazione *destinazione;
-
+@property (nonatomic,strong) NSDate     *data;
 @property (nonatomic,strong) NSString *durata;
 
 @property (nonatomic,strong) NSArray    *tragitto;

@@ -13,7 +13,7 @@
 
 @property (strong,nonatomic) NSMutableArray *soluzioniPossibili;
 
-@property (strong,nonatomic) Treno *trenoQuery;
+@property (strong,nonatomic) Viaggio *query;
 
 @property (weak, nonatomic) id delegateNext;
 
