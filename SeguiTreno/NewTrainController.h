@@ -25,14 +25,14 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *soluzioneViaggio;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *ripeti;
-@property (weak, nonatomic) IBOutlet UITableViewCell *inizioRipetizione;
+//@property (weak, nonatomic) IBOutlet UITableViewCell *inizioRipetizione;
 @property (weak, nonatomic) IBOutlet UITableViewCell *fineRipetizione;
 
 @property (weak, nonatomic) IBOutlet MultiSelectSegmentedControl *settimanaRipetizioni;
 
 @property (strong,nonatomic)    Viaggio     *viaggio;
 
-//@property (strong,nonatomic)    Treno       *treno;
+
 
 @property (nonatomic) BOOL refresh;
 

@@ -25,16 +25,13 @@
     
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(close:)];
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(saveTrain:)];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(salva)];
     
     self.navigationItem.leftBarButtonItem = closeButton;
     self.navigationItem.rightBarButtonItem = saveButton;
     
     self.view.backgroundColor = BACKGROUND_COLOR;
     
-    // CAMBIARE TRENO CON SOLUZIONE VIAGGIO
-    
-    //self.treno = [[Treno alloc] init];
     self.viaggio = [[Viaggio alloc] init];
     
     self.settimanaRipetizioni.delegate = self;
@@ -48,28 +45,28 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     
-    if(self.viaggio.origine.nome == nil) self.stazionePartenza.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
-    else self.stazionePartenza.detailTextLabel.text = self.viaggio.origine.nome;
+    if(self.viaggio.partenza.nome == nil) self.stazionePartenza.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
+    else self.stazionePartenza.detailTextLabel.text = self.viaggio.partenza.nome;
     
-    if(self.viaggio.destinazione.nome == nil) self.stazioneDestinazione.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
-    else self.stazioneDestinazione.detailTextLabel.text = self.viaggio.destinazione.nome;
+    if(self.viaggio.arrivo.nome == nil) self.stazioneDestinazione.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
+    else self.stazioneDestinazione.detailTextLabel.text = self.viaggio.arrivo.nome;
     
 }
 
 - (void) impostaStazioneP:(Stazione *) stazioneP {
     // imposto sull'oggetto stazione P
-    self.viaggio.origine = stazioneP;
+    self.viaggio.partenza = stazioneP;
 }
 - (void) impostaStazioneA:(Stazione *)stazioneA {
     // imposto sull'oggetto stazione A
-    self.viaggio.destinazione = stazioneA;
+    self.viaggio.arrivo = stazioneA;
 }
 
 - (void) impostaSoluzione:(Viaggio *) soluzioneSelezionata {
     // imposto sull'oggetto stazione P
     self.viaggio = soluzioneSelezionata;
     
-    self.soluzioneViaggio.detailTextLabel.text =  [self.viaggio mostraOrario:self.viaggio.orarioPartenza];
+    self.soluzioneViaggio.detailTextLabel.text =  [[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]]; //[self.viaggio mostraOrario:self.viaggio.orarioPartenza];
     self.dataViaggio.detailTextLabel.text = [self formattaData:self.viaggio.orarioPartenza conOrario:NO eGiorno:YES];
 }
 
@@ -82,7 +79,127 @@
     
 }
 
--(void)saveTrain:(id)sender {
+-(void)salva {
+    NSLog(@"Preparo salvataggio treno...");
+    
+    
+    NSString *viaggioQuery = [NSString stringWithFormat:@"INSERT INTO viaggi (durata) VALUES ('%@')",self.viaggio.durata];
+    [[DBHelper sharedInstance] executeSQLStatement:viaggioQuery];
+    
+    NSString *record =  [[[[DBHelper sharedInstance] executeSQLStatement:@"SELECT last_insert_rowid() AS id"] objectAtIndex:0] objectForKey:@"id"];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    // salvo tutti i treni
+    for(Treno *toDb in self.viaggio.tragitto) {
+        
+        NSString  *numero = toDb.numero;
+        
+        [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":numero,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSArray *response) {
+            NSLog(@"Response: %@", response);
+            
+            for(NSDictionary *trenoDict in response) {
+                toDb.categoria = [trenoDict objectForKey:@"categoria"];
+                Stazione *origine = [[Stazione alloc] init];
+                Stazione *destinazione = [[Stazione alloc] init];
+                //origine.nome = [trenoDict objectForKey:@"origine"];
+                origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
+                destinazione.idStazione = [trenoDict objectForKey:@"idDestinazione"];
+                toDb.origine = origine;
+                toDb.destinazione = destinazione;
+            }
+            
+            
+            
+            
+            
+            
+            NSInteger tsPartenza, tsArrivo;
+            // son costretto a inserire i nomi perchè trenitalia nelle soluzioni viaggio del tragitto non da gli ID ma i nomi
+            // in ogni caso non sono utili in tale circostanza in quanto serviranno solo poi per essere visualizzati nella schermata principale
+            // nel dettaglio completo del treno/viaggio verranno elencate le varie stazioni e solo in quel momento sarà utile l'idStazione.
+            // Il server si occupa di recuperare la stazione di origine dato un numero treno, quindi nel dettaglio recupererò il tutto.
+            
+            NSString *nomePartenza = toDb.partenza.nome;
+            NSString *nomeArrivo = toDb.arrivo.nome;
+            
+            NSDate *nextPartenza = [[DateUtils shared] dateFrom:toDb.orarioPartenza];
+            NSDate *nextArrivo = [[DateUtils shared] dateFrom:toDb.orarioArrivo];
+            
+            //NSLog(@"nextpartenza %@",[self formattaData:[toDb datePartenza] conOrario:NO eGiorno:YES]);
+            //NSLog(@"%@",[self formattaData:self.viaggio.fineRipetizione conOrario:NO eGiorno:YES]);
+            
+            do {
+                // ciclo i treni fino alla fine delle ripetizioni
+                NSLog(@"Salvo");
+                
+                
+                tsPartenza = [[NSNumber numberWithDouble:[nextPartenza timeIntervalSince1970]] intValue];
+                tsArrivo = [[NSNumber numberWithDouble:[nextArrivo timeIntervalSince1970]] intValue];
+                
+                NSString *query = [NSString stringWithFormat:@"INSERT INTO treni (numero,idSoluzione, nomePartenza,nomeArrivo,orarioPartenza,orarioArrivo, idOrigine, idDestinazione, categoria) VALUES ('%@','%@','%@','%@','%ld','%ld','%@','%@','%@')",numero,record, nomePartenza,nomeArrivo,tsPartenza,tsArrivo,toDb.origine.idStazione,toDb.destinazione.idStazione,toDb.categoria];
+                
+                [[DBHelper sharedInstance] executeSQLStatement:query];
+                
+                
+                if(self.viaggio.fineRipetizione != nil) {
+                    nextPartenza = [self getNexWeekDateFor:nextPartenza until:self.viaggio.fineRipetizione];
+                    NSLog(@"ciclo: %@",[self formattaData:nextPartenza conOrario:YES eGiorno:YES]);
+                    nextArrivo = [self getNexWeekDateFor:nextArrivo until:self.viaggio.fineRipetizione];
+                } else nextPartenza = nil;
+                
+            }
+            while(nextPartenza != nil);
+            
+        }];
+        
+    }
+    
+    /*
+     
+     // salvo tutti i treni
+     for(Treno *toDb in self.viaggio.tragitto) {
+     NSString  *numero = toDb.numero;
+     NSInteger tsPartenza = [[NSNumber numberWithDouble:[[toDb datePartenza] timeIntervalSince1970]] intValue];
+     NSInteger tsArrivo = [[NSNumber numberWithDouble:[[toDb dateArrivo] timeIntervalSince1970]] intValue];
+     NSString *idOrigine = toDb.stazioneP.idStazione;
+     NSString *idDestinazione = toDb.stazioneA.idStazione;
+     
+     NSString *query = [NSString stringWithFormat:@"INSERT INTO treni (numero,idOrigine,idDestinazione,timestamp) VALUES (%@,%@,%@,%ld)",toDb.numero,toDb.stazioneP.idStazione,toDb.stazioneA.idStazione,ts];
+     [[DBHelper sharedInstance] executeSQLStatement:query];
+     }
+     
+     // ROBA BUONA
+     NSIndexSet *indexes = [self.settimanaRipetizioni selectedSegmentIndexes];
+     NSMutableArray *array = [NSMutableArray array];
+     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+     [array addObject:@(idx)];
+     }];
+     NSLog(@"%@", array);
+     
+     [[DBHelper sharedInstance] executeSQLStatement:[NSString stringWithFormat:@"UPDATE calendario SET %@ = %d WHERE id = %@",[[DBHelper sharedInstance] dayFromNumber:index],[[NSNumber numberWithBool:value]intValue],self.viaggio.idViaggio]];
+     */
+    
+    
+    
+}
+
+-(NSDate*) getNexWeekDateFor:(NSDate*) date until:(NSDate*) finish {
+    NSDateComponents *weekComponent = [[NSDateComponents alloc] init];
+    [weekComponent setWeekOfYear:1];
+    
+    NSCalendar *theCalendar = [NSCalendar currentCalendar];
+    NSDate *nextDate = [theCalendar dateByAddingComponents:weekComponent toDate:[NSDate date] options:0];
+    
+    
+    if ([nextDate compare:finish] == NSOrderedAscending) {
+        NSLog(@"date1 is earlier than date2");
+        return nextDate;
+    } else {
+        NSLog(@"finito");
+        return nil;
+    }
+    
     
 }
 
@@ -122,13 +239,19 @@
         
     } else {
         NSString *dateString = [self formattaData:aDate conOrario:NO eGiorno:NO];
-        if(vc.senderIndex.row == 0) self.inizioRipetizione.detailTextLabel.text = dateString;
-        else self.fineRipetizione.detailTextLabel.text = dateString;
+        //if(vc.senderIndex.row == 0) //self.inizioRipetizione.detailTextLabel.text = dateString;
+        //else {
+        NSLog(@"setto finerip");
+        self.viaggio.fineRipetizione = aDate;
+        self.fineRipetizione.detailTextLabel.text = dateString;
+        // }
+        
+        
         
         
     }
     
-
+    
     
     
     self.viaggio.data = [self creaData];
@@ -210,6 +333,7 @@
         [self.tableView reloadData];
         self.refresh = true;
     }
+    NSLog(@"%@",[self.settimanaRipetizioni selectedSegmentIndexes]);
     
 }
 
@@ -257,9 +381,9 @@
     
     if([segue.identifier  isEqual: @"selezionaTreno"]) {
         
-            SoluzioneViaggioViewController *destination = (SoluzioneViaggioViewController*) [segue destinationViewController];
-            destination.delegateNext = self;
-            destination.query = self.viaggio;
+        SoluzioneViaggioViewController *destination = (SoluzioneViaggioViewController*) [segue destinationViewController];
+        //destination.delegateNext = self;
+        destination.query = self.viaggio;
         
     }
     

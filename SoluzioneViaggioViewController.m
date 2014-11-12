@@ -27,33 +27,35 @@
     self.soluzioniPossibili = [[NSMutableArray alloc] init];
     
     [self trovaSoluzioniTreno];
+    //NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
+    //NSLog(@"%@ %@ %@",[self.query.origine cleanId],[self.query.destinazione cleanId],ts);
     
 }
 
 -(void) trovaSoluzioniTreno {
     
     NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
-    //NSLog(@"%@",ts);
+    NSLog(@"%@",ts);
     
-    [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.query.origine cleanId],@"arrivo":[self.query.destinazione cleanId],@"data":ts} completion:^(NSArray *response) {
-        //NSLog(@"Response: %@", response);
+    [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSArray *response) {
+        NSLog(@"Response: %@", response);
         
         
         for (NSDictionary *solDict in response) {
             
             Viaggio  *soluzione = [[Viaggio alloc] init];
             
-            Stazione *origine = [[Stazione alloc] init];
-            Stazione *destinazione = [[Stazione alloc] init];
+            Stazione *partenza = [[Stazione alloc] init];
+            Stazione *arrivo = [[Stazione alloc] init];
             
-            origine.idStazione            = [self.query.origine cleanId];
-            destinazione.idStazione       = [self.query.destinazione cleanId];
+            partenza.idStazione            = [self.query.partenza cleanId];
+            arrivo.idStazione       = [self.query.arrivo cleanId];
             
-            origine.nome      = [solDict objectForKey:@"origine"];
-            destinazione.nome = [solDict objectForKey:@"destinazione"];
+            partenza.nome      = [solDict objectForKey:@"origine"];
+            arrivo.nome = [solDict objectForKey:@"destinazione"];
             
-            soluzione.origine = origine;
-            soluzione.destinazione = destinazione;
+            soluzione.partenza = arrivo;
+            soluzione.arrivo = partenza;
             
             //soluzione.tragitto          = [solDict objectForKey:@"tragitto"];
             
@@ -73,9 +75,16 @@
                 Stazione *stazioneA = [[Stazione alloc] init];
                 stazioneA.nome = [trenoDict objectForKey:@"destinazione"];
                 
+                //[stazioneA formattaNome];
+                //[stazioneP formattaNome];
                 
-                treno.stazioneP = stazioneP;
-                treno.stazioneA = stazioneA;
+                //stazioneA.idStazione = [[[[DBHelper sharedInstance] executeSQLStatement:[NSString stringWithFormat:@"SELECT id FROM stazioni WHERE nome = '%@'",stazioneA.nome]] objectAtIndex:0] objectForKey:@"id"];
+                //stazioneP.idStazione = [[[[DBHelper sharedInstance] executeSQLStatement:[NSString stringWithFormat:@"SELECT id FROM stazioni WHERE nome = '%@'",stazioneP.nome]] objectAtIndex:0] objectForKey:@"id"];
+                
+                //NSLog(@"%@ %@",stazioneA.idStazione,stazioneP.idStazione);
+                
+                treno.partenza = stazioneP;
+                treno.arrivo = stazioneA;
 
                 [tmpTragitto addObject:treno];
             }

@@ -18,30 +18,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.orarioP.text = [self.soluzione mostraData:[self.soluzione orarioPartenza]];
-    self.orarioA.text = [self.soluzione mostraData:[self.soluzione orarioArrivo]];
+    self.orarioP.text = [[DateUtils shared] showDateAndHHmm:[self.soluzione orarioPartenza]]; // [self.soluzione mostraData:[self.soluzione orarioPartenza]];
+    self.orarioA.text = [[DateUtils shared] showDateAndHHmm:[self.soluzione orarioArrivo]];// [self.soluzione mostraData:[self.soluzione orarioArrivo]];
     
-    self.stazioneP.text = self.soluzione.origine.nome;
-    self.stazioneA.text = self.soluzione.destinazione.nome;
+
+    
+    self.stazioneP.text = self.soluzione.partenza.nome;
+    self.stazioneA.text = self.soluzione.arrivo.nome;
+    
+
     
     self.durataSoluzione.text = self.soluzione.durata;
     
     self.numeroCambi.text = [NSString stringWithFormat:@"%lu",[self.soluzione numeroCambi]];
     
-    //self.navigationItem.rightBarButtonItem = self.;
     
    
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Usa" style:UIBarButtonItemStyleDone target:self action:@selector(confirmSolution:)];
     
     self.navigationItem.rightBarButtonItem = doneButton;
 
-    
-    
+    /*
+     NSArray *numeriTreno = [self.soluzione jsonCompatibile];
+    [[APIClient sharedClient] requestWithPath:@"trovaCambio" andParams:@{@"tratta":numeriTreno} completion:^(NSArray *response) {
+        NSLog(@"Response: %@", response);
+        // se cambi = 0 (diretto) prosegui
+        // se cambi = 3 beccali tutti
+        // se cambi = 3 o qualsiasi altra cifra ma più opzioni scegli la prima 
+        
+    }];
+     */
     
 }
 
 -(void)confirmSolution:(id) sender {
     NSLog(@"Salvataggio soluzione");
+    
+    
+    
+    
     [self.delegate impostaSoluzione:self.soluzione];
     
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -78,12 +93,14 @@
     //cell.treno = [self.treni objectAtIndex:indexPath.section];
     cell.treno = [self.soluzione.tragitto objectAtIndex:indexPath.section];
     
+    cell.stazioneP.text = cell.treno.partenza.nome;
+    cell.stazioneA.text = cell.treno.arrivo.nome;
     
-    cell.stazioneP.text = cell.treno.stazioneP.nome;
-    cell.stazioneA.text = cell.treno.stazioneA.nome;
+    NSDate* orarioPartenza = [[DateUtils shared] dateFrom:cell.treno.orarioPartenza];
+    NSDate* orarioArrivo = [[DateUtils shared] dateFrom:cell.treno.orarioArrivo];
     
-    cell.orarioP.text = [cell.treno mostraOrario:[cell.treno datePartenza]];
-    cell.orarioA.text = [cell.treno mostraOrario:[cell.treno dateArrivo]];
+    cell.orarioP.text = [[DateUtils shared] showHHmm:orarioPartenza];   //[cell.treno mostraOrario:[cell.treno datePartenza]];
+    cell.orarioA.text = [[DateUtils shared] showHHmm:orarioArrivo];  //[cell.treno mostraOrario:orarioArrivo];
     // Configure the cell...
     
     return cell;

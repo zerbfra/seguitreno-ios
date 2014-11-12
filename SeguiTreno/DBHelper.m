@@ -52,6 +52,11 @@
     
 }
 
+- (NSString*) dayFromNumber:(NSInteger) num {
+    NSArray *week = @[@"lun",@"mar",@"mer",@"gio",@"ven",@"sab",@"dom"];
+    return week[num];
+    
+}
 
 
 @end

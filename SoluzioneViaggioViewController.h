@@ -15,6 +15,6 @@
 
 @property (strong,nonatomic) Viaggio *query;
 
-@property (weak, nonatomic) id delegateNext;
+//@property (weak, nonatomic) id delegateNext;
 
 @end

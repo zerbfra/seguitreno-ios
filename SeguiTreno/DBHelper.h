@@ -17,4 +17,6 @@
 
 -(NSMutableArray*) executeSQLStatement:(NSString*)stmt;
 
+- (NSString*) dayFromNumber:(NSInteger) num;
+
 @end

@@ -247,7 +247,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Oggi" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zBB-iq-NWa">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Selezionato" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zBB-iq-NWa">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -267,7 +267,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Per sempre" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fep-M2-9Sk">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Mai" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fep-M2-9Sk">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -288,7 +288,6 @@
                     <connections>
                         <outlet property="dataViaggio" destination="3VO-W4-Hyx" id="1bJ-Do-igg"/>
                         <outlet property="fineRipetizione" destination="z4M-3A-3v9" id="vDg-0J-9jd"/>
-                        <outlet property="inizioRipetizione" destination="Ocz-2Q-Pnl" id="NqO-g8-RSv"/>
                         <outlet property="ripeti" destination="LGK-aE-Fyd" id="PhA-qA-vz9"/>
                         <outlet property="settimanaRipetizioni" destination="nfY-iI-0jO" id="x8n-IX-eji"/>
                         <outlet property="soluzioneViaggio" destination="O47-tc-Fql" id="PId-ze-hzQ"/>

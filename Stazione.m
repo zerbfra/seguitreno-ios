@@ -21,7 +21,7 @@
         
         stazione.idStazione = [set objectForKey:@"id"];
         stazione.nome       = [set objectForKey:@"nome"];
-        [stazione formattaNome];
+        //[stazione formattaNome];
         
         
         [stazioni addObject:stazione];

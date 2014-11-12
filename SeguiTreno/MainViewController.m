@@ -38,6 +38,31 @@ if (yourDOW == 2) { ... }     // Sun = 1, Sat = 7, 0 = unico
     self.treniTable.dataSource = self;
     self.treniTable.backgroundColor = BACKGROUND_COLOR;
     self.treniTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    
+    [self caricaViaggi];
+    
+}
+
+-(void) caricaViaggi {
+    
+    NSArray *results = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM treni"];
+    
+    for (NSDictionary* set in results) {
+        
+        Treno *trovato = [[Treno alloc] init];
+        trovato.numero = [set objectForKey:@"numero"];
+        
+        trovato.orarioPartenza = [[set objectForKey:@"orarioPartenza"] intValue];
+        trovato.orarioArrivo = [[set objectForKey:@"orarioArrivo"] intValue];
+        
+        NSDate* orarioPartenza = [[DateUtils shared] dateFrom:trovato.orarioPartenza];
+        
+        NSLog(@"%@ %@",trovato.numero ,[[DateUtils shared] showHHmm:orarioPartenza]);
+        
+        
+    }
+    
 }
 
 - (void)updateSelectedDate
@@ -69,6 +94,7 @@ if (yourDOW == 2) { ... }     // Sun = 1, Sat = 7, 0 = unico
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     // Return the number of rows in the section.
+    if(section == 2) return 1;
     return 2;
 }
 

@@ -17,9 +17,8 @@
 -(NSDate*) orarioPartenza {
     
     Treno *temp = self.tragitto[0];
-    //NSString *orarioPartenza = temp.orarioPartenza;
-    //NSTimeInterval _interval = [orarioPartenza doubleValue];
-    NSDate *partenza = [NSDate dateWithTimeIntervalSince1970:temp.orarioPartenza];
+    NSDate *partenza = [[DateUtils shared] dateFrom:temp.orarioPartenza];
+    //NSDate *partenza = [NSDate dateWithTimeIntervalSince1970:temp.partenza.orarioPartenza];
     return partenza;
 }
 
@@ -28,34 +27,9 @@
     NSUInteger cambi = [self numeroCambi];
     
     Treno *temp = self.tragitto[cambi];
-    //NSString *orarioArrivo = [self.tragitto[cambi] objectForKey:@"orarioPartenza"];
-    //NSTimeInterval _interval = [orarioArrivo doubleValue];
-    NSDate *arrivo = [NSDate dateWithTimeIntervalSince1970:temp.orarioArrivo];
+    NSDate *arrivo = [[DateUtils shared] dateFrom:temp.orarioArrivo];
+    //NSDate *arrivo = [NSDate dateWithTimeIntervalSince1970:temp.arrivo.orarioArrivo];
     return arrivo;
-}
-
--(NSString*) mostraOrario:(NSDate*) date {
-    
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-    timeFormatter.dateFormat = @"HH:mm";
-    
-    NSString *dateString = [timeFormatter stringFromDate: date];
-    
-    return dateString;
-}
-
--(NSString*) mostraData:(NSDate*) date {
-    
-    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-    timeFormatter.dateFormat = @"HH:mm";
-    
-    [timeFormatter setDateStyle:NSDateFormatterMediumStyle];
-    
-    [timeFormatter setTimeStyle:NSDateFormatterShortStyle];
-    
-    NSString *dateString = [timeFormatter stringFromDate: date];
-    
-    return dateString;
 }
 
 -(NSArray*) jsonCompatibile {
@@ -69,5 +43,6 @@
     
     return (NSArray*)numeriTreno;
 }
+
 
 @end

@@ -22,13 +22,14 @@
     }
 }
 
--(NSDate*) datePartenza   {
+
+-(NSDate*) dataPartenza   {
 
     NSDate *partenza = [NSDate dateWithTimeIntervalSince1970:self.orarioPartenza];
     return partenza;
 }
 
--(NSDate*) dateArrivo {
+-(NSDate*) dataArrivo {
 
     NSDate *arrivo = [NSDate dateWithTimeIntervalSince1970:self.orarioArrivo];
     return arrivo;
