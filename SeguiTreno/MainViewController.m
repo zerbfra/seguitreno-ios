@@ -37,7 +37,7 @@
     
     [self.datepicker addTarget:self action:@selector(updateSelectedDate) forControlEvents:UIControlEventValueChanged];
     
-    self.viaggi = [[NSMutableArray alloc] init];
+    self.viaggi = [NSMutableArray array];
     [self caricaViaggi];
 
     
@@ -60,6 +60,8 @@
         end = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:self.datepicker.selectedDate At:24]];
     }
     
+    NSLog(@"%@",[[DateUtils shared] showDateFull:self.datepicker.selectedDate]);
+    
     for (NSDictionary* viaggoSet in dbViaggi) {
         Viaggio *viaggio = [[Viaggio alloc] init];
         viaggio.idViaggio = [viaggoSet objectForKey:@"id"];
@@ -71,7 +73,7 @@
         NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE idSoluzione = '%@' AND orarioPartenza BETWEEN '%tu' AND '%tu' ORDER BY orarioPartenza",viaggio.idViaggio,start,end];
         NSArray *treni = [[DBHelper sharedInstance] executeSQLStatement:stmt];
         
-        NSMutableArray *tragitto = [[NSMutableArray alloc] init];
+        NSMutableArray *tragitto = [NSMutableArray array];
         
         for (NSDictionary* trenoSet in treni) {
             
@@ -109,6 +111,7 @@
         [self.viaggi addObject:viaggio];
     }
     NSLog(@"Tutti i viaggi caricati");
+        NSLog(@"COUNTER %tu",[self.viaggi count]);
     [self.treniTable reloadData];
     
 }
@@ -116,8 +119,10 @@
 
 - (void)updateSelectedDate
 {
-    self.viaggi  = [[NSMutableArray alloc] init];
+    [self.viaggi removeAllObjects];
+    //NSLog(@"COUNTER %tu",[self.viaggi count]);
     [self caricaViaggi];
+    
 }
 
 /* Apre la schermata di aggiunta prodotti */
@@ -148,15 +153,19 @@
     
 }
 
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    NSString *titolo;
     
-    
-    Viaggio *viaggioSezione = [self.viaggi objectAtIndex:section];
-    
-    NSString *titolo = [NSString stringWithFormat:@"%@ | %@ → %@",viaggioSezione.durata,[viaggioSezione luogoPartenza],[viaggioSezione luogoArrivo]];
-    
-    
+
+    /*
+    if([self.viaggi count] > 0) {
+        Viaggio *viaggioSezione = [self.viaggi objectAtIndex:section];
+        titolo = [NSString stringWithFormat:@"%@ | %@ → %@",viaggioSezione.durata,[viaggioSezione luogoPartenza],[viaggioSezione luogoArrivo]];
+    }
+        else return nil;
+    */
     return titolo;
 }
 

@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *treniTable;
 
 @property (strong,nonatomic) NSMutableArray *viaggi;
-//@property (strong,nonatomic) NSMutableArray *viaggiDataSelezionata;
+
 
 @property NSString *text;
 
