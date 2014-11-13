@@ -159,7 +159,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Programmazione" id="w3A-U5-Dyp">
+                            <tableViewSection headerTitle="quando" id="w3A-U5-Dyp">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="l5n-m8-JUc" detailTextLabel="IBz-Mh-zSf" style="IBUITableViewCellStyleValue1" id="3VO-W4-Hyx">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -203,71 +203,20 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Configurazione ripetizione" id="e9b-Os-vlw">
+                            <tableViewSection headerTitle="ripetizione" id="wtw-e5-PEQ">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="62" id="LGK-aE-Fyd">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LGK-aE-Fyd" id="5Ou-Fc-FWQ">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="nfY-iI-0jO" customClass="MultiSelectSegmentedControl">
-                                                    <rect key="frame" x="10" y="17" width="580" height="29"/>
-                                                    <segments>
-                                                        <segment title="LUN"/>
-                                                        <segment title="MAR"/>
-                                                        <segment title="MER"/>
-                                                        <segment title="GIO"/>
-                                                        <segment title="VEN"/>
-                                                        <segment title="SAB"/>
-                                                        <segment title="DOM"/>
-                                                    </segments>
-                                                    <color key="tintColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
-                                                </segmentedControl>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="nfY-iI-0jO" firstAttribute="top" secondItem="5Ou-Fc-FWQ" secondAttribute="top" constant="17" id="LX6-wI-9UA"/>
-                                                <constraint firstItem="nfY-iI-0jO" firstAttribute="leading" secondItem="5Ou-Fc-FWQ" secondAttribute="leading" constant="10" id="PtW-xh-gx4"/>
-                                                <constraint firstAttribute="bottom" secondItem="nfY-iI-0jO" secondAttribute="bottom" constant="16" id="aXX-i9-Hg6"/>
-                                                <constraint firstAttribute="trailing" secondItem="nfY-iI-0jO" secondAttribute="trailing" constant="10" id="pk0-bT-1Ae"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Periodo ripetizione" id="wtw-e5-PEQ">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="B0w-y4-sT3" detailTextLabel="zBB-iq-NWa" style="IBUITableViewCellStyleValue1" id="Ocz-2Q-Pnl">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ocz-2Q-Pnl" id="Xjg-Lk-4od">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Dal giorno" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B0w-y4-sT3">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Selezionato" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zBB-iq-NWa">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Hq6-kf-W9B" detailTextLabel="fep-M2-9Sk" style="IBUITableViewCellStyleValue1" id="z4M-3A-3v9">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z4M-3A-3v9" id="imi-Xk-caC">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Fino al" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hq6-kf-W9B">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Ripeti fino al" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hq6-kf-W9B">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Mai" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fep-M2-9Sk">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Non ripetere" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fep-M2-9Sk">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -288,8 +237,6 @@
                     <connections>
                         <outlet property="dataViaggio" destination="3VO-W4-Hyx" id="1bJ-Do-igg"/>
                         <outlet property="fineRipetizione" destination="z4M-3A-3v9" id="vDg-0J-9jd"/>
-                        <outlet property="ripeti" destination="LGK-aE-Fyd" id="PhA-qA-vz9"/>
-                        <outlet property="settimanaRipetizioni" destination="nfY-iI-0jO" id="x8n-IX-eji"/>
                         <outlet property="soluzioneViaggio" destination="O47-tc-Fql" id="PId-ze-hzQ"/>
                         <outlet property="stazioneDestinazione" destination="1rR-Fk-oUX" id="i2q-7Z-6Pe"/>
                         <outlet property="stazionePartenza" destination="BWa-lI-ytv" id="Zbu-wu-Ftl"/>

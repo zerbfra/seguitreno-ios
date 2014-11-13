@@ -34,10 +34,11 @@
     
     self.viaggio = [[Viaggio alloc] init];
     
-    self.settimanaRipetizioni.delegate = self;
+    //self.settimanaRipetizioni.delegate = self;
     
     [self setDate];
-    self.refresh = true;
+    //self.refresh = true;
+   // self.viaggio.data = [self creaData];
     
     self.soluzioneViaggio.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
     
@@ -66,14 +67,15 @@
     // imposto sull'oggetto stazione P
     self.viaggio = soluzioneSelezionata;
     
-    self.soluzioneViaggio.detailTextLabel.text =  [[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]]; //[self.viaggio mostraOrario:self.viaggio.orarioPartenza];
-    self.dataViaggio.detailTextLabel.text = [self formattaData:self.viaggio.orarioPartenza conOrario:NO eGiorno:YES];
+    // orario selezionato
+    self.soluzioneViaggio.detailTextLabel.text =  [[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]];
+    //self.dataViaggio.detailTextLabel.text = [[DateUtils shared] showDateFull:self.viaggio.orarioPartenza];
 }
 
 
 -(void) setDate {
     
-    self.dataViaggio.detailTextLabel.text = [self formattaData:nil conOrario:NO eGiorno:YES];
+    self.dataViaggio.detailTextLabel.text = [[DateUtils shared] showDateFull:nil];
     // imposto sull'oggetto dataviaggio a oggi (esattamente alla mezza)
     self.viaggio.data = [self creaData];
     
@@ -141,11 +143,10 @@
                 
                 [[DBHelper sharedInstance] executeSQLStatement:query];
                 
-                
+                NSLog(@"AAA: %@",[[DateUtils shared] showDateAndHHmm:self.viaggio.fineRipetizione]);
                 if(self.viaggio.fineRipetizione != nil) {
-                    nextPartenza = [self getNexWeekDateFor:nextPartenza until:self.viaggio.fineRipetizione];
-                    NSLog(@"ciclo: %@",[self formattaData:nextPartenza conOrario:YES eGiorno:YES]);
-                    nextArrivo = [self getNexWeekDateFor:nextArrivo until:self.viaggio.fineRipetizione];
+                    nextPartenza = [[DateUtils shared] getNexWeekDateFor:nextPartenza until:self.viaggio.fineRipetizione];
+                    nextArrivo = [[DateUtils shared] getNexWeekDateFor:nextArrivo until:self.viaggio.fineRipetizione];
                 } else nextPartenza = nil;
                 
             }
@@ -155,53 +156,9 @@
         
     }
     
-    /*
-     
-     // salvo tutti i treni
-     for(Treno *toDb in self.viaggio.tragitto) {
-     NSString  *numero = toDb.numero;
-     NSInteger tsPartenza = [[NSNumber numberWithDouble:[[toDb datePartenza] timeIntervalSince1970]] intValue];
-     NSInteger tsArrivo = [[NSNumber numberWithDouble:[[toDb dateArrivo] timeIntervalSince1970]] intValue];
-     NSString *idOrigine = toDb.stazioneP.idStazione;
-     NSString *idDestinazione = toDb.stazioneA.idStazione;
-     
-     NSString *query = [NSString stringWithFormat:@"INSERT INTO treni (numero,idOrigine,idDestinazione,timestamp) VALUES (%@,%@,%@,%ld)",toDb.numero,toDb.stazioneP.idStazione,toDb.stazioneA.idStazione,ts];
-     [[DBHelper sharedInstance] executeSQLStatement:query];
-     }
-     
-     // ROBA BUONA
-     NSIndexSet *indexes = [self.settimanaRipetizioni selectedSegmentIndexes];
-     NSMutableArray *array = [NSMutableArray array];
-     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-     [array addObject:@(idx)];
-     }];
-     NSLog(@"%@", array);
-     
-     [[DBHelper sharedInstance] executeSQLStatement:[NSString stringWithFormat:@"UPDATE calendario SET %@ = %d WHERE id = %@",[[DBHelper sharedInstance] dayFromNumber:index],[[NSNumber numberWithBool:value]intValue],self.viaggio.idViaggio]];
-     */
-    
-    
-    
 }
 
--(NSDate*) getNexWeekDateFor:(NSDate*) date until:(NSDate*) finish {
-    NSDateComponents *weekComponent = [[NSDateComponents alloc] init];
-    [weekComponent setWeekOfYear:1];
-    
-    NSCalendar *theCalendar = [NSCalendar currentCalendar];
-    NSDate *nextDate = [theCalendar dateByAddingComponents:weekComponent toDate:[NSDate date] options:0];
-    
-    
-    if ([nextDate compare:finish] == NSOrderedAscending) {
-        NSLog(@"date1 is earlier than date2");
-        return nextDate;
-    } else {
-        NSLog(@"finito");
-        return nil;
-    }
-    
-    
-}
+
 
 
 - (IBAction)openDateSelectionController:(NSIndexPath*)sender {
@@ -223,7 +180,8 @@
     dateSelectionVC.datePicker.datePickerMode = UIDatePickerModeDate;
     dateSelectionVC.datePicker.minuteInterval = 5;
     dateSelectionVC.datePicker.minimumDate = [NSDate date];
-    dateSelectionVC.datePicker.date = [NSDate date];
+    NSLog(@"%@",[[DateUtils shared] showDay:self.viaggio.data]);
+    //dateSelectionVC.datePicker.date = self.viaggio.data; BUG
     
     [dateSelectionVC show];
     
@@ -234,16 +192,20 @@
     
     if(vc.senderIndex.section == 1) {
         
-        self.dataViaggio.detailTextLabel.text = [self formattaData:aDate conOrario:NO eGiorno:YES];
-        
+        self.dataViaggio.detailTextLabel.text = [[DateUtils shared] showDateFull:aDate];
+        self.viaggio.data = aDate;
+        if(self.viaggio.fineRipetizione != nil)
+            self.fineRipetizione.textLabel.text = [NSString stringWithFormat:@"Ripeti tutti i %@ fino al",[[DateUtils shared] showDay:aDate]];
+
         
     } else {
-        NSString *dateString = [self formattaData:aDate conOrario:NO eGiorno:NO];
+        NSString *dateString = [[DateUtils shared] showDateMedium:aDate];
         //if(vc.senderIndex.row == 0) //self.inizioRipetizione.detailTextLabel.text = dateString;
         //else {
         NSLog(@"setto finerip");
         self.viaggio.fineRipetizione = aDate;
         self.fineRipetizione.detailTextLabel.text = dateString;
+        self.fineRipetizione.textLabel.text = [NSString stringWithFormat:@"Ripeti tutti i %@ fino al",[[DateUtils shared] showDay:self.viaggio.data]];
         // }
         
         
@@ -254,10 +216,12 @@
     
     
     
-    self.viaggio.data = [self creaData];
+    
     
     
 }
+
+
 
 -(NSDate*) creaData {
     // imposto data viaggio effettivamente selezionata alla mezzanotte (in modo da avere i treni di tutta la giornata)
@@ -271,21 +235,7 @@
     return aDate;
 }
 
--(NSString*) formattaData:(NSDate*) aDate conOrario:(BOOL) vediora eGiorno:(BOOL) vedigiorno {
-    
-    if(aDate == nil) aDate = [NSDate date];
-    
-    NSString *dateString;
-    NSDateFormatter *format = [[NSDateFormatter alloc] init];
-    if(vedigiorno)[format setDateStyle:NSDateFormatterFullStyle];
-    else [format setDateStyle:NSDateFormatterShortStyle];
-    if(vediora) [format setTimeStyle:NSDateFormatterShortStyle];
-    else [format setTimeStyle:NSDateFormatterNoStyle];
-    
-    dateString = [format stringFromDate:aDate];
-    
-    return dateString;
-}
+
 
 - (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {
     //NSLog(@"Date selection was canceled");
@@ -304,7 +254,7 @@
     }
     
     
-    if((indexPath.section == 1 && indexPath.row == 0) || (indexPath.section == 2 && (indexPath.row == 1 || indexPath.row == 2))) {
+    if((indexPath.section == 1 && indexPath.row == 0) || (indexPath.section == 2 && indexPath.row == 0)) {
         [self openDateSelectionController:indexPath];
     }
     
@@ -320,22 +270,23 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-
--(void)multiSelect:(MultiSelectSegmentedControl *)multiSelecSegmendedControl didChangeValue:(BOOL)value atIndex:(NSUInteger)index{
-    
-    
-    if([self.settimanaRipetizioni.selectedSegmentIndexes count] > 0 && self.refresh) {
-        [self.tableView reloadData];
-        self.refresh = false;
-    }
-    
-    if([self.settimanaRipetizioni.selectedSegmentIndexes count] == 0) {
-        [self.tableView reloadData];
-        self.refresh = true;
-    }
-    NSLog(@"%@",[self.settimanaRipetizioni selectedSegmentIndexes]);
-    
-}
+/*
+ -(void)multiSelect:(MultiSelectSegmentedControl *)multiSelecSegmendedControl didChangeValue:(BOOL)value atIndex:(NSUInteger)index{
+ 
+ 
+ if([self.settimanaRipetizioni.selectedSegmentIndexes count] > 0 && self.refresh) {
+ [self.tableView reloadData];
+ self.refresh = false;
+ }
+ 
+ if([self.settimanaRipetizioni.selectedSegmentIndexes count] == 0) {
+ [self.tableView reloadData];
+ self.refresh = true;
+ }
+ NSLog(@"%@",[self.settimanaRipetizioni selectedSegmentIndexes]);
+ 
+ }
+ */
 
 
 -(void)close:(id)sender {
@@ -352,8 +303,8 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     // Return the number of sections.
-    if([self.settimanaRipetizioni.selectedSegmentIndexes count] == 0) return 3;
-    else return 4;
+    return 3;
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

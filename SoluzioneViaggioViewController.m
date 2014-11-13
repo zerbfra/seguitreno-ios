@@ -295,7 +295,7 @@
 -(NSDate*) todayAt:(NSInteger) hour {
     NSCalendar* myCalendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [myCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
-                                                 fromDate:[NSDate date]];
+                                                 fromDate:self.query.data];
     [components setHour: hour];
     [components setMinute: 0];
     [components setSecond: 0];
