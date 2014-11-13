@@ -10,13 +10,7 @@
 
 @implementation MainViewController
 
-/*
- 
-int yourDOW = [[[NSCalendar currentCalendar] components:NSWeekdayCalendarUnit
-                                               fromDate:yourDate] weekday];
-if (yourDOW == 2) { ... }     // Sun = 1, Sat = 7, 0 = unico
-*/
- 
+
 -(void)viewDidLoad {
     
     [super viewDidLoad];
@@ -25,10 +19,12 @@ if (yourDOW == 2) { ... }     // Sun = 1, Sat = 7, 0 = unico
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    [self.datepicker addTarget:self action:@selector(updateSelectedDate) forControlEvents:UIControlEventValueChanged];
+
+    
+  
     
     [self.datepicker fillDatesFromCurrentDate:15];
-
+    
     [self.datepicker selectDateAtIndex:0];
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
@@ -39,42 +35,89 @@ if (yourDOW == 2) { ... }     // Sun = 1, Sat = 7, 0 = unico
     self.treniTable.backgroundColor = BACKGROUND_COLOR;
     self.treniTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    [self.datepicker addTarget:self action:@selector(updateSelectedDate) forControlEvents:UIControlEventValueChanged];
     
+    self.viaggi = [[NSMutableArray alloc] init];
     [self caricaViaggi];
+
     
 }
 
 -(void) caricaViaggi {
     
-    NSArray *results = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM treni"];
     
-    for (NSDictionary* set in results) {
-        
-        Treno *trovato = [[Treno alloc] init];
-        trovato.numero = [set objectForKey:@"numero"];
-        
-        trovato.orarioPartenza = [[set objectForKey:@"orarioPartenza"] intValue];
-        trovato.orarioArrivo = [[set objectForKey:@"orarioArrivo"] intValue];
-        
-        NSDate* orarioPartenza = [[DateUtils shared] dateFrom:trovato.orarioPartenza];
-        
-        NSLog(@"%@ %@",trovato.numero ,[[DateUtils shared] showHHmm:orarioPartenza]);
-        
-        
+
+    NSArray *dbViaggi = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT id,durata FROM viaggi WHERE (SELECT COUNT(*) FROM treni WHERE idSoluzione = viaggi.id) > 0"];
+    
+    NSInteger start,end;
+    
+    if(self.datepicker.selectedDate == nil) {
+        start = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:[NSDate date] At:0]];
+        end = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:[NSDate date] At:24]];
     }
+    else {
+        start = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:self.datepicker.selectedDate At:0]];
+        end = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:self.datepicker.selectedDate At:24]];
+    }
+    
+    for (NSDictionary* viaggoSet in dbViaggi) {
+        Viaggio *viaggio = [[Viaggio alloc] init];
+        viaggio.idViaggio = [viaggoSet objectForKey:@"id"];
+        viaggio.durata = [viaggoSet objectForKey:@"durata"];
+        
+        
+
+        
+        NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE idSoluzione = '%@' AND orarioPartenza BETWEEN '%tu' AND '%tu' ORDER BY orarioPartenza",viaggio.idViaggio,start,end];
+        NSArray *treni = [[DBHelper sharedInstance] executeSQLStatement:stmt];
+        
+        NSMutableArray *tragitto = [[NSMutableArray alloc] init];
+        
+        for (NSDictionary* trenoSet in treni) {
+            
+            Treno *trovato = [[Treno alloc] init];
+            trovato.numero = [trenoSet objectForKey:@"numero"];
+            
+            //NSLog(@"Treno: %@",trovato.numero);
+            
+            Stazione *origine = [[Stazione alloc] init];
+            origine.idStazione = [trenoSet objectForKey:@"idOrigine"];
+            //Stazione *destinazione = [[Stazione alloc] init];
+            //destinazione.idStazione = [trenoSet objectForKey:@"idDestinazione"];
+            
+            trovato.origine = origine;
+            
+            Stazione *partenza = [[Stazione alloc] init];
+            partenza.nome = [trenoSet objectForKey:@"nomePartenza"];
+            
+            
+            
+            Stazione *arrivo = [[Stazione alloc] init];
+            arrivo.nome = [trenoSet objectForKey:@"nomeArrivo"];
+            
+            trovato.partenza = partenza;
+            trovato.arrivo = arrivo;
+            
+            trovato.orarioPartenza = [[trenoSet objectForKey:@"orarioPartenza"] intValue];
+            trovato.orarioArrivo = [[trenoSet objectForKey:@"orarioArrivo"] intValue];
+
+            [tragitto addObject:trovato];
+            
+        }
+        
+        viaggio.tragitto = tragitto;
+        [self.viaggi addObject:viaggio];
+    }
+    NSLog(@"Tutti i viaggi caricati");
+    [self.treniTable reloadData];
     
 }
 
+
 - (void)updateSelectedDate
 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = [NSDateFormatter dateFormatFromTemplate:@"EEEEddMMMM" options:0 locale:nil];
-    
-    self.text = [formatter stringFromDate:self.datepicker.selectedDate];
-    [self.treniTable reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade]; //right e left sarebbero carini
-    //[self.treniTable reloadData];
-    
-    //self.selectedDateLabel.text = [formatter stringFromDate:self.datepicker.selectedDate];
+    self.viaggi  = [[NSMutableArray alloc] init];
+    [self caricaViaggi];
 }
 
 /* Apre la schermata di aggiunta prodotti */
@@ -86,37 +129,59 @@ if (yourDOW == 2) { ... }     // Sun = 1, Sat = 7, 0 = unico
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    // Return the number of sections.
-    return 1;
+    
+    // Return the number of sections: pari al numero di viaggi di una giornata (i treni sono raggruppati in viaggi)
+    return [self.viaggi count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    // Return the number of rows in the section.
-    if(section == 2) return 1;
-    return 2;
+    
+    // ogni sezione (e quindi viaggio) è composto dai treni del suo tragitto
+    Viaggio *sezione = self.viaggi[section];
+    return [sezione.tragitto count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return 100;
+    return 120;
     
 }
 
-
- - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-     
-     static NSString *cellIdentifier = @"trenoCell";
-     
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
     
-     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-     /*cell.textLabel.text = self.text;
-     */
- 
-     return cell;
- }
+    
+    Viaggio *viaggioSezione = [self.viaggi objectAtIndex:section];
+    
+    NSString *titolo = [NSString stringWithFormat:@"%@ | %@ → %@",viaggioSezione.durata,[viaggioSezione luogoPartenza],[viaggioSezione luogoArrivo]];
+    
+    
+    return titolo;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *cellIdentifier = @"trenoCell";
+
+    
+    SalvatoTableViewCell *cell = (SalvatoTableViewCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    Viaggio *viaggio = [self.viaggi objectAtIndex:indexPath.section];
+    
+    cell.treno = [viaggio.tragitto objectAtIndex:indexPath.row];
+    
+    
+    cell.partenzaL.text = cell.treno.partenza.nome;
+    cell.arrivoL.text = cell.treno.arrivo.nome;
+    
+    cell.trenoL.text = cell.treno.numero;
+    
+    cell.orarioPL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioPartenza]];
+    cell.orarioAL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioArrivo]];
+
+    
+    return cell;
+}
 
 
 /*

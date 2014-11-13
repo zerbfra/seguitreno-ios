@@ -251,58 +251,25 @@
 
 -(NSArray*)soluzioniTraOra:(NSInteger) inizio e:(NSInteger) fine {
     
-    NSDate *dataInizio = [self todayAt:inizio];
-    NSDate *dataFine = [self todayAt:fine];
+    NSDate *dataInizio = [[DateUtils shared] date:self.query.data At:inizio]; //[self todayAt:inizio];
+    NSDate *dataFine = [[DateUtils shared] date:self.query.data At:fine];
     
     NSMutableArray *viaggiCompresi = [[NSMutableArray alloc] init];
     
     for(Viaggio* soluzione in self.soluzioniPossibili) {
         NSDate *partenza = [soluzione orarioPartenza];
         
-        if([self date:partenza isBetweenDate:dataInizio andDate:dataFine]) [viaggiCompresi addObject:soluzione];
+        if([[DateUtils shared] date:partenza isBetweenDate:dataInizio andDate:dataFine]) [viaggiCompresi addObject:soluzione];
     }
     return viaggiCompresi;
 }
 
 -(NSInteger)numerosoluzioniTraOra:(NSInteger) inizio e:(NSInteger) fine {
     
-    NSDate *dataInizio = [self todayAt:inizio];
-    NSDate *dataFine = [self todayAt:fine];
-    
-    NSInteger viaggiCompresi = 0;
-    
-    for(Viaggio* soluzione in self.soluzioniPossibili) {
-        NSDate *partenza = [soluzione orarioPartenza];
-        
-        if([self date:partenza isBetweenDate:dataInizio andDate:dataFine]) viaggiCompresi++;
-    }
-    return viaggiCompresi;
+    return [[self soluzioniTraOra:inizio e:fine] count];
 }
 
 
-
-- (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate
-{
-    if ([date compare:beginDate] == NSOrderedAscending)
-        return NO;
-    
-    if ([date compare:endDate] == NSOrderedDescending)
-        return NO;
-    
-    return YES;
-}
-
--(NSDate*) todayAt:(NSInteger) hour {
-    NSCalendar* myCalendar = [NSCalendar currentCalendar];
-    NSDateComponents* components = [myCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
-                                                 fromDate:self.query.data];
-    [components setHour: hour];
-    [components setMinute: 0];
-    [components setSecond: 0];
-    NSDate *myDate = [myCalendar dateFromComponents:components];
-    
-    return myDate;
-}
 
 
 #pragma mark - Navigation

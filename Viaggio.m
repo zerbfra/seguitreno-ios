@@ -44,5 +44,16 @@
     return (NSArray*)numeriTreno;
 }
 
+-(NSString*) luogoPartenza {
+    Treno *temp = self.tragitto[0];
+    return temp.partenza.nome;
+}
+
+-(NSString*) luogoArrivo {
+    NSUInteger cambi = [self numeroCambi];
+    Treno *temp = self.tragitto[cambi];
+    return temp.arrivo.nome;
+}
+
 
 @end

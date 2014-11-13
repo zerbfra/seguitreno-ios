@@ -26,6 +26,9 @@
     return date;
 }
 
+-(NSTimeInterval) timestampFrom:(NSDate*) date {
+    return [date timeIntervalSince1970];
+}
 
 -(NSDate*) getNexWeekDateFor:(NSDate*) date until:(NSDate*) finish {
     
@@ -41,6 +44,32 @@
     
     
 }
+
+- (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate
+{
+    if ([date compare:beginDate] == NSOrderedAscending)
+        return NO;
+    
+    if ([date compare:endDate] == NSOrderedDescending)
+        return NO;
+    
+    return YES;
+}
+
+-(NSDate*) date:(NSDate*) date At:(NSInteger) hour {
+    NSCalendar* myCalendar = [NSCalendar currentCalendar];
+    NSDateComponents* components = [myCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+                                                 fromDate:date];
+    [components setHour: hour];
+    [components setMinute: 0];
+    [components setSecond: 0];
+    NSDate *myDate = [myCalendar dateFromComponents:components];
+    
+    return myDate;
+}
+
+
+/** Formattazione date **/
 
 -(NSString*) showHHmm:(NSDate*) date {
     

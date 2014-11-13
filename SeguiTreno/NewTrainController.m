@@ -101,14 +101,13 @@
             NSLog(@"Response: %@", response);
             
             for(NSDictionary *trenoDict in response) {
-                toDb.categoria = [trenoDict objectForKey:@"categoria"];
                 Stazione *origine = [[Stazione alloc] init];
                 Stazione *destinazione = [[Stazione alloc] init];
-                //origine.nome = [trenoDict objectForKey:@"origine"];
                 origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
                 destinazione.idStazione = [trenoDict objectForKey:@"idDestinazione"];
                 toDb.origine = origine;
                 toDb.destinazione = destinazione;
+                toDb.categoria = [trenoDict objectForKey:@"categoria"];
             }
             
             

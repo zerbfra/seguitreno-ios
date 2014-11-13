@@ -25,17 +25,17 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="7RW-lU-VsF">
-                                <rect key="frame" x="0.0" y="124" width="605" height="476"/>
+                                <rect key="frame" x="-5" y="124" width="605" height="427"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <color key="separatorColor" white="0.81288548519736847" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trenoCell" rowHeight="120" id="HXn-KK-o6r">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trenoCell" rowHeight="120" id="HXn-KK-o6r" customClass="SalvatoTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HXn-KK-o6r" id="Qqj-ZI-wRh">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="16:27" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rC0-tR-rZC">
-                                                    <rect key="frame" x="439" y="9" width="146" height="21"/>
+                                                    <rect key="frame" x="439" y="10" width="146" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="146" id="fvA-ik-jBG"/>
                                                         <constraint firstAttribute="height" constant="21" id="oHy-FI-VeJ"/>
@@ -45,7 +45,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RITARDO: 15 MIN" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6t6-La-O0Q">
-                                                    <rect key="frame" x="406" y="56" width="179" height="21"/>
+                                                    <rect key="frame" x="406" y="91" width="179" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="cAX-h5-cRI"/>
                                                         <constraint firstAttribute="width" constant="179" id="exM-8Q-kcZ"/>
@@ -54,45 +54,72 @@
                                                     <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MANTOVA → MILANO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sm-6z-dN7">
-                                                    <rect key="frame" x="14" y="9" width="183" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mantova" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9sm-6z-dN7">
+                                                    <rect key="frame" x="14" y="12" width="215" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Treno REG 2657" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lp9-Uz-rX1">
-                                                    <rect key="frame" x="14" y="27" width="161" height="21"/>
+                                                    <rect key="frame" x="14" y="61" width="161" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="13"/>
                                                     <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PARTE TRA 5 MIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CrU-B7-VWr">
-                                                    <rect key="frame" x="14" y="56" width="161" height="21"/>
+                                                    <rect key="frame" x="14" y="90" width="161" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Milano" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65A-ey-bEG">
+                                                    <rect key="frame" x="14" y="33" width="215" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18:10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QXd-Qp-4PD">
+                                                    <rect key="frame" x="439" y="33" width="146" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="FQK-XO-AEv"/>
+                                                        <constraint firstAttribute="width" constant="146" id="In6-m1-tyG"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="6t6-La-O0Q" firstAttribute="top" secondItem="rC0-tR-rZC" secondAttribute="bottom" constant="26" id="0TC-nw-Gpg"/>
-                                                <constraint firstItem="rC0-tR-rZC" firstAttribute="top" secondItem="Qqj-ZI-wRh" secondAttribute="top" constant="9" id="2Gj-S4-WjR"/>
+                                                <constraint firstItem="6t6-La-O0Q" firstAttribute="top" secondItem="rC0-tR-rZC" secondAttribute="bottom" constant="60" id="0TC-nw-Gpg"/>
+                                                <constraint firstItem="rC0-tR-rZC" firstAttribute="top" secondItem="Qqj-ZI-wRh" secondAttribute="top" constant="10" id="2Gj-S4-WjR"/>
                                                 <constraint firstAttribute="trailing" secondItem="6t6-La-O0Q" secondAttribute="trailing" constant="20" id="Bjl-KH-wGj"/>
+                                                <constraint firstItem="QXd-Qp-4PD" firstAttribute="top" secondItem="rC0-tR-rZC" secondAttribute="bottom" constant="2" id="Saz-Yc-nvX"/>
                                                 <constraint firstAttribute="trailing" secondItem="rC0-tR-rZC" secondAttribute="trailing" constant="20" id="XcD-Z4-aVf"/>
+                                                <constraint firstAttribute="trailing" secondItem="QXd-Qp-4PD" secondAttribute="trailing" constant="20" id="hpl-xR-ZVR"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="arrivoL" destination="65A-ey-bEG" id="Gda-Mc-1U8"/>
+                                            <outlet property="countdownL" destination="CrU-B7-VWr" id="xWq-rz-lzl"/>
+                                            <outlet property="orarioAL" destination="QXd-Qp-4PD" id="YWv-xd-mSN"/>
+                                            <outlet property="orarioPL" destination="rC0-tR-rZC" id="fdN-jL-yoI"/>
+                                            <outlet property="partenzaL" destination="9sm-6z-dN7" id="Xw3-Wn-sRI"/>
+                                            <outlet property="ritardoL" destination="6t6-La-O0Q" id="sN1-lE-Vnj"/>
+                                            <outlet property="trenoL" destination="Lp9-Uz-rX1" id="KBb-Ty-dWd"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="7RW-lU-VsF" secondAttribute="bottom" id="1qU-HO-Yng"/>
+                            <constraint firstAttribute="bottom" secondItem="7RW-lU-VsF" secondAttribute="bottom" constant="49" id="1qU-HO-Yng"/>
                             <constraint firstItem="m6j-0e-YdN" firstAttribute="top" secondItem="5uo-mL-pVH" secondAttribute="bottom" id="3Dk-54-YSf"/>
                             <constraint firstItem="m6j-0e-YdN" firstAttribute="leading" secondItem="UbR-1R-klO" secondAttribute="leading" id="7bA-Pj-Ca3"/>
                             <constraint firstAttribute="trailing" secondItem="m6j-0e-YdN" secondAttribute="trailing" id="8PZ-IS-bue"/>
-                            <constraint firstItem="7RW-lU-VsF" firstAttribute="leading" secondItem="UbR-1R-klO" secondAttribute="leading" id="amS-La-AvK"/>
+                            <constraint firstItem="7RW-lU-VsF" firstAttribute="leading" secondItem="UbR-1R-klO" secondAttribute="leading" constant="-5" id="amS-La-AvK"/>
                             <constraint firstItem="7RW-lU-VsF" firstAttribute="top" secondItem="m6j-0e-YdN" secondAttribute="bottom" id="cdT-aU-hDl"/>
-                            <constraint firstAttribute="trailing" secondItem="7RW-lU-VsF" secondAttribute="trailing" constant="-5" id="sA9-YG-VQ4"/>
+                            <constraint firstAttribute="trailing" secondItem="7RW-lU-VsF" secondAttribute="trailing" id="sA9-YG-VQ4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="SeguiTreno" id="ybr-dw-mCV"/>
@@ -104,7 +131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jPu-aS-8th" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2849" y="157"/>
+            <point key="canvasLocation" x="2849" y="151"/>
         </scene>
         <!--Nuovo treno-->
         <scene sceneID="dgX-KC-FUh">

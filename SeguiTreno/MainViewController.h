@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "FZDatepicker.h"
+#import "SalvatoTableViewCell.h"
 
 @interface MainViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet FZDatepicker *datepicker;
 @property (weak, nonatomic) IBOutlet UITableView *treniTable;
+
+@property (strong,nonatomic) NSMutableArray *viaggi;
+//@property (strong,nonatomic) NSMutableArray *viaggiDataSelezionata;
 
 @property NSString *text;
 

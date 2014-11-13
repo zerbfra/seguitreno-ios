@@ -22,6 +22,7 @@
 		137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */; };
 		137F4DF11A11786100B9E77E /* seguitreno.db in Resources */ = {isa = PBXBuildFile; fileRef = 137F4DF01A1177D300B9E77E /* seguitreno.db */; };
 		137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DF31A135E5200B9E77E /* DateUtils.m */; };
+		13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */; };
 		13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */; };
 		13D01EDC1A0B888000BDCD05 /* MultiSelectSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EDB1A0B887F00BDCD05 /* MultiSelectSegmentedControl.m */; };
 		13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */; };
@@ -79,6 +80,8 @@
 		137F4DF01A1177D300B9E77E /* seguitreno.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = seguitreno.db; sourceTree = "<group>"; };
 		137F4DF21A135E5200B9E77E /* DateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtils.h; sourceTree = "<group>"; };
 		137F4DF31A135E5200B9E77E /* DateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtils.m; sourceTree = "<group>"; };
+		13AC56591A14B3BC00492CB6 /* SalvatoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalvatoTableViewCell.h; sourceTree = "<group>"; };
+		13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalvatoTableViewCell.m; sourceTree = "<group>"; };
 		13D01ED71A0B706200BDCD05 /* RMDateSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDateSelectionViewController.h; sourceTree = "<group>"; };
 		13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDateSelectionViewController.m; sourceTree = "<group>"; };
 		13D01EDA1A0B887F00BDCD05 /* MultiSelectSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiSelectSegmentedControl.h; sourceTree = "<group>"; };
@@ -308,6 +311,8 @@
 				13D829BF1A0CBA00008433E6 /* SoluzioneTableViewCell.m */,
 				137F4DED1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.h */,
 				137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */,
+				13AC56591A14B3BC00492CB6 /* SalvatoTableViewCell.h */,
+				13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */,
 			);
 			name = "Custom cells";
 			sourceTree = "<group>";
@@ -454,6 +459,7 @@
 				13D01EED1A0BC3B300BDCD05 /* FMDatabaseQueue.m in Sources */,
 				13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */,
 				135CC3B61A0A1F3B0074D079 /* main.m in Sources */,
+				13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */,
 				13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */,
 				137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */,
 				135CC3DE1A0A1F6D0074D079 /* FZDatepickerDateView.m in Sources */,

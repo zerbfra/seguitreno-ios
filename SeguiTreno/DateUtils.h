@@ -15,8 +15,16 @@
 // restituisce data da un nstimeinterval
 -(NSDate*) dateFrom:(NSTimeInterval) ts;
 
+-(NSTimeInterval) timestampFrom:(NSDate*) date;
+
 // ottiene giorno della prossima settimana
 -(NSDate*) getNexWeekDateFor:(NSDate*) date until:(NSDate*) finish;
+
+// ritorna l'NSDate di una data ad un ora stabilita
+-(NSDate*) date:(NSDate*) date At:(NSInteger) hour;
+
+// ritorna un bool che dice se la data è compresa tra altre due
+- (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
 
 // vedi solo ora
 -(NSString*) showHHmm:(NSDate*) date;

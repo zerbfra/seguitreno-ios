@@ -36,6 +36,9 @@
 -(NSDate*) orarioArrivo;
 -(NSDate*) orarioPartenza;
 
+-(NSString*) luogoPartenza;
+-(NSString*) luogoArrivo;
+
 /*
 -(NSString*) mostraOrario:(NSDate*) date;
 -(NSString*) mostraData:(NSDate*) date;
