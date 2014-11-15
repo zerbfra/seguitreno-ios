@@ -16,11 +16,11 @@
 		135CC3DD1A0A1F6D0074D079 /* FZDatepicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3DA1A0A1F6D0074D079 /* FZDatepicker.m */; };
 		135CC3DE1A0A1F6D0074D079 /* FZDatepickerDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3DC1A0A1F6D0074D079 /* FZDatepickerDateView.m */; };
 		13650BB41A0A5F14000F2F51 /* NewTrainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13650BB31A0A5F14000F2F51 /* NewTrainController.m */; };
+		137941F31A17CFBB000D45E1 /* seguitreno.db in Resources */ = {isa = PBXBuildFile; fileRef = 137941F21A17CDC5000D45E1 /* seguitreno.db */; };
 		137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86CF1A0CB65E00D31838 /* MainViewController.m */; };
 		137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */; };
 		137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */; };
 		137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */; };
-		137F4DF11A11786100B9E77E /* seguitreno.db in Resources */ = {isa = PBXBuildFile; fileRef = 137F4DF01A1177D300B9E77E /* seguitreno.db */; };
 		137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DF31A135E5200B9E77E /* DateUtils.m */; };
 		13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */; };
 		13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */; };
@@ -69,6 +69,7 @@
 		135CC3E51A0A203C0074D079 /* SeguiTreno-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SeguiTreno-Prefix.pch"; sourceTree = "<group>"; };
 		13650BB21A0A5F14000F2F51 /* NewTrainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTrainController.h; sourceTree = "<group>"; };
 		13650BB31A0A5F14000F2F51 /* NewTrainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTrainController.m; sourceTree = "<group>"; };
+		137941F21A17CDC5000D45E1 /* seguitreno.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = seguitreno.db; sourceTree = "<group>"; };
 		137D86CE1A0CB65E00D31838 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		137D86CF1A0CB65E00D31838 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		137D86D41A0CB9A900D31838 /* SoluzioneViaggioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoluzioneViaggioViewController.h; path = ../SoluzioneViaggioViewController.h; sourceTree = "<group>"; };
@@ -77,7 +78,6 @@
 		137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioSoluzioneViewController.m; sourceTree = "<group>"; };
 		137F4DED1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DettaglioSoluzioneTableViewCell.h; sourceTree = "<group>"; };
 		137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioSoluzioneTableViewCell.m; sourceTree = "<group>"; };
-		137F4DF01A1177D300B9E77E /* seguitreno.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = seguitreno.db; sourceTree = "<group>"; };
 		137F4DF21A135E5200B9E77E /* DateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateUtils.h; sourceTree = "<group>"; };
 		137F4DF31A135E5200B9E77E /* DateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtils.m; sourceTree = "<group>"; };
 		13AC56591A14B3BC00492CB6 /* SalvatoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalvatoTableViewCell.h; sourceTree = "<group>"; };
@@ -160,7 +160,7 @@
 				13650BB51A0A654D000F2F51 /* UI Elements */,
 				13D01EEF1A0BC3BB00BDCD05 /* Libraries */,
 				135CC3BD1A0A1F3B0074D079 /* Main.storyboard */,
-				137F4DF01A1177D300B9E77E /* seguitreno.db */,
+				137941F21A17CDC5000D45E1 /* seguitreno.db */,
 				135CC3C01A0A1F3B0074D079 /* Images.xcassets */,
 				13D01EF61A0BC45800BDCD05 /* Frameworks */,
 				135CC3B31A0A1F3B0074D079 /* Supporting Files */,
@@ -429,7 +429,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				137F4DF11A11786100B9E77E /* seguitreno.db in Resources */,
+				137941F31A17CFBB000D45E1 /* seguitreno.db in Resources */,
 				135CC3BF1A0A1F3B0074D079 /* Main.storyboard in Resources */,
 				135CC3C11A0A1F3B0074D079 /* Images.xcassets in Resources */,
 			);

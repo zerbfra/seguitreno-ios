@@ -18,9 +18,6 @@
     // status bar bianca
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
-
-    
   
     
     [self.datepicker fillDatesFromCurrentDate:15];
