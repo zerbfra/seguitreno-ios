@@ -77,7 +77,7 @@
     
     self.dataViaggio.detailTextLabel.text = [[DateUtils shared] showDateFull:nil];
     // imposto sull'oggetto dataviaggio a oggi (esattamente alla mezza)
-    self.viaggio.data = [self creaData];
+    self.viaggio.data = [[DateUtils shared] date:[NSDate date] At:0];
     
 }
 
@@ -85,7 +85,7 @@
     NSLog(@"Preparo salvataggio treno...");
     
     
-    NSString *viaggioQuery = [NSString stringWithFormat:@"INSERT INTO viaggi (durata) VALUES ('%@')",self.viaggio.durata];
+    NSString *viaggioQuery = [NSString stringWithFormat:@"INSERT INTO viaggi (durata) VALUES ('%@')",self.viaggio.durata];// BUG
     [[DBHelper sharedInstance] executeSQLStatement:viaggioQuery];
     
     NSString *record =  [[[[DBHelper sharedInstance] executeSQLStatement:@"SELECT last_insert_rowid() AS id"] objectAtIndex:0] objectForKey:@"id"];
@@ -192,7 +192,7 @@
     if(vc.senderIndex.section == 1) {
         
         self.dataViaggio.detailTextLabel.text = [[DateUtils shared] showDateFull:aDate];
-        self.viaggio.data = aDate;
+        self.viaggio.data = [[DateUtils shared] date:aDate At:0];
         if(self.viaggio.fineRipetizione != nil)
             self.fineRipetizione.textLabel.text = [NSString stringWithFormat:@"Ripeti tutti i %@ fino al",[[DateUtils shared] showDay:aDate]];
 
@@ -219,21 +219,6 @@
     
     
 }
-
-
-
--(NSDate*) creaData {
-    // imposto data viaggio effettivamente selezionata alla mezzanotte (in modo da avere i treni di tutta la giornata)
-    
-    NSDate *aDate = [NSDate date];
-    
-    NSCalendar *gregorian = [[NSCalendar alloc]initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *dateComponents = [gregorian components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:aDate];
-    
-    aDate = [gregorian dateFromComponents:dateComponents];
-    return aDate;
-}
-
 
 
 - (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {

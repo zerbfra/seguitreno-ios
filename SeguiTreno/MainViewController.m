@@ -45,10 +45,6 @@
 
 -(void) caricaViaggi {
     
-    
-
-    NSArray *dbViaggi = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT id,durata FROM viaggi WHERE (SELECT COUNT(*) FROM treni WHERE idSoluzione = viaggi.id) > 0"];
-    
     NSInteger start,end;
     
     if(self.datepicker.selectedDate == nil) {
@@ -60,22 +56,34 @@
         end = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:self.datepicker.selectedDate At:24]];
     }
     
-    NSLog(@"%@",[[DateUtils shared] showDateFull:self.datepicker.selectedDate]);
+    NSString *query = [NSString stringWithFormat:@"SELECT * FROM viaggi WHERE id IN  (SELECT idSoluzione FROM treni WHERE orarioPartenza BETWEEN '%tu' AND '%tu' GROUP BY idSoluzione)",start,end];
+    NSLog(@"%@",query);
+
+    NSArray *dbViaggi = [[DBHelper sharedInstance] executeSQLStatement:query];
+    
+
+    
+
+    
+    //NSLog(@"%@",[[DateUtils shared] showDateFull:self.datepicker.selectedDate]);
     
     for (NSDictionary* viaggoSet in dbViaggi) {
         Viaggio *viaggio = [[Viaggio alloc] init];
         viaggio.idViaggio = [viaggoSet objectForKey:@"id"];
         viaggio.durata = [viaggoSet objectForKey:@"durata"];
         
+        NSLog(@"%@",viaggio.idViaggio);
         
-
+        //Viaggio *viaggio = [[Viaggio alloc] init];
         
         NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE idSoluzione = '%@' AND orarioPartenza BETWEEN '%tu' AND '%tu' ORDER BY orarioPartenza",viaggio.idViaggio,start,end];
         NSArray *treni = [[DBHelper sharedInstance] executeSQLStatement:stmt];
-        
+        NSLog(@"%@",stmt);
         NSMutableArray *tragitto = [NSMutableArray array];
         
         for (NSDictionary* trenoSet in treni) {
+            
+            //viaggio.idViaggio = [trenoSet objectForKey:@"idSoluzione"];
             
             Treno *trovato = [[Treno alloc] init];
             trovato.numero = [trenoSet objectForKey:@"numero"];
@@ -110,10 +118,18 @@
         viaggio.tragitto = tragitto;
         [self.viaggi addObject:viaggio];
     }
-    NSLog(@"Tutti i viaggi caricati");
-        NSLog(@"COUNTER %tu",[self.viaggi count]);
-    [self.treniTable reloadData];
     
+    NSLog(@"Tutti i viaggi caricati");
+    //NSLog(@"COUNTER %tu",[self.viaggi count]);
+
+    // Aggiorno tabella con un'animazione
+    [UIView transitionWithView:self.treniTable
+                      duration:0.2f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^(void) {
+                        [self.treniTable reloadData];
+                    } completion:NULL];
+
 }
 
 
@@ -159,13 +175,14 @@
     NSString *titolo;
     
 
-    /*
+    
+
     if([self.viaggi count] > 0) {
         Viaggio *viaggioSezione = [self.viaggi objectAtIndex:section];
         titolo = [NSString stringWithFormat:@"%@ | %@ → %@",viaggioSezione.durata,[viaggioSezione luogoPartenza],[viaggioSezione luogoArrivo]];
     }
         else return nil;
-    */
+    
     return titolo;
 }
 
