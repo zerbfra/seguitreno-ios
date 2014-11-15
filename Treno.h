@@ -16,7 +16,7 @@
 @property (strong,nonatomic) Stazione *origine;
 @property (strong,nonatomic) Stazione *destinazione;
 
-// percorso dell'utente da partenza ad arrivo
+// percorso dell'utente da partenza ad arrivo (ovviamente del treno)
 @property (strong,nonatomic) Stazione *partenza;
 @property (strong,nonatomic) Stazione *arrivo;
 

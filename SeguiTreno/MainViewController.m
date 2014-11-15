@@ -56,7 +56,7 @@
         end = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:self.datepicker.selectedDate At:24]];
     }
     
-    NSString *query = [NSString stringWithFormat:@"SELECT * FROM viaggi WHERE id IN  (SELECT idSoluzione FROM treni WHERE orarioPartenza BETWEEN '%tu' AND '%tu' GROUP BY idSoluzione)",start,end];
+    NSString *query = [NSString stringWithFormat:@"SELECT * FROM viaggi WHERE orarioPartenza BETWEEN '%tu' AND '%tu' ORDER BY orarioPartenza",start,end];
     NSLog(@"%@",query);
 
     NSArray *dbViaggi = [[DBHelper sharedInstance] executeSQLStatement:query];
@@ -76,8 +76,9 @@
         
         //Viaggio *viaggio = [[Viaggio alloc] init];
         
-        NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE idSoluzione = '%@' AND orarioPartenza BETWEEN '%tu' AND '%tu' ORDER BY orarioPartenza",viaggio.idViaggio,start,end];
+        NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%@') ORDER BY orarioPartenza",viaggio.idViaggio];
         NSArray *treni = [[DBHelper sharedInstance] executeSQLStatement:stmt];
+        NSLog(@"conteggio treni %lu",(unsigned long)[treni count]);
         NSLog(@"%@",stmt);
         NSMutableArray *tragitto = [NSMutableArray array];
         
@@ -112,6 +113,7 @@
             trovato.orarioArrivo = [[trenoSet objectForKey:@"orarioArrivo"] intValue];
 
             [tragitto addObject:trovato];
+            NSLog(@"%@",trovato.numero);
             
         }
         

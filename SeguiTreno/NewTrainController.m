@@ -84,13 +84,45 @@
 -(void)salva {
     NSLog(@"Preparo salvataggio treno...");
     
-    
-    NSString *viaggioQuery = [NSString stringWithFormat:@"INSERT INTO viaggi (durata) VALUES ('%@')",self.viaggio.durata];// BUG
-    [[DBHelper sharedInstance] executeSQLStatement:viaggioQuery];
-    
-    NSString *record =  [[[[DBHelper sharedInstance] executeSQLStatement:@"SELECT last_insert_rowid() AS id"] objectAtIndex:0] objectForKey:@"id"];
-    
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    NSMutableArray *viaggiInseriti = [NSMutableArray array];
+    
+    NSInteger tsPartenza, tsArrivo;
+    
+    NSDate *nextPartenza = [self.viaggio orarioPartenza];
+    NSDate *nextArrivo = [self.viaggio orarioArrivo];
+    
+    // SALVO VIAGGI
+    do {
+        // ciclo inserimento viaggi fino alla fine delle ripetizioni
+        
+        tsPartenza = [[NSNumber numberWithDouble:[nextPartenza timeIntervalSince1970]] intValue];
+        tsArrivo = [[NSNumber numberWithDouble:[nextArrivo timeIntervalSince1970]] intValue];
+        
+        NSString *query = [NSString stringWithFormat:@"INSERT INTO viaggi (nomePartenza,nomeArrivo, orarioPartenza,orarioArrivo,durata) VALUES ('%@','%@','%ld','%ld','%@')",self.viaggio.partenza.nome,self.viaggio.arrivo.nome,tsPartenza,tsArrivo,self.viaggio.durata];
+
+        [[DBHelper sharedInstance] executeSQLStatement:query];
+        
+        NSString *dbViaggio =  [[[[DBHelper sharedInstance] executeSQLStatement:@"SELECT last_insert_rowid() AS id"] objectAtIndex:0] objectForKey:@"id"];
+        NSLog(@"Viaggio %@ salvato: %@",dbViaggio,[[DateUtils shared] showDateAndHHmm:self.viaggio.fineRipetizione]);
+        [viaggiInseriti addObject:dbViaggio];
+        
+        if(self.viaggio.fineRipetizione != nil) {
+            nextPartenza = [[DateUtils shared] getNexWeekDateFor:nextPartenza until:self.viaggio.fineRipetizione];
+            nextArrivo = [[DateUtils shared] getNexWeekDateFor:nextArrivo until:self.viaggio.fineRipetizione];
+        } else nextPartenza = nil;
+        
+    }
+    while(nextPartenza != nil);
+    
+    // salvo ripetizioni
+    for (NSUInteger index = 0; index < viaggiInseriti.count; index++) {
+        NSString *query = [NSString stringWithFormat:@"INSERT INTO ripetizioni (id,idViaggio) VALUES ('%@','%@')",viaggiInseriti[0],viaggiInseriti[index]];
+        [[DBHelper sharedInstance] executeSQLStatement:query];
+    }
+    
+    NSMutableArray *treniInseriti = [NSMutableArray array];
     
     // salvo tutti i treni
     for(Treno *toDb in self.viaggio.tragitto) {
@@ -109,51 +141,36 @@
                 toDb.destinazione = destinazione;
                 toDb.categoria = [trenoDict objectForKey:@"categoria"];
             }
+
+            
+            NSInteger tsPartenza = [[NSNumber numberWithDouble:toDb.orarioPartenza] intValue];
+            NSInteger tsArrivo = [[NSNumber numberWithDouble:toDb.orarioArrivo] intValue];
             
             
+            NSString *query = [NSString stringWithFormat:@"INSERT INTO treni (numero,idOrigine,idDestinazione,categoria,nomePartenza,nomeArrivo,orarioPartenza,orarioArrivo) VALUES ('%@','%@','%@','%@','%@','%@','%ld','%ld')",toDb.numero,toDb.origine.idStazione,toDb.destinazione.idStazione,toDb.categoria,toDb.partenza.nome,toDb.arrivo.nome,tsPartenza,tsArrivo];
+            
+            [[DBHelper sharedInstance] executeSQLStatement:query];
+            NSString *dbTreno =  [[[[DBHelper sharedInstance] executeSQLStatement:@"SELECT last_insert_rowid() AS id"] objectAtIndex:0] objectForKey:@"id"];
+            
+            [treniInseriti addObject:dbTreno];
+            NSLog(@"Treno %@ salvato: %@",dbTreno,toDb.numero);
             
             
-            
-            
-            NSInteger tsPartenza, tsArrivo;
-            // son costretto a inserire i nomi perchè trenitalia nelle soluzioni viaggio del tragitto non da gli ID ma i nomi
-            // in ogni caso non sono utili in tale circostanza in quanto serviranno solo poi per essere visualizzati nella schermata principale
-            // nel dettaglio completo del treno/viaggio verranno elencate le varie stazioni e solo in quel momento sarà utile l'idStazione.
-            // Il server si occupa di recuperare la stazione di origine dato un numero treno, quindi nel dettaglio recupererò il tutto.
-            
-            NSString *nomePartenza = toDb.partenza.nome;
-            NSString *nomeArrivo = toDb.arrivo.nome;
-            
-            NSDate *nextPartenza = [[DateUtils shared] dateFrom:toDb.orarioPartenza];
-            NSDate *nextArrivo = [[DateUtils shared] dateFrom:toDb.orarioArrivo];
-            
-            //NSLog(@"nextpartenza %@",[self formattaData:[toDb datePartenza] conOrario:NO eGiorno:YES]);
-            //NSLog(@"%@",[self formattaData:self.viaggio.fineRipetizione conOrario:NO eGiorno:YES]);
-            
-            do {
-                // ciclo i treni fino alla fine delle ripetizioni
-                NSLog(@"Salvo");
-                
-                
-                tsPartenza = [[NSNumber numberWithDouble:[nextPartenza timeIntervalSince1970]] intValue];
-                tsArrivo = [[NSNumber numberWithDouble:[nextArrivo timeIntervalSince1970]] intValue];
-                
-                NSString *query = [NSString stringWithFormat:@"INSERT INTO treni (numero,idSoluzione, nomePartenza,nomeArrivo,orarioPartenza,orarioArrivo, idOrigine, idDestinazione, categoria) VALUES ('%@','%@','%@','%@','%ld','%ld','%@','%@','%@')",numero,record, nomePartenza,nomeArrivo,tsPartenza,tsArrivo,toDb.origine.idStazione,toDb.destinazione.idStazione,toDb.categoria];
-                
-                [[DBHelper sharedInstance] executeSQLStatement:query];
-                
-                NSLog(@"AAA: %@",[[DateUtils shared] showDateAndHHmm:self.viaggio.fineRipetizione]);
-                if(self.viaggio.fineRipetizione != nil) {
-                    nextPartenza = [[DateUtils shared] getNexWeekDateFor:nextPartenza until:self.viaggio.fineRipetizione];
-                    nextArrivo = [[DateUtils shared] getNexWeekDateFor:nextArrivo until:self.viaggio.fineRipetizione];
-                } else nextPartenza = nil;
+            // compilo la tabella che associa treni ai viaggi
+            for (NSUInteger indexV = 0; indexV < viaggiInseriti.count; indexV++) {
+                for (NSUInteger indexT = 0; indexT < treniInseriti.count; indexT++) {
+                    //NSLog(@"Inserisco viaggio-treno");
+                    NSString *query = [NSString stringWithFormat:@"INSERT INTO 'treni-viaggi' (idViaggio,idTreno) VALUES ('%@','%@')",viaggiInseriti[indexV],treniInseriti[indexT]];
+                    [[DBHelper sharedInstance] executeSQLStatement:query];
+                }
                 
             }
-            while(nextPartenza != nil);
+            
             
         }];
         
     }
+    
     
 }
 
