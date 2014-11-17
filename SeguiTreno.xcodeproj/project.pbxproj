@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1304EB201A0D0B0900C2DC12 /* Viaggio.m in Sources */ = {isa = PBXBuildFile; fileRef = 1304EB1F1A0D0B0900C2DC12 /* Viaggio.m */; };
+		1309253B1A1A17A3003DCD52 /* JourneyProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925391A1A17A3003DCD52 /* JourneyProgressView.m */; };
+		1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1309253E1A1A24A2003DCD52 /* FermataTableViewCell.m */; };
+		130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */; };
 		135CC3B61A0A1F3B0074D079 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B51A0A1F3B0074D079 /* main.m */; };
 		135CC3B91A0A1F3B0074D079 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B81A0A1F3B0074D079 /* AppDelegate.m */; };
 		135CC3BF1A0A1F3B0074D079 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135CC3BD1A0A1F3B0074D079 /* Main.storyboard */; };
@@ -52,6 +55,12 @@
 /* Begin PBXFileReference section */
 		1304EB1E1A0D0B0900C2DC12 /* Viaggio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Viaggio.h; sourceTree = "<group>"; };
 		1304EB1F1A0D0B0900C2DC12 /* Viaggio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Viaggio.m; sourceTree = "<group>"; };
+		130925391A1A17A3003DCD52 /* JourneyProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JourneyProgressView.m; sourceTree = "<group>"; };
+		1309253A1A1A17A3003DCD52 /* JourneyProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JourneyProgressView.h; sourceTree = "<group>"; };
+		1309253D1A1A24A2003DCD52 /* FermataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FermataTableViewCell.h; sourceTree = "<group>"; };
+		1309253E1A1A24A2003DCD52 /* FermataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FermataTableViewCell.m; sourceTree = "<group>"; };
+		130925431A1A2512003DCD52 /* DettaglioTrenoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DettaglioTrenoViewController.h; path = ../DettaglioTrenoViewController.h; sourceTree = "<group>"; };
+		130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DettaglioTrenoViewController.m; path = ../DettaglioTrenoViewController.m; sourceTree = "<group>"; };
 		135CC3B01A0A1F3B0074D079 /* SeguiTreno.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeguiTreno.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135CC3B41A0A1F3B0074D079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		135CC3B51A0A1F3B0074D079 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -131,6 +140,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1309253C1A1A17A7003DCD52 /* JourneyProgress */ = {
+			isa = PBXGroup;
+			children = (
+				130925391A1A17A3003DCD52 /* JourneyProgressView.m */,
+				1309253A1A1A17A3003DCD52 /* JourneyProgressView.h */,
+			);
+			name = JourneyProgress;
+			sourceTree = "<group>";
+		};
 		135CC3A71A0A1F3B0074D079 = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +237,8 @@
 				137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */,
 				137F4DEA1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.h */,
 				137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */,
+				130925431A1A2512003DCD52 /* DettaglioTrenoViewController.h */,
+				130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */,
 				13D829C11A0CBA07008433E6 /* Custom cells */,
 			);
 			name = Views;
@@ -227,6 +247,7 @@
 		13650BB51A0A654D000F2F51 /* UI Elements */ = {
 			isa = PBXGroup;
 			children = (
+				1309253C1A1A17A7003DCD52 /* JourneyProgress */,
 				13D01EDD1A0B888400BDCD05 /* MultiSegmented */,
 				13D01ED61A0B706200BDCD05 /* RMDateSelectionViewController */,
 				135CC3DF1A0A1F730074D079 /* Datepicker */,
@@ -313,6 +334,8 @@
 				137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */,
 				13AC56591A14B3BC00492CB6 /* SalvatoTableViewCell.h */,
 				13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */,
+				1309253D1A1A24A2003DCD52 /* FermataTableViewCell.h */,
+				1309253E1A1A24A2003DCD52 /* FermataTableViewCell.m */,
 			);
 			name = "Custom cells";
 			sourceTree = "<group>";
@@ -450,6 +473,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13FF51521A0BE88A005A8409 /* Treno.m in Sources */,
+				130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */,
 				135CC3DD1A0A1F6D0074D079 /* FZDatepicker.m in Sources */,
 				13D01EEC1A0BC3B300BDCD05 /* FMDatabasePool.m in Sources */,
 				13D01EEE1A0BC3B300BDCD05 /* FMResultSet.m in Sources */,
@@ -459,12 +483,14 @@
 				13D01EED1A0BC3B300BDCD05 /* FMDatabaseQueue.m in Sources */,
 				13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */,
 				135CC3B61A0A1F3B0074D079 /* main.m in Sources */,
+				1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */,
 				13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */,
 				13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */,
 				137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */,
 				135CC3DE1A0A1F6D0074D079 /* FZDatepickerDateView.m in Sources */,
 				137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */,
 				13D01EEB1A0BC3B300BDCD05 /* FMDatabaseAdditions.m in Sources */,
+				1309253B1A1A17A3003DCD52 /* JourneyProgressView.m in Sources */,
 				137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */,
 				1304EB201A0D0B0900C2DC12 /* Viaggio.m in Sources */,
 				137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */,

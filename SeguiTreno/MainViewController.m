@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "DettaglioTrenoViewController.h"
 
 @implementation MainViewController
 
@@ -208,6 +209,14 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    SalvatoTableViewCell *cell  = (SalvatoTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"dettaglioTreno" sender:cell];
+    
+}
+
+
 
 /*
  // Override to support conditional editing of the table view.
@@ -243,15 +252,22 @@
  }
  */
 
-/*
+
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
+
+     if ([[segue identifier] isEqualToString:@"dettaglioTreno"]) {
+         
+         SalvatoTableViewCell *trenocell = (SalvatoTableViewCell*) sender;
+         
+         DettaglioTrenoViewController *destination = (DettaglioTrenoViewController*) [segue destinationViewController];
+         destination.treno = trenocell.treno;
+         
+     }
  }
- */
+
 
 
 @end
