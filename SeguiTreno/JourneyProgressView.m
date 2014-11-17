@@ -33,7 +33,7 @@ const float CIRCLE_RADIUS = 6.0;
     
     
 
-    UIColor *strokeColor = i < currentStatus ? GREEN : [UIColor lightGrayColor];;
+    UIColor *strokeColor = 1 ==  currentStatus ? GREEN : [UIColor lightGrayColor];
     CGPoint toPoint;
     CGPoint fromPoint;
     

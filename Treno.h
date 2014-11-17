@@ -37,7 +37,7 @@
 @property (strong,nonatomic) NSString *durata; 
 
 // ritardo del treno
-@property (strong,nonatomic) NSNumber *ritardo;
+@property  NSInteger ritardo;
 
 // indica se il treno è sopresso o meno
 @property (nonatomic) BOOL soppresso;

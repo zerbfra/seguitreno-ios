@@ -9,6 +9,17 @@
 #import <UIKit/UIKit.h>
 
 @interface FermataTableViewCell : UITableViewCell
+
+@property (strong,nonatomic) Fermata *fermata;
+
+
 @property (weak, nonatomic) IBOutlet UIView *progressView;
+
+@property (weak, nonatomic) IBOutlet UILabel *nomeFermata;
+
+@property (weak, nonatomic) IBOutlet UILabel *orarioProgrammato;
+@property (weak, nonatomic) IBOutlet UILabel *orarioEffettivo;
+
+@property (weak, nonatomic) IBOutlet UILabel *binario;
 
 @end

@@ -22,6 +22,7 @@
 #import "Stazione.h"
 #import "Treno.h"
 #import "Viaggio.h"
+#import "Fermata.h"
 
 #endif
 

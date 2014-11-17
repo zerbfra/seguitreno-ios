@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *stazioneP;
 @property (weak, nonatomic) IBOutlet UILabel *stazioneA;
 
+@property (weak, nonatomic) IBOutlet UILabel *ultimoRilevamento;
+@property (weak, nonatomic) IBOutlet UILabel *ritardo;
 
 
 @end

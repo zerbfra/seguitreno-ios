@@ -11,6 +11,7 @@
 		1309253B1A1A17A3003DCD52 /* JourneyProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925391A1A17A3003DCD52 /* JourneyProgressView.m */; };
 		1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1309253E1A1A24A2003DCD52 /* FermataTableViewCell.m */; };
 		130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */; };
+		130925481A1A3FE4003DCD52 /* Fermata.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925471A1A3FE4003DCD52 /* Fermata.m */; };
 		135CC3B61A0A1F3B0074D079 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B51A0A1F3B0074D079 /* main.m */; };
 		135CC3B91A0A1F3B0074D079 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B81A0A1F3B0074D079 /* AppDelegate.m */; };
 		135CC3BF1A0A1F3B0074D079 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135CC3BD1A0A1F3B0074D079 /* Main.storyboard */; };
@@ -61,6 +62,8 @@
 		1309253E1A1A24A2003DCD52 /* FermataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FermataTableViewCell.m; sourceTree = "<group>"; };
 		130925431A1A2512003DCD52 /* DettaglioTrenoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DettaglioTrenoViewController.h; path = ../DettaglioTrenoViewController.h; sourceTree = "<group>"; };
 		130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DettaglioTrenoViewController.m; path = ../DettaglioTrenoViewController.m; sourceTree = "<group>"; };
+		130925461A1A3FE4003DCD52 /* Fermata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fermata.h; path = SeguiTreno/Fermata.h; sourceTree = "<group>"; };
+		130925471A1A3FE4003DCD52 /* Fermata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Fermata.m; path = SeguiTreno/Fermata.m; sourceTree = "<group>"; };
 		135CC3B01A0A1F3B0074D079 /* SeguiTreno.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeguiTreno.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135CC3B41A0A1F3B0074D079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		135CC3B51A0A1F3B0074D079 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -368,6 +371,8 @@
 				13FF51541A0BE898005A8409 /* Stazione.m */,
 				1304EB1E1A0D0B0900C2DC12 /* Viaggio.h */,
 				1304EB1F1A0D0B0900C2DC12 /* Viaggio.m */,
+				130925461A1A3FE4003DCD52 /* Fermata.h */,
+				130925471A1A3FE4003DCD52 /* Fermata.m */,
 			);
 			name = Model;
 			path = ..;
@@ -485,6 +490,7 @@
 				135CC3B61A0A1F3B0074D079 /* main.m in Sources */,
 				1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */,
 				13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */,
+				130925481A1A3FE4003DCD52 /* Fermata.m in Sources */,
 				13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */,
 				137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */,
 				135CC3DE1A0A1F6D0074D079 /* FZDatepickerDateView.m in Sources */,
