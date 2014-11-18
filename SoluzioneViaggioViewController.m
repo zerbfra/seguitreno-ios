@@ -54,8 +54,8 @@
             partenza.nome      = [solDict objectForKey:@"origine"];
             arrivo.nome = [solDict objectForKey:@"destinazione"];
             
-            soluzione.partenza = arrivo;
-            soluzione.arrivo = partenza;
+            soluzione.partenza = partenza;
+            soluzione.arrivo = arrivo;
             
             //soluzione.tragitto          = [solDict objectForKey:@"tragitto"];
             

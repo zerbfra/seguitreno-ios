@@ -22,8 +22,8 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-
-    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.treno.numero,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSArray *response) {
+    NSLog(@"%@",self.treno.origine.idStazione);
+    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.treno.numero,@"origine":self.treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSArray *response) {
         NSLog(@"Response: %@", response);
         
         for(NSDictionary *trenoDict in response) {
@@ -82,8 +82,9 @@
                 Stazione *stazFermata = [[Stazione alloc] init];
                 stazFermata.idStazione = [stazioneDict objectForKey:@"id"];
                 stazFermata.nome = [stazioneDict objectForKey:@"nome"];
-                stazFermata.lat = [[stazioneDict objectForKey:@"lat"] floatValue];
-                stazFermata.lon = [[stazioneDict objectForKey:@"lon"] floatValue];
+                // non forniti da questo JSON (rallenterebbero di molto le prestazioni del server)
+                //stazFermata.lat = [[stazioneDict objectForKey:@"lat"] floatValue];
+                //stazFermata.lon = [[stazioneDict objectForKey:@"lon"] floatValue];
                 [stazFermata formattaNome];
 
                 fermata.stazione = stazFermata;

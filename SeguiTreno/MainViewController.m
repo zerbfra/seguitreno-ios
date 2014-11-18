@@ -19,7 +19,7 @@
     // status bar bianca
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.automaticallyAdjustsScrollViewInsets = NO;
-  
+    
     
     [self.datepicker fillDatesFromCurrentDate:15];
     
@@ -37,7 +37,7 @@
     
     self.viaggi = [NSMutableArray array];
     [self caricaViaggi];
-
+    
     
 }
 
@@ -56,12 +56,12 @@
     
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM viaggi WHERE orarioPartenza BETWEEN '%tu' AND '%tu' ORDER BY orarioPartenza",start,end];
     NSLog(@"%@",query);
-
+    
     NSArray *dbViaggi = [[DBHelper sharedInstance] executeSQLStatement:query];
     
-
     
-
+    
+    
     
     //NSLog(@"%@",[[DateUtils shared] showDateFull:self.datepicker.selectedDate]);
     
@@ -76,52 +76,55 @@
         
         NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%@') ORDER BY orarioPartenza",viaggio.idViaggio];
         NSArray *treni = [[DBHelper sharedInstance] executeSQLStatement:stmt];
-        NSLog(@"conteggio treni %lu",(unsigned long)[treni count]);
-        NSLog(@"%@",stmt);
-        NSMutableArray *tragitto = [NSMutableArray array];
-        
-        for (NSDictionary* trenoSet in treni) {
+        if([treni count] > 0) {
+            NSLog(@"conteggio treni %lu",(unsigned long)[treni count]);
+            NSLog(@"%@",stmt);
+            NSMutableArray *tragitto = [NSMutableArray array];
             
-            //viaggio.idViaggio = [trenoSet objectForKey:@"idSoluzione"];
+            for (NSDictionary* trenoSet in treni) {
+                
+                //viaggio.idViaggio = [trenoSet objectForKey:@"idSoluzione"];
+                
+                Treno *trovato = [[Treno alloc] init];
+                trovato.numero = [trenoSet objectForKey:@"numero"];
+                
+                //NSLog(@"Treno: %@",trovato.numero);
+                
+                Stazione *origine = [[Stazione alloc] init];
+                origine.idStazione = [trenoSet objectForKey:@"idOrigine"];
+                //Stazione *destinazione = [[Stazione alloc] init];
+                //destinazione.idStazione = [trenoSet objectForKey:@"idDestinazione"];
+                
+                trovato.origine = origine;
+                
+                Stazione *partenza = [[Stazione alloc] init];
+                partenza.nome = [trenoSet objectForKey:@"nomePartenza"];
+                
+                
+                
+                Stazione *arrivo = [[Stazione alloc] init];
+                arrivo.nome = [trenoSet objectForKey:@"nomeArrivo"];
+                
+                trovato.partenza = partenza;
+                trovato.arrivo = arrivo;
+                
+                trovato.orarioPartenza = [[trenoSet objectForKey:@"orarioPartenza"] intValue];
+                trovato.orarioArrivo = [[trenoSet objectForKey:@"orarioArrivo"] intValue];
+                
+                [tragitto addObject:trovato];
+                NSLog(@"%@",trovato.numero);
+                
+            }
             
-            Treno *trovato = [[Treno alloc] init];
-            trovato.numero = [trenoSet objectForKey:@"numero"];
-            
-            //NSLog(@"Treno: %@",trovato.numero);
-            
-            Stazione *origine = [[Stazione alloc] init];
-            origine.idStazione = [trenoSet objectForKey:@"idOrigine"];
-            //Stazione *destinazione = [[Stazione alloc] init];
-            //destinazione.idStazione = [trenoSet objectForKey:@"idDestinazione"];
-            
-            trovato.origine = origine;
-            
-            Stazione *partenza = [[Stazione alloc] init];
-            partenza.nome = [trenoSet objectForKey:@"nomePartenza"];
-            
-            
-            
-            Stazione *arrivo = [[Stazione alloc] init];
-            arrivo.nome = [trenoSet objectForKey:@"nomeArrivo"];
-            
-            trovato.partenza = partenza;
-            trovato.arrivo = arrivo;
-            
-            trovato.orarioPartenza = [[trenoSet objectForKey:@"orarioPartenza"] intValue];
-            trovato.orarioArrivo = [[trenoSet objectForKey:@"orarioArrivo"] intValue];
-
-            [tragitto addObject:trovato];
-            NSLog(@"%@",trovato.numero);
-            
-        }
-        
-        viaggio.tragitto = tragitto;
-        [self.viaggi addObject:viaggio];
+            viaggio.tragitto = tragitto;
+            [self.viaggi addObject:viaggio];
+            NSLog(@"Tutti i viaggi caricati");
+        } else NSLog(@"Treni della giornata = 0");
     }
     
-    NSLog(@"Tutti i viaggi caricati");
+    
     //NSLog(@"COUNTER %tu",[self.viaggi count]);
-
+    
     // Aggiorno tabella con un'animazione
     [UIView transitionWithView:self.treniTable
                       duration:0.2f
@@ -129,7 +132,7 @@
                     animations:^(void) {
                         [self.treniTable reloadData];
                     } completion:NULL];
-
+    
 }
 
 
@@ -174,14 +177,14 @@
 {
     NSString *titolo;
     
-
     
-
+    
+    
     if([self.viaggi count] > 0) {
         Viaggio *viaggioSezione = [self.viaggi objectAtIndex:section];
         titolo = [NSString stringWithFormat:@"%@ | %@ → %@",viaggioSezione.durata,[viaggioSezione luogoPartenza],[viaggioSezione luogoArrivo]];
     }
-        else return nil;
+    else return nil;
     
     return titolo;
 }
@@ -189,7 +192,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"trenoCell";
-
+    
     
     SalvatoTableViewCell *cell = (SalvatoTableViewCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     Viaggio *viaggio = [self.viaggi objectAtIndex:indexPath.section];
@@ -204,7 +207,7 @@
     
     cell.orarioPL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioPartenza]];
     cell.orarioAL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioArrivo]];
-
+    
     
     return cell;
 }
@@ -253,20 +256,20 @@
  */
 
 
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+#pragma mark - Navigation
 
-     if ([[segue identifier] isEqualToString:@"dettaglioTreno"]) {
-         
-         SalvatoTableViewCell *trenocell = (SalvatoTableViewCell*) sender;
-         
-         DettaglioTrenoViewController *destination = (DettaglioTrenoViewController*) [segue destinationViewController];
-         destination.treno = trenocell.treno;
-         
-     }
- }
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([[segue identifier] isEqualToString:@"dettaglioTreno"]) {
+        
+        SalvatoTableViewCell *trenocell = (SalvatoTableViewCell*) sender;
+        
+        DettaglioTrenoViewController *destination = (DettaglioTrenoViewController*) [segue destinationViewController];
+        destination.treno = trenocell.treno;
+        
+    }
+}
 
 
 

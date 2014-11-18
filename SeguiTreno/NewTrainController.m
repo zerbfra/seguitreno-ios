@@ -13,8 +13,6 @@
 
 @end
 
-
-
 @implementation NewTrainController
 
 - (void)viewDidLoad {
