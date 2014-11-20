@@ -10,6 +10,8 @@
 
 @interface Treno : NSObject
 
+@property (strong,nonatomic) NSString *idTreno;
+
 @property (strong,nonatomic) NSString *numero;
 
 // tratta del treno da origine a destinazione
@@ -45,6 +47,7 @@
 // array delle fermate (che sono stazioni)
 @property (strong,nonatomic) NSArray *fermate;
 
+-(NSString*) stringaStatoTemporale;
 
 /*
 // formatta una stringa con orario o data data la nsdate

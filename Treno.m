@@ -59,6 +59,14 @@
     return dateString;
 }
 
+-(NSString*) stringaStatoTemporale {
+    int ritardo = abs((int)self.ritardo);
+    
+    if(self.ritardo < 0) return [NSString stringWithFormat:@"ANTICIPO %d MIN",ritardo];
+    else if(self.ritardo > 0) return [NSString stringWithFormat:@"RITARDO %d MIN",ritardo];
+    else return @"IN ORARIO";
+}
+
 
 
 @end

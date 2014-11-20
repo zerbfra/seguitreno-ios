@@ -55,30 +55,21 @@
     }
     
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM viaggi WHERE orarioPartenza BETWEEN '%tu' AND '%tu' ORDER BY orarioPartenza",start,end];
-    NSLog(@"%@",query);
     
     NSArray *dbViaggi = [[DBHelper sharedInstance] executeSQLStatement:query];
-    
-    
-    
-    
-    
-    //NSLog(@"%@",[[DateUtils shared] showDateFull:self.datepicker.selectedDate]);
+
     
     for (NSDictionary* viaggoSet in dbViaggi) {
         Viaggio *viaggio = [[Viaggio alloc] init];
         viaggio.idViaggio = [viaggoSet objectForKey:@"id"];
         viaggio.durata = [viaggoSet objectForKey:@"durata"];
         
-        NSLog(@"%@",viaggio.idViaggio);
-        
-        //Viaggio *viaggio = [[Viaggio alloc] init];
         
         NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%@') ORDER BY orarioPartenza",viaggio.idViaggio];
         NSArray *treni = [[DBHelper sharedInstance] executeSQLStatement:stmt];
         if([treni count] > 0) {
-            NSLog(@"conteggio treni %lu",(unsigned long)[treni count]);
-            NSLog(@"%@",stmt);
+            NSLog(@"Treni giornata %lu",(unsigned long)[treni count]);
+            
             NSMutableArray *tragitto = [NSMutableArray array];
             
             for (NSDictionary* trenoSet in treni) {
@@ -87,6 +78,8 @@
                 
                 Treno *trovato = [[Treno alloc] init];
                 trovato.numero = [trenoSet objectForKey:@"numero"];
+                
+                trovato.idTreno = [trenoSet objectForKey:@"id"];
                 
                 //NSLog(@"Treno: %@",trovato.numero);
                 
@@ -111,30 +104,85 @@
                 trovato.orarioPartenza = [[trenoSet objectForKey:@"orarioPartenza"] intValue];
                 trovato.orarioArrivo = [[trenoSet objectForKey:@"orarioArrivo"] intValue];
                 
-                [tragitto addObject:trovato];
-                NSLog(@"%@",trovato.numero);
+                trovato.categoria =  [trenoSet objectForKey:@"categoria"];
                 
+                [tragitto addObject:trovato];
+         
             }
             
             viaggio.tragitto = tragitto;
             [self.viaggi addObject:viaggio];
-            NSLog(@"Tutti i viaggi caricati");
+            NSLog(@"Tutti i viaggi recuperati dal db");
+            
         } else NSLog(@"Treni della giornata = 0");
     }
-    
-    
-    //NSLog(@"COUNTER %tu",[self.viaggi count]);
-    
-    // Aggiorno tabella con un'animazione
+
+    // Aggiorno tabella con un'animazione (con i dati locali)
     [UIView transitionWithView:self.treniTable
                       duration:0.2f
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^(void) {
-                        [self.treniTable reloadData];
+                        
                     } completion:NULL];
+    
+    
+    [self requestGroupTrain:[self elencoTreni]  completion:^(NSArray *response) {
+        // aggiorno per le informazioni recuperate dal server
+        [self.treniTable reloadData];
+    }];
+    
     
 }
 
+-(NSMutableArray*) elencoTreni {
+   
+    NSMutableArray* treni = [NSMutableArray array];
+    
+    for(Viaggio* viaggio in self.viaggi) {
+        for(Treno* treno in viaggio.tragitto) {
+            [treni addObject:treno];
+        }
+    }
+    
+    return treni;
+}
+
+
+-(void) requestGroupTrain:(NSMutableArray*) batch completion:(void (^)(NSArray *))completion {
+    
+    // creo un gruppo di dispatch
+    dispatch_group_t group = dispatch_group_create();
+    
+    NSMutableArray *final = [NSMutableArray array];
+    
+    for(Treno *treno in batch)
+    {
+        
+        dispatch_group_enter(group);
+        
+        [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":treno.numero,@"origine":treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSArray *response) {
+            
+            for(NSDictionary *trenoDict in response) {
+                treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
+                treno.soppresso = [[trenoDict objectForKey:@"soppresso"] boolValue];
+            }
+
+            dispatch_group_leave(group);
+            
+        }];
+        
+    }
+    
+    
+    // Here we wait for all the requests to finish
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        // Do whatever you need to do when all requests are finished
+        NSLog(@"Finito le richieste al server");
+        // mando l'array
+        completion([final copy]);
+    });
+    
+}
 
 - (void)updateSelectedDate
 {
@@ -168,7 +216,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return 120;
+    return 96;
     
 }
 
@@ -203,10 +251,13 @@
     cell.partenzaL.text = cell.treno.partenza.nome;
     cell.arrivoL.text = cell.treno.arrivo.nome;
     
-    cell.trenoL.text = cell.treno.numero;
+    cell.trenoL.text = [NSString stringWithFormat:@"%@ %@",cell.treno.categoria,cell.treno.numero]; 
     
     cell.orarioPL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioPartenza]];
     cell.orarioAL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioArrivo]];
+    
+    cell.ritardoL.text = [cell.treno stringaStatoTemporale];
+
     
     
     return cell;

@@ -25,6 +25,81 @@
     [self requestWithPath:path andParams:parameters withTimeout:20 completion:completion];
 }
 
+-(NSDictionary*) createBatchRequests:(NSString*) page andParams:(NSDictionary*) parameters {
+    
+    NSMutableDictionary *tmpDict;
+    [tmpDict setObject:parameters forKey:page];
+    
+    NSDictionary* copy = [tmpDict copy];
+    return copy;
+}
+
+/*
+-(void) requestGroup {
+    
+    // Create a dispatch group
+    dispatch_group_t group = dispatch_group_create();
+    
+    for (int i = 0; i < 10; i++) {
+        // Enter the group for each request we create
+        dispatch_group_enter(group);
+        
+        
+        [self requestWithPath:@"trovaTreno" andParams:@{@"numero":@"2651",@"origine":@"S01700",@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSArray *response) {
+            NSLog(@"finito %d",i);
+            dispatch_group_leave(group);
+            
+        }];
+        
+    }
+    
+    // Here we wait for all the requests to finish
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        // Do whatever you need to do when all requests are finished
+        NSLog(@"finite tutte");
+    });
+    
+}*/
+
+-(void) requestGroup:(NSMutableArray*) batch completion:(void (^)(NSArray *))completion {
+    
+    // Create a dispatch group
+    dispatch_group_t group = dispatch_group_create();
+    
+    NSMutableArray *final = [NSMutableArray array];
+    
+    for(NSDictionary *dict in batch)
+    {
+        
+        
+        dispatch_group_enter(group);
+        
+        NSString* path =[dict objectForKey:@"path"];
+
+        [self requestWithPath:path andParams:dict completion:^(NSArray *response) {
+            NSLog(@"finito %@",path);
+            
+            // creo un nuovo dizionario che conterrà la risposta
+            NSMutableDictionary *respDict = [dict mutableCopy];
+            [respDict setObject:response forKey:@"response"];
+            // aggiungo la risposta ad un array
+            [final addObject:respDict];
+            dispatch_group_leave(group);
+            
+        }];
+        
+    }
+    
+    
+    // Here we wait for all the requests to finish
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        // Do whatever you need to do when all requests are finished
+        NSLog(@"finite tutte");
+        // mando l'array
+        completion([final copy]);
+    });
+    
+}
 
 
 -(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters withTimeout:(int) timeout completion:(void (^)(NSArray *))completion {
@@ -188,67 +263,5 @@
     
     
 }
-
-
-/*
- +(APIClient *)sharedClient {
- static APIClient *_sharedClient = nil;
- static dispatch_once_t oncePredicate;
- dispatch_once(&oncePredicate, ^{
- _sharedClient = [[self alloc] initWithBaseURL:[NSURL URLWithString:BaseURLString]];
- 
- });
- return _sharedClient;
- }
- 
- -(id)initWithBaseURL:(NSURL *)url {
- self = [super initWithBaseURL:url];
- if (!self) {
- return nil;
- }
- //[self registerHTTPOperationClass:[AFJSONRequestOperation class]];
- //[self setDefaultHeader:@"Accept" value:@"application/json"];
- //self.parameterEncoding = AFJSONParameterEncoding;
- 
- return self;
- 
- }
- */
-
-/*
-
-// Esegue la richiesta e ritorna un operation
--(AFHTTPRequestOperation *) executeRequestWithPath:(NSString*) path andParams:(NSDictionary*) parameters {
-    
-    // normalmente richiamo il metodo con 20 di timeout
-    return [self executeRequestWithPath:path andParams:parameters withTimeout:20];
-    
-}
-
--(AFHTTPRequestOperation *) executeRequestWithPath:(NSString*) path andParams:(NSDictionary*) parameters withTimeout:(int) timeout {
-    
-    // aggiungo l'estensione
-    path = [path stringByAppendingString:@".php"];
-    
-    APIClient *client = [APIClient sharedClient];
-    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-    [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
-    
-    // post request
-    NSMutableURLRequest *request = [client requestWithMethod:@"POST" path:path parameters:parameters];
-    [request setTimeoutInterval:timeout];
-    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
-    
-    return operation;
-    
-}
-
-// Disattiva indicatore di attività decrementando le attività
--(void) endRequest {
-    [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
-}
-*/
 
 @end

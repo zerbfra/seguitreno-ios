@@ -41,9 +41,8 @@
 -(void) genericJSONRequestWithURL:(NSString*)urlString withTimeout:(int) timeout completion:(void (^)(NSArray *))completion;
 
 -(void) downloadDataWithURL:(NSString*)urlString withTimeout:(int) timeout completion:(void (^)(NSData*))completion;
-//-(AFHTTPRequestOperation *) executeRequestWithPath:(NSString*) path andParams:(NSDictionary*) parameters;
-//-(AFHTTPRequestOperation *) executeRequestWithPath:(NSString*) path andParams:(NSDictionary*) parameters withTimeout:(int) timeout;
-//-(void) endRequest;
+
+-(void) requestGroup:(NSMutableArray*) batch completion:(void (^)(NSArray *))completion;
 
 
 @end

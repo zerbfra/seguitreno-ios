@@ -38,7 +38,7 @@ const float CIRCLE_RADIUS = 6.0;
     CGPoint fromPoint;
     
     if(i==0) {              //iniziale
-        
+        NSLog(@"inizio");
         // disegno cerchio
         CAShapeLayer *grayStaticCircleLayer = [self getLayerWithCircle:[self circleWithCenterY:self.frame.size.height/2] andStrokeColor:strokeColor];
         [self.layer addSublayer:grayStaticCircleLayer];

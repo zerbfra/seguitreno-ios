@@ -112,7 +112,8 @@
     Stazione *rilevamento = [[Stazione alloc] init];
     rilevamento.nome = self.treno.stazioneUltimoRilevamento;
     //[rilevamento formattaNome];
-    self.ultimoRilevamento.text = [NSString stringWithFormat:@"RILEVATO A %@",rilevamento.nome];
+    if([rilevamento.nome isEqualToString:@"--"]) self.ultimoRilevamento.text = @"NON ANCORA PARTITO";
+    else self.ultimoRilevamento.text = [NSString stringWithFormat:@"RILEVATO A %@",rilevamento.nome];
     self.orarioA.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:self.treno.orarioArrivo]];
     self.orarioP.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:self.treno.orarioPartenza]];
     
@@ -120,8 +121,7 @@
     self.stazioneA.text = self.treno.destinazione.nome;
     
     
-    if(self.treno.ritardo < 0) self.ritardo.text = [NSString stringWithFormat:@"ANTICIPO %d MIN",abs((int)self.treno.ritardo)];
-    else self.ritardo.text = [NSString stringWithFormat:@"RITARDO %ld MIN",self.treno.ritardo];
+    self.ritardo.text = [self.treno stringaStatoTemporale];
     
     [self.tableView reloadData];
     
@@ -156,29 +156,33 @@
     
     FermataTableViewCell *cell = (FermataTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cellFermata" forIndexPath:indexPath];
     
-
     cell.fermata = self.treno.fermate[indexPath.row];
     
+    // cancello l'immagine precedente a causa della reusable cell ;)
+    [self deleteSubviews:cell.progressView];
     JourneyProgressView *timeline = [[JourneyProgressView alloc] initWithRow:(int)indexPath.row andMax:(int)[self.treno.fermate count]-1 andCurrentStatus:cell.fermata.raggiunta andFrame:cell.progressView.frame];
-    
-    
-    
-    
     [cell.progressView addSubview:timeline];
-    
 
     
     cell.nomeFermata.text = cell.fermata.stazione.nome;
     cell.orarioProgrammato.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.fermata.orarioProgrammato]];
     cell.orarioEffettivo.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.fermata.orarioEffettivo]];
+    cell.orarioEffettivo.textColor = cell.fermata.raggiunta == TRUE ? GREEN : DARKGREY;
     
-    if(cell.fermata.binarioEffettivo == nil && cell.fermata.binarioProgrammato != nil) cell.binario.text = cell.fermata.binarioProgrammato;
-    else if(cell.fermata.binarioEffettivo != nil) cell.binario.text = cell.fermata.binarioEffettivo;
-
-    
-    // Configure the cell...
+    if(cell.fermata.binarioEffettivo == nil && cell.fermata.binarioProgrammato != nil) cell.binario.text = [NSString stringWithFormat:@"BINARIO %@",cell.fermata.binarioProgrammato];
+    else if(cell.fermata.binarioEffettivo != nil) cell.binario.text = [NSString stringWithFormat:@"BINARIO %@",cell.fermata.binarioEffettivo];
     
     return cell;
+}
+
+
+
+-(void) deleteSubviews:(UIView*) view {
+    
+    for (UIView *sub in view.subviews)
+    {
+        [sub removeFromSuperview];
+    }
 }
 
 
