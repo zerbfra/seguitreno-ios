@@ -23,9 +23,7 @@ extern const CGFloat kFZDetepickerHeight;
 // methods
 - (void)fillDatesFromCurrentDate:(NSInteger)nextDatesCount;
 - (void)fillDatesFromDate:(NSDate *)fromDate numberOfDays:(NSInteger)nextDatesCount;
-//- (void)fillCurrentWeek;
-//- (void)fillCurrentMonth;
-//- (void)fillCurrentYear;
+
 - (void)selectDate:(NSDate *)date;
 - (void)selectDateAtIndex:(NSUInteger)index;
 

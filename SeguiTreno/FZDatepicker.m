@@ -128,73 +128,6 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
     self.dates = dates;
 }
 
-/*
-- (void)fillCurrentWeek
-{
-    NSDate *today = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *todayComponents = [calendar components:NSWeekdayCalendarUnit fromDate:today];
-
-    NSMutableArray *dates = [[NSMutableArray alloc] init];
-    for (NSInteger weekday = 0; weekday < 7; weekday++) {
-        [dates addObject:[NSDate dateWithTimeInterval:(kMondayOffset + weekday - todayComponents.weekday)*kSecondsInDay sinceDate:today]];
-    }
-
-    self.dates = dates;
-}
-
-- (void)fillCurrentMonth
-{
-    NSDate *today = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSRange days = [calendar rangeOfUnit:NSDayCalendarUnit
-                                  inUnit:NSMonthCalendarUnit
-                                 forDate:today];
-    NSDateComponents *todayComponents = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth fromDate:today];
-
-    NSMutableArray *dates = [[NSMutableArray alloc] init];
-    for (NSInteger day = 1; day <= days.length; day++) {
-        [todayComponents setDay:day];
-        [dates addObject:[calendar dateFromComponents:todayComponents]];
-    }
-
-    self.dates = dates;
-}
-
-- (void)fillCurrentYear
-{
-    NSDate *today = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *todayComponents = [calendar components:NSCalendarUnitYear fromDate:today];
-
-    NSMutableArray *dates = [[NSMutableArray alloc] init];
-
-    NSUInteger daysInYear = [self numberOfDaysInThisYear];
-    for (NSInteger day = 1; day <= daysInYear; day++) {
-        [todayComponents setDay:day];
-        [dates addObject:[calendar dateFromComponents:todayComponents]];
-    }
-
-    self.dates = dates;
-}
-
-- (NSUInteger)numberOfDaysInThisYear
-{
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDate *startOfYear;
-    NSTimeInterval lengthOfYear;
-    [calendar rangeOfUnit:NSYearCalendarUnit
-                startDate:&startOfYear
-                 interval:&lengthOfYear
-                  forDate:[NSDate date]];
-    NSDate *endOfYear = [startOfYear dateByAddingTimeInterval:lengthOfYear];
-    NSDateComponents *components = [calendar components:NSDayCalendarUnit
-                                         fromDate:startOfYear
-                                           toDate:endOfYear
-                                          options:0];
-    return [components day];
-}
- */
 
 - (void)selectDate:(NSDate *)date
 {
@@ -216,7 +149,7 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
-/*
+
     // draw bottom line
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -225,7 +158,7 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
     CGContextMoveToPoint(context, 0, rect.size.height - .5);
     CGContextAddLineToPoint(context, rect.size.width, rect.size.height - .5);
     CGContextStrokePath(context);
- */
+ 
  
 }
 

@@ -44,14 +44,16 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
 
     [dateFormatter setDateFormat:@"dd"];
     NSString *dayFormattedString = [dateFormatter stringFromDate:date];
-
-    [dateFormatter setDateFormat:@"EEE"];
-    NSString *dayInWeekFormattedString = [dateFormatter stringFromDate:date];
-
-    [dateFormatter setDateFormat:@"MMMM"];
+    
+    [dateFormatter setDateFormat:@"MMM"];
     NSString *monthFormattedString = [[dateFormatter stringFromDate:date] uppercaseString];
 
-    NSMutableAttributedString *dateString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@\n%@", dayFormattedString, [dayInWeekFormattedString uppercaseString], monthFormattedString]];
+    [dateFormatter setDateFormat:@"EEEE"];
+    NSString *dayInWeekFormattedString = [dateFormatter stringFromDate:date];
+
+
+
+    NSMutableAttributedString *dateString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@\n%@", dayFormattedString, monthFormattedString, [dayInWeekFormattedString uppercaseString]]];
 
     [dateString addAttributes:@{
                                 NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:20],
@@ -64,18 +66,21 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
                                     NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:8],
                                     NSForegroundColorAttributeName: COLOR_WITH_RGB(255,78,80)
                                     }
-                            range:NSMakeRange(dayFormattedString.length + 1, dayInWeekFormattedString.length)];
+                            range:NSMakeRange(dayFormattedString.length + 1, monthFormattedString.length)];
         [dateString addAttributes:@{
                                     NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:20],
                                     NSForegroundColorAttributeName: COLOR_WITH_RGB(255,78,80)
                                     }
                             range:NSMakeRange(0, dayFormattedString.length)];
+        
+        
     } else {
+        
         [dateString addAttributes:@{
                                     NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:8],
                                     NSForegroundColorAttributeName: [UIColor blackColor]
                                     }
-                            range:NSMakeRange(dayFormattedString.length + 1, dayInWeekFormattedString.length)];
+                            range:NSMakeRange(dayFormattedString.length + 1, monthFormattedString.length)];
         
         [dateString addAttributes:@{
                                     NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:20],
@@ -83,14 +88,15 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
                                     }
                             range:NSMakeRange(0, dayFormattedString.length)];
         
-    }
 
+        
+    }
 
     [dateString addAttributes:@{
                                 NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:8],
                                 NSForegroundColorAttributeName: [UIColor colorWithRed:153./255. green:153./255. blue:153./255. alpha:1.]
                                 }
-                        range:NSMakeRange(dateString.string.length - monthFormattedString.length, monthFormattedString.length)];
+                        range:NSMakeRange(dateString.string.length - dayInWeekFormattedString.length, dayInWeekFormattedString.length)];
 
 
 

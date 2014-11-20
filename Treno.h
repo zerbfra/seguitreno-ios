@@ -44,10 +44,14 @@
 // indica se il treno è sopresso o meno
 @property (nonatomic) BOOL soppresso;
 
+// dice se arrivato o meno
+@property (nonatomic) BOOL arrivato;
+
 // array delle fermate (che sono stazioni)
 @property (strong,nonatomic) NSArray *fermate;
 
 -(NSString*) stringaStatoTemporale;
+-(NSString*) stringaRitardo;
 
 /*
 // formatta una stringa con orario o data data la nsdate

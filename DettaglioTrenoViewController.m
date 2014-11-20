@@ -45,6 +45,9 @@
             self.treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
             self.treno.ritardo = [[trenoDict objectForKey:@"ritardo"] integerValue];
             
+            self.treno.arrivato = [[trenoDict objectForKey:@"arrivato"] boolValue];
+            self.treno.soppresso = [[trenoDict objectForKey:@"soppresso"] boolValue];
+            
             NSDictionary *fermateDict = [trenoDict objectForKey:@"fermate"];
             
             NSMutableArray *fermateArray = [NSMutableArray array];
@@ -113,15 +116,19 @@
     rilevamento.nome = self.treno.stazioneUltimoRilevamento;
     //[rilevamento formattaNome];
     if([rilevamento.nome isEqualToString:@"--"]) self.ultimoRilevamento.text = @"NON ANCORA PARTITO";
-    else self.ultimoRilevamento.text = [NSString stringWithFormat:@"RILEVATO A %@",rilevamento.nome];
+    else {
+        if(self.treno.arrivato) self.ultimoRilevamento.text = @"ARRIVATO";
+        else self.ultimoRilevamento.text = [NSString stringWithFormat:@"RILEVATO A %@",rilevamento.nome];
+
+    }
     self.orarioA.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:self.treno.orarioArrivo]];
     self.orarioP.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:self.treno.orarioPartenza]];
     
     self.stazioneP.text = self.treno.origine.nome;
     self.stazioneA.text = self.treno.destinazione.nome;
     
-    
-    self.ritardo.text = [self.treno stringaStatoTemporale];
+
+    self.ritardo.text = [self.treno stringaRitardo];
     
     [self.tableView reloadData];
     

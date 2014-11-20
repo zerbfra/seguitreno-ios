@@ -165,6 +165,7 @@
             for(NSDictionary *trenoDict in response) {
                 treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
                 treno.soppresso = [[trenoDict objectForKey:@"soppresso"] boolValue];
+                treno.arrivato = [[trenoDict objectForKey:@"arrivato"] boolValue];
             }
 
             dispatch_group_leave(group);
@@ -187,7 +188,6 @@
 - (void)updateSelectedDate
 {
     [self.viaggi removeAllObjects];
-    //NSLog(@"COUNTER %tu",[self.viaggi count]);
     [self caricaViaggi];
     
 }

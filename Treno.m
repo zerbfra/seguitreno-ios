@@ -60,13 +60,29 @@
 }
 
 -(NSString*) stringaStatoTemporale {
+    
+    if(!self.soppresso && !self.arrivato) {
+        // se non soprresso e non arrivato
+        return [self stringaRitardo];
+    } else {
+        if(self.soppresso) return @"SOPPRESSO";
+        if(self.arrivato)  return @"ARRIVATO";
+    }
+    
+    return @"--";
+    
+}
+
+-(NSString*) stringaRitardo {
     int ritardo = abs((int)self.ritardo);
     
     if(self.ritardo < 0) return [NSString stringWithFormat:@"ANTICIPO %d MIN",ritardo];
-    else if(self.ritardo > 0) return [NSString stringWithFormat:@"RITARDO %d MIN",ritardo];
-    else return @"IN ORARIO";
-}
+    if(self.ritardo > 0) return [NSString stringWithFormat:@"RITARDO %d MIN",ritardo];
+    if(self.ritardo == 0) return @"IN ORARIO";
+    
+    return @"";
 
+}
 
 
 @end
