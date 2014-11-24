@@ -27,8 +27,6 @@
 		137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */; };
 		137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DF31A135E5200B9E77E /* DateUtils.m */; };
 		13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */; };
-		13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */; };
-		13D01EDC1A0B888000BDCD05 /* MultiSelectSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EDB1A0B887F00BDCD05 /* MultiSelectSegmentedControl.m */; };
 		13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */; };
 		13D01EEB1A0BC3B300BDCD05 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE21A0BC3B300BDCD05 /* FMDatabaseAdditions.m */; };
 		13D01EEC1A0BC3B300BDCD05 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE41A0BC3B300BDCD05 /* FMDatabasePool.m */; };
@@ -94,10 +92,6 @@
 		137F4DF31A135E5200B9E77E /* DateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtils.m; sourceTree = "<group>"; };
 		13AC56591A14B3BC00492CB6 /* SalvatoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalvatoTableViewCell.h; sourceTree = "<group>"; };
 		13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalvatoTableViewCell.m; sourceTree = "<group>"; };
-		13D01ED71A0B706200BDCD05 /* RMDateSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDateSelectionViewController.h; sourceTree = "<group>"; };
-		13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDateSelectionViewController.m; sourceTree = "<group>"; };
-		13D01EDA1A0B887F00BDCD05 /* MultiSelectSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiSelectSegmentedControl.h; sourceTree = "<group>"; };
-		13D01EDB1A0B887F00BDCD05 /* MultiSelectSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiSelectSegmentedControl.m; sourceTree = "<group>"; };
 		13D01EDF1A0BC3B300BDCD05 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		13D01EE11A0BC3B300BDCD05 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -251,8 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				1309253C1A1A17A7003DCD52 /* JourneyProgress */,
-				13D01EDD1A0B888400BDCD05 /* MultiSegmented */,
-				13D01ED61A0B706200BDCD05 /* RMDateSelectionViewController */,
 				135CC3DF1A0A1F730074D079 /* Datepicker */,
 			);
 			name = "UI Elements";
@@ -265,24 +257,6 @@
 				137F4DF31A135E5200B9E77E /* DateUtils.m */,
 			);
 			name = DateUtils;
-			sourceTree = "<group>";
-		};
-		13D01ED61A0B706200BDCD05 /* RMDateSelectionViewController */ = {
-			isa = PBXGroup;
-			children = (
-				13D01ED71A0B706200BDCD05 /* RMDateSelectionViewController.h */,
-				13D01ED81A0B706200BDCD05 /* RMDateSelectionViewController.m */,
-			);
-			path = RMDateSelectionViewController;
-			sourceTree = "<group>";
-		};
-		13D01EDD1A0B888400BDCD05 /* MultiSegmented */ = {
-			isa = PBXGroup;
-			children = (
-				13D01EDA1A0B887F00BDCD05 /* MultiSelectSegmentedControl.h */,
-				13D01EDB1A0B887F00BDCD05 /* MultiSelectSegmentedControl.m */,
-			);
-			name = MultiSegmented;
 			sourceTree = "<group>";
 		};
 		13D01EDE1A0BC3B300BDCD05 /* fmdb */ = {
@@ -492,7 +466,6 @@
 				1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */,
 				13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */,
 				130925481A1A3FE4003DCD52 /* Fermata.m in Sources */,
-				13D01ED91A0B706200BDCD05 /* RMDateSelectionViewController.m in Sources */,
 				137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */,
 				135CC3DE1A0A1F6D0074D079 /* FZDatepickerDateView.m in Sources */,
 				137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */,
@@ -506,7 +479,6 @@
 				13650BB41A0A5F14000F2F51 /* NewTrainController.m in Sources */,
 				13D829C01A0CBA00008433E6 /* SoluzioneTableViewCell.m in Sources */,
 				137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */,
-				13D01EDC1A0B888000BDCD05 /* MultiSelectSegmentedControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,6 +598,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = SeguiTreno/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -637,6 +610,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = SeguiTreno/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
