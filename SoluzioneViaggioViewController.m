@@ -35,10 +35,9 @@
 -(void) trovaSoluzioniTreno {
     
     NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
-    NSLog(@"%@",ts);
-    
+
     [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSArray *response) {
-        NSLog(@"Response: %@", response);
+        //NSLog(@"Response: %@", response);
         
         
         for (NSDictionary *solDict in response) {

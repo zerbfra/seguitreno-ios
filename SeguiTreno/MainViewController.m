@@ -37,7 +37,7 @@
     [self.datepicker addTarget:self action:@selector(updateSelectedDate) forControlEvents:UIControlEventValueChanged];
     
     self.viaggi = [NSMutableArray array];
-
+    
     
     
 }
@@ -66,7 +66,7 @@
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM viaggi WHERE orarioPartenza BETWEEN '%tu' AND '%tu' ORDER BY orarioPartenza",start,end];
     
     NSArray *dbViaggi = [[DBHelper sharedInstance] executeSQLStatement:query];
-
+    
     
     for (NSDictionary* viaggoSet in dbViaggi) {
         Viaggio *viaggio = [[Viaggio alloc] init];
@@ -77,7 +77,7 @@
         NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%@') ORDER BY orarioPartenza",viaggio.idViaggio];
         NSArray *treni = [[DBHelper sharedInstance] executeSQLStatement:stmt];
         if([treni count] > 0) {
-            NSLog(@"Treni giornata %lu",(unsigned long)[treni count]);
+            
             
             NSMutableArray *tragitto = [NSMutableArray array];
             
@@ -118,16 +118,16 @@
                 
                 
                 [tragitto addObject:trovato];
-         
+                
             }
             
             viaggio.tragitto = tragitto;
             [self.viaggi addObject:viaggio];
-            NSLog(@"Tutti i viaggi recuperati dal db");
             
-        } else NSLog(@"Treni della giornata = 0");
+            
+        }
     }
-
+    
     // Aggiorno tabella con un'animazione (con i dati locali)
     [UIView transitionWithView:self.treniTable
                       duration:0.2f
@@ -140,18 +140,21 @@
     // richiedo informazioni aggiuntive sui treni se sono quelli della giornata (quindi index = 0)
     
     if([self.datepicker selectedIndex] == 0) {
-    
-    [self requestGroupTrain:[self elencoTreni]  completion:^(NSArray *response) {
-        // aggiorno per le informazioni recuperate dal server
+        NSLog(@"Recupero informazioni live...");
+        [self requestGroupTrain:[self elencoTreni]  completion:^(NSArray *response) {
+            // aggiorno per le informazioni recuperate dal server
+            [self.treniTable reloadData];
+        }];
+    } else {
+        NSLog(@"Stampo treni senza live...");
         [self.treniTable reloadData];
-    }];
-    } else [self.treniTable reloadData];
+    }
     
     
 }
 
 -(NSMutableArray*) elencoTreni {
-   
+    
     NSMutableArray* treni = [NSMutableArray array];
     
     for(Viaggio* viaggio in self.viaggi) {
@@ -183,7 +186,7 @@
                 treno.soppresso = [[trenoDict objectForKey:@"soppresso"] boolValue];
                 treno.arrivato = [[trenoDict objectForKey:@"arrivato"] boolValue];
             }
-
+            
             dispatch_group_leave(group);
             
         }];
@@ -267,7 +270,7 @@
     cell.partenzaL.text = cell.treno.partenza.nome;
     cell.arrivoL.text = cell.treno.arrivo.nome;
     
-    cell.trenoL.text = [NSString stringWithFormat:@"%@ %@",cell.treno.categoria,cell.treno.numero]; 
+    cell.trenoL.text = [NSString stringWithFormat:@"%@ %@",cell.treno.categoria,cell.treno.numero];
     
     cell.orarioPL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioPartenza]];
     cell.orarioAL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioArrivo]];
@@ -305,7 +308,7 @@
         else destination.attuale = NO;
         
         destination.dataTreno = self.datepicker.selectedDate;
-
+        
         
     }
 }

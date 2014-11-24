@@ -57,7 +57,7 @@
 
 -(void) datePickerChanged:(UIDatePicker *)datePicker {
     self.viaggio.data = [[DateUtils shared] date:datePicker.date At:0];
-    NSLog(@"Salvo data: %@",self.viaggio.data);
+    //NSLog(@"Salvo data: %@",self.viaggio.data);
 
 }
 
@@ -83,7 +83,7 @@
 
 
 -(void)salva {
-    NSLog(@"Preparo salvataggio treno...");
+    //NSLog(@"Preparo salvataggio treno...");
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -131,7 +131,7 @@
         NSString  *numero = toDb.numero;
         
         [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":numero,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSArray *response) {
-            NSLog(@"Response: %@", response);
+            //NSLog(@"Response: %@", response);
             
             for(NSDictionary *trenoDict in response) {
                 Stazione *origine = [[Stazione alloc] init];
@@ -267,19 +267,19 @@
     
     switch (sender.selectedSegmentIndex) {
         case 0:
-            NSLog(@"2 settimane");
+            //NSLog(@"2 settimane");
             self.viaggio.fineRipetizione = [[DateUtils shared] addDays:14 toDate:self.viaggio.data];
             break;
         case 1:
-            NSLog(@"1 mese");
+            //NSLog(@"1 mese");
             self.viaggio.fineRipetizione = [[DateUtils shared] addDays:30 toDate:self.viaggio.data];
             break;
         case 2:
-            NSLog(@"3 mesi");
+            //NSLog(@"3 mesi");
             self.viaggio.fineRipetizione = [[DateUtils shared] addDays:90 toDate:self.viaggio.data];
             break;
         case 3:
-            NSLog(@"6 mesi");
+            //NSLog(@"6 mesi");
             self.viaggio.fineRipetizione = [[DateUtils shared] addDays:180 toDate:self.viaggio.data];
             break;
             
