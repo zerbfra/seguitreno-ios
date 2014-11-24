@@ -12,6 +12,9 @@
 
 @property (nonatomic,strong) Treno *treno;
 
+@property BOOL attuale;
+@property (nonatomic,strong) NSDate* dataTreno;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UILabel *orarioP;

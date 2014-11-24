@@ -299,6 +299,12 @@
         
         DettaglioTrenoViewController *destination = (DettaglioTrenoViewController*) [segue destinationViewController];
         destination.treno = trenocell.treno;
+        
+        // dico al dettaglio se è il treno della giornata attuale o meno
+        if([self.datepicker selectedIndex] == 0) destination.attuale = YES;
+        else destination.attuale = NO;
+        
+        destination.dataTreno = self.datepicker.selectedDate;
 
         
     }

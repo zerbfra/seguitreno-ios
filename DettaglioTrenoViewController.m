@@ -112,15 +112,25 @@
 
 -(void) setData {
     
+    if(self.attuale) {
+    
     Stazione *rilevamento = [[Stazione alloc] init];
     rilevamento.nome = self.treno.stazioneUltimoRilevamento;
-    //[rilevamento formattaNome];
+
     if([rilevamento.nome isEqualToString:@"--"]) self.ultimoRilevamento.text = @"NON ANCORA PARTITO";
     else {
         if(self.treno.arrivato) self.ultimoRilevamento.text = @"ARRIVATO";
         else self.ultimoRilevamento.text = [NSString stringWithFormat:@"RILEVATO A %@",rilevamento.nome];
 
     }
+    self.ritardo.text = [self.treno stringaRitardo];
+    
+    } else {
+        self.ultimoRilevamento.text = @"NON ANCORA PARTITO";
+        // siccome avrò impostata una data, visualizzo quella
+        self.ritardo.text = [[DateUtils shared] showDateMedium:self.dataTreno];
+    }
+    
     self.orarioA.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:self.treno.orarioArrivo]];
     self.orarioP.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:self.treno.orarioPartenza]];
     
@@ -128,7 +138,7 @@
     self.stazioneA.text = self.treno.destinazione.nome;
     
 
-    self.ritardo.text = [self.treno stringaRitardo];
+
     
     [self.tableView reloadData];
     
@@ -164,6 +174,8 @@
     FermataTableViewCell *cell = (FermataTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"cellFermata" forIndexPath:indexPath];
     
     cell.fermata = self.treno.fermate[indexPath.row];
+    
+    if(!self.attuale) cell.fermata.raggiunta = FALSE; // sicuramente non raggiunta in quanto treno non attuale
     
     // cancello l'immagine precedente a causa della reusable cell ;)
     [self deleteSubviews:cell.progressView];
