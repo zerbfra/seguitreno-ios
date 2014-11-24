@@ -27,4 +27,6 @@ extern const CGFloat kFZDetepickerHeight;
 - (void)selectDate:(NSDate *)date;
 - (void)selectDateAtIndex:(NSUInteger)index;
 
+-(NSUInteger) selectedIndex;
+
 @end

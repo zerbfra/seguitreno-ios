@@ -182,24 +182,24 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="quando" id="w3A-U5-Dyp">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="l5n-m8-JUc" detailTextLabel="IBz-Mh-zSf" style="IBUITableViewCellStyleValue1" id="3VO-W4-Hyx">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="180" id="3VO-W4-Hyx">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3VO-W4-Hyx" id="owS-hR-eZf">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Data viaggio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="l5n-m8-JUc">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Lunedi, 5/11/2014" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IBz-Mh-zSf">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="rly-6I-Jt8">
+                                                    <rect key="frame" x="27" y="9" width="547" height="162"/>
+                                                    <date key="date" timeIntervalSinceReferenceDate="438253880.76842201">
+                                                        <!--2014-11-21 09:11:20 +0000-->
+                                                    </date>
+                                                </datePicker>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="rly-6I-Jt8" firstAttribute="leading" secondItem="owS-hR-eZf" secondAttribute="leading" constant="27" id="33f-Qn-7Wg"/>
+                                                <constraint firstItem="rly-6I-Jt8" firstAttribute="top" secondItem="owS-hR-eZf" secondAttribute="top" constant="9" id="RJv-aU-aeG"/>
+                                                <constraint firstAttribute="bottom" secondItem="rly-6I-Jt8" secondAttribute="bottom" constant="8.5" id="VOm-5l-wnY"/>
+                                                <constraint firstAttribute="trailing" secondItem="rly-6I-Jt8" secondAttribute="trailing" constant="26" id="eWr-xn-7zn"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="q4q-VU-nxB" detailTextLabel="hox-Cf-fun" style="IBUITableViewCellStyleValue1" id="O47-tc-Fql">
@@ -226,24 +226,31 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="ripetizione" id="wtw-e5-PEQ">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Hq6-kf-W9B" detailTextLabel="fep-M2-9Sk" style="IBUITableViewCellStyleValue1" id="z4M-3A-3v9">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="z4M-3A-3v9">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z4M-3A-3v9" id="imi-Xk-caC">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Ripeti fino al" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hq6-kf-W9B">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Non ripetere" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fep-M2-9Sk">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="GNT-or-FaQ">
+                                                    <rect key="frame" x="8" y="8" width="584" height="29"/>
+                                                    <segments>
+                                                        <segment title="2 settimane"/>
+                                                        <segment title="1 mese"/>
+                                                        <segment title="3 mesi"/>
+                                                        <segment title="6 mesi"/>
+                                                    </segments>
+                                                    <color key="tintColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="selezioneRipetizione:" destination="kii-7n-TWc" eventType="valueChanged" id="FcU-2F-0XO"/>
+                                                    </connections>
+                                                </segmentedControl>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="GNT-or-FaQ" secondAttribute="bottom" constant="7.5" id="JGV-Zb-yh9"/>
+                                                <constraint firstItem="GNT-or-FaQ" firstAttribute="top" secondItem="imi-Xk-caC" secondAttribute="top" constant="8" id="eL5-N4-Igy"/>
+                                                <constraint firstItem="GNT-or-FaQ" firstAttribute="leading" secondItem="imi-Xk-caC" secondAttribute="leading" constant="8" id="uBp-cu-les"/>
+                                                <constraint firstAttribute="trailing" secondItem="GNT-or-FaQ" secondAttribute="trailing" constant="8" id="whI-zs-9l0"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -257,7 +264,7 @@
                     <navigationItem key="navigationItem" title="Nuovo treno" id="gbe-BE-dE7"/>
                     <connections>
                         <outlet property="dataViaggio" destination="3VO-W4-Hyx" id="1bJ-Do-igg"/>
-                        <outlet property="fineRipetizione" destination="z4M-3A-3v9" id="vDg-0J-9jd"/>
+                        <outlet property="pickDataViaggio" destination="rly-6I-Jt8" id="S1O-wk-2Rk"/>
                         <outlet property="soluzioneViaggio" destination="O47-tc-Fql" id="PId-ze-hzQ"/>
                         <outlet property="stazioneDestinazione" destination="1rR-Fk-oUX" id="i2q-7Z-6Pe"/>
                         <outlet property="stazionePartenza" destination="BWa-lI-ytv" id="Zbu-wu-Ftl"/>
@@ -268,7 +275,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lik-PP-QCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4603" y="157"/>
+            <point key="canvasLocation" x="4603" y="150"/>
         </scene>
         <!--Search Stazione View Controller-->
         <scene sceneID="f5e-JP-Qu9">
@@ -827,23 +834,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6zN-FV-g0v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2849" y="1060"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="NnA-2S-ki5">
-            <objects>
-                <viewController id="5ux-sa-NyG" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="7Jy-Ne-SLb"/>
-                        <viewControllerLayoutGuide type="bottom" id="RUW-aD-9B6"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lR0-wg-EEC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ID8-gu-uw2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
         </scene>
     </scenes>
 </document>

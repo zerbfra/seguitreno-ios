@@ -37,4 +37,7 @@
 // vedi data nel formato 10/11/2014
 -(NSString*) showDateMedium:(NSDate*) date;
 
+// ritorna la data che si ottiene aggiungendo n giorni ad una data di partenza
+-(NSDate*) addDays:(int) days toDate:(NSDate*) date;
+
 @end

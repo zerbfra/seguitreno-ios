@@ -30,16 +30,19 @@
     
     self.view.backgroundColor = BACKGROUND_COLOR;
     
+    
     self.viaggio = [[Viaggio alloc] init];
     
-    //self.settimanaRipetizioni.delegate = self;
-    
-    [self setDate];
-    //self.refresh = true;
-   // self.viaggio.data = [self creaData];
+
+    self.viaggio.data = [[DateUtils shared] date:[NSDate date] At:0];
+
     
     self.soluzioneViaggio.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
     
+    [self.pickDataViaggio setDatePickerMode:UIDatePickerModeDate];
+    [self.pickDataViaggio addTarget:self action:@selector(datePickerChanged:) forControlEvents:UIControlEventValueChanged];
+    self.pickDataViaggio.minimumDate = self.viaggio.data;
+    self.pickDataViaggio.date = self.viaggio.data;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -51,6 +54,13 @@
     else self.stazioneDestinazione.detailTextLabel.text = self.viaggio.arrivo.nome;
     
 }
+
+-(void) datePickerChanged:(UIDatePicker *)datePicker {
+    self.viaggio.data = [[DateUtils shared] date:datePicker.date At:0];
+    NSLog(@"Salvo data: %@",self.viaggio.data);
+
+}
+
 
 - (void) impostaStazioneP:(Stazione *) stazioneP {
     // imposto sull'oggetto stazione P
@@ -64,20 +74,13 @@
 - (void) impostaSoluzione:(Viaggio *) soluzioneSelezionata {
     // imposto sull'oggetto stazione P
     self.viaggio = soluzioneSelezionata;
-    
+    // importo la data
+    self.viaggio.data = [self.viaggio orarioPartenza];
     // orario selezionato
     self.soluzioneViaggio.detailTextLabel.text =  [[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]];
-    //self.dataViaggio.detailTextLabel.text = [[DateUtils shared] showDateFull:self.viaggio.orarioPartenza];
 }
 
 
--(void) setDate {
-    
-    self.dataViaggio.detailTextLabel.text = [[DateUtils shared] showDateFull:nil];
-    // imposto sull'oggetto dataviaggio a oggi (esattamente alla mezza)
-    self.viaggio.data = [[DateUtils shared] date:[NSDate date] At:0];
-    
-}
 
 -(void)salva {
     NSLog(@"Preparo salvataggio treno...");
@@ -174,73 +177,6 @@
 
 
 
-
-- (IBAction)openDateSelectionController:(NSIndexPath*)sender {
-    RMDateSelectionViewController *dateSelectionVC = [RMDateSelectionViewController dateSelectionController];
-    dateSelectionVC.delegate = self;
-    
-    //You can enable or disable blur, bouncing and motion effects
-    dateSelectionVC.disableBouncingWhenShowing = TRUE;
-    dateSelectionVC.disableMotionEffects = TRUE;
-    dateSelectionVC.disableBlurEffects = TRUE;
-    
-    
-    dateSelectionVC.senderIndex = sender;
-    
-    dateSelectionVC.tintColor = GREEN;
-    
-    //You can access the actual UIDatePicker via the datePicker property
-    
-    dateSelectionVC.datePicker.datePickerMode = UIDatePickerModeDate;
-    dateSelectionVC.datePicker.minuteInterval = 5;
-    dateSelectionVC.datePicker.minimumDate = [NSDate date];
-    NSLog(@"%@",[[DateUtils shared] showDay:self.viaggio.data]);
-    //dateSelectionVC.datePicker.date = self.viaggio.data; BUG
-    
-    [dateSelectionVC show];
-    
-}
-
-#pragma mark - RMDAteSelectionViewController Delegates
-- (void)dateSelectionViewController:(RMDateSelectionViewController *)vc didSelectDate:(NSDate *)aDate {
-    
-    if(vc.senderIndex.section == 1) {
-        
-        self.dataViaggio.detailTextLabel.text = [[DateUtils shared] showDateFull:aDate];
-        self.viaggio.data = [[DateUtils shared] date:aDate At:0];
-        if(self.viaggio.fineRipetizione != nil)
-            self.fineRipetizione.textLabel.text = [NSString stringWithFormat:@"Ripeti tutti i %@ fino al",[[DateUtils shared] showDay:aDate]];
-
-        
-    } else {
-        NSString *dateString = [[DateUtils shared] showDateMedium:aDate];
-        //if(vc.senderIndex.row == 0) //self.inizioRipetizione.detailTextLabel.text = dateString;
-        //else {
-        NSLog(@"setto finerip");
-        self.viaggio.fineRipetizione = aDate;
-        self.fineRipetizione.detailTextLabel.text = dateString;
-        self.fineRipetizione.textLabel.text = [NSString stringWithFormat:@"Ripeti tutti i %@ fino al",[[DateUtils shared] showDay:self.viaggio.data]];
-        // }
-        
-        
-        
-        
-    }
-    
-    
-    
-    
-    
-    
-    
-}
-
-
-- (void)dateSelectionViewControllerDidCancel:(RMDateSelectionViewController *)vc {
-    //NSLog(@"Date selection was canceled");
-    
-}
-
 #pragma mark - UITableView Delegates
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -253,39 +189,24 @@
     }
     
     
-    if((indexPath.section == 1 && indexPath.row == 0) || (indexPath.section == 2 && indexPath.row == 0)) {
-        [self openDateSelectionController:indexPath];
-    }
-    
     if(indexPath.section == 1 && indexPath.row == 1) {
-        [self performSegueWithIdentifier:@"selezionaTreno" sender:nil];
+        
+        if(self.viaggio.partenza != nil && self.viaggio.arrivo != nil) {
+                    [self performSegueWithIdentifier:@"selezionaTreno" sender:nil];
+        }
+        else {
+            NSLog(@"Selezionare stazioni!");
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Devi selezionare stazione di partenza e di arrivo per poter cercare un treno!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            [alertView show];
+        }
     }
-    
-    
-    if(indexPath.section == 3) [self openDateSelectionController:indexPath];
     
     
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-/*
- -(void)multiSelect:(MultiSelectSegmentedControl *)multiSelecSegmendedControl didChangeValue:(BOOL)value atIndex:(NSUInteger)index{
- 
- 
- if([self.settimanaRipetizioni.selectedSegmentIndexes count] > 0 && self.refresh) {
- [self.tableView reloadData];
- self.refresh = false;
- }
- 
- if([self.settimanaRipetizioni.selectedSegmentIndexes count] == 0) {
- [self.tableView reloadData];
- self.refresh = true;
- }
- NSLog(@"%@",[self.settimanaRipetizioni selectedSegmentIndexes]);
- 
- }
- */
+
 
 
 -(void)close:(id)sender {
@@ -332,7 +253,6 @@
     if([segue.identifier  isEqual: @"selezionaTreno"]) {
         
         SoluzioneViaggioViewController *destination = (SoluzioneViaggioViewController*) [segue destinationViewController];
-        //destination.delegateNext = self;
         destination.query = self.viaggio;
         
     }
@@ -340,5 +260,35 @@
     
 }
 
+
+- (IBAction)selezioneRipetizione:(UISegmentedControl *)sender {
+    
+    NSLog(@"%@",self.viaggio.data);
+    
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            NSLog(@"2 settimane");
+            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:14 toDate:self.viaggio.data];
+            break;
+        case 1:
+            NSLog(@"1 mese");
+            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:30 toDate:self.viaggio.data];
+            break;
+        case 2:
+            NSLog(@"3 mesi");
+            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:90 toDate:self.viaggio.data];
+            break;
+        case 3:
+            NSLog(@"6 mesi");
+            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:180 toDate:self.viaggio.data];
+            break;
+            
+        default:
+            break;
+    }
+    
+    NSLog(@"%@",self.viaggio.fineRipetizione);
+    
+}
 
 @end

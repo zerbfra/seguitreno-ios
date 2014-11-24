@@ -25,6 +25,7 @@
     
     [self.datepicker selectDateAtIndex:0];
     
+    
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
     self.navigationItem.rightBarButtonItem = addButton;
     
@@ -36,14 +37,22 @@
     [self.datepicker addTarget:self action:@selector(updateSelectedDate) forControlEvents:UIControlEventValueChanged];
     
     self.viaggi = [NSMutableArray array];
+
+    
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
     [self caricaViaggi];
-    
-    
 }
 
 -(void) caricaViaggi {
     
     NSInteger start,end;
+    
+    [self.viaggi removeAllObjects];
     
     if(self.datepicker.selectedDate == nil) {
         start = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:[NSDate date] At:0]];
@@ -106,6 +115,8 @@
                 
                 trovato.categoria =  [trenoSet objectForKey:@"categoria"];
                 
+                
+                
                 [tragitto addObject:trovato];
          
             }
@@ -126,10 +137,15 @@
                     } completion:NULL];
     
     
+    // richiedo informazioni aggiuntive sui treni se sono quelli della giornata (quindi index = 0)
+    
+    if([self.datepicker selectedIndex] == 0) {
+    
     [self requestGroupTrain:[self elencoTreni]  completion:^(NSArray *response) {
         // aggiorno per le informazioni recuperate dal server
         [self.treniTable reloadData];
     }];
+    } else [self.treniTable reloadData];
     
     
 }
@@ -256,8 +272,9 @@
     cell.orarioPL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioPartenza]];
     cell.orarioAL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioArrivo]];
     
-    cell.ritardoL.text = [cell.treno stringaStatoTemporale];
-
+    if([self.datepicker selectedIndex] == 0) {
+        cell.ritardoL.text = [cell.treno stringaStatoTemporale];
+    } else  cell.ritardoL.text = @"";
     
     
     return cell;
@@ -271,42 +288,6 @@
 }
 
 
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -318,6 +299,7 @@
         
         DettaglioTrenoViewController *destination = (DettaglioTrenoViewController*) [segue destinationViewController];
         destination.treno = trenocell.treno;
+
         
     }
 }

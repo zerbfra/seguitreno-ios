@@ -15,8 +15,9 @@
 #import "DettaglioSoluzioneViewController.h"
 
 
-@interface NewTrainController : UITableViewController <RMDateSelectionViewControllerDelegate,UIActionSheetDelegate,SearchStazioneDelegate,SoluzioneViaggioDelegate>
+@interface NewTrainController : UITableViewController <UIActionSheetDelegate,SearchStazioneDelegate,SoluzioneViaggioDelegate>
 
+@property BOOL showPickerRipetizione;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *stazionePartenza;
 @property (weak, nonatomic) IBOutlet UITableViewCell *stazioneDestinazione;
@@ -24,12 +25,12 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *dataViaggio;
 @property (weak, nonatomic) IBOutlet UITableViewCell *soluzioneViaggio;
 
+@property (weak, nonatomic) IBOutlet UIDatePicker *pickDataViaggio;
 
-@property (weak, nonatomic) IBOutlet UITableViewCell *fineRipetizione;
 
+- (IBAction)selezioneRipetizione:(UISegmentedControl *)sender;
 
 @property (strong,nonatomic) Viaggio *viaggio;
 
-//@property (nonatomic) BOOL refresh;
 
 @end

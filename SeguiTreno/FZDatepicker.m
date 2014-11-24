@@ -187,6 +187,11 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
     self.selectedDate = dateView.date;
 }
 
+-(NSUInteger) selectedIndex {
+    NSUInteger itemIndex = [self.dates indexOfObject:self.selectedDate];
+    return itemIndex;
+}
+
 - (void)updateSelectedDatePosition
 {
     NSUInteger itemIndex = [self.dates indexOfObject:self.selectedDate];

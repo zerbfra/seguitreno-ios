@@ -45,6 +45,11 @@
     
 }
 
+-(NSDate*) addDays:(int) days toDate:(NSDate*) date {
+    NSDate *nextDate = [date dateByAddingTimeInterval:days*24*3600];
+    return nextDate;
+}
+
 - (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate
 {
     if ([date compare:beginDate] == NSOrderedAscending)
