@@ -22,7 +22,35 @@
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    
+    // aggiungo refresh sulla tabella
+    self.refreshControl = [[UIRefreshControl alloc]init];
+    [self.tableView addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl setTintColor:GREEN];
+    
+    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:[self.treno stringaDescrizione]
+                                   style:UIBarButtonItemStyleBordered
+                                   target:self
+                                   action:@selector(flipView)];
+    self.navigationItem.rightBarButtonItem = flipButton;
+    
+    
+    [self loadInfo];
+}
 
+-(void) flipView {
+    
+}
+
+-(void) refresh {
+    [self.refreshControl endRefreshing];
+    [self loadInfo];
+}
+
+-(void) loadInfo {
+    
     [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.treno.numero,@"origine":self.treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSArray *response) {
         //NSLog(@"Response: %@", response);
         
@@ -40,7 +68,7 @@
             self.treno.categoria = [trenoDict objectForKey:@"categoria"];
             self.treno.stazioneUltimoRilevamento = [trenoDict objectForKey:@"stazioneUltimoRilevamento"];
             self.treno.oraUltimoRilevamento = [trenoDict objectForKey:@"oraUltimoRilevamento"];
-
+            
             self.treno.orarioArrivo = [[trenoDict objectForKey:@"orarioArrivo"] doubleValue];
             self.treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
             self.treno.ritardo = [[trenoDict objectForKey:@"ritardo"] integerValue];
@@ -53,7 +81,7 @@
             NSMutableArray *fermateArray = [NSMutableArray array];
             
             for(NSDictionary *fermate in fermateDict) {
-         
+                
                 
                 Fermata *fermata = [[Fermata alloc] init];
                 
@@ -72,11 +100,11 @@
                 
                 
                 if(fermata.raggiunta == true) {
-                fermata.orarioEffettivo = [[fermate objectForKey:@"effettiva"] doubleValue]; // caso i cui sia effettiva (e quindi treno arrivato li)
+                    fermata.orarioEffettivo = [[fermate objectForKey:@"effettiva"] doubleValue]; // caso i cui sia effettiva (e quindi treno arrivato li)
                 }
                 else  {
                     fermata.orarioEffettivo = fermata.orarioProgrammato + self.treno.ritardo*60; // caso in cui non cè effettiva, stimo l'orario con il ritardo
-
+                    
                 }
                 
                 
@@ -89,11 +117,11 @@
                 //stazFermata.lat = [[stazioneDict objectForKey:@"lat"] floatValue];
                 //stazFermata.lon = [[stazioneDict objectForKey:@"lon"] floatValue];
                 [stazFermata formattaNome];
-
+                
                 fermata.stazione = stazFermata;
                 
                 [fermateArray addObject:fermata];
-
+                
             }
             
             self.treno.fermate = fermateArray;
@@ -102,12 +130,11 @@
         }
         
         [self setData];
-
+        
         
         
     }];
 
-    
 }
 
 -(void) setData {

@@ -15,7 +15,11 @@
 
 @interface NewTrainController : UITableViewController <UIActionSheetDelegate,SearchStazioneDelegate,SoluzioneViaggioDelegate>
 
-@property BOOL showPickerRipetizione;
+@property BOOL trenoCompilato;
+
+@property NSInteger ripetizioneSel;
+
+@property (strong,nonatomic) NSDate* dataIniziale;
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *stazionePartenza;
 @property (weak, nonatomic) IBOutlet UITableViewCell *stazioneDestinazione;
@@ -24,6 +28,9 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *soluzioneViaggio;
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *pickDataViaggio;
+@property (weak, nonatomic) IBOutlet UILabel *labelSoluzione;
+@property (weak, nonatomic) IBOutlet UIButton *selezionaAltro;
+- (IBAction)ridisegnaPicker:(id)sender;
 
 
 - (IBAction)selezioneRipetizione:(UISegmentedControl *)sender;

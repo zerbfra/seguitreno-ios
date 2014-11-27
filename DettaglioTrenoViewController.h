@@ -26,5 +26,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *ultimoRilevamento;
 @property (weak, nonatomic) IBOutlet UILabel *ritardo;
 
+@property (strong,nonatomic) UIRefreshControl *refreshControl;
+
 
 @end

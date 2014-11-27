@@ -76,12 +76,18 @@
 -(NSString*) stringaRitardo {
     int ritardo = abs((int)self.ritardo);
     
+    if(self.nonDisponibile) return @"NON DISPONIBILE";
+    
     if(self.ritardo < 0) return [NSString stringWithFormat:@"ANTICIPO %d MIN",ritardo];
     if(self.ritardo > 0) return [NSString stringWithFormat:@"RITARDO %d MIN",ritardo];
     if(self.ritardo == 0) return @"IN ORARIO";
     
     return @"";
 
+}
+
+-(NSString*) stringaDescrizione {
+    return [NSString stringWithFormat:@"%@ %@",self.categoria,self.numero];
 }
 
 

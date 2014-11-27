@@ -47,11 +47,17 @@
 // dice se arrivato o meno
 @property (nonatomic) BOOL arrivato;
 
+// dice se il treno non è disponibile dalle API di trenitalia (di default obj-c istanzia a false, quindi corretto nel mio caso)
+@property (nonatomic) BOOL nonDisponibile;
+
 // array delle fermate (che sono stazioni)
 @property (strong,nonatomic) NSArray *fermate;
 
 -(NSString*) stringaStatoTemporale;
 -(NSString*) stringaRitardo;
+
+//ritorna categoria e numero treno
+-(NSString*) stringaDescrizione;
 
 /*
 // formatta una stringa con orario o data data la nsdate

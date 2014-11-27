@@ -33,8 +33,10 @@
     
     self.viaggio = [[Viaggio alloc] init];
     
+    self.trenoCompilato = FALSE;
+    self.ripetizioneSel = 0;
 
-    self.viaggio.data = [[DateUtils shared] date:[NSDate date] At:0];
+    self.viaggio.data = [[DateUtils shared] date:self.dataIniziale At:0];
 
     
     self.soluzioneViaggio.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
@@ -78,12 +80,39 @@
     self.viaggio.data = [self.viaggio orarioPartenza];
     // orario selezionato
     self.soluzioneViaggio.detailTextLabel.text =  [[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]];
-}
+    
 
+    
+    self.trenoCompilato = TRUE;
+    
+    NSArray *deleteIndexPaths = [[NSArray alloc] initWithObjects:
+                               
+                                 [NSIndexPath indexPathForRow:1 inSection:1],
+                                 nil];
+    
+    
+    self.labelSoluzione.text = [NSString stringWithFormat:@"%@\n alle ore %@",[[DateUtils shared] showDateMedium:[self.viaggio orarioPartenza]],[[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]]];
+    
+
+    
+    [UIView animateWithDuration:0.3 animations:^() {
+        self.selezionaAltro.alpha = 1.0;
+        self.labelSoluzione.alpha = 1.0;
+        self.pickDataViaggio.alpha = 0.0;
+    }];
+    
+    [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView reloadData];
+
+    //aggiorno la fine ripetizione in base a quello che è selezionato
+    [self gestisciRipetizione:self.ripetizioneSel];
+    
+}
 
 
 -(void)salva {
     //NSLog(@"Preparo salvataggio treno...");
+    if(self.trenoCompilato) {
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -167,9 +196,16 @@
                 
             }
             
+            // invio la notifica globale che ho aggiunto dei treni
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"update" object:nil];
+            
             
         }];
         
+    }
+    } else {
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Seleziona un treno per salvarlo!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alertView show];
     }
     
     
@@ -192,7 +228,12 @@
     if(indexPath.section == 1 && indexPath.row == 1) {
         
         if(self.viaggio.partenza != nil && self.viaggio.arrivo != nil) {
-                    [self performSegueWithIdentifier:@"selezionaTreno" sender:nil];
+            
+            if(![self.viaggio.partenza.idStazione isEqualToString:self.viaggio.arrivo.idStazione]) [self performSegueWithIdentifier:@"selezionaTreno" sender:nil];
+            else {
+                UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Seleziona due stazioni diverse per una soluzione viaggio" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+                [alertView show];
+            }
         }
         else {
             NSLog(@"Selezionare stazioni!");
@@ -224,13 +265,14 @@
     
     // Return the number of sections.
     return 3;
-    
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     // Return the number of rows in the section.
     if(section == 2) return 1;
+    if(self.trenoCompilato && section == 1) return 1;
     return 2;
 }
 
@@ -261,26 +303,59 @@
 }
 
 
+- (IBAction)ridisegnaPicker:(id)sender {
+    
+    self.trenoCompilato = FALSE;
+    NSArray *deleteIndexPaths = [[NSArray alloc] initWithObjects:
+                                 [NSIndexPath indexPathForRow:1 inSection:1],
+                                 nil];
+    
+
+    [UIView animateWithDuration:0.3 animations:^() {
+        self.selezionaAltro.alpha = 0.0;
+        self.labelSoluzione.alpha = 0.0;
+        self.pickDataViaggio.alpha = 1.0;
+    }];
+    
+    [self.tableView insertRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+}
+
 - (IBAction)selezioneRipetizione:(UISegmentedControl *)sender {
     
-    NSLog(@"%@",self.viaggio.data);
     
-    switch (sender.selectedSegmentIndex) {
+    [self gestisciRipetizione:sender.selectedSegmentIndex];
+    
+
+    
+}
+
+-(void) gestisciRipetizione:(NSInteger) selezionato {
+    
+    switch (selezionato) {
         case 0:
-            //NSLog(@"2 settimane");
-            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:14 toDate:self.viaggio.data];
+            //NSLog(@"Mai");
+            self.viaggio.fineRipetizione = nil;
+            self.ripetizioneSel = 0;
             break;
         case 1:
-            //NSLog(@"1 mese");
-            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:30 toDate:self.viaggio.data];
+            //NSLog(@"2 settimane");
+            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:14 toDate:self.viaggio.data];
+            self.ripetizioneSel = 1;
             break;
         case 2:
-            //NSLog(@"3 mesi");
-            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:90 toDate:self.viaggio.data];
+            //NSLog(@"1 mese");
+            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:30 toDate:self.viaggio.data];
+            self.ripetizioneSel = 2;
             break;
         case 3:
+            //NSLog(@"3 mesi");
+            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:90 toDate:self.viaggio.data];
+            self.ripetizioneSel = 3;
+            break;
+        case 4:
             //NSLog(@"6 mesi");
             self.viaggio.fineRipetizione = [[DateUtils shared] addDays:180 toDate:self.viaggio.data];
+            self.ripetizioneSel = 4;
             break;
             
         default:
@@ -288,7 +363,6 @@
     }
     
     NSLog(@"%@",self.viaggio.fineRipetizione);
-    
 }
 
 @end

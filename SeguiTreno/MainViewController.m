@@ -8,6 +8,8 @@
 
 #import "MainViewController.h"
 #import "DettaglioTrenoViewController.h"
+#import "NewTrainController.h"
+
 
 @implementation MainViewController
 
@@ -38,14 +40,30 @@
     
     self.viaggi = [NSMutableArray array];
     
+    // rispondo alla notifica aggiornando tutti i viaggi
+    [[NSNotificationCenter defaultCenter]   addObserver:self
+                                               selector:@selector(caricaViaggi)
+                                                   name:@"update"
+                                                 object:nil];
     
+    
+    // aggiungo refresh sulla tabella
+    self.refreshControl = [[UIRefreshControl alloc]init];
+    [self.treniTable addSubview:self.refreshControl];
+    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    
+    [self caricaViaggi];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
+}
+
+-(void) refresh {
     [self caricaViaggi];
+    [self.refreshControl endRefreshing];
 }
 
 -(void) caricaViaggi {
@@ -133,7 +151,7 @@
                       duration:0.2f
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^(void) {
-                        
+                        [self.treniTable reloadData];
                     } completion:NULL];
     
     
@@ -180,11 +198,18 @@
         dispatch_group_enter(group);
         
         [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":treno.numero,@"origine":treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSArray *response) {
-            
+            NSLog(@"%@",response);
             for(NSDictionary *trenoDict in response) {
-                treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
-                treno.soppresso = [[trenoDict objectForKey:@"soppresso"] boolValue];
-                treno.arrivato = [[trenoDict objectForKey:@"arrivato"] boolValue];
+                // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
+                if([NSNull null] != [trenoDict objectForKey:@"ritardo"]) {
+                    treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
+                    treno.soppresso = [[trenoDict objectForKey:@"soppresso"] boolValue];
+                    treno.arrivato = [[trenoDict objectForKey:@"arrivato"] boolValue];
+                    treno.nonDisponibile = false;
+                } else {
+                    treno.nonDisponibile = true;
+                }
+                
             }
             
             dispatch_group_leave(group);
@@ -270,7 +295,7 @@
     cell.partenzaL.text = cell.treno.partenza.nome;
     cell.arrivoL.text = cell.treno.arrivo.nome;
     
-    cell.trenoL.text = [NSString stringWithFormat:@"%@ %@",cell.treno.categoria,cell.treno.numero];
+    cell.trenoL.text = [cell.treno stringaDescrizione];
     
     cell.orarioPL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioPartenza]];
     cell.orarioAL.text =  [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.treno.orarioArrivo]];
@@ -286,7 +311,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     SalvatoTableViewCell *cell  = (SalvatoTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-    [self performSegueWithIdentifier:@"dettaglioTreno" sender:cell];
+    // solo se ho informazioni dalle API lo rendo cliccabile
+    if(!cell.treno.nonDisponibile) [self performSegueWithIdentifier:@"dettaglioTreno" sender:cell];
+    else [self.treniTable deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 
@@ -311,7 +338,16 @@
         
         
     }
+    
+    
+    if([[segue identifier] isEqualToString:@"addSegue"]) {
+        
+        UINavigationController *navController = segue.destinationViewController;
+        NewTrainController *destination = (NewTrainController*)navController.topViewController;
+        destination.dataIniziale = self.datepicker.selectedDate;
+    }
 }
+
 
 
 

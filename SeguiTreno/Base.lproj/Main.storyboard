@@ -193,12 +193,40 @@
                                                         <!--2014-11-21 09:11:20 +0000-->
                                                     </date>
                                                 </datePicker>
+                                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DoK-de-zgf">
+                                                    <rect key="frame" x="27" y="121" width="547" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="VBm-Bo-0Ov"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Cambia soluzione">
+                                                        <color key="titleColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="ridisegnaPicker:" destination="kii-7n-TWc" eventType="touchUpInside" id="Llt-h6-Y1O"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="selezionata" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2Y-pa-Mh5">
+                                                    <rect key="frame" x="27" y="9" width="547" height="96"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="96" id="03z-jU-ezw"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="rly-6I-Jt8" firstAttribute="leading" secondItem="owS-hR-eZf" secondAttribute="leading" constant="27" id="33f-Qn-7Wg"/>
+                                                <constraint firstItem="DoK-de-zgf" firstAttribute="top" secondItem="U2Y-pa-Mh5" secondAttribute="bottom" constant="16" id="65Q-Ws-Lud"/>
+                                                <constraint firstAttribute="trailing" secondItem="DoK-de-zgf" secondAttribute="trailing" constant="26" id="7YF-71-jzL"/>
+                                                <constraint firstAttribute="trailing" secondItem="U2Y-pa-Mh5" secondAttribute="trailing" constant="26" id="D7z-st-aLK"/>
                                                 <constraint firstItem="rly-6I-Jt8" firstAttribute="top" secondItem="owS-hR-eZf" secondAttribute="top" constant="9" id="RJv-aU-aeG"/>
                                                 <constraint firstAttribute="bottom" secondItem="rly-6I-Jt8" secondAttribute="bottom" constant="8.5" id="VOm-5l-wnY"/>
+                                                <constraint firstItem="U2Y-pa-Mh5" firstAttribute="top" secondItem="owS-hR-eZf" secondAttribute="top" constant="9" id="b6c-7W-Gg2"/>
                                                 <constraint firstAttribute="trailing" secondItem="rly-6I-Jt8" secondAttribute="trailing" constant="26" id="eWr-xn-7zn"/>
+                                                <constraint firstItem="DoK-de-zgf" firstAttribute="leading" secondItem="owS-hR-eZf" secondAttribute="leading" constant="27" id="th9-CL-vA6"/>
+                                                <constraint firstItem="U2Y-pa-Mh5" firstAttribute="leading" secondItem="owS-hR-eZf" secondAttribute="leading" constant="27" id="v71-Tq-sXA"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -209,8 +237,8 @@
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Seleziona viaggio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="q4q-VU-nxB">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                                    <color key="textColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hox-Cf-fun">
@@ -224,17 +252,18 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="ripetizione" id="wtw-e5-PEQ">
+                            <tableViewSection headerTitle="ripetizione" footerTitle="Gli orari dei treni potrebbero cambiare durante il periodo di ripetizione: ti avviseremo per tempo se noteremo modifiche." id="wtw-e5-PEQ">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="z4M-3A-3v9">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z4M-3A-3v9" id="imi-Xk-caC">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="GNT-or-FaQ">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GNT-or-FaQ">
                                                     <rect key="frame" x="8" y="8" width="584" height="29"/>
                                                     <segments>
-                                                        <segment title="2 settimane"/>
+                                                        <segment title="Mai"/>
+                                                        <segment title="15 gg"/>
                                                         <segment title="1 mese"/>
                                                         <segment title="3 mesi"/>
                                                         <segment title="6 mesi"/>
@@ -264,7 +293,9 @@
                     <navigationItem key="navigationItem" title="Nuovo treno" id="gbe-BE-dE7"/>
                     <connections>
                         <outlet property="dataViaggio" destination="3VO-W4-Hyx" id="1bJ-Do-igg"/>
+                        <outlet property="labelSoluzione" destination="U2Y-pa-Mh5" id="hQT-ma-01Y"/>
                         <outlet property="pickDataViaggio" destination="rly-6I-Jt8" id="S1O-wk-2Rk"/>
+                        <outlet property="selezionaAltro" destination="DoK-de-zgf" id="eZU-bk-2PR"/>
                         <outlet property="soluzioneViaggio" destination="O47-tc-Fql" id="PId-ze-hzQ"/>
                         <outlet property="stazioneDestinazione" destination="1rR-Fk-oUX" id="i2q-7Z-6Pe"/>
                         <outlet property="stazionePartenza" destination="BWa-lI-ytv" id="Zbu-wu-Ftl"/>

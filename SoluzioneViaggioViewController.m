@@ -47,11 +47,18 @@
             Stazione *partenza = [[Stazione alloc] init];
             Stazione *arrivo = [[Stazione alloc] init];
             
+            //NSLog(@"%@",self.query.partenza.idStazione);
+            
+            
+            partenza.nome = self.query.partenza.nome;
+            
+            arrivo.nome = self.query.arrivo.nome;
+             
             partenza.idStazione            = [self.query.partenza cleanId];
             arrivo.idStazione       = [self.query.arrivo cleanId];
             
-            partenza.nome      = [solDict objectForKey:@"origine"];
-            arrivo.nome = [solDict objectForKey:@"destinazione"];
+            //partenza.nome      = [solDict objectForKey:@"origine"];
+            //arrivo.nome = [solDict objectForKey:@"destinazione"];
             
             soluzione.partenza = partenza;
             soluzione.arrivo = arrivo;

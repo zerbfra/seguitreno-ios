@@ -17,6 +17,7 @@
 
 @property (strong,nonatomic) NSMutableArray *viaggi;
 
+@property (strong,nonatomic) UIRefreshControl *refreshControl;
 
 @property NSString *text;
 
