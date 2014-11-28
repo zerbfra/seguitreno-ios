@@ -51,6 +51,8 @@
 
 -(void) loadInfo {
     
+    NSLog(@"%@",self.treno.origine.idStazione);
+    
     [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.treno.numero,@"origine":self.treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSArray *response) {
         //NSLog(@"Response: %@", response);
         

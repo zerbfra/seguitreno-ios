@@ -29,6 +29,7 @@
 		1397AB361A27C5870084D478 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1397AB351A27C5870084D478 /* MapKit.framework */; };
 		1397AB3C1A27C6F10084D478 /* DettaglioStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */; };
 		13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */; };
+		13B24A4D1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B24A4C1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m */; };
 		13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */; };
 		13D01EEB1A0BC3B300BDCD05 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE21A0BC3B300BDCD05 /* FMDatabaseAdditions.m */; };
 		13D01EEC1A0BC3B300BDCD05 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE41A0BC3B300BDCD05 /* FMDatabasePool.m */; };
@@ -97,6 +98,8 @@
 		1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioStazioneViewController.m; sourceTree = "<group>"; };
 		13AC56591A14B3BC00492CB6 /* SalvatoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalvatoTableViewCell.h; sourceTree = "<group>"; };
 		13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalvatoTableViewCell.m; sourceTree = "<group>"; };
+		13B24A4B1A28E479009EEFB4 /* TrenoStazioneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrenoStazioneTableViewCell.h; path = ../TrenoStazioneTableViewCell.h; sourceTree = "<group>"; };
+		13B24A4C1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrenoStazioneTableViewCell.m; path = ../TrenoStazioneTableViewCell.m; sourceTree = "<group>"; };
 		13D01EDF1A0BC3B300BDCD05 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		13D01EE11A0BC3B300BDCD05 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -322,6 +325,8 @@
 				13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */,
 				1309253D1A1A24A2003DCD52 /* FermataTableViewCell.h */,
 				1309253E1A1A24A2003DCD52 /* FermataTableViewCell.m */,
+				13B24A4B1A28E479009EEFB4 /* TrenoStazioneTableViewCell.h */,
+				13B24A4C1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m */,
 			);
 			name = "Custom cells";
 			sourceTree = "<group>";
@@ -472,6 +477,7 @@
 				13D01EED1A0BC3B300BDCD05 /* FMDatabaseQueue.m in Sources */,
 				13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */,
 				135CC3B61A0A1F3B0074D079 /* main.m in Sources */,
+				13B24A4D1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m in Sources */,
 				1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */,
 				13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */,
 				130925481A1A3FE4003DCD52 /* Fermata.m in Sources */,

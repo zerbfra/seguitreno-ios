@@ -7,6 +7,8 @@
 //
 
 #import "DettaglioStazioneViewController.h"
+#import "DettaglioTrenoViewController.h"
+#import "TrenoStazioneTableViewCell.h"
 
 #define MINIMUM_ZOOM_ARC 0.014 //approximately 1 miles (1 degree of arc ~= 69 miles)
 #define ANNOTATION_REGION_PAD_FACTOR 1.15
@@ -106,8 +108,8 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
    
-    if(section == 0) return @"PARTENZE";
-    else return @"ARRIVI";
+    if(section == 0) return @"PARTENZE PER:";
+    else return @"ARRIVI DA:";
     
 }
 
@@ -130,35 +132,51 @@
     }
 }
 
+/*
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if(indexPath.section == 0)
+    [self performSegueWithIdentifier:@"dettaglioTreno" sender:[self.treniPartenza objectAtIndex:indexPath.row]];
+    else [self performSegueWithIdentifier:@"dettaglioTreno" sender:[self.treniArrivo objectAtIndex:indexPath.row]];
+
+    
+}
+ */
+
 
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"trainCell" forIndexPath:indexPath];
+     TrenoStazioneTableViewCell *cell = (TrenoStazioneTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"trainCell" forIndexPath:indexPath];
  
-     
+
+
      
      if(indexPath.section == 0) {
          //partenze
          if([self.treniPartenza count] > 0) {
              Treno *partenza = [self.treniPartenza objectAtIndex:indexPath.row];
-             cell.textLabel.text = [partenza stringaDescrizione];
-             cell.detailTextLabel.text = [NSString stringWithFormat:@"A: %@",partenza.destinazione.nome];
+             cell.treno.text = [partenza stringaDescrizione];
+             cell.info.text = partenza.destinazione.nome;
+             [cell setRitardo:partenza.ritardo];
          } else {
-             cell.detailTextLabel.text = @""; //BUG IOS8
-             cell.textLabel.text = @"Nessun treno in partenza";
+             cell.treno.text = @"";
+             cell.info.text = @"Nessun treno in partenza";
          }
          
      } else {
          //arrivi
          if([self.treniArrivo count] > 0) {
              Treno *arrivo = [self.treniArrivo objectAtIndex:indexPath.row];
-             cell.textLabel.text = [arrivo stringaDescrizione];
-             cell.detailTextLabel.text = [NSString stringWithFormat:@"Da: %@",arrivo.origine.nome];
+             cell.treno.text = [arrivo stringaDescrizione];
+             cell.info.text = arrivo.origine.nome;
+             [cell setRitardo:arrivo.ritardo];
          } else {
-             cell.textLabel.text = @"Nessun treno in arrivo";
-             cell.detailTextLabel.text = @"";
+             cell.treno.text = @"Nessun treno in arrivo";
+             cell.info.text = @"";
          }
          
      }
+     
+     
 
      return cell;
  }
@@ -211,12 +229,17 @@
                 treno.categoria = [trenoDict objectForKey:@"categoria"];
                 treno.numero = [trenoDict objectForKey:@"numero"];
                 Stazione *destinazione = [[Stazione alloc] init];
-                destinazione.idStazione = [trenoDict objectForKey:@"idDestinazione"];
                 destinazione.nome = [trenoDict objectForKey:@"destinazione"];
+                
+                Stazione *origine = [[Stazione alloc] init];
+                origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
                 
                 [destinazione formattaNome];
                 
+                treno.origine = origine;
                 treno.destinazione = destinazione;
+                
+                treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
                 
                 [self.treniPartenza addObject:treno];
                 
@@ -286,14 +309,27 @@
  */
 
 
-
 /*
-#pragma mark - Navigation
-
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
+    if ([[segue identifier] isEqualToString:@"dettaglioTreno"]) {
+        
+
+        Treno * treno = (Treno*) sender;
+        
+        DettaglioTrenoViewController *destination = (DettaglioTrenoViewController*) [segue destinationViewController];
+        destination.treno = treno;
+        
+        // dico al dettaglio se è il treno della giornata attuale o meno
+        destination.attuale = YES;
+        
+        destination.dataTreno = [NSDate date];
+        
+        
+    }
+    
+
 }
 */
 
