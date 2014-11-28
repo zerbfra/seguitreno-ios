@@ -1,0 +1,300 @@
+//
+//  DettaglioStazioneViewController.m
+//  SeguiTreno
+//
+//  Created by Francesco Zerbinati on 27/11/14.
+//  Copyright (c) 2014 Francesco Zerbinati. All rights reserved.
+//
+
+#import "DettaglioStazioneViewController.h"
+
+#define MINIMUM_ZOOM_ARC 0.014 //approximately 1 miles (1 degree of arc ~= 69 miles)
+#define ANNOTATION_REGION_PAD_FACTOR 1.15
+#define MAX_DEGREES_ARC 360
+
+@interface DettaglioStazioneViewController ()
+
+@end
+
+@implementation DettaglioStazioneViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    
+    [self configuraMappa];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+
+    [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
+    
+    self.treniArrivo = [NSMutableArray array];
+    self.treniPartenza = [NSMutableArray array];
+    
+    [self caricaTreni];
+    
+}
+
+-(void) configuraMappa {
+    
+    self.mapView.delegate = self;
+    self.mapView.mapType = MKMapTypeStandard;
+    
+    NSString *query = [NSString stringWithFormat:@"SELECT lat,lon FROM stazioni WHERE id='%@'",self.stazione.idStazione];
+    NSDictionary *result= [[[DBHelper sharedInstance] executeSQLStatement:query] objectAtIndex:0];
+    
+    CLLocationDegrees lat =  [[result objectForKey:@"lat"] doubleValue];
+    CLLocationDegrees lon = [[result objectForKey:@"lon"] doubleValue];
+    
+    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(lat,lon);
+    
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    [annotation setCoordinate:coord];
+    [annotation setTitle:self.stazione.nome];
+    [self.mapView addAnnotation:annotation];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+//size the mapView region to fit its annotations
+- (void)zoomMapViewToFitAnnotations:(MKMapView *)mapView animated:(BOOL)animated
+{
+    NSArray *annotations = mapView.annotations;
+    NSInteger count = [mapView.annotations count];
+    
+    if ( count == 0) { return; } //bail if no annotations
+    
+    //convert NSArray of id <MKAnnotation> into an MKCoordinateRegion that can be used to set the map size
+    //can't use NSArray with MKMapPoint because MKMapPoint is not an id
+    MKMapPoint points[count]; //C array of MKMapPoint struct
+    for( int i=0; i<count; i++ ) //load points C array by converting coordinates to points
+    {
+        CLLocationCoordinate2D coordinate = [(id <MKAnnotation>)[annotations objectAtIndex:i] coordinate];
+        points[i] = MKMapPointForCoordinate(coordinate);
+    }
+    //create MKMapRect from array of MKMapPoint
+    MKMapRect mapRect = [[MKPolygon polygonWithPoints:points count:count] boundingMapRect];
+    //convert MKCoordinateRegion from MKMapRect
+    MKCoordinateRegion region = MKCoordinateRegionForMapRect(mapRect);
+    
+    //add padding so pins aren't scrunched on the edges
+    region.span.latitudeDelta  *= ANNOTATION_REGION_PAD_FACTOR;
+    region.span.longitudeDelta *= ANNOTATION_REGION_PAD_FACTOR;
+    //but padding can't be bigger than the world
+    if( region.span.latitudeDelta > MAX_DEGREES_ARC ) { region.span.latitudeDelta  = MAX_DEGREES_ARC; }
+    if( region.span.longitudeDelta > MAX_DEGREES_ARC ){ region.span.longitudeDelta = MAX_DEGREES_ARC; }
+    
+    //and don't zoom in stupid-close on small samples
+    if( region.span.latitudeDelta  < MINIMUM_ZOOM_ARC ) { region.span.latitudeDelta  = MINIMUM_ZOOM_ARC; }
+    if( region.span.longitudeDelta < MINIMUM_ZOOM_ARC ) { region.span.longitudeDelta = MINIMUM_ZOOM_ARC; }
+    //and if there is a sample of 1 we want the max zoom-in instead of max zoom-out
+    if( count == 1 )
+    {
+        region.span.latitudeDelta = MINIMUM_ZOOM_ARC;
+        region.span.longitudeDelta = MINIMUM_ZOOM_ARC;
+    }
+    [mapView setRegion:region animated:animated];
+}
+
+
+#pragma mark - Table view data source
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+   
+    if(section == 0) return @"PARTENZE";
+    else return @"ARRIVI";
+    
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    // Return the number of sections.
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    if(section == 0) {
+        if([self.treniPartenza count] > 0) return [self.treniPartenza count];
+        else return 1;
+    }
+    else {
+        if([self.treniArrivo count] > 0) return [self.treniArrivo count];
+        else return 1;
+    }
+}
+
+
+ - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"trainCell" forIndexPath:indexPath];
+ 
+     
+     
+     if(indexPath.section == 0) {
+         //partenze
+         if([self.treniPartenza count] > 0) {
+             Treno *partenza = [self.treniPartenza objectAtIndex:indexPath.row];
+             cell.textLabel.text = [partenza stringaDescrizione];
+             cell.detailTextLabel.text = [NSString stringWithFormat:@"A: %@",partenza.destinazione.nome];
+         } else {
+             cell.detailTextLabel.text = @""; //BUG IOS8
+             cell.textLabel.text = @"Nessun treno in partenza";
+         }
+         
+     } else {
+         //arrivi
+         if([self.treniArrivo count] > 0) {
+             Treno *arrivo = [self.treniArrivo objectAtIndex:indexPath.row];
+             cell.textLabel.text = [arrivo stringaDescrizione];
+             cell.detailTextLabel.text = [NSString stringWithFormat:@"Da: %@",arrivo.origine.nome];
+         } else {
+             cell.textLabel.text = @"Nessun treno in arrivo";
+             cell.detailTextLabel.text = @"";
+         }
+         
+     }
+
+     return cell;
+ }
+
+
+-(void) caricaTreni {
+    
+    NSLog(@"%@",self.stazione.idStazione);
+    
+    // creo un gruppo di dispatch
+    dispatch_group_t group = dispatch_group_create();
+
+        
+        dispatch_group_enter(group);
+        
+        [[APIClient sharedClient] requestWithPath:@"treniArrivo" andParams:@{@"stazione":self.stazione.idStazione} completion:^(NSArray *response) {
+            NSLog(@"%@",response);
+            
+            for(NSDictionary *trenoDict in response) {
+                // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
+                Treno *treno = [[Treno alloc] init];
+                treno.categoria = [trenoDict objectForKey:@"categoria"];
+                treno.numero = [trenoDict objectForKey:@"numero"];
+                Stazione *origine = [[Stazione alloc] init];
+                origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
+                origine.nome = [trenoDict objectForKey:@"origine"];
+                
+                [origine formattaNome];
+                
+                treno.origine = origine;
+                
+                [self.treniArrivo addObject:treno];
+                
+            }
+            
+            
+            
+            dispatch_group_leave(group);
+            
+        }];
+        
+        dispatch_group_enter(group);
+        
+        [[APIClient sharedClient] requestWithPath:@"treniPartenza" andParams:@{@"stazione":self.stazione.idStazione} completion:^(NSArray *response) {
+            NSLog(@"%@",response);
+            
+            for(NSDictionary *trenoDict in response) {
+                // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
+                Treno *treno = [[Treno alloc] init];
+                treno.categoria = [trenoDict objectForKey:@"categoria"];
+                treno.numero = [trenoDict objectForKey:@"numero"];
+                Stazione *destinazione = [[Stazione alloc] init];
+                destinazione.idStazione = [trenoDict objectForKey:@"idDestinazione"];
+                destinazione.nome = [trenoDict objectForKey:@"destinazione"];
+                
+                [destinazione formattaNome];
+                
+                treno.destinazione = destinazione;
+                
+                [self.treniPartenza addObject:treno];
+                
+            }
+            
+            dispatch_group_leave(group);
+            
+        }];
+        
+    
+    
+    
+    // Here we wait for all the requests to finish
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        // Do whatever you need to do when all requests are finished
+        NSLog(@"Finito le richieste al server");
+        [self.tableView reloadData];
+ 
+    });
+    
+}
+
+
+
+/*
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
+
+/*
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+ } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
+
+/*
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
+
+/*
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

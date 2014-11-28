@@ -860,11 +860,78 @@
                         <outlet property="stazioneP" destination="Z42-Ue-A3M" id="X8a-Hd-xvz"/>
                         <outlet property="tableView" destination="32y-tC-Uzu" id="AtR-bT-NYV"/>
                         <outlet property="ultimoRilevamento" destination="qRI-ru-fek" id="i9g-8V-N1w"/>
+                        <segue destination="ni6-Zm-9gR" kind="show" identifier="dettaglioStazione" id="XZL-GM-sGO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6zN-FV-g0v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2849" y="1060"/>
+        </scene>
+        <!--Dettaglio Stazione View Controller-->
+        <scene sceneID="jxR-2C-F9a">
+            <objects>
+                <viewController id="ni6-Zm-9gR" customClass="DettaglioStazioneViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zwb-5q-Z4A"/>
+                        <viewControllerLayoutGuide type="bottom" id="wz4-NW-1Wu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zIO-As-fh3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsBuildings="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDx-lI-evk">
+                                <rect key="frame" x="0.0" y="64" width="600" height="165"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="165" id="j6T-42-AIe"/>
+                                </constraints>
+                            </mapView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="9sr-yd-YJ5">
+                                <rect key="frame" x="0.0" y="229" width="600" height="322"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="trainCell" textLabel="R3f-ZC-fZ3" detailTextLabel="Etx-zh-9qD" style="IBUITableViewCellStyleSubtitle" id="klz-uK-YWl">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="klz-uK-YWl" id="EAo-B5-LmF">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R3f-ZC-fZ3">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Etx-zh-9qD">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="9sr-yd-YJ5" secondAttribute="trailing" id="9Cm-D0-my3"/>
+                            <constraint firstItem="MDx-lI-evk" firstAttribute="top" secondItem="zwb-5q-Z4A" secondAttribute="bottom" id="Lvt-XP-6QS"/>
+                            <constraint firstItem="9sr-yd-YJ5" firstAttribute="top" secondItem="MDx-lI-evk" secondAttribute="bottom" id="OxF-0O-apI"/>
+                            <constraint firstItem="9sr-yd-YJ5" firstAttribute="leading" secondItem="zIO-As-fh3" secondAttribute="leading" id="T4b-zK-omO"/>
+                            <constraint firstAttribute="trailing" secondItem="MDx-lI-evk" secondAttribute="trailing" id="Uw9-We-IOM"/>
+                            <constraint firstItem="MDx-lI-evk" firstAttribute="leading" secondItem="zIO-As-fh3" secondAttribute="leading" id="i9Q-8q-ZGO"/>
+                            <constraint firstItem="wz4-NW-1Wu" firstAttribute="top" secondItem="9sr-yd-YJ5" secondAttribute="bottom" id="y3s-mQ-9r8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="MDx-lI-evk" id="ot0-16-DhF"/>
+                        <outlet property="tableView" destination="9sr-yd-YJ5" id="mCc-1b-ZYf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZoV-Hd-Fdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3525" y="1060"/>
         </scene>
     </scenes>
 </document>

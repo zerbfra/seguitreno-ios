@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DettaglioStazioneViewController.h"
 
 @interface DettaglioTrenoViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
