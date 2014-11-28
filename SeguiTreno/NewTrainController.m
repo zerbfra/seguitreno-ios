@@ -339,7 +339,7 @@
             break;
         case 1:
             //NSLog(@"2 settimane");
-            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:14 toDate:self.viaggio.data];
+            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:7 toDate:self.viaggio.data];
             self.ripetizioneSel = 1;
             break;
         case 2:

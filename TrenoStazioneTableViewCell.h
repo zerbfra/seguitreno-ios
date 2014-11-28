@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UIView *status;
 @property (weak, nonatomic) IBOutlet UILabel *info;
 @property (weak, nonatomic) IBOutlet UILabel *treno;
+@property (weak, nonatomic) IBOutlet UILabel *orario;
 
 -(void) setRitardo:(NSInteger) ritardo;
 

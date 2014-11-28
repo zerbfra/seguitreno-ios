@@ -33,6 +33,9 @@
     self.treniArrivo = [NSMutableArray array];
     self.treniPartenza = [NSMutableArray array];
     
+    self.navigationItem.title = self.stazione.nome;
+
+    
     [self caricaTreni];
     
 }
@@ -156,6 +159,7 @@
              Treno *partenza = [self.treniPartenza objectAtIndex:indexPath.row];
              cell.treno.text = [partenza stringaDescrizione];
              cell.info.text = partenza.destinazione.nome;
+             cell.orario.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:partenza.orarioPartenza]];
              [cell setRitardo:partenza.ritardo];
          } else {
              cell.treno.text = @"";
@@ -168,6 +172,7 @@
              Treno *arrivo = [self.treniArrivo objectAtIndex:indexPath.row];
              cell.treno.text = [arrivo stringaDescrizione];
              cell.info.text = arrivo.origine.nome;
+             cell.orario.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:arrivo.orarioArrivo]];
              [cell setRitardo:arrivo.ritardo];
          } else {
              cell.treno.text = @"Nessun treno in arrivo";
@@ -207,7 +212,8 @@
                 [origine formattaNome];
                 
                 treno.origine = origine;
-                
+                treno.orarioArrivo = [[trenoDict objectForKey:@"orarioArrivo"] intValue];
+                treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
                 [self.treniArrivo addObject:treno];
                 
             }
@@ -240,7 +246,7 @@
                 treno.destinazione = destinazione;
                 
                 treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
-                
+                treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] intValue];
                 [self.treniPartenza addObject:treno];
                 
             }
