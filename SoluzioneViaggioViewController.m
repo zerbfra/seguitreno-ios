@@ -99,7 +99,8 @@
             
             soluzione.durata            = [solDict objectForKey:@"durata"];
             
-            // aggiungo l'oggetto agli oggetti remoti
+            // aggiungo l'oggetto agli oggetti remoti, solo con meno di 5 treni/4cambi (in teoria trenitalia non fornisce soluzioni più ampie, dummy di conseguenza)
+            if([soluzione.tragitto count] < 5)
             [self.soluzioniPossibili addObject:soluzione];
             
         }

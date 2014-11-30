@@ -28,8 +28,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *soluzioneViaggio;
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *pickDataViaggio;
-@property (weak, nonatomic) IBOutlet UILabel *labelSoluzione;
-@property (weak, nonatomic) IBOutlet UIButton *selezionaAltro;
+
 - (IBAction)ridisegnaPicker:(id)sender;
 
 

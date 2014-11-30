@@ -85,29 +85,36 @@
     
     self.trenoCompilato = TRUE;
     
+    // celle da cancellare
+    /*
     NSArray *deleteIndexPaths = [[NSArray alloc] initWithObjects:
-                               
+                                 [NSIndexPath indexPathForRow:0 inSection:1],
                                  [NSIndexPath indexPathForRow:1 inSection:1],
                                  nil];
     
+    // celle da inserire (una per ogni treno della soluzione viaggio)
+    NSMutableArray *rows = [NSMutableArray array];
+    for (int i = 0; i < [self.viaggio.tragitto count]; i++) [rows addObject:[NSIndexPath indexPathForRow:i inSection:1]];
     
-    self.labelSoluzione.text = [NSString stringWithFormat:@"%@\n alle ore %@",[[DateUtils shared] showDateMedium:[self.viaggio orarioPartenza]],[[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]]];
+    // aggiorno con inserimenti e cancellazioni
     
-
-    
-    [UIView animateWithDuration:0.3 animations:^() {
-        self.selezionaAltro.alpha = 1.0;
-        self.labelSoluzione.alpha = 1.0;
-        self.pickDataViaggio.alpha = 0.0;
-    }];
-    
+    [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView insertRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationFade];
+    // inserisco cella con opzione per il cambio soluzione
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+     */
+    
     [self.tableView reloadData];
-
+    
+  
+    
     //aggiorno la fine ripetizione in base a quello che è selezionato
     [self gestisciRipetizione:self.ripetizioneSel];
     
 }
+
 
 
 -(void)salva {
@@ -264,19 +271,57 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     // Return the number of sections.
-    return 3;
+    return 4;
 
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
+    switch (section) {
+        case 0:
+            return 2;
+            break;
+        case 1:
+            if(self.trenoCompilato) return [self.viaggio.tragitto count];
+            else return 2;
+        case 2:
+            if(self.trenoCompilato) return 1;
+            else return 0;
+        case 3:
+            return 1;
+        default:
+            return 0;
+            break;
+    }
     
-    // Return the number of rows in the section.
-    if(section == 2) return 1;
-    if(self.trenoCompilato && section == 1) return 1;
-    return 2;
 }
 
 
+-(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+  
+    
+    if(indexPath.section == 1 && self.trenoCompilato) {
+        
+        static NSString *cellIdentifier = @"cellTragitto";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+        }
+
+        Treno *trenoCell = self.viaggio.tragitto[indexPath.row];
+        
+        cell.textLabel.text = [trenoCell stringaDescrizione];
+        cell.detailTextLabel.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:trenoCell.orarioPartenza]];
+        
+        return cell;
+    }
+
+    return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    
+}
 
 #pragma mark - Navigation
 
@@ -303,30 +348,41 @@
 }
 
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // se sono in fase di selezione data devo mostrare il datepicker quindi mi serve una cella più alta
+    if(!self.trenoCompilato && indexPath.section == 1 && indexPath.row == 0) {
+            return 180.0;
+    }
+    
+    return 44;
+}
+
 - (IBAction)ridisegnaPicker:(id)sender {
     
     self.trenoCompilato = FALSE;
+    
+    
     NSArray *deleteIndexPaths = [[NSArray alloc] initWithObjects:
+                                 [NSIndexPath indexPathForRow:0 inSection:1],
                                  [NSIndexPath indexPathForRow:1 inSection:1],
                                  nil];
     
-
-    [UIView animateWithDuration:0.3 animations:^() {
-        self.selezionaAltro.alpha = 0.0;
-        self.labelSoluzione.alpha = 0.0;
-        self.pickDataViaggio.alpha = 1.0;
-    }];
     
+    NSMutableArray *rows = [NSMutableArray array];
+    
+    for (int i = 0; i < [self.viaggio.tragitto count]; i++) [rows addObject:[NSIndexPath indexPathForRow:i inSection:1]];
+
+    
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView insertRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+    // rimuovo cella con opzione per il cambio soluzione
+    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
 }
 
 - (IBAction)selezioneRipetizione:(UISegmentedControl *)sender {
-    
-    
     [self gestisciRipetizione:sender.selectedSegmentIndex];
-    
-
-    
 }
 
 -(void) gestisciRipetizione:(NSInteger) selezionato {

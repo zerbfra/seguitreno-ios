@@ -111,7 +111,7 @@
     
     Treno *tmp = self.soluzione.tragitto[section];
     
-    return [NSString stringWithFormat:@"Treno %@",tmp.numero];
+    return [tmp stringaDescrizione];
 }
 
 
