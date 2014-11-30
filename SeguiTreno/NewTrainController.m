@@ -79,7 +79,7 @@
     // importo la data
     self.viaggio.data = [self.viaggio orarioPartenza];
     // orario selezionato
-    self.soluzioneViaggio.detailTextLabel.text =  [[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]];
+    //self.soluzioneViaggio.detailTextLabel.text =  [[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]];
     
 
     
@@ -115,7 +115,21 @@
     
 }
 
-
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return @"DATI VIAGGIO";
+            break;
+        case 1:
+            if(!self.trenoCompilato) return @"QUANDO";
+            else return [NSString stringWithFormat:@"VIAGGIO DEL %@",[[DateUtils shared] showDateMedium:self.viaggio.data]];
+        case 2:
+            return @"RIPETIZIONE";
+        default:
+            return nil;
+            break;
+    }
+}
 
 -(void)salva {
     //NSLog(@"Preparo salvataggio treno...");

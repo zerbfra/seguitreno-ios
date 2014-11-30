@@ -35,7 +35,7 @@
     NSDate *nextDate = [date dateByAddingTimeInterval:(7*24*3600)];
     //NSLog(@"%@",[[DateUtils shared] showDateAndHHmm:nextDate]);
     
-    if ([nextDate compare:finish] == NSOrderedAscending) {
+    if ([nextDate compare:finish] == NSOrderedAscending || [nextDate compare:finish] == NSOrderedSame) {
         // nextDate minore di finish
         return nextDate;
     } else {
