@@ -10,7 +10,7 @@
 #import "FZDatepicker.h"
 #import "SalvatoTableViewCell.h"
 
-@interface MainViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
+@interface MainViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet FZDatepicker *datepicker;
 @property (weak, nonatomic) IBOutlet UITableView *treniTable;

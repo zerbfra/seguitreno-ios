@@ -264,7 +264,104 @@
     
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    
+    NSString *titolo;
+    
+    if([self.viaggi count] > 0) {
+        Viaggio *viaggioSezione = [self.viaggi objectAtIndex:section];
+        titolo = [NSString stringWithFormat:@"%@  %@ → %@",viaggioSezione.durata,[viaggioSezione luogoPartenza],[viaggioSezione luogoArrivo]];
+    }
+    
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 22)];
+    headerView.backgroundColor = [UIColor lightGrayColor];
+    
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(8, 0, 350, 22)];
+    headerLabel.text = titolo;
+    headerLabel.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
+    headerLabel.textColor = [UIColor whiteColor];
+    [headerView addSubview:headerLabel];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.tag = section;
+    button.frame = CGRectMake(tableView.frame.size.width - 20, 3, 18, 16);
 
+    [button setImage:[UIImage imageNamed:@"trash"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+
+    [headerView addSubview:button];
+    return headerView;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 22.0;
+}
+
+-(void)deleteButtonPressed:(id)sender {
+    // devo rimuovere il viaggio
+    UIButton *button = (UIButton*) sender;
+    Viaggio *viaggio = [self.viaggi objectAtIndex:button.tag];
+    
+    NSLog(@"Viaggio da cancellare: %@",viaggio.idViaggio);
+    
+    UIAlertView *deleteAlert = [[UIAlertView alloc] initWithTitle:@"Cancella viaggio" message:@"Sei sicuro di voler cancellare il viaggio?" delegate:self cancelButtonTitle:@"Annulla" otherButtonTitles:@"Solo questa volta",@"Cancella tutti", nil];
+    deleteAlert.tag = [viaggio.idViaggio intValue];
+    [deleteAlert show];
+
+
+}
+
+-(void) cancellaSoluzioni:(NSInteger) idViaggio {
+    
+    NSString *query = [NSString stringWithFormat:@"SELECT idViaggio FROM ripetizioni where id = (SELECT id FROM ripetizioni  WHERE idViaggio = '%ld')",idViaggio];
+    NSArray *idViaggi =  [[DBHelper sharedInstance] executeSQLStatement:query];
+        
+    for (NSDictionary* cancella in idViaggi) {
+        
+        NSInteger idCancella = [[cancella objectForKey:@"idViaggio"] intValue];
+        
+        [self cancellaViaggio:idCancella];
+        // nel caso di rimozione di cancellazioni di tutti, pulisco anche il treno
+        query = [NSString stringWithFormat:@"DELETE FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%ld')",idCancella];
+        [[DBHelper sharedInstance] executeSQLStatement:query];
+
+        
+        
+    }
+}
+
+-(void) cancellaViaggio:(NSInteger) idViaggio {
+    
+        NSString *query = [NSString stringWithFormat:@"DELETE FROM viaggi where id = '%ld'",idViaggio];
+        [[DBHelper sharedInstance] executeSQLStatement:query];
+        query =  [NSString stringWithFormat:@"DELETE FROM ripetizioni WHERE idViaggio = '%ld'",idViaggio];
+        [[DBHelper sharedInstance] executeSQLStatement:query];
+        query =  [NSString stringWithFormat:@"DELETE FROM 'treni-viaggi' WHERE idViaggio = '%ld'",idViaggio];
+        [[DBHelper sharedInstance] executeSQLStatement:query];
+    
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    // a seconda di cosa viene premuto cancello il viaggio corrispondente (intero salvato nel tag)
+    
+    switch (buttonIndex) {
+        case 1:
+             [self cancellaViaggio:alertView.tag];
+            break;
+        case 2:
+            [self cancellaSoluzioni:alertView.tag];
+        default:
+            break;
+    }
+    
+    // quindi reload
+    [self caricaViaggi];
+}
+
+/*
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSString *titolo;
@@ -280,6 +377,7 @@
     
     return titolo;
 }
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
