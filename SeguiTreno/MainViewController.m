@@ -323,7 +323,7 @@
         NSInteger idCancella = [[cancella objectForKey:@"idViaggio"] intValue];
         
         [self cancellaViaggio:idCancella];
-        // nel caso di rimozione di cancellazioni di tutti, pulisco anche il treno
+        // nel caso di rimozione di cancellazioni di tutti, pulisco anche il treno //bugghino (potrebbero restarne - non me ne frega più di tanto)
         query = [NSString stringWithFormat:@"DELETE FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%ld')",idCancella];
         [[DBHelper sharedInstance] executeSQLStatement:query];
 

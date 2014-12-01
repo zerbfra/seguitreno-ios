@@ -198,7 +198,7 @@
         dispatch_group_enter(group);
         
         [[APIClient sharedClient] requestWithPath:@"treniArrivo" andParams:@{@"stazione":self.stazione.idStazione} completion:^(NSArray *response) {
-            NSLog(@"%@",response);
+            //NSLog(@"%@",response);
             
             for(NSDictionary *trenoDict in response) {
                 // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
@@ -227,7 +227,7 @@
         dispatch_group_enter(group);
         
         [[APIClient sharedClient] requestWithPath:@"treniPartenza" andParams:@{@"stazione":self.stazione.idStazione} completion:^(NSArray *response) {
-            NSLog(@"%@",response);
+            //NSLog(@"%@",response);
             
             for(NSDictionary *trenoDict in response) {
                 // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
