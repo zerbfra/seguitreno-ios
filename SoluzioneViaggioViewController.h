@@ -15,6 +15,7 @@
 
 @property (strong,nonatomic) Viaggio *query;
 
-//@property (weak, nonatomic) id delegateNext;
+
+-(void) trovaSoluzioniTreno;
 
 @end

@@ -20,6 +20,9 @@
 		135CC3DD1A0A1F6D0074D079 /* FZDatepicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3DA1A0A1F6D0074D079 /* FZDatepicker.m */; };
 		135CC3DE1A0A1F6D0074D079 /* FZDatepickerDateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3DC1A0A1F6D0074D079 /* FZDatepickerDateView.m */; };
 		13650BB41A0A5F14000F2F51 /* NewTrainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13650BB31A0A5F14000F2F51 /* NewTrainController.m */; };
+		1376AAA51A2CBAF400C55F6F /* RicercaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1376AAA41A2CBAF400C55F6F /* RicercaViewController.m */; };
+		1376AAAC1A2D1E1000C55F6F /* RisultatiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1376AAAB1A2D1E1000C55F6F /* RisultatiViewController.m */; };
+		1376AAAF1A2D22E200C55F6F /* RisultatoRicercaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1376AAAE1A2D22E200C55F6F /* RisultatoRicercaTableViewCell.m */; };
 		137941F31A17CFBB000D45E1 /* seguitreno.db in Resources */ = {isa = PBXBuildFile; fileRef = 137941F21A17CDC5000D45E1 /* seguitreno.db */; };
 		137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86CF1A0CB65E00D31838 /* MainViewController.m */; };
 		137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */; };
@@ -82,6 +85,12 @@
 		135CC3E51A0A203C0074D079 /* SeguiTreno-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SeguiTreno-Prefix.pch"; sourceTree = "<group>"; };
 		13650BB21A0A5F14000F2F51 /* NewTrainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTrainController.h; sourceTree = "<group>"; };
 		13650BB31A0A5F14000F2F51 /* NewTrainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTrainController.m; sourceTree = "<group>"; };
+		1376AAA31A2CBAF400C55F6F /* RicercaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RicercaViewController.h; sourceTree = "<group>"; };
+		1376AAA41A2CBAF400C55F6F /* RicercaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RicercaViewController.m; sourceTree = "<group>"; };
+		1376AAAA1A2D1E1000C55F6F /* RisultatiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RisultatiViewController.h; sourceTree = "<group>"; };
+		1376AAAB1A2D1E1000C55F6F /* RisultatiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RisultatiViewController.m; sourceTree = "<group>"; };
+		1376AAAD1A2D22E200C55F6F /* RisultatoRicercaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RisultatoRicercaTableViewCell.h; sourceTree = "<group>"; };
+		1376AAAE1A2D22E200C55F6F /* RisultatoRicercaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RisultatoRicercaTableViewCell.m; sourceTree = "<group>"; };
 		137941F21A17CDC5000D45E1 /* seguitreno.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = seguitreno.db; sourceTree = "<group>"; };
 		137D86CE1A0CB65E00D31838 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		137D86CF1A0CB65E00D31838 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -248,6 +257,7 @@
 				130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */,
 				1397AB3A1A27C6F10084D478 /* DettaglioStazioneViewController.h */,
 				1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */,
+				1376AAA91A2D1DEA00C55F6F /* Cerca Treno */,
 				13D829C11A0CBA07008433E6 /* Custom cells */,
 			);
 			name = Views;
@@ -260,6 +270,17 @@
 				135CC3DF1A0A1F730074D079 /* Datepicker */,
 			);
 			name = "UI Elements";
+			sourceTree = "<group>";
+		};
+		1376AAA91A2D1DEA00C55F6F /* Cerca Treno */ = {
+			isa = PBXGroup;
+			children = (
+				1376AAA31A2CBAF400C55F6F /* RicercaViewController.h */,
+				1376AAA41A2CBAF400C55F6F /* RicercaViewController.m */,
+				1376AAAA1A2D1E1000C55F6F /* RisultatiViewController.h */,
+				1376AAAB1A2D1E1000C55F6F /* RisultatiViewController.m */,
+			);
+			name = "Cerca Treno";
 			sourceTree = "<group>";
 		};
 		137F4DF51A135E5800B9E77E /* DateUtils */ = {
@@ -327,6 +348,8 @@
 				1309253E1A1A24A2003DCD52 /* FermataTableViewCell.m */,
 				13B24A4B1A28E479009EEFB4 /* TrenoStazioneTableViewCell.h */,
 				13B24A4C1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m */,
+				1376AAAD1A2D22E200C55F6F /* RisultatoRicercaTableViewCell.h */,
+				1376AAAE1A2D22E200C55F6F /* RisultatoRicercaTableViewCell.m */,
 			);
 			name = "Custom cells";
 			sourceTree = "<group>";
@@ -480,6 +503,7 @@
 				13B24A4D1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m in Sources */,
 				1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */,
 				13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */,
+				1376AAAC1A2D1E1000C55F6F /* RisultatiViewController.m in Sources */,
 				130925481A1A3FE4003DCD52 /* Fermata.m in Sources */,
 				137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */,
 				135CC3DE1A0A1F6D0074D079 /* FZDatepickerDateView.m in Sources */,
@@ -488,11 +512,13 @@
 				1309253B1A1A17A3003DCD52 /* JourneyProgressView.m in Sources */,
 				137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */,
 				1304EB201A0D0B0900C2DC12 /* Viaggio.m in Sources */,
+				1376AAA51A2CBAF400C55F6F /* RicercaViewController.m in Sources */,
 				137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */,
 				13FF514F1A0BCD59005A8409 /* SearchStazioneViewController.m in Sources */,
 				1397AB3C1A27C6F10084D478 /* DettaglioStazioneViewController.m in Sources */,
 				13D01EF21A0BC3D800BDCD05 /* DBHelper.m in Sources */,
 				13650BB41A0A5F14000F2F51 /* NewTrainController.m in Sources */,
+				1376AAAF1A2D22E200C55F6F /* RisultatoRicercaTableViewCell.m in Sources */,
 				13D829C01A0CBA00008433E6 /* SoluzioneTableViewCell.m in Sources */,
 				137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */,
 			);

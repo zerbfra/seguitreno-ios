@@ -125,7 +125,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jPu-aS-8th" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2849" y="157"/>
+            <point key="canvasLocation" x="2735" y="157"/>
         </scene>
         <!--Nuovo treno-->
         <scene sceneID="dgX-KC-FUh">
@@ -406,7 +406,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lik-PP-QCh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4601" y="157"/>
+            <point key="canvasLocation" x="4841" y="1085"/>
         </scene>
         <!--Search Stazione View Controller-->
         <scene sceneID="f5e-JP-Qu9">
@@ -453,7 +453,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="5356" y="157"/>
+            <point key="canvasLocation" x="4418" y="1928"/>
         </scene>
         <!--Dettaglio Soluzione View Controller-->
         <scene sceneID="4Ep-aC-Rek">
@@ -613,7 +613,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8AX-bz-vYw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6098" y="906"/>
+            <point key="canvasLocation" x="6238" y="1928"/>
         </scene>
         <!--Soluzione Viaggio View Controller-->
         <scene sceneID="sMJ-Qd-Rly">
@@ -700,7 +700,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bmg-h0-8Yz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5356" y="906"/>
+            <point key="canvasLocation" x="5225" y="1920"/>
         </scene>
         <!--Item-->
         <scene sceneID="pGv-Oj-HG4">
@@ -724,7 +724,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9FC-Zb-s8g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2034" y="157"/>
+            <point key="canvasLocation" x="1794" y="157"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KDj-as-5PV">
@@ -745,7 +745,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QNf-dH-NGR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3758" y="157"/>
+            <point key="canvasLocation" x="3998" y="1085"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="uCg-Lo-OZe">
@@ -760,11 +760,12 @@
                     </tabBar>
                     <connections>
                         <segue destination="gay-i4-UpN" kind="relationship" relationship="viewControllers" id="AG4-Ks-WDY"/>
+                        <segue destination="AdZ-U2-d3n" kind="relationship" relationship="viewControllers" id="Zxu-bt-yyp"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTy-QC-lRe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1223" y="157"/>
+            <point key="canvasLocation" x="967" y="157"/>
         </scene>
         <!--Dettaglio Treno View Controller-->
         <scene sceneID="CDY-mA-cUQ">
@@ -965,7 +966,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6zN-FV-g0v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2849" y="1605"/>
+            <point key="canvasLocation" x="3998" y="157"/>
         </scene>
         <!--Dettaglio Stazione View Controller-->
         <scene sceneID="jxR-2C-F9a">
@@ -1004,7 +1005,7 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bx9-Vi-5jn">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bx9-Vi-5jn">
                                                     <rect key="frame" x="14" y="19" width="12" height="12"/>
                                                     <color key="backgroundColor" red="0.98431372549999996" green="0.20392156859999999" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -1034,7 +1035,7 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Bx9-Vi-5jn" firstAttribute="top" secondItem="EAo-B5-LmF" secondAttribute="top" constant="14" id="3aX-Vq-Xaf"/>
+                                                <constraint firstItem="Bx9-Vi-5jn" firstAttribute="top" secondItem="EAo-B5-LmF" secondAttribute="top" constant="19" id="3aX-Vq-Xaf"/>
                                                 <constraint firstItem="Jwh-bX-0HN" firstAttribute="top" secondItem="EAo-B5-LmF" secondAttribute="top" constant="5" id="8HE-gN-Kd4"/>
                                                 <constraint firstAttribute="trailing" secondItem="EXE-JB-cUa" secondAttribute="trailing" constant="41" id="AdY-G1-mWi"/>
                                                 <constraint firstItem="EXE-JB-cUa" firstAttribute="top" secondItem="EAo-B5-LmF" secondAttribute="top" constant="14" id="Wx6-2Z-aYp"/>
@@ -1073,7 +1074,256 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZoV-Hd-Fdt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3535" y="1605"/>
+            <point key="canvasLocation" x="4841" y="157"/>
+        </scene>
+        <!--Cerca Treno-->
+        <scene sceneID="0ec-6L-3aR">
+            <objects>
+                <tableViewController id="ufe-eL-K9J" customClass="RicercaViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Iy6-AC-jIT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="CERCA PER STAZIONE" id="uK6-xq-qEN">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="fva-cv-z9c" detailTextLabel="mlI-1Z-yxq" style="IBUITableViewCellStyleValue1" id="8PT-xk-TPP">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8PT-xk-TPP" id="iOl-i9-0TZ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Partenza" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fva-cv-z9c">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mlI-1Z-yxq">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell tag="1" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="lJv-rm-6IP" detailTextLabel="7rd-zb-fwQ" style="IBUITableViewCellStyleValue1" id="310-EH-mQz">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="310-EH-mQz" id="OlB-9f-crw">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Destinazione" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lJv-rm-6IP">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7rd-zb-fwQ">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="0Yd-Jc-UPY">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0Yd-Jc-UPY" id="x2E-qj-hIY">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="x1R-oF-JpQ">
+                                                    <rect key="frame" x="8" y="8" width="584" height="29"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="28" id="2H8-bZ-BFB"/>
+                                                    </constraints>
+                                                    <segments>
+                                                        <segment title="Mattina"/>
+                                                        <segment title="Pomeriggio"/>
+                                                        <segment title="Sera"/>
+                                                    </segments>
+                                                    <color key="tintColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="selezioneFascia:" destination="ufe-eL-K9J" eventType="valueChanged" id="5fE-Aq-u2A"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="x1R-oF-JpQ" secondAttribute="trailing" constant="8" id="OTI-jL-1zu"/>
+                                                <constraint firstItem="x1R-oF-JpQ" firstAttribute="leading" secondItem="x2E-qj-hIY" secondAttribute="leading" constant="8" id="bCo-sa-erR"/>
+                                                <constraint firstItem="x1R-oF-JpQ" firstAttribute="top" secondItem="x2E-qj-hIY" secondAttribute="top" constant="8" id="tqP-qZ-qh5"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="CERCA PER NUMERO TRENO" id="35O-vJ-ccu">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="7Ul-bS-LGQ">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Ul-bS-LGQ" id="Laa-eT-pqf">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Numero treno..." textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Wui-xQ-1uj">
+                                                    <rect key="frame" x="8" y="7" width="584" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="XOA-rH-eDO"/>
+                                                    </constraints>
+                                                    <color key="textColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" returnKeyType="search"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Wui-xQ-1uj" firstAttribute="top" secondItem="Laa-eT-pqf" secondAttribute="top" constant="7" id="Q4a-nU-U18"/>
+                                                <constraint firstItem="Wui-xQ-1uj" firstAttribute="leading" secondItem="Laa-eT-pqf" secondAttribute="leading" constant="8" id="XqI-00-CpI"/>
+                                                <constraint firstAttribute="trailing" secondItem="Wui-xQ-1uj" secondAttribute="trailing" constant="8" id="thZ-lc-4aP"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="z3i-rK-g4C">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="YRr-zK-Our">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YRr-zK-Our" id="Bae-EM-0SE">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B8e-lI-dTf">
+                                                    <rect key="frame" x="8" y="7" width="584" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="i6P-yc-sZy"/>
+                                                    </constraints>
+                                                    <color key="tintColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" title="Cerca">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="search:" destination="ufe-eL-K9J" eventType="touchUpInside" id="5oj-FV-2CO"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="B8e-lI-dTf" firstAttribute="top" secondItem="Bae-EM-0SE" secondAttribute="top" constant="7" id="0Mq-jL-Du4"/>
+                                                <constraint firstItem="B8e-lI-dTf" firstAttribute="leading" secondItem="Bae-EM-0SE" secondAttribute="leading" constant="8" id="efR-qI-7ew"/>
+                                                <constraint firstAttribute="trailing" secondItem="B8e-lI-dTf" secondAttribute="trailing" constant="8" id="lmU-Al-eLr"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="ufe-eL-K9J" id="K3g-i0-LjO"/>
+                            <outlet property="delegate" destination="ufe-eL-K9J" id="fuR-7R-DkA"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Cerca Treno" id="Wh5-8K-9Fi"/>
+                    <connections>
+                        <outlet property="fasciaOraria" destination="x1R-oF-JpQ" id="C2A-HF-vZ3"/>
+                        <outlet property="stazioneDestinazione" destination="310-EH-mQz" id="oVI-0p-08Y"/>
+                        <outlet property="stazionePartenza" destination="8PT-xk-TPP" id="R4H-sR-KuW"/>
+                        <segue destination="PlS-i2-EC4" kind="show" identifier="selezionaStazione" id="IJ0-qI-BuJ"/>
+                        <segue destination="Zp7-VJ-dGJ" kind="show" identifier="cercaSoluzione" id="4dR-dI-Wfp"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Ev-Yp-B6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1862" y="1928"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="3QY-MB-OeB">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AdZ-U2-d3n" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="Aea-hj-wHV"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="u36-zL-09z">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ufe-eL-K9J" kind="relationship" relationship="rootViewController" id="YTl-Uc-kl9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5JY-Kl-c4w" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="959" y="1928"/>
+        </scene>
+        <!--Risultati View Controller-->
+        <scene sceneID="vaa-IA-5qP">
+            <objects>
+                <tableViewController id="Zp7-VJ-dGJ" customClass="RisultatiViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="DQG-R3-OGX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="risultatoRicerca" rowHeight="90" id="mdf-Va-JgX" customClass="RisultatoRicercaTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mdf-Va-JgX" id="wCg-uw-FoW">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="REG 2657" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OyD-TA-ibJ">
+                                            <rect key="frame" x="17" y="6" width="104" height="21"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Milano Lambrate" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uzH-bI-IyM">
+                                            <rect key="frame" x="89" y="35" width="269" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="18:20" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ain-j7-Pue">
+                                            <rect key="frame" x="17" y="58" width="52" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mantova" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7a-Vu-QKS">
+                                            <rect key="frame" x="89" y="58" width="187" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="16:27" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xTw-K1-0Fa">
+                                            <rect key="frame" x="17" y="34" width="52" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="arrivo" destination="g7a-Vu-QKS" id="iB8-gH-bBj"/>
+                                    <outlet property="orarioA" destination="Ain-j7-Pue" id="1AW-PK-Z7y"/>
+                                    <outlet property="orarioP" destination="xTw-K1-0Fa" id="ls7-gy-HzU"/>
+                                    <outlet property="partenza" destination="uzH-bI-IyM" id="sjf-B4-rgU"/>
+                                    <outlet property="treno" destination="OyD-TA-ibJ" id="I2D-ec-BJQ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Zp7-VJ-dGJ" id="sW1-gc-Hx7"/>
+                            <outlet property="delegate" destination="Zp7-VJ-dGJ" id="xY0-hF-Mxe"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <segue destination="Rzc-Ec-67n" kind="show" identifier="dettaglioTreno" id="jZP-VW-fbP"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nKo-iA-OWb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2735" y="1145"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="jZP-VW-fbP"/>
+        <segue reference="BSA-5i-RKd"/>
+    </inferredMetricsTieBreakers>
 </document>
