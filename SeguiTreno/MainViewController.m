@@ -31,6 +31,10 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
     self.navigationItem.rightBarButtonItem = addButton;
     
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(showDelete)];
+    self.navigationItem.leftBarButtonItem = editButton;
+    
+    
     self.treniTable.delegate = self;
     self.treniTable.dataSource = self;
     self.treniTable.backgroundColor = BACKGROUND_COLOR;
@@ -54,6 +58,20 @@
     
     [self caricaViaggi];
     
+    self.treniTable.sectionFooterHeight = 0;
+    
+}
+
+-(void) showDelete {
+
+    if(self.treniTable.sectionFooterHeight == 0) self.treniTable.sectionFooterHeight = 38;
+    else  self.treniTable.sectionFooterHeight = 0;
+    
+    [UIView transitionWithView: self.treniTable duration: 0.2f options: UIViewAnimationOptionTransitionCrossDissolve animations: ^(void) {
+         [self.treniTable reloadData];
+    } completion:nil];
+
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -296,25 +314,37 @@
     return 22.0;
 }
 
+/*
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     
     return 38;
     
 }
+ */
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     
     UIView *footer=[[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,38.0)];
-    footer.backgroundColor = [UIColor redColor];
+    footer.backgroundColor = [UIColor whiteColor];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.tag = section;
-    button.frame = CGRectMake(tableView.frame.size.width/2 - 18, 3, 36, 32);
+    button.frame = CGRectMake(tableView.frame.size.width/2 - 50, 3, 100, 32);
     
-    [button setImage:[UIImage imageNamed:@"trash"] forState:UIControlStateNormal];
+    [button setTitle:@"Cancella" forState:UIControlStateNormal];
+    [button setTitleColor:RED forState:UIControlStateNormal];
+    //[button setImage:[UIImage imageNamed:@"trash"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [footer addSubview:button];
+    
+
+    
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 37, tableView.frame.size.width, 1)];
+    lineView.backgroundColor = COLOR_WITH_RGB(231,231,231);
+    [footer addSubview:lineView];
+   
+    
     
     
     return footer;

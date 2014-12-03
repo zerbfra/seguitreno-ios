@@ -153,8 +153,8 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
     // draw bottom line
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    CGContextSetStrokeColorWithColor(context, COLOR_WITH_RGB(210,209,213).CGColor);
-    CGContextSetLineWidth(context, 0.5f);
+    CGContextSetStrokeColorWithColor(context, COLOR_WITH_RGB(231,231,231).CGColor);
+    CGContextSetLineWidth(context, 1);
     CGContextMoveToPoint(context, 0, rect.size.height - .5);
     CGContextAddLineToPoint(context, rect.size.width, rect.size.height - .5);
     CGContextStrokePath(context);

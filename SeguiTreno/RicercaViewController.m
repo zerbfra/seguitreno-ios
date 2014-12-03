@@ -7,7 +7,7 @@
 //
 
 #import "RicercaViewController.h"
-
+#define kOFFSET_FOR_KEYBOARD 200.0
 
 @interface RicercaViewController ()
 
@@ -37,12 +37,45 @@
 
 -(void) keyboardWillShow:(NSNotification *) note {
     [self.view addGestureRecognizer:self.tapRecognizer];
+    
+    if (self.view.frame.origin.y >= 0) [self setViewMovedUp:YES];
+    
+
+    
 }
 
 -(void) keyboardWillHide:(NSNotification *) note
 {
     [self.view removeGestureRecognizer:self.tapRecognizer];
+    if (self.view.frame.origin.y < 0) [self setViewMovedUp:NO];
 }
+
+// derivato da http://stackoverflow.com/questions/1126726/how-to-make-a-uitextfield-move-up-when-keyboard-is-present
+-(void)setViewMovedUp:(BOOL)movedUp
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3]; // if you want to slide up the view
+    
+    CGRect rect = self.view.frame;
+    if (movedUp)
+    {
+        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+        // 2. increase the size of the view so that the area behind the keyboard is covered up.
+        rect.origin.y -= kOFFSET_FOR_KEYBOARD;
+        rect.size.height += kOFFSET_FOR_KEYBOARD;
+    }
+    else
+    {
+        // revert back to the normal state.
+        rect.origin.y += kOFFSET_FOR_KEYBOARD;
+        rect.size.height -= kOFFSET_FOR_KEYBOARD;
+    }
+    self.view.frame = rect;
+    
+    [UIView commitAnimations];
+}
+
+
 
 -(void)didTapAnywhere: (UITapGestureRecognizer*) recognizer {
     [self.numeroTreno resignFirstResponder];
@@ -140,6 +173,7 @@
         UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Compila le stazioni o il numero treno" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alertView show];
     }
+    [self.numeroTreno resignFirstResponder];
     
 }
 
