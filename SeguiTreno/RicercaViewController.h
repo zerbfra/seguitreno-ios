@@ -21,4 +21,6 @@
 - (IBAction)search:(id)sender;
 - (IBAction)selezioneFascia:(id)sender;
 
+@property (strong,nonatomic) UITapGestureRecognizer *tapRecognizer;
+
 @end

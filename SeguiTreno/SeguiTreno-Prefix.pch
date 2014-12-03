@@ -37,10 +37,10 @@
 #define DARKGREY                    [UIColor colorWithRed:64.0/255.0f green:64.0/255.0f blue:64.0/255.0f alpha:1.0f]
 
 //#define BaseURLString @"http://178.62.75.8/trenitalia_api/" //DigitalOcean
-#define BaseURLString @"http://localhost:8888/trenitalia_api/"
+//#define BaseURLString @"http://localhost:8888/trenitalia_api/"
 //#define BaseURLString @"http://milano.myds.me:8888/trenitalia_api/" //raspberry
 
-
+#define BaseURLString @"http://192.168.0.120:8888/trenitalia_api/" //raspberry locale
 
 
 /*****************************************************************************/

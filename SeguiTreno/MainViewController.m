@@ -287,14 +287,7 @@
     headerLabel.textColor = [UIColor whiteColor];
     [headerView addSubview:headerLabel];
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.tag = section;
-    button.frame = CGRectMake(tableView.frame.size.width - 20, 3, 18, 16);
 
-    [button setImage:[UIImage imageNamed:@"trash"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
-    [headerView addSubview:button];
     return head;
 }
 
@@ -302,6 +295,33 @@
 {
     return 22.0;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    
+    return 38;
+    
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    
+    UIView *footer=[[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,38.0)];
+    footer.backgroundColor = [UIColor redColor];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.tag = section;
+    button.frame = CGRectMake(tableView.frame.size.width/2 - 18, 3, 36, 32);
+    
+    [button setImage:[UIImage imageNamed:@"trash"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [footer addSubview:button];
+    
+    
+    return footer;
+    
+    
+}
+
 
 -(void)deleteButtonPressed:(id)sender {
     // devo rimuovere il viaggio
