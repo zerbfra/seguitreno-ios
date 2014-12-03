@@ -115,7 +115,11 @@
 
 - (IBAction)search:(id)sender {
     
-    [self performSegueWithIdentifier:@"cercaSoluzione" sender:nil];
+    if([self.numeroTreno.text length] > 0 || (self.viaggio.partenza != nil && self.viaggio.arrivo != nil)) [self performSegueWithIdentifier:@"cercaSoluzione" sender:nil];
+    else {
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Compila le stazioni o il numero treno" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alertView show];
+    }
     
 }
 
@@ -163,8 +167,13 @@
      if([segue.identifier  isEqual: @"cercaSoluzione"]) {
          
          RisultatiViewController *destination = (RisultatiViewController*) [segue destinationViewController];
+         if([self.numeroTreno.text length] == 0) {
          destination.query = self.viaggio;
          destination.fascia = self.fasciaOraria.selectedSegmentIndex;
+         } else {
+             destination.numeroTreno = self.numeroTreno.text;
+             NSLog(@"Numero treno");
+         }
          
      }
      

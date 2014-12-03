@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *stazioneDestinazione;
 @property (weak, nonatomic) IBOutlet UITableViewCell *stazionePartenza;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *fasciaOraria;
+@property (weak, nonatomic) IBOutlet UITextField *numeroTreno;
 
 - (IBAction)search:(id)sender;
 - (IBAction)selezioneFascia:(id)sender;

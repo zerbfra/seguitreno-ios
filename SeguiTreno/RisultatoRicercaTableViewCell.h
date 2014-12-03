@@ -10,9 +10,9 @@
 
 @interface RisultatoRicercaTableViewCell : UITableViewCell
 
-@property Viaggio *soluzione;
+@property Treno *treno;
 
-@property (weak, nonatomic) IBOutlet UILabel *treno;
+@property (weak, nonatomic) IBOutlet UILabel *descTreno;
 @property (weak, nonatomic) IBOutlet UILabel *orarioP;
 @property (weak, nonatomic) IBOutlet UILabel *orarioA;
 @property (weak, nonatomic) IBOutlet UILabel *partenza;

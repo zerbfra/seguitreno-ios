@@ -15,6 +15,7 @@
 @property (strong,nonatomic) NSMutableArray *soluzioniPossibili;
 
 @property (strong,nonatomic) Viaggio *query;
+@property (strong,nonatomic) NSString *numeroTreno;
 
 @property NSInteger fascia;
 

@@ -46,17 +46,22 @@
     self.mapView.mapType = MKMapTypeStandard;
     
     NSString *query = [NSString stringWithFormat:@"SELECT lat,lon FROM stazioni WHERE id='%@'",self.stazione.idStazione];
-    NSDictionary *result= [[[DBHelper sharedInstance] executeSQLStatement:query] objectAtIndex:0];
+    NSArray *results = [[DBHelper sharedInstance] executeSQLStatement:query];
+    // non tutte le stazioni sono presenti nel db (limitazione data da trenitalia)
+    if([results count] > 0) {
+        NSDictionary *result= [results objectAtIndex:0];
     
-    CLLocationDegrees lat =  [[result objectForKey:@"lat"] doubleValue];
-    CLLocationDegrees lon = [[result objectForKey:@"lon"] doubleValue];
+        CLLocationDegrees lat =  [[result objectForKey:@"lat"] doubleValue];
+        CLLocationDegrees lon = [[result objectForKey:@"lon"] doubleValue];
     
-    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(lat,lon);
+        CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(lat,lon);
     
-    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    [annotation setCoordinate:coord];
-    [annotation setTitle:self.stazione.nome];
-    [self.mapView addAnnotation:annotation];
+        MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+        [annotation setCoordinate:coord];
+        [annotation setTitle:self.stazione.nome];
+        [self.mapView addAnnotation:annotation];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
