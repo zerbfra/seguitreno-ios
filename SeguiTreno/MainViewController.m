@@ -296,7 +296,7 @@
     
     UIView* head = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 22)];
     
-    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, tableView.frame.size.width, 22)];
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(3, 20, tableView.frame.size.width, 22)];
     headerView.backgroundColor = [UIColor lightGrayColor];
     
     [head addSubview:headerView];
