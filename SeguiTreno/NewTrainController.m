@@ -124,7 +124,12 @@
             if(!self.trenoCompilato) return @"QUANDO";
             else return [NSString stringWithFormat:@"VIAGGIO DEL %@",[[DateUtils shared] showDateMedium:self.viaggio.data]];
         case 2:
+            return nil;
+            break;
+        case 3:
             return @"RIPETIZIONE";
+            
+            break;
         default:
             return nil;
             break;
@@ -352,8 +357,11 @@
     }
     
     if([segue.identifier  isEqual: @"selezionaTreno"]) {
+        NSLog(@"%@ %@",self.viaggio.partenza.idStazione,self.viaggio.arrivo.idStazione);
         
         SoluzioneViaggioViewController *destination = (SoluzioneViaggioViewController*) [segue destinationViewController];
+        //ogni richiesta viene fatta alla mezza del giorno (se devo fare richiesta "nuova" resetto)
+        self.viaggio.data = [[DateUtils shared] date:self.viaggio.data At:0];
         destination.query = self.viaggio;
         
     }

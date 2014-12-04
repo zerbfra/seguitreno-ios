@@ -33,9 +33,11 @@
 }
 
 -(void) trovaSoluzioniTreno {
-    
+
     NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
 
+    NSLog(@"%@ %@ %d",[self.query.partenza cleanId],[self.query.arrivo cleanId],[ts intValue]);
+    
     [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSArray *response) {
         //NSLog(@"Response: %@", response);
         
@@ -54,8 +56,8 @@
             
             arrivo.nome = self.query.arrivo.nome;
              
-            partenza.idStazione            = [self.query.partenza cleanId];
-            arrivo.idStazione       = [self.query.arrivo cleanId];
+            partenza.idStazione            = self.query.partenza.idStazione;
+            arrivo.idStazione       = self.query.arrivo.idStazione;
             
             //partenza.nome      = [solDict objectForKey:@"origine"];
             //arrivo.nome = [solDict objectForKey:@"destinazione"];
