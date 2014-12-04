@@ -68,6 +68,7 @@
 		130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DettaglioTrenoViewController.m; path = ../DettaglioTrenoViewController.m; sourceTree = "<group>"; };
 		130925461A1A3FE4003DCD52 /* Fermata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fermata.h; path = SeguiTreno/Fermata.h; sourceTree = "<group>"; };
 		130925471A1A3FE4003DCD52 /* Fermata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Fermata.m; path = SeguiTreno/Fermata.m; sourceTree = "<group>"; };
+		132FB3EC1A30E4BA00346240 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		135CC3B01A0A1F3B0074D079 /* SeguiTreno.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeguiTreno.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135CC3B41A0A1F3B0074D079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		135CC3B51A0A1F3B0074D079 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 		135CC3A71A0A1F3B0074D079 = {
 			isa = PBXGroup;
 			children = (
+				132FB3EC1A30E4BA00346240 /* QuartzCore.framework */,
 				1397AB351A27C5870084D478 /* MapKit.framework */,
 				135CC3B21A0A1F3B0074D079 /* SeguiTreno */,
 				135CC3CC1A0A1F3B0074D079 /* SeguiTrenoTests */,

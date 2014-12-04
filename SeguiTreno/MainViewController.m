@@ -31,8 +31,7 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
     self.navigationItem.rightBarButtonItem = addButton;
     
-    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(showDelete)];
-    self.navigationItem.leftBarButtonItem = editButton;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     
     self.treniTable.delegate = self;
@@ -57,25 +56,27 @@
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
     [self caricaViaggi];
+
     
-    self.treniTable.sectionFooterHeight = 0;
+    
+}
+
+-(void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    
+    [super setEditing:editing animated:animated];
+    [self showDelete];
     
 }
 
 -(void) showDelete {
 
-    if(self.treniTable.sectionFooterHeight == 0) self.treniTable.sectionFooterHeight = 38;
-    else  self.treniTable.sectionFooterHeight = 0;
-    
-    [UIView transitionWithView: self.treniTable duration: 0.2f options: UIViewAnimationOptionTransitionCrossDissolve animations: ^(void) {
-         [self.treniTable reloadData];
-    } completion:nil];
-
+    // solo per fare l'animazione correttamente
+    [self.treniTable beginUpdates];
+    [self.treniTable endUpdates];
 
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
 }
 
@@ -282,6 +283,7 @@
     
 }
 
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     
@@ -294,7 +296,7 @@
     
     UIView* head = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 22)];
     
-    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, tableView.frame.size.width, 22)];
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 20, tableView.frame.size.width, 22)];
     headerView.backgroundColor = [UIColor lightGrayColor];
     
     [head addSubview:headerView];
@@ -305,52 +307,59 @@
     headerLabel.textColor = [UIColor whiteColor];
     [headerView addSubview:headerLabel];
     
-
+    
     return head;
 }
 
+
+
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 22.0;
+    return 42.0;
 }
 
-/*
+
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     
-    return 38;
+
+    if(self.editing)
+    return 38.0f;
+    else return 0.1f;
+    
+
     
 }
- */
+
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     
-    UIView *footer=[[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,38.0)];
+    UIView *footer=[[UIView alloc] initWithFrame:CGRectMake(0.0f,0.0f,tableView.frame.size.width,38.0f)];
+    footer.clipsToBounds = YES;
+    
+    
     footer.backgroundColor = [UIColor whiteColor];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.tag = section;
-    button.frame = CGRectMake(tableView.frame.size.width/2 - 50, 3, 100, 32);
-    
-    [button setTitle:@"Cancella" forState:UIControlStateNormal];
-    [button setTitleColor:RED forState:UIControlStateNormal];
-    //[button setImage:[UIImage imageNamed:@"trash"] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [footer addSubview:button];
-    
-
-    
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 37, tableView.frame.size.width, 1)];
     lineView.backgroundColor = COLOR_WITH_RGB(231,231,231);
     [footer addSubview:lineView];
-   
+
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.tag = section;
     
     
+    [button setTitle:@"Cancella" forState:UIControlStateNormal];
+    [button setTitleColor:RED forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [footer addSubview:button];
+
+    button.frame = CGRectMake(tableView.frame.size.width/2 - 50, 3, 100, 32);
     
     return footer;
     
     
 }
+
+
 
 
 -(void)deleteButtonPressed:(id)sender {
@@ -363,15 +372,15 @@
     UIAlertView *deleteAlert = [[UIAlertView alloc] initWithTitle:@"Cancella viaggio" message:@"Sei sicuro di voler cancellare il viaggio?" delegate:self cancelButtonTitle:@"Annulla" otherButtonTitles:@"Solo questa volta",@"Cancella tutti", nil];
     deleteAlert.tag = [viaggio.idViaggio intValue];
     [deleteAlert show];
-
-
+    
+    
 }
 
 -(void) cancellaSoluzioni:(NSInteger) idViaggio {
     
     NSString *query = [NSString stringWithFormat:@"SELECT idViaggio FROM ripetizioni where id = (SELECT id FROM ripetizioni  WHERE idViaggio = '%ld')",idViaggio];
     NSArray *idViaggi =  [[DBHelper sharedInstance] executeSQLStatement:query];
-        
+    
     for (NSDictionary* cancella in idViaggi) {
         
         NSInteger idCancella = [[cancella objectForKey:@"idViaggio"] intValue];
@@ -380,7 +389,7 @@
         // nel caso di rimozione di cancellazioni di tutti, pulisco anche il treno //bugghino (potrebbero restarne - non me ne frega più di tanto)
         query = [NSString stringWithFormat:@"DELETE FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%ld')",idCancella];
         [[DBHelper sharedInstance] executeSQLStatement:query];
-
+        
         
         
     }
@@ -388,12 +397,12 @@
 
 -(void) cancellaViaggio:(NSInteger) idViaggio {
     
-        NSString *query = [NSString stringWithFormat:@"DELETE FROM viaggi where id = '%ld'",idViaggio];
-        [[DBHelper sharedInstance] executeSQLStatement:query];
-        query =  [NSString stringWithFormat:@"DELETE FROM ripetizioni WHERE idViaggio = '%ld'",idViaggio];
-        [[DBHelper sharedInstance] executeSQLStatement:query];
-        query =  [NSString stringWithFormat:@"DELETE FROM 'treni-viaggi' WHERE idViaggio = '%ld'",idViaggio];
-        [[DBHelper sharedInstance] executeSQLStatement:query];
+    NSString *query = [NSString stringWithFormat:@"DELETE FROM viaggi where id = '%ld'",idViaggio];
+    [[DBHelper sharedInstance] executeSQLStatement:query];
+    query =  [NSString stringWithFormat:@"DELETE FROM ripetizioni WHERE idViaggio = '%ld'",idViaggio];
+    [[DBHelper sharedInstance] executeSQLStatement:query];
+    query =  [NSString stringWithFormat:@"DELETE FROM 'treni-viaggi' WHERE idViaggio = '%ld'",idViaggio];
+    [[DBHelper sharedInstance] executeSQLStatement:query];
     
 }
 
@@ -403,7 +412,7 @@
     
     switch (buttonIndex) {
         case 1:
-             [self cancellaViaggio:alertView.tag];
+            [self cancellaViaggio:alertView.tag];
             break;
         case 2:
             [self cancellaSoluzioni:alertView.tag];
@@ -415,23 +424,6 @@
     [self caricaViaggi];
 }
 
-/*
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    NSString *titolo;
-    
-    
-    
-    
-    if([self.viaggi count] > 0) {
-        Viaggio *viaggioSezione = [self.viaggi objectAtIndex:section];
-        titolo = [NSString stringWithFormat:@"%@ | %@ → %@",viaggioSezione.durata,[viaggioSezione luogoPartenza],[viaggioSezione luogoArrivo]];
-    }
-    else return nil;
-    
-    return titolo;
-}
- */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
