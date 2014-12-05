@@ -83,13 +83,6 @@
                 Stazione *stazioneA = [[Stazione alloc] init];
                 stazioneA.nome = [trenoDict objectForKey:@"destinazione"];
                 
-                //[stazioneA formattaNome];
-                //[stazioneP formattaNome];
-                
-                //stazioneA.idStazione = [[[[DBHelper sharedInstance] executeSQLStatement:[NSString stringWithFormat:@"SELECT id FROM stazioni WHERE nome = '%@'",stazioneA.nome]] objectAtIndex:0] objectForKey:@"id"];
-                //stazioneP.idStazione = [[[[DBHelper sharedInstance] executeSQLStatement:[NSString stringWithFormat:@"SELECT id FROM stazioni WHERE nome = '%@'",stazioneP.nome]] objectAtIndex:0] objectForKey:@"id"];
-                
-                //NSLog(@"%@ %@",stazioneA.idStazione,stazioneP.idStazione);
                 
                 treno.partenza = stazioneP;
                 treno.arrivo = stazioneA;

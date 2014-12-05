@@ -42,6 +42,7 @@
 		13D01EF51A0BC43900BDCD05 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 13D01EF41A0BC43900BDCD05 /* libsqlite3.dylib */; };
 		13D829C01A0CBA00008433E6 /* SoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D829BF1A0CBA00008433E6 /* SoluzioneTableViewCell.m */; };
 		13DA1CD21A0A360F00AE6160 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DA1CD11A0A360F00AE6160 /* APIClient.m */; };
+		13EFA8271A31F56E00AE98B3 /* ThreadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA8261A31F56E00AE98B3 /* ThreadHelper.m */; };
 		13FF514F1A0BCD59005A8409 /* SearchStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */; };
 		13FF51521A0BE88A005A8409 /* Treno.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF51511A0BE88A005A8409 /* Treno.m */; };
 		13FF51551A0BE898005A8409 /* Stazione.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF51541A0BE898005A8409 /* Stazione.m */; };
@@ -128,6 +129,8 @@
 		13D829BF1A0CBA00008433E6 /* SoluzioneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoluzioneTableViewCell.m; sourceTree = "<group>"; };
 		13DA1CD01A0A360F00AE6160 /* APIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIClient.h; sourceTree = "<group>"; };
 		13DA1CD11A0A360F00AE6160 /* APIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
+		13EFA8251A31F56E00AE98B3 /* ThreadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadHelper.h; sourceTree = "<group>"; };
+		13EFA8261A31F56E00AE98B3 /* ThreadHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadHelper.m; sourceTree = "<group>"; };
 		13FF514D1A0BCD59005A8409 /* SearchStazioneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchStazioneViewController.h; sourceTree = "<group>"; };
 		13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchStazioneViewController.m; sourceTree = "<group>"; };
 		13FF51501A0BE88A005A8409 /* Treno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Treno.h; sourceTree = "<group>"; };
@@ -362,6 +365,7 @@
 				137F4DF51A135E5800B9E77E /* DateUtils */,
 				13D01EF31A0BC3DE00BDCD05 /* DBHelper */,
 				13DA1CD41A0A362400AE6160 /* APIClient */,
+				13EFA8281A31F57500AE98B3 /* ThreadHelper */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -373,6 +377,15 @@
 				13DA1CD11A0A360F00AE6160 /* APIClient.m */,
 			);
 			name = APIClient;
+			sourceTree = "<group>";
+		};
+		13EFA8281A31F57500AE98B3 /* ThreadHelper */ = {
+			isa = PBXGroup;
+			children = (
+				13EFA8251A31F56E00AE98B3 /* ThreadHelper.h */,
+				13EFA8261A31F56E00AE98B3 /* ThreadHelper.m */,
+			);
+			name = ThreadHelper;
 			sourceTree = "<group>";
 		};
 		13FF51561A0BE8E6005A8409 /* Model */ = {
@@ -494,6 +507,7 @@
 				13FF51521A0BE88A005A8409 /* Treno.m in Sources */,
 				130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */,
 				135CC3DD1A0A1F6D0074D079 /* FZDatepicker.m in Sources */,
+				13EFA8271A31F56E00AE98B3 /* ThreadHelper.m in Sources */,
 				13D01EEC1A0BC3B300BDCD05 /* FMDatabasePool.m in Sources */,
 				13D01EEE1A0BC3B300BDCD05 /* FMResultSet.m in Sources */,
 				13DA1CD21A0A360F00AE6160 /* APIClient.m in Sources */,

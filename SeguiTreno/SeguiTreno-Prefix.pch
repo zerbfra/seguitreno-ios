@@ -21,6 +21,8 @@
 #import "DBHelper.h"
 #import "DateUtils.h"
 
+#import "ThreadHelper.h"
+
 #import "Stazione.h"
 #import "Treno.h"
 #import "Viaggio.h"

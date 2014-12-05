@@ -55,6 +55,7 @@
     [self.treniTable addSubview:self.refreshControl];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
+
     [self caricaViaggi];
 
     
@@ -86,6 +87,36 @@
 }
 
 -(void) caricaViaggi {
+    // siccome il metodo carica viaggi implica vari caricamenti dal DB, lo mando su un secondo thread
+    [[ThreadHelper shared] executeInBackground:@selector(recuperaViaggiDB) of:self completion:^(BOOL success) {
+        // qui sono di nuovo sul main thread
+        NSLog(@"Ho caricato db");
+        
+        // Aggiorno tabella con un'animazione (con i dati locali)
+        [UIView transitionWithView:self.treniTable
+                          duration:0.2f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^(void) {
+                            [self.treniTable reloadData];
+                        } completion:NULL];
+        
+        
+        // richiedo informazioni aggiuntive sui treni se sono quelli della giornata (quindi index = 0)
+        
+        if([self.datepicker selectedIndex] == 0) {
+            NSLog(@"Recupero informazioni live...");
+            [self requestGroupTrain:[self elencoTreni]  completion:^(NSArray *response) {
+                // aggiorno per le informazioni recuperate dal server
+                [self.treniTable reloadData];
+            }];
+        } else {
+            NSLog(@"Stampo treni senza live...");
+            [self.treniTable reloadData];
+        }
+    }];
+}
+
+-(void) recuperaViaggiDB {
     
     NSInteger start,end;
     
@@ -161,32 +192,8 @@
             viaggio.tragitto = tragitto;
             [self.viaggi addObject:viaggio];
             
-            
         }
     }
-    
-    // Aggiorno tabella con un'animazione (con i dati locali)
-    [UIView transitionWithView:self.treniTable
-                      duration:0.2f
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^(void) {
-                        [self.treniTable reloadData];
-                    } completion:NULL];
-    
-    
-    // richiedo informazioni aggiuntive sui treni se sono quelli della giornata (quindi index = 0)
-    
-    if([self.datepicker selectedIndex] == 0) {
-        NSLog(@"Recupero informazioni live...");
-        [self requestGroupTrain:[self elencoTreni]  completion:^(NSArray *response) {
-            // aggiorno per le informazioni recuperate dal server
-            [self.treniTable reloadData];
-        }];
-    } else {
-        NSLog(@"Stampo treni senza live...");
-        [self.treniTable reloadData];
-    }
-    
     
 }
 
@@ -376,32 +383,31 @@
     
 }
 
--(void) cancellaSoluzioni:(NSInteger) idViaggio {
+-(void) cancellaSoluzioni:(NSNumber*) idViaggio {
     
-    NSString *query = [NSString stringWithFormat:@"SELECT idViaggio FROM ripetizioni where id = (SELECT id FROM ripetizioni  WHERE idViaggio = '%ld')",idViaggio];
+    
+    NSString *query = [NSString stringWithFormat:@"SELECT idViaggio FROM ripetizioni where id = (SELECT id FROM ripetizioni  WHERE idViaggio = '%ld')",[idViaggio integerValue]];
     NSArray *idViaggi =  [[DBHelper sharedInstance] executeSQLStatement:query];
     
     for (NSDictionary* cancella in idViaggi) {
         
-        NSInteger idCancella = [[cancella objectForKey:@"idViaggio"] intValue];
+        NSNumber *idCancella = [cancella objectForKey:@"idViaggio"];
         
         [self cancellaViaggio:idCancella];
         // nel caso di rimozione di cancellazioni di tutti, pulisco anche il treno //bugghino (potrebbero restarne - non me ne frega più di tanto)
-        query = [NSString stringWithFormat:@"DELETE FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%ld')",idCancella];
+        query = [NSString stringWithFormat:@"DELETE FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%ld')",[idCancella integerValue]];
         [[DBHelper sharedInstance] executeSQLStatement:query];
-        
-        
         
     }
 }
 
--(void) cancellaViaggio:(NSInteger) idViaggio {
+-(void) cancellaViaggio:(NSNumber*) idViaggio {
     
-    NSString *query = [NSString stringWithFormat:@"DELETE FROM viaggi where id = '%ld'",idViaggio];
+    NSString *query = [NSString stringWithFormat:@"DELETE FROM viaggi where id = '%ld'",[idViaggio integerValue]];
     [[DBHelper sharedInstance] executeSQLStatement:query];
-    query =  [NSString stringWithFormat:@"DELETE FROM ripetizioni WHERE idViaggio = '%ld'",idViaggio];
+    query =  [NSString stringWithFormat:@"DELETE FROM ripetizioni WHERE idViaggio = '%ld'",[idViaggio integerValue]];
     [[DBHelper sharedInstance] executeSQLStatement:query];
-    query =  [NSString stringWithFormat:@"DELETE FROM 'treni-viaggi' WHERE idViaggio = '%ld'",idViaggio];
+    query =  [NSString stringWithFormat:@"DELETE FROM 'treni-viaggi' WHERE idViaggio = '%ld'",[idViaggio integerValue]];
     [[DBHelper sharedInstance] executeSQLStatement:query];
     
 }
@@ -409,19 +415,28 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     // a seconda di cosa viene premuto cancello il viaggio corrispondente (intero salvato nel tag)
+    NSNumber *tag = [NSNumber numberWithInteger:alertView.tag];
+   
+    SEL method;
     
     switch (buttonIndex) {
         case 1:
-            [self cancellaViaggio:alertView.tag];
+            method = @selector(cancellaViaggio:);
             break;
         case 2:
-            [self cancellaSoluzioni:alertView.tag];
+            method = @selector(cancellaSoluzioni:);
+            break;
         default:
             break;
     }
     
+    [[ThreadHelper shared] executeInBackground:method of:self withParam:tag completion:^(BOOL success) {
+        NSLog(@"Cancellato tutto");
+        [self caricaViaggi];
+    }];
+    
     // quindi reload
-    [self caricaViaggi];
+    //[self caricaViaggi];
 }
 
 

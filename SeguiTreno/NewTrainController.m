@@ -23,7 +23,7 @@
     
     UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(close:)];
     
-    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(salva)];
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(salvaTreno)];
     
     self.navigationItem.leftBarButtonItem = closeButton;
     self.navigationItem.rightBarButtonItem = saveButton;
@@ -35,9 +35,9 @@
     
     self.trenoCompilato = FALSE;
     self.ripetizioneSel = 0;
-
+    
     self.viaggio.data = [[DateUtils shared] date:self.dataIniziale At:0];
-
+    
     
     self.soluzioneViaggio.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
     
@@ -60,7 +60,7 @@
 -(void) datePickerChanged:(UIDatePicker *)datePicker {
     self.viaggio.data = [[DateUtils shared] date:datePicker.date At:0];
     //NSLog(@"Salvo data: %@",self.viaggio.data);
-
+    
 }
 
 
@@ -81,34 +81,34 @@
     // orario selezionato
     //self.soluzioneViaggio.detailTextLabel.text =  [[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]];
     
-
+    
     
     self.trenoCompilato = TRUE;
     
     // celle da cancellare
     /*
-    NSArray *deleteIndexPaths = [[NSArray alloc] initWithObjects:
-                                 [NSIndexPath indexPathForRow:0 inSection:1],
-                                 [NSIndexPath indexPathForRow:1 inSection:1],
-                                 nil];
-    
-    // celle da inserire (una per ogni treno della soluzione viaggio)
-    NSMutableArray *rows = [NSMutableArray array];
-    for (int i = 0; i < [self.viaggio.tragitto count]; i++) [rows addObject:[NSIndexPath indexPathForRow:i inSection:1]];
-    
-    // aggiorno con inserimenti e cancellazioni
-    
-    [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView insertRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationFade];
-    // inserisco cella con opzione per il cambio soluzione
-    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
+     NSArray *deleteIndexPaths = [[NSArray alloc] initWithObjects:
+     [NSIndexPath indexPathForRow:0 inSection:1],
+     [NSIndexPath indexPathForRow:1 inSection:1],
+     nil];
+     
+     // celle da inserire (una per ogni treno della soluzione viaggio)
+     NSMutableArray *rows = [NSMutableArray array];
+     for (int i = 0; i < [self.viaggio.tragitto count]; i++) [rows addObject:[NSIndexPath indexPathForRow:i inSection:1]];
+     
+     // aggiorno con inserimenti e cancellazioni
+     
+     [self.tableView beginUpdates];
+     [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationFade];
+     [self.tableView insertRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationFade];
+     // inserisco cella con opzione per il cambio soluzione
+     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
+     [self.tableView endUpdates];
      */
     
     [self.tableView reloadData];
     
-  
+    
     
     //aggiorno la fine ripetizione in base a quello che è selezionato
     [self gestisciRipetizione:self.ripetizioneSel];
@@ -136,11 +136,22 @@
     }
 }
 
--(void)salva {
-    //NSLog(@"Preparo salvataggio treno...");
-    if(self.trenoCompilato) {
+-(void) salvaTreno {
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if(self.trenoCompilato) {
+        // siccome il metodo salva implica molte query lo mando su un secondo thread
+        [[ThreadHelper shared] executeInBackground:@selector(salva) of:self completion:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Seleziona un treno per salvarlo!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+        [alertView show];
+        
+    }
+}
+
+-(void)salva {
+    
+
     
     NSMutableArray *viaggiInseriti = [NSMutableArray array];
     
@@ -157,7 +168,7 @@
         tsArrivo = [[NSNumber numberWithDouble:[nextArrivo timeIntervalSince1970]] intValue];
         
         NSString *query = [NSString stringWithFormat:@"INSERT INTO viaggi (nomePartenza,nomeArrivo, orarioPartenza,orarioArrivo,durata) VALUES ('%@','%@','%ld','%ld','%@')",self.viaggio.partenza.nome,self.viaggio.arrivo.nome,tsPartenza,tsArrivo,self.viaggio.durata];
-
+        
         [[DBHelper sharedInstance] executeSQLStatement:query];
         
         NSString *dbViaggio =  [[[[DBHelper sharedInstance] executeSQLStatement:@"SELECT last_insert_rowid() AS id"] objectAtIndex:0] objectForKey:@"id"];
@@ -197,7 +208,7 @@
                 toDb.destinazione = destinazione;
                 toDb.categoria = [trenoDict objectForKey:@"categoria"];
             }
-
+            
             
             NSInteger tsPartenza = [[NSNumber numberWithDouble:toDb.orarioPartenza] intValue];
             NSInteger tsArrivo = [[NSNumber numberWithDouble:toDb.orarioArrivo] intValue];
@@ -222,6 +233,7 @@
                 
             }
             
+            
             // invio la notifica globale che ho aggiunto dei treni
             [[NSNotificationCenter defaultCenter] postNotificationName:@"update" object:nil];
             
@@ -229,10 +241,7 @@
         }];
         
     }
-    } else {
-        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Seleziona un treno per salvarlo!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-        [alertView show];
-    }
+    
     
     
 }
@@ -291,11 +300,11 @@
     
     // Return the number of sections.
     return 4;
-
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
+    
     switch (section) {
         case 0:
             return 2;
@@ -318,7 +327,7 @@
 
 -(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-  
+    
     
     if(indexPath.section == 1 && self.trenoCompilato) {
         
@@ -329,7 +338,7 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
         }
-
+        
         Treno *trenoCell = self.viaggio.tragitto[indexPath.row];
         
         cell.textLabel.text = [trenoCell stringaDescrizione];
@@ -337,7 +346,7 @@
         
         return cell;
     }
-
+    
     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
 }
@@ -373,7 +382,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     // se sono in fase di selezione data devo mostrare il datepicker quindi mi serve una cella più alta
     if(!self.trenoCompilato && indexPath.section == 1 && indexPath.row == 0) {
-            return 180.0;
+        return 180.0;
     }
     
     return 44;
@@ -393,7 +402,7 @@
     NSMutableArray *rows = [NSMutableArray array];
     
     for (int i = 0; i < [self.viaggio.tragitto count]; i++) [rows addObject:[NSIndexPath indexPathForRow:i inSection:1]];
-
+    
     
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationFade];

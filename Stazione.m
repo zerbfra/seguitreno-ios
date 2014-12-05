@@ -10,26 +10,6 @@
 
 @implementation Stazione
 
-
--(NSArray*) elencoStazioni {
-    
-    NSArray* results  = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM stazioni"];
-    NSMutableArray *stazioni = [[NSMutableArray alloc] init];
-    
-    for (NSDictionary* set in results) {
-        Stazione *stazione = [[Stazione alloc] init];
-        
-        stazione.idStazione = [set objectForKey:@"id"];
-        stazione.nome       = [set objectForKey:@"nome"];
-        //[stazione formattaNome];
-        
-        
-        [stazioni addObject:stazione];
-    }
-    
-    return  [NSArray arrayWithArray:stazioni];
-}
-
 -(void) formattaNome {
     NSString *clean = self.nome.lowercaseString;
     

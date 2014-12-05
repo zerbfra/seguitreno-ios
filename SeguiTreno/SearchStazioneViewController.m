@@ -17,8 +17,11 @@
     [super viewDidLoad];
 
     
+    // su un secondo thread recupero le stazioni
+    [[ThreadHelper shared] executeInBackground:@selector(elencoStazioni) of:self completion:^(BOOL success) {
+        [self.tableView reloadData];
+    }];
     
-    self.stazioni = [[[Stazione alloc] init] elencoStazioni];
     
     //basandomi su questo, http://jslim.net/blog/2014/07/14/remove-the-1px-shadow-from-uisearchbar/ per rimuovere la riga da 1px bianco
     self.searchDisplayController.searchBar.layer.borderColor = COLOR_WITH_RGB(201, 201, 206).CGColor;
@@ -31,6 +34,25 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void) elencoStazioni {
+    
+    NSArray* results  = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM stazioni"];
+    NSMutableArray *stazioni = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary* set in results) {
+        Stazione *stazione = [[Stazione alloc] init];
+        
+        stazione.idStazione = [set objectForKey:@"id"];
+        stazione.nome       = [set objectForKey:@"nome"];
+        //[stazione formattaNome];
+        
+        
+        [stazioni addObject:stazione];
+    }
+    
+    self.stazioni =  [NSArray arrayWithArray:stazioni];
 }
 
 #pragma mark - Table view data source
