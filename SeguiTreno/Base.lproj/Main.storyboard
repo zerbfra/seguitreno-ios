@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--SeguiTreno-->
@@ -702,6 +703,65 @@
             </objects>
             <point key="canvasLocation" x="5225" y="1920"/>
         </scene>
+        <!--Scioperi-->
+        <scene sceneID="fsF-BB-GPJ">
+            <objects>
+                <tableViewController id="aMU-bh-Fwt" customClass="ScioperiViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="109" sectionHeaderHeight="22" sectionFooterHeight="22" id="dsO-b6-clY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="scioperoCell" rowHeight="109" id="mCC-mv-8Z0" customClass="ScioperoTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mCC-mv-8Z0" id="6Sz-86-mMH">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WOl-ak-KRb">
+                                            <rect key="frame" x="8" y="10" width="584" height="59"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="59" id="aUj-Pn-amh"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="kKy-yb-zZd">
+                                            <rect key="frame" x="8" y="77" width="584" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="vmo-Xm-Isy"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="kKy-yb-zZd" secondAttribute="trailing" constant="8" id="3VH-VS-6IT"/>
+                                        <constraint firstItem="kKy-yb-zZd" firstAttribute="top" secondItem="WOl-ak-KRb" secondAttribute="bottom" constant="8" id="4CX-G7-keP"/>
+                                        <constraint firstItem="kKy-yb-zZd" firstAttribute="leading" secondItem="6Sz-86-mMH" secondAttribute="leading" constant="8" id="Lgt-qh-JVw"/>
+                                        <constraint firstItem="WOl-ak-KRb" firstAttribute="top" secondItem="6Sz-86-mMH" secondAttribute="topMargin" constant="2" id="kB7-U8-IIc"/>
+                                        <constraint firstItem="WOl-ak-KRb" firstAttribute="leading" secondItem="6Sz-86-mMH" secondAttribute="leadingMargin" id="oPF-xk-Qd9"/>
+                                        <constraint firstItem="WOl-ak-KRb" firstAttribute="trailing" secondItem="6Sz-86-mMH" secondAttribute="trailingMargin" id="zt2-nX-djL"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descrizione" destination="kKy-yb-zZd" id="9Pf-1W-GdP"/>
+                                    <outlet property="titolo" destination="WOl-ak-KRb" id="UC2-7A-0gs"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="aMU-bh-Fwt" id="T82-XY-2Zn"/>
+                            <outlet property="delegate" destination="aMU-bh-Fwt" id="JMS-OS-Yac"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Scioperi" id="gis-1P-kmA"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4wV-Ti-S3O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2735" y="-762"/>
+        </scene>
         <!--Item-->
         <scene sceneID="pGv-Oj-HG4">
             <objects>
@@ -761,6 +821,7 @@
                     <connections>
                         <segue destination="gay-i4-UpN" kind="relationship" relationship="viewControllers" id="AG4-Ks-WDY"/>
                         <segue destination="AdZ-U2-d3n" kind="relationship" relationship="viewControllers" id="Zxu-bt-yyp"/>
+                        <segue destination="hhC-cS-W4D" kind="relationship" relationship="viewControllers" id="vpj-UM-qe8"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cTy-QC-lRe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1321,6 +1382,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nKo-iA-OWb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2735" y="1145"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="2jb-wk-Qzi">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hhC-cS-W4D" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="JWg-La-p41"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zCO-Y7-0hw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="aMU-bh-Fwt" kind="relationship" relationship="rootViewController" id="6uy-6u-eLm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3fw-vz-LXN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1794" y="-753"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

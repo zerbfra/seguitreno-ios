@@ -84,27 +84,7 @@
     
     
     self.trenoCompilato = TRUE;
-    
-    // celle da cancellare
-    /*
-     NSArray *deleteIndexPaths = [[NSArray alloc] initWithObjects:
-     [NSIndexPath indexPathForRow:0 inSection:1],
-     [NSIndexPath indexPathForRow:1 inSection:1],
-     nil];
-     
-     // celle da inserire (una per ogni treno della soluzione viaggio)
-     NSMutableArray *rows = [NSMutableArray array];
-     for (int i = 0; i < [self.viaggio.tragitto count]; i++) [rows addObject:[NSIndexPath indexPathForRow:i inSection:1]];
-     
-     // aggiorno con inserimenti e cancellazioni
-     
-     [self.tableView beginUpdates];
-     [self.tableView deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationFade];
-     [self.tableView insertRowsAtIndexPaths:rows withRowAnimation:UITableViewRowAnimationFade];
-     // inserisco cella con opzione per il cambio soluzione
-     [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:UITableViewRowAnimationFade];
-     [self.tableView endUpdates];
-     */
+
     
     [self.tableView reloadData];
     
@@ -140,7 +120,9 @@
     
     if(self.trenoCompilato) {
         // siccome il metodo salva implica molte query lo mando su un secondo thread
-        [[ThreadHelper shared] executeInBackground:@selector(salva) of:self completion:nil];
+        [[ThreadHelper shared] executeInBackground:@selector(salva) of:self completion:^(BOOL success) {
+
+        }];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
         UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Seleziona un treno per salvarlo!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
@@ -191,8 +173,15 @@
     
     NSMutableArray *treniInseriti = [NSMutableArray array];
     
+    // creo un gruppo di dispatch
+    dispatch_group_t group = dispatch_group_create();
+    
+    
     // salvo tutti i treni
     for(Treno *toDb in self.viaggio.tragitto) {
+        
+        //entro
+        dispatch_group_enter(group);
         
         NSString  *numero = toDb.numero;
         
@@ -233,15 +222,21 @@
                 
             }
             
-            
-            // invio la notifica globale che ho aggiunto dei treni
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"update" object:nil];
+            //esco
+            dispatch_group_leave(group);
             
             
         }];
         
     }
     
+    // Here we wait for all the requests to finish
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        // Do whatever you need to do when all requests are finished
+        NSLog(@"Finito le richieste di salvataggio");
+        // invio la notifica globale che ho aggiunto dei treni BUG: deve essere conclusiva!
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"update" object:nil];
+    });
     
     
 }

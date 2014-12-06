@@ -25,12 +25,13 @@
     // Do any additional setup after loading the view.
     
     //eseguo query al db per la mappa in background
-    [[ThreadHelper shared] executeInBackground:@selector(configuraMappa) of:self completion:nil];
+    [[ThreadHelper shared] executeInBackground:@selector(configuraMappa) of:self completion:^(BOOL success) {
+        [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
+    }];
     //[self configuraMappa];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
-    [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
     
     self.treniArrivo = [NSMutableArray array];
     self.treniPartenza = [NSMutableArray array];

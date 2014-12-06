@@ -43,6 +43,9 @@
 		13D829C01A0CBA00008433E6 /* SoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D829BF1A0CBA00008433E6 /* SoluzioneTableViewCell.m */; };
 		13DA1CD21A0A360F00AE6160 /* APIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 13DA1CD11A0A360F00AE6160 /* APIClient.m */; };
 		13EFA8271A31F56E00AE98B3 /* ThreadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA8261A31F56E00AE98B3 /* ThreadHelper.m */; };
+		13EFA82B1A3323F600AE98B3 /* ScioperiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA82A1A3323F600AE98B3 /* ScioperiViewController.m */; };
+		13EFA82F1A33242500AE98B3 /* ScioperoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA82E1A33242500AE98B3 /* ScioperoTableViewCell.m */; };
+		13EFA8321A3325A600AE98B3 /* Notizia.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA8311A3325A600AE98B3 /* Notizia.m */; };
 		13FF514F1A0BCD59005A8409 /* SearchStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */; };
 		13FF51521A0BE88A005A8409 /* Treno.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF51511A0BE88A005A8409 /* Treno.m */; };
 		13FF51551A0BE898005A8409 /* Stazione.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF51541A0BE898005A8409 /* Stazione.m */; };
@@ -131,6 +134,12 @@
 		13DA1CD11A0A360F00AE6160 /* APIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIClient.m; sourceTree = "<group>"; };
 		13EFA8251A31F56E00AE98B3 /* ThreadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadHelper.h; sourceTree = "<group>"; };
 		13EFA8261A31F56E00AE98B3 /* ThreadHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThreadHelper.m; sourceTree = "<group>"; };
+		13EFA8291A3323F600AE98B3 /* ScioperiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScioperiViewController.h; sourceTree = "<group>"; };
+		13EFA82A1A3323F600AE98B3 /* ScioperiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScioperiViewController.m; sourceTree = "<group>"; };
+		13EFA82D1A33242500AE98B3 /* ScioperoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScioperoTableViewCell.h; sourceTree = "<group>"; };
+		13EFA82E1A33242500AE98B3 /* ScioperoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScioperoTableViewCell.m; sourceTree = "<group>"; };
+		13EFA8301A3325A600AE98B3 /* Notizia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notizia.h; sourceTree = "<group>"; };
+		13EFA8311A3325A600AE98B3 /* Notizia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notizia.m; sourceTree = "<group>"; };
 		13FF514D1A0BCD59005A8409 /* SearchStazioneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchStazioneViewController.h; sourceTree = "<group>"; };
 		13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchStazioneViewController.m; sourceTree = "<group>"; };
 		13FF51501A0BE88A005A8409 /* Treno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Treno.h; sourceTree = "<group>"; };
@@ -262,6 +271,7 @@
 				130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */,
 				1397AB3A1A27C6F10084D478 /* DettaglioStazioneViewController.h */,
 				1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */,
+				13EFA82C1A33240800AE98B3 /* Scioperi */,
 				1376AAA91A2D1DEA00C55F6F /* Cerca Treno */,
 				13D829C11A0CBA07008433E6 /* Custom cells */,
 			);
@@ -355,6 +365,8 @@
 				13B24A4C1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m */,
 				1376AAAD1A2D22E200C55F6F /* RisultatoRicercaTableViewCell.h */,
 				1376AAAE1A2D22E200C55F6F /* RisultatoRicercaTableViewCell.m */,
+				13EFA82D1A33242500AE98B3 /* ScioperoTableViewCell.h */,
+				13EFA82E1A33242500AE98B3 /* ScioperoTableViewCell.m */,
 			);
 			name = "Custom cells";
 			sourceTree = "<group>";
@@ -388,6 +400,15 @@
 			name = ThreadHelper;
 			sourceTree = "<group>";
 		};
+		13EFA82C1A33240800AE98B3 /* Scioperi */ = {
+			isa = PBXGroup;
+			children = (
+				13EFA8291A3323F600AE98B3 /* ScioperiViewController.h */,
+				13EFA82A1A3323F600AE98B3 /* ScioperiViewController.m */,
+			);
+			name = Scioperi;
+			sourceTree = "<group>";
+		};
 		13FF51561A0BE8E6005A8409 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +420,8 @@
 				1304EB1F1A0D0B0900C2DC12 /* Viaggio.m */,
 				130925461A1A3FE4003DCD52 /* Fermata.h */,
 				130925471A1A3FE4003DCD52 /* Fermata.m */,
+				13EFA8301A3325A600AE98B3 /* Notizia.h */,
+				13EFA8311A3325A600AE98B3 /* Notizia.m */,
 			);
 			name = Model;
 			path = ..;
@@ -509,6 +532,7 @@
 				135CC3DD1A0A1F6D0074D079 /* FZDatepicker.m in Sources */,
 				13EFA8271A31F56E00AE98B3 /* ThreadHelper.m in Sources */,
 				13D01EEC1A0BC3B300BDCD05 /* FMDatabasePool.m in Sources */,
+				13EFA82F1A33242500AE98B3 /* ScioperoTableViewCell.m in Sources */,
 				13D01EEE1A0BC3B300BDCD05 /* FMResultSet.m in Sources */,
 				13DA1CD21A0A360F00AE6160 /* APIClient.m in Sources */,
 				135CC3B91A0A1F3B0074D079 /* AppDelegate.m in Sources */,
@@ -516,6 +540,7 @@
 				13D01EED1A0BC3B300BDCD05 /* FMDatabaseQueue.m in Sources */,
 				13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */,
 				135CC3B61A0A1F3B0074D079 /* main.m in Sources */,
+				13EFA82B1A3323F600AE98B3 /* ScioperiViewController.m in Sources */,
 				13B24A4D1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m in Sources */,
 				1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */,
 				13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */,
@@ -536,6 +561,7 @@
 				13650BB41A0A5F14000F2F51 /* NewTrainController.m in Sources */,
 				1376AAAF1A2D22E200C55F6F /* RisultatoRicercaTableViewCell.m in Sources */,
 				13D829C01A0CBA00008433E6 /* SoluzioneTableViewCell.m in Sources */,
+				13EFA8321A3325A600AE98B3 /* Notizia.m in Sources */,
 				137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
