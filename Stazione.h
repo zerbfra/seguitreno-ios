@@ -21,6 +21,11 @@
 @property (nonatomic) float lat;
 @property (nonatomic) float lon;
 
+// usata per creare l'oggetto CLLocation date lat e lon
+@property (nonatomic,strong) CLLocation *posizione;
+// usato solo per sapere la distanza dalla posizione attuale
+@property float distanza;
+
 // ritorna l'elenco delle stazioni in un array
 //-(NSArray*) elencoStazioni;
 // formatta il nome (deprecata)

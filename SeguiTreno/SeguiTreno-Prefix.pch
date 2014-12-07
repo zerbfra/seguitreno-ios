@@ -11,17 +11,18 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-#import "APIClient.h"
 
 #import "sqlite3.h"
 #import "FMDatabase.h"
 #import "FMDatabaseQueue.h"
 #import "FMResultSet.h"
 
+#import "APIClient.h"
 #import "DBHelper.h"
 #import "DateUtils.h"
-
 #import "ThreadHelper.h"
+#import "LocationManager.h"
+
 
 #import "Stazione.h"
 #import "Treno.h"

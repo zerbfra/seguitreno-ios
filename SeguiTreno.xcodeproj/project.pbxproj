@@ -29,7 +29,6 @@
 		137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */; };
 		137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */; };
 		137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DF31A135E5200B9E77E /* DateUtils.m */; };
-		1397AB361A27C5870084D478 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1397AB351A27C5870084D478 /* MapKit.framework */; };
 		1397AB3C1A27C6F10084D478 /* DettaglioStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */; };
 		13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */; };
 		13B24A4D1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B24A4C1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m */; };
@@ -46,6 +45,9 @@
 		13EFA82B1A3323F600AE98B3 /* ScioperiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA82A1A3323F600AE98B3 /* ScioperiViewController.m */; };
 		13EFA82F1A33242500AE98B3 /* ScioperoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA82E1A33242500AE98B3 /* ScioperoTableViewCell.m */; };
 		13EFA8321A3325A600AE98B3 /* Notizia.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA8311A3325A600AE98B3 /* Notizia.m */; };
+		13EFA8351A34710E00AE98B3 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA8341A34710E00AE98B3 /* LocationManager.m */; };
+		13EFA8371A347E1700AE98B3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1397AB351A27C5870084D478 /* MapKit.framework */; };
+		13EFA83A1A347EBC00AE98B3 /* TrovaStazioniViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA8391A347EBC00AE98B3 /* TrovaStazioniViewController.m */; };
 		13FF514F1A0BCD59005A8409 /* SearchStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */; };
 		13FF51521A0BE88A005A8409 /* Treno.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF51511A0BE88A005A8409 /* Treno.m */; };
 		13FF51551A0BE898005A8409 /* Stazione.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF51541A0BE898005A8409 /* Stazione.m */; };
@@ -72,7 +74,6 @@
 		130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DettaglioTrenoViewController.m; path = ../DettaglioTrenoViewController.m; sourceTree = "<group>"; };
 		130925461A1A3FE4003DCD52 /* Fermata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fermata.h; path = SeguiTreno/Fermata.h; sourceTree = "<group>"; };
 		130925471A1A3FE4003DCD52 /* Fermata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Fermata.m; path = SeguiTreno/Fermata.m; sourceTree = "<group>"; };
-		132FB3EC1A30E4BA00346240 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		135CC3B01A0A1F3B0074D079 /* SeguiTreno.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeguiTreno.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135CC3B41A0A1F3B0074D079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		135CC3B51A0A1F3B0074D079 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -140,6 +141,10 @@
 		13EFA82E1A33242500AE98B3 /* ScioperoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScioperoTableViewCell.m; sourceTree = "<group>"; };
 		13EFA8301A3325A600AE98B3 /* Notizia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notizia.h; sourceTree = "<group>"; };
 		13EFA8311A3325A600AE98B3 /* Notizia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notizia.m; sourceTree = "<group>"; };
+		13EFA8331A34710E00AE98B3 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		13EFA8341A34710E00AE98B3 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		13EFA8381A347EBC00AE98B3 /* TrovaStazioniViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrovaStazioniViewController.h; sourceTree = "<group>"; };
+		13EFA8391A347EBC00AE98B3 /* TrovaStazioniViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrovaStazioniViewController.m; sourceTree = "<group>"; };
 		13FF514D1A0BCD59005A8409 /* SearchStazioneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchStazioneViewController.h; sourceTree = "<group>"; };
 		13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchStazioneViewController.m; sourceTree = "<group>"; };
 		13FF51501A0BE88A005A8409 /* Treno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Treno.h; sourceTree = "<group>"; };
@@ -153,7 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1397AB361A27C5870084D478 /* MapKit.framework in Frameworks */,
+				13EFA8371A347E1700AE98B3 /* MapKit.framework in Frameworks */,
 				13D01EF51A0BC43900BDCD05 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -180,8 +185,6 @@
 		135CC3A71A0A1F3B0074D079 = {
 			isa = PBXGroup;
 			children = (
-				132FB3EC1A30E4BA00346240 /* QuartzCore.framework */,
-				1397AB351A27C5870084D478 /* MapKit.framework */,
 				135CC3B21A0A1F3B0074D079 /* SeguiTreno */,
 				135CC3CC1A0A1F3B0074D079 /* SeguiTrenoTests */,
 				135CC3B11A0A1F3B0074D079 /* Products */,
@@ -271,6 +274,8 @@
 				130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */,
 				1397AB3A1A27C6F10084D478 /* DettaglioStazioneViewController.h */,
 				1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */,
+				13EFA8381A347EBC00AE98B3 /* TrovaStazioniViewController.h */,
+				13EFA8391A347EBC00AE98B3 /* TrovaStazioniViewController.m */,
 				13EFA82C1A33240800AE98B3 /* Scioperi */,
 				1376AAA91A2D1DEA00C55F6F /* Cerca Treno */,
 				13D829C11A0CBA07008433E6 /* Custom cells */,
@@ -345,6 +350,7 @@
 		13D01EF61A0BC45800BDCD05 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1397AB351A27C5870084D478 /* MapKit.framework */,
 				13D01EF41A0BC43900BDCD05 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
@@ -378,6 +384,7 @@
 				13D01EF31A0BC3DE00BDCD05 /* DBHelper */,
 				13DA1CD41A0A362400AE6160 /* APIClient */,
 				13EFA8281A31F57500AE98B3 /* ThreadHelper */,
+				13EFA8361A34711800AE98B3 /* LocationManager */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -407,6 +414,15 @@
 				13EFA82A1A3323F600AE98B3 /* ScioperiViewController.m */,
 			);
 			name = Scioperi;
+			sourceTree = "<group>";
+		};
+		13EFA8361A34711800AE98B3 /* LocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				13EFA8331A34710E00AE98B3 /* LocationManager.h */,
+				13EFA8341A34710E00AE98B3 /* LocationManager.m */,
+			);
+			name = LocationManager;
 			sourceTree = "<group>";
 		};
 		13FF51561A0BE8E6005A8409 /* Model */ = {
@@ -537,6 +553,7 @@
 				13DA1CD21A0A360F00AE6160 /* APIClient.m in Sources */,
 				135CC3B91A0A1F3B0074D079 /* AppDelegate.m in Sources */,
 				13FF51551A0BE898005A8409 /* Stazione.m in Sources */,
+				13EFA83A1A347EBC00AE98B3 /* TrovaStazioniViewController.m in Sources */,
 				13D01EED1A0BC3B300BDCD05 /* FMDatabaseQueue.m in Sources */,
 				13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */,
 				135CC3B61A0A1F3B0074D079 /* main.m in Sources */,
@@ -552,6 +569,7 @@
 				13D01EEB1A0BC3B300BDCD05 /* FMDatabaseAdditions.m in Sources */,
 				1309253B1A1A17A3003DCD52 /* JourneyProgressView.m in Sources */,
 				137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */,
+				13EFA8351A34710E00AE98B3 /* LocationManager.m in Sources */,
 				1304EB201A0D0B0900C2DC12 /* Viaggio.m in Sources */,
 				1376AAA51A2CBAF400C55F6F /* RicercaViewController.m in Sources */,
 				137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */,
