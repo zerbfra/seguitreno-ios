@@ -809,7 +809,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="uCg-Lo-OZe">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="JKT-AF-CQT" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="JKT-AF-CQT" customClass="TabBarController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="07g-mL-1JX">

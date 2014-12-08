@@ -12,6 +12,7 @@
 		1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1309253E1A1A24A2003DCD52 /* FermataTableViewCell.m */; };
 		130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */; };
 		130925481A1A3FE4003DCD52 /* Fermata.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925471A1A3FE4003DCD52 /* Fermata.m */; };
+		1319266D1A3604A800F16A37 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1319266C1A3604A800F16A37 /* TabBarController.m */; };
 		135CC3B61A0A1F3B0074D079 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B51A0A1F3B0074D079 /* main.m */; };
 		135CC3B91A0A1F3B0074D079 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B81A0A1F3B0074D079 /* AppDelegate.m */; };
 		135CC3BF1A0A1F3B0074D079 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135CC3BD1A0A1F3B0074D079 /* Main.storyboard */; };
@@ -74,6 +75,8 @@
 		130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DettaglioTrenoViewController.m; path = ../DettaglioTrenoViewController.m; sourceTree = "<group>"; };
 		130925461A1A3FE4003DCD52 /* Fermata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fermata.h; path = SeguiTreno/Fermata.h; sourceTree = "<group>"; };
 		130925471A1A3FE4003DCD52 /* Fermata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Fermata.m; path = SeguiTreno/Fermata.m; sourceTree = "<group>"; };
+		1319266B1A3604A800F16A37 /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
+		1319266C1A3604A800F16A37 /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
 		135CC3B01A0A1F3B0074D079 /* SeguiTreno.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeguiTreno.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135CC3B41A0A1F3B0074D079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		135CC3B51A0A1F3B0074D079 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				13EFA82C1A33240800AE98B3 /* Scioperi */,
 				1376AAA91A2D1DEA00C55F6F /* Cerca Treno */,
 				13D829C11A0CBA07008433E6 /* Custom cells */,
+				1319266B1A3604A800F16A37 /* TabBarController.h */,
+				1319266C1A3604A800F16A37 /* TabBarController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -558,6 +563,7 @@
 				13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */,
 				135CC3B61A0A1F3B0074D079 /* main.m in Sources */,
 				13EFA82B1A3323F600AE98B3 /* ScioperiViewController.m in Sources */,
+				1319266D1A3604A800F16A37 /* TabBarController.m in Sources */,
 				13B24A4D1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m in Sources */,
 				1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */,
 				13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */,
