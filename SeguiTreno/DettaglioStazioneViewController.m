@@ -26,7 +26,7 @@
     
     //eseguo query al db per la mappa in background
     [[ThreadHelper shared] executeInBackground:@selector(configuraMappa) of:self completion:^(BOOL success) {
-        [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
+        [self zoomMapViewToFitAnnotations:self.mapView animated:NO];
     }];
     //[self configuraMappa];
     self.tableView.delegate = self;
@@ -65,6 +65,30 @@
         [self.mapView addAnnotation:annotation];
     }
     
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    // tutte tranne la user location
+    if([annotation isKindOfClass: [MKUserLocation class]]) return nil;
+    
+    static NSString *SFAnnotationIdentifier = @"SFAnnotationIdentifier";
+    MKPinAnnotationView *pinView = (MKPinAnnotationView *)[self.mapView dequeueReusableAnnotationViewWithIdentifier:SFAnnotationIdentifier];
+    if (!pinView)
+    {
+        MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation
+                                                                        reuseIdentifier:SFAnnotationIdentifier];
+        UIImage *flagImage = [UIImage imageNamed:@"logofs"];
+        // You may need to resize the image here.
+        annotationView.image = flagImage;
+        annotationView.canShowCallout = YES;
+        return annotationView;
+    }
+    else
+    {
+        pinView.annotation = annotation;
+    }
+    return pinView;
 }
 
 - (void)didReceiveMemoryWarning {

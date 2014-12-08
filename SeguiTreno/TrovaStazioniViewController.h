@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DettaglioStazioneViewController.h"
 
-@interface TrovaStazioniViewController : UIViewController
+@interface TrovaStazioniViewController : UIViewController <MKMapViewDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,strong) NSArray *stazioniVicine;
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

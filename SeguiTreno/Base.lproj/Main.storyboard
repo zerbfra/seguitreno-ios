@@ -762,11 +762,11 @@
             </objects>
             <point key="canvasLocation" x="2735" y="-753"/>
         </scene>
-        <!--Item-->
+        <!--Calendario-->
         <scene sceneID="pGv-Oj-HG4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gay-i4-UpN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="br8-H5-e3h"/>
+                    <tabBarItem key="tabBarItem" title="Calendario" id="br8-H5-e3h"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="g5k-eU-qsn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1294,11 +1294,11 @@
             </objects>
             <point key="canvasLocation" x="1862" y="1928"/>
         </scene>
-        <!--Item-->
+        <!--Cerca Treno-->
         <scene sceneID="3QY-MB-OeB">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AdZ-U2-d3n" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Aea-hj-wHV"/>
+                    <tabBarItem key="tabBarItem" title="Cerca Treno" id="Aea-hj-wHV"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="u36-zL-09z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1394,19 +1394,53 @@
                     <view key="view" contentMode="scaleToFill" id="OE6-mN-TQY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ORi-Rw-SWH">
+                                <rect key="frame" x="0.0" y="64" width="600" height="264"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="264" id="5t4-q4-jyV"/>
+                                </constraints>
+                            </mapView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KRJ-YN-R96">
+                                <rect key="frame" x="0.0" y="328" width="600" height="223"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellStazione" id="vok-dH-93Q">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vok-dH-93Q" id="bn7-dz-SQI">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RNl-yx-gEv" firstAttribute="top" secondItem="KRJ-YN-R96" secondAttribute="bottom" id="Dse-en-hqC"/>
+                            <constraint firstItem="ORi-Rw-SWH" firstAttribute="leading" secondItem="OE6-mN-TQY" secondAttribute="leading" id="HjF-FM-Hfq"/>
+                            <constraint firstItem="KRJ-YN-R96" firstAttribute="top" secondItem="ORi-Rw-SWH" secondAttribute="bottom" id="Wii-6Q-CPL"/>
+                            <constraint firstAttribute="trailing" secondItem="KRJ-YN-R96" secondAttribute="trailing" id="X21-qK-RPy"/>
+                            <constraint firstItem="KRJ-YN-R96" firstAttribute="leading" secondItem="OE6-mN-TQY" secondAttribute="leading" id="gDj-2u-2PM"/>
+                            <constraint firstAttribute="trailing" secondItem="ORi-Rw-SWH" secondAttribute="trailing" id="lIZ-y6-CmT"/>
+                            <constraint firstItem="ORi-Rw-SWH" firstAttribute="top" secondItem="8bz-Gb-4AG" secondAttribute="bottom" id="p1M-q0-6ST"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Stazioni vicine" id="jfI-8b-lRY"/>
+                    <connections>
+                        <outlet property="mapView" destination="ORi-Rw-SWH" id="1Jn-5w-MaR"/>
+                        <outlet property="tableView" destination="KRJ-YN-R96" id="Ep2-l0-t4w"/>
+                        <segue destination="ni6-Zm-9gR" kind="show" identifier="dettaglioStazione" id="SFm-V2-Nqw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e7n-TR-M7z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2735" y="-1607"/>
         </scene>
-        <!--Item-->
+        <!--Scioperi-->
         <scene sceneID="2jb-wk-Qzi">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hhC-cS-W4D" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="JWg-La-p41"/>
+                    <tabBarItem key="tabBarItem" title="Scioperi" id="JWg-La-p41"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zCO-Y7-0hw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1423,15 +1457,16 @@
             </objects>
             <point key="canvasLocation" x="1794" y="-753"/>
         </scene>
-        <!--Item-->
+        <!--Stazioni vicine-->
         <scene sceneID="YxH-op-UUq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1OO-P9-0bp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="DOP-iF-BaE"/>
+                    <tabBarItem key="tabBarItem" title="Stazioni vicine" id="DOP-iF-BaE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dfx-xa-pgc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="barTintColor" red="0.43529411759999997" green="0.76078431369999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1447,5 +1482,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="Wzc-yb-yfU"/>
         <segue reference="BSA-5i-RKd"/>
+        <segue reference="SFm-V2-Nqw"/>
     </inferredMetricsTieBreakers>
 </document>
