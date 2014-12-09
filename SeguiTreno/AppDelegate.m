@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <Dropbox/Dropbox.h>
 
 @interface AppDelegate ()
 
@@ -19,7 +20,24 @@
     // Override point for customization after application launch.
     [self createCopyOfDatabaseIfNeeded];
     
+    // Dropbox
+    DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:@"wwj9wcfcb2rnptz" secret:@"28f9g22ggv00l2d"];
+    [DBAccountManager setSharedManager:accountManager];
+    
     return YES;
+    
+    return YES;
+}
+
+// Dropbox
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url
+  sourceApplication:(NSString *)source annotation:(id)annotation {
+    DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
+    if (account) {
+        NSLog(@"App linked successfully!");
+        return YES;
+    }
+    return NO;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -13,6 +13,13 @@
 		130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */; };
 		130925481A1A3FE4003DCD52 /* Fermata.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925471A1A3FE4003DCD52 /* Fermata.m */; };
 		1319266D1A3604A800F16A37 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1319266C1A3604A800F16A37 /* TabBarController.m */; };
+		1319266F1A37673A00F16A37 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1319266E1A37673A00F16A37 /* Dropbox.framework */; };
+		131926711A37675B00F16A37 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926701A37675B00F16A37 /* CFNetwork.framework */; };
+		131926731A37676200F16A37 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926721A37676200F16A37 /* Security.framework */; };
+		131926751A37676A00F16A37 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926741A37676A00F16A37 /* SystemConfiguration.framework */; };
+		131926771A37677300F16A37 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926761A37677300F16A37 /* QuartzCore.framework */; };
+		131926791A37677F00F16A37 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926781A37677F00F16A37 /* libc++.dylib */; };
+		1319267B1A37678700F16A37 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1319267A1A37678700F16A37 /* libz.dylib */; };
 		135CC3B61A0A1F3B0074D079 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B51A0A1F3B0074D079 /* main.m */; };
 		135CC3B91A0A1F3B0074D079 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B81A0A1F3B0074D079 /* AppDelegate.m */; };
 		135CC3BF1A0A1F3B0074D079 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135CC3BD1A0A1F3B0074D079 /* Main.storyboard */; };
@@ -27,6 +34,8 @@
 		137941F31A17CFBB000D45E1 /* seguitreno.db in Resources */ = {isa = PBXBuildFile; fileRef = 137941F21A17CDC5000D45E1 /* seguitreno.db */; };
 		137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86CF1A0CB65E00D31838 /* MainViewController.m */; };
 		137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */; };
+		137E5F911A376DA600AC291B /* ImpostazioniViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137E5F901A376DA600AC291B /* ImpostazioniViewController.m */; };
+		137E5F931A37702800AC291B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 137E5F921A37702800AC291B /* MessageUI.framework */; };
 		137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */; };
 		137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */; };
 		137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DF31A135E5200B9E77E /* DateUtils.m */; };
@@ -77,6 +86,13 @@
 		130925471A1A3FE4003DCD52 /* Fermata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Fermata.m; path = SeguiTreno/Fermata.m; sourceTree = "<group>"; };
 		1319266B1A3604A800F16A37 /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
 		1319266C1A3604A800F16A37 /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
+		1319266E1A37673A00F16A37 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
+		131926701A37675B00F16A37 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		131926721A37676200F16A37 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		131926741A37676A00F16A37 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		131926761A37677300F16A37 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		131926781A37677F00F16A37 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		1319267A1A37678700F16A37 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		135CC3B01A0A1F3B0074D079 /* SeguiTreno.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeguiTreno.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135CC3B41A0A1F3B0074D079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		135CC3B51A0A1F3B0074D079 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -105,6 +121,9 @@
 		137D86CF1A0CB65E00D31838 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		137D86D41A0CB9A900D31838 /* SoluzioneViaggioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoluzioneViaggioViewController.h; path = ../SoluzioneViaggioViewController.h; sourceTree = "<group>"; };
 		137D86D51A0CB9A900D31838 /* SoluzioneViaggioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SoluzioneViaggioViewController.m; path = ../SoluzioneViaggioViewController.m; sourceTree = "<group>"; };
+		137E5F8F1A376DA600AC291B /* ImpostazioniViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImpostazioniViewController.h; sourceTree = "<group>"; };
+		137E5F901A376DA600AC291B /* ImpostazioniViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImpostazioniViewController.m; sourceTree = "<group>"; };
+		137E5F921A37702800AC291B /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		137F4DEA1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DettaglioSoluzioneViewController.h; sourceTree = "<group>"; };
 		137F4DEB1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioSoluzioneViewController.m; sourceTree = "<group>"; };
 		137F4DED1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DettaglioSoluzioneTableViewCell.h; sourceTree = "<group>"; };
@@ -161,7 +180,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				137E5F931A37702800AC291B /* MessageUI.framework in Frameworks */,
+				1319267B1A37678700F16A37 /* libz.dylib in Frameworks */,
+				131926791A37677F00F16A37 /* libc++.dylib in Frameworks */,
+				131926771A37677300F16A37 /* QuartzCore.framework in Frameworks */,
+				131926751A37676A00F16A37 /* SystemConfiguration.framework in Frameworks */,
+				131926731A37676200F16A37 /* Security.framework in Frameworks */,
+				131926711A37675B00F16A37 /* CFNetwork.framework in Frameworks */,
 				13EFA8371A347E1700AE98B3 /* MapKit.framework in Frameworks */,
+				1319266F1A37673A00F16A37 /* Dropbox.framework in Frameworks */,
 				13D01EF51A0BC43900BDCD05 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -188,6 +215,7 @@
 		135CC3A71A0A1F3B0074D079 = {
 			isa = PBXGroup;
 			children = (
+				137E5F921A37702800AC291B /* MessageUI.framework */,
 				135CC3B21A0A1F3B0074D079 /* SeguiTreno */,
 				135CC3CC1A0A1F3B0074D079 /* SeguiTrenoTests */,
 				135CC3B11A0A1F3B0074D079 /* Products */,
@@ -279,6 +307,8 @@
 				1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */,
 				13EFA8381A347EBC00AE98B3 /* TrovaStazioniViewController.h */,
 				13EFA8391A347EBC00AE98B3 /* TrovaStazioniViewController.m */,
+				137E5F8F1A376DA600AC291B /* ImpostazioniViewController.h */,
+				137E5F901A376DA600AC291B /* ImpostazioniViewController.m */,
 				13EFA82C1A33240800AE98B3 /* Scioperi */,
 				1376AAA91A2D1DEA00C55F6F /* Cerca Treno */,
 				13D829C11A0CBA07008433E6 /* Custom cells */,
@@ -355,6 +385,13 @@
 		13D01EF61A0BC45800BDCD05 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1319267A1A37678700F16A37 /* libz.dylib */,
+				131926781A37677F00F16A37 /* libc++.dylib */,
+				131926761A37677300F16A37 /* QuartzCore.framework */,
+				131926741A37676A00F16A37 /* SystemConfiguration.framework */,
+				131926721A37676200F16A37 /* Security.framework */,
+				131926701A37675B00F16A37 /* CFNetwork.framework */,
+				1319266E1A37673A00F16A37 /* Dropbox.framework */,
 				1397AB351A27C5870084D478 /* MapKit.framework */,
 				13D01EF41A0BC43900BDCD05 /* libsqlite3.dylib */,
 			);
@@ -552,6 +589,7 @@
 				130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */,
 				135CC3DD1A0A1F6D0074D079 /* FZDatepicker.m in Sources */,
 				13EFA8271A31F56E00AE98B3 /* ThreadHelper.m in Sources */,
+				137E5F911A376DA600AC291B /* ImpostazioniViewController.m in Sources */,
 				13D01EEC1A0BC3B300BDCD05 /* FMDatabasePool.m in Sources */,
 				13EFA82F1A33242500AE98B3 /* ScioperoTableViewCell.m in Sources */,
 				13D01EEE1A0BC3B300BDCD05 /* FMResultSet.m in Sources */,
@@ -707,6 +745,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SeguiTreno",
+				);
 				INFOPLIST_FILE = SeguiTreno/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -719,6 +761,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SeguiTreno",
+				);
 				INFOPLIST_FILE = SeguiTreno/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
