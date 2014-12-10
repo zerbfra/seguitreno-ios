@@ -58,5 +58,21 @@
     
 }
 
+-(NSData*) getDatabaseBackup {
+    NSData *backup;
+    
+    NSArray *treni = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM treni"];
+    NSArray *ripetizioni = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM ripetizioni"];
+    NSArray *treniviaggi = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM 'treni-viaggi'"];
+    NSArray *viaggi = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM viaggi"];
+    
+    NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:treni,@"treni",ripetizioni,@"ripetizioni",treniviaggi,@"treniviaggi",viaggi,@"viaggi",nil];
+    
+    backup = [NSKeyedArchiver archivedDataWithRootObject:result];
+
+    
+    return backup;
+}
+
 
 @end

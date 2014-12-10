@@ -19,4 +19,6 @@
 
 - (NSString*) dayFromNumber:(NSInteger) num;
 
+-(NSData*) getDatabaseBackup;
+
 @end

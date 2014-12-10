@@ -7,7 +7,7 @@
 //
 
 #import "ImpostazioniViewController.h"
-#import <Dropbox/Dropbox.h>
+
 
 @interface ImpostazioniViewController ()
 
@@ -25,7 +25,11 @@
     self.cellVersione.detailTextLabel.text = versione;
     
     [self updateDropboxLabel];
-
+    
+    
+    
+    
+    
 }
 
 
@@ -44,7 +48,7 @@
             break;
         case 2:
             if(indexPath.row == 0) [self dropboxExport];
-            else [self dropboxImport];
+            else  [self dropboxImport];
             break;
         case 3:
             if(indexPath.row == 0) [self sendFeedback];
@@ -79,9 +83,11 @@
         }
         
     } else {
+        
         switch (section) {
             case 2:
-                return 0;
+                if([self isDropboxLinked]) return 2;
+                else return 0;
                 break;
             case 3:
                 return 2;
@@ -95,7 +101,7 @@
         }
     }
     
-
+    
     
 }
 
@@ -106,10 +112,6 @@
     else return FALSE;
 }
 
--(void) connectDropbox {
-    DBAccountManager *manager = [DBAccountManager sharedManager];
-    [manager linkFromController:self];
-}
 
 -(void) manageDropbox {
     
@@ -117,20 +119,38 @@
     
     if([self isDropboxLinked]) {
         [[manager linkedAccount] unlink];
+        [DBFilesystem setSharedFilesystem:nil];
     } else {
         [manager linkFromController:self];
     }
     
     [manager addObserver:self block:^(DBAccount *account) {
         [self updateDropboxLabel];
-        [self.tableView reloadData];
+        
+        [UIView transitionWithView:self.tableView
+                          duration:0.1f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^(void) {
+                            [self.tableView reloadData];
+                        } completion:NULL];
+        
     }];
     
-
+    
     
 }
 
+-(void) setupDBFilesystem {
+
+    if(![DBFilesystem sharedFilesystem]) {
+            //Alloco DBFilesystem
+        DBFilesystem *filesystem = [[DBFilesystem alloc] initWithAccount:[[DBAccountManager sharedManager] linkedAccount]];
+        [DBFilesystem setSharedFilesystem:filesystem];
+    }
+}
+
 -(void) updateDropboxLabel {
+    
     if(![self isDropboxLinked]) {
         self.cellDropbox.textLabel.text = @"Collega a Dropbox";
     } else {
@@ -138,33 +158,94 @@
     }
 }
 
-- (void)dropboxExport {
+- (void) dropboxExport {
     
-    if([self isDropboxLinked]) {
+    [self setupDBFilesystem];
+    
+    if ([self isDropboxLinked]) {
         
-        DBFilesystem *filesystem = [[DBFilesystem alloc] initWithAccount:[[DBAccountManager sharedManager] linkedAccount]];
-        [DBFilesystem setSharedFilesystem:filesystem];
-        DBPath *newPath = [[DBPath root] childPath:@"hello.txt"];
-        DBFile *file = [[DBFilesystem sharedFilesystem] createFile:newPath error:nil];
-        [file writeString:@"Hello World!" error:nil];
+        if(![[DBFilesystem sharedFilesystem] completedFirstSync]) {
+            [[DBFilesystem sharedFilesystem] addObserver:self block:^{
+                if([[DBFilesystem sharedFilesystem] completedFirstSync]) {
+                    NSLog(@"DBFilesystem ready");
+                    [[DBFilesystem sharedFilesystem] removeObserver:self];
+                    [self upload];
+                }
+            }];
+        } else [self upload];
+        
     }
     
-
     
     
 }
 
 -(void) dropboxImport {
     
-
+    [self setupDBFilesystem];
+    
     if ([self isDropboxLinked]) {
-        NSLog(@"ciao!");
-        DBPath *existingPath = [[DBPath root] childPath:@"hello.txt"];
-        DBFile *file = [[DBFilesystem sharedFilesystem] openFile:existingPath error:nil];
-        NSString *contents = [file readString:nil];
-        NSLog(@"%@", contents);
+        
+        
+        if(![[DBFilesystem sharedFilesystem] completedFirstSync]) {
+            [[DBFilesystem sharedFilesystem] addObserver:self block:^{
+                if([[DBFilesystem sharedFilesystem] completedFirstSync]) {
+                    NSLog(@"DBFilesystem ready");
+                    [[DBFilesystem sharedFilesystem] removeObserver:self];
+                    [self download];
+                }
+                
+            }];
+        } else [self download];
+        
     }
     
+}
+
+-(void) download {
+    DBPath *existingPath = [[DBPath root] childPath:@"data.stdb"];
+    DBFileInfo *info = [[DBFilesystem sharedFilesystem] fileInfoForPath:existingPath error:nil];
+    
+    // controllo se è disponibile il file
+    if(info) {
+        
+        [[ThreadHelper shared] executeInBackground:@selector(openDropboxFile:) of:self withParam:existingPath  completion:^(BOOL success) {
+            //update tabelle
+            NSLog(@"Finito");
+        }];
+        
+        
+    }
+}
+
+-(void) upload {
+    
+    DBPath *newPath = [[DBPath root] childPath:@"data.stdb"];
+    
+    [[ThreadHelper shared] executeInBackground:@selector(replaceDropboxFile:) of:self withParam:newPath  completion:^(BOOL success) {
+        //update tabelle
+        NSLog(@"Finito");
+    }];
+}
+
+
+-(void) openDropboxFile:(DBPath*) path {
+    
+    DBFile *file = [[DBFilesystem sharedFilesystem] openFile:path error:nil];
+    
+    NSData *contents = [file readData:nil];
+    NSDictionary *backup = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:contents];
+    NSLog(@"%@",backup);
+}
+
+-(void) replaceDropboxFile:(DBPath*) path {
+    
+    DBFileInfo *info = [[DBFilesystem sharedFilesystem] fileInfoForPath:path error:nil];
+    if (info) [[DBFilesystem sharedFilesystem] deletePath:path error:nil]; // se il file esiste lo vado a cancellare
+    
+    DBFile *file = [[DBFilesystem sharedFilesystem] createFile:path error:nil];
+    NSData* backup = [[DBHelper sharedInstance] getDatabaseBackup];
+    [file writeData:backup error:nil];
 }
 
 
