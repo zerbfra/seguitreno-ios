@@ -20,5 +20,6 @@
 - (NSString*) dayFromNumber:(NSInteger) num;
 
 -(NSData*) getDatabaseBackup;
+-(void) importBackup:(NSData*) data;
 
 @end

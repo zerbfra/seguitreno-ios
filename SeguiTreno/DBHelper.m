@@ -52,6 +52,14 @@
     
 }
 
+-(void) executeMultipleStatements:(NSString*)sql {
+    
+    [self.queue inDatabase:^(FMDatabase *db) {
+        [db executeStatements:sql];
+    }];
+    
+}
+
 - (NSString*) dayFromNumber:(NSInteger) num {
     NSArray *week = @[@"lun",@"mar",@"mer",@"gio",@"ven",@"sab",@"dom"];
     return week[num];
@@ -72,6 +80,74 @@
 
     
     return backup;
+}
+
+-(void) importBackup:(NSData *)data {
+    
+    NSLog(@"Importazione backup in corso...");
+    
+    NSDictionary *backup = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    NSArray *viaggi = [backup objectForKey:@"viaggi"];
+    NSArray *ripetizioni = [backup objectForKey:@"ripetizioni"];
+    NSArray *treni = [backup objectForKey:@"treni"];
+    NSArray *treniviaggi = [backup objectForKey:@"treniviaggi"];
+    
+    
+    NSMutableString *query = [NSMutableString string];
+    
+    
+    // viaggi
+    for(int idx = 0; idx < [viaggi count]; idx++) {
+        NSDictionary *backupViaggio = [viaggi objectAtIndex:idx];
+        
+        NSString *thisQuery = [NSString stringWithFormat:@"INSERT INTO viaggi (nomePartenza,nomeArrivo, orarioPartenza,orarioArrivo,durata) VALUES ('%@','%@','%@','%@','%@');",
+                            [backupViaggio objectForKey:@"nomePartenza"],[backupViaggio objectForKey:@"nomeArrivo"],[backupViaggio objectForKey:@"orarioPartenza"],[backupViaggio objectForKey:@"orarioArrivo"],[backupViaggio objectForKey:@"durata"]];
+        [query appendString:thisQuery];
+    }
+
+    [[DBHelper sharedInstance] executeMultipleStatements:query];
+
+    
+    [query setString:@""];
+    
+    //ripetizioni
+    for(int idx = 0; idx < [ripetizioni count]; idx++) {
+        NSDictionary *backupRipetizioni = [ripetizioni objectAtIndex:idx];
+        
+        NSString *thisQuery = [NSString stringWithFormat:@"INSERT INTO ripetizioni (id,idViaggio) VALUES ('%@','%@');",[backupRipetizioni objectForKey:@"id"],[backupRipetizioni objectForKey:@"idViaggio"]];
+        [query appendString:thisQuery];
+    }
+    
+    [[DBHelper sharedInstance] executeMultipleStatements:query];
+    
+    [query setString:@""];
+    
+    //treni
+    for(int idx = 0; idx < [treni count]; idx++) {
+        NSDictionary *backupTreni = [treni objectAtIndex:idx];
+        
+        NSString *thisQuery = [NSString stringWithFormat:@"INSERT INTO treni (numero,idOrigine,idDestinazione,categoria,nomePartenza,nomeArrivo,orarioPartenza,orarioArrivo) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@');",
+                               [backupTreni objectForKey:@"numero"],[backupTreni objectForKey:@"idOrigine"],[backupTreni objectForKey:@"idDestinazione"],[backupTreni objectForKey:@"categoria"],[backupTreni objectForKey:@"nomePartenza"],[backupTreni objectForKey:@"nomeArrivo"],[backupTreni objectForKey:@"orarioPartenza"],[backupTreni objectForKey:@"orarioArrivo"]];
+
+        [query appendString:thisQuery];
+    }
+    
+    [[DBHelper sharedInstance] executeMultipleStatements:query];
+    
+    
+    [query setString:@""];
+    
+    //treni-viaggi
+    for(int idx = 0; idx < [treniviaggi count]; idx++) {
+        NSDictionary *backupTreniviaggi = [treniviaggi objectAtIndex:idx];
+
+        NSString *thisQuery = [NSString stringWithFormat:@"INSERT INTO 'treni-viaggi' (idViaggio,idTreno) VALUES ('%@','%@');",[backupTreniviaggi objectForKey:@"idViaggio"] ,[backupTreniviaggi objectForKey:@"idTreno"]];
+        [query appendString:thisQuery];
+    }
+    
+    [[DBHelper sharedInstance] executeMultipleStatements:query];
+    
 }
 
 
