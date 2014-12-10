@@ -40,6 +40,7 @@
 		137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */; };
 		137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DF31A135E5200B9E77E /* DateUtils.m */; };
 		1397AB3C1A27C6F10084D478 /* DettaglioStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */; };
+		1398B9D71A388CBF005D6F31 /* DropboxClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1398B9D61A388CBF005D6F31 /* DropboxClient.m */; };
 		13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */; };
 		13B24A4D1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B24A4C1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m */; };
 		13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */; };
@@ -133,6 +134,8 @@
 		1397AB351A27C5870084D478 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1397AB3A1A27C6F10084D478 /* DettaglioStazioneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DettaglioStazioneViewController.h; sourceTree = "<group>"; };
 		1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioStazioneViewController.m; sourceTree = "<group>"; };
+		1398B9D51A388CBF005D6F31 /* DropboxClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxClient.h; sourceTree = "<group>"; };
+		1398B9D61A388CBF005D6F31 /* DropboxClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxClient.m; sourceTree = "<group>"; };
 		13AC56591A14B3BC00492CB6 /* SalvatoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalvatoTableViewCell.h; sourceTree = "<group>"; };
 		13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalvatoTableViewCell.m; sourceTree = "<group>"; };
 		13B24A4B1A28E479009EEFB4 /* TrenoStazioneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrenoStazioneTableViewCell.h; path = ../TrenoStazioneTableViewCell.h; sourceTree = "<group>"; };
@@ -347,6 +350,15 @@
 			name = DateUtils;
 			sourceTree = "<group>";
 		};
+		1398B9D81A388CD1005D6F31 /* DropboxClient */ = {
+			isa = PBXGroup;
+			children = (
+				1398B9D51A388CBF005D6F31 /* DropboxClient.h */,
+				1398B9D61A388CBF005D6F31 /* DropboxClient.m */,
+			);
+			name = DropboxClient;
+			sourceTree = "<group>";
+		};
 		13D01EDE1A0BC3B300BDCD05 /* fmdb */ = {
 			isa = PBXGroup;
 			children = (
@@ -422,6 +434,7 @@
 		13DA1CD31A0A361700AE6160 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				1398B9D81A388CD1005D6F31 /* DropboxClient */,
 				137F4DF51A135E5800B9E77E /* DateUtils */,
 				13D01EF31A0BC3DE00BDCD05 /* DBHelper */,
 				13DA1CD41A0A362400AE6160 /* APIClient */,
@@ -588,6 +601,7 @@
 				13FF51521A0BE88A005A8409 /* Treno.m in Sources */,
 				130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */,
 				135CC3DD1A0A1F6D0074D079 /* FZDatepicker.m in Sources */,
+				1398B9D71A388CBF005D6F31 /* DropboxClient.m in Sources */,
 				13EFA8271A31F56E00AE98B3 /* ThreadHelper.m in Sources */,
 				137E5F911A376DA600AC291B /* ImpostazioniViewController.m in Sources */,
 				13D01EEC1A0BC3B300BDCD05 /* FMDatabasePool.m in Sources */,
