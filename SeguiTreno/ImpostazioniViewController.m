@@ -26,8 +26,13 @@
     
     [self updateDropboxLabel];
     
-    
-    
+    // inizializzo gli spinner
+    self.spinnerExport = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.spinnerImport = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.spinnerExport.frame = CGRectMake(0, 0, 24, 24);
+    self.spinnerImport.frame = CGRectMake(0, 0, 24, 24);
+    self.cellExport.accessoryView = self.spinnerExport;
+    self.cellImport.accessoryView = self.spinnerImport;
     
     
 }
@@ -160,6 +165,9 @@
 
 - (void) dropboxExport {
     
+
+    [self.spinnerExport startAnimating];
+    
     [self setupDBFilesystem];
     
     if ([self isDropboxLinked]) {
@@ -181,6 +189,8 @@
 }
 
 -(void) dropboxImport {
+    
+    [self.spinnerImport startAnimating];
     
     [self setupDBFilesystem];
     
@@ -212,6 +222,7 @@
         [[ThreadHelper shared] executeInBackground:@selector(openDropboxFile:) of:self withParam:existingPath  completion:^(BOOL success) {
             //update tabelle
             NSLog(@"Finito");
+            [self.spinnerImport stopAnimating];
         }];
         
         
@@ -225,6 +236,7 @@
     [[ThreadHelper shared] executeInBackground:@selector(replaceDropboxFile:) of:self withParam:newPath  completion:^(BOOL success) {
         //update tabelle
         NSLog(@"Finito");
+        [self.spinnerExport stopAnimating];
     }];
 }
 

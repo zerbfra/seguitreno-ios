@@ -985,6 +985,8 @@
                     <navigationItem key="navigationItem" title="Impostazioni" id="1ph-U5-0ca"/>
                     <connections>
                         <outlet property="cellDropbox" destination="PEj-82-aMF" id="Uib-dm-JE0"/>
+                        <outlet property="cellExport" destination="cQe-2a-KTa" id="3ZU-fr-wgu"/>
+                        <outlet property="cellImport" destination="kai-TP-0vl" id="S0v-ZZ-xAY"/>
                         <outlet property="cellVersione" destination="i1k-Pb-Xrb" id="syf-my-LUR"/>
                     </connections>
                 </tableViewController>
