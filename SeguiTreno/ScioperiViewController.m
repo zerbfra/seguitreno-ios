@@ -82,7 +82,7 @@
             [self.notizie addObject:news];
             
         }
-        
+
         
         
         dispatch_group_leave(group);

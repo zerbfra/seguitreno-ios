@@ -191,7 +191,12 @@
              Treno *partenza = [self.treniPartenza objectAtIndex:indexPath.row];
              cell.treno.text = [partenza stringaDescrizione];
              cell.info.text = partenza.destinazione.nome;
-             cell.orario.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:partenza.orarioPartenza]];
+             
+             if(partenza.ritardo > 0) {
+                 NSString *stringaRitardo = [NSString stringWithFormat:@"Ritardo %ld min",partenza.ritardo];
+                 cell.orario.text = [NSString stringWithFormat:@"%@ - %@",[[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:partenza.orarioPartenza]],stringaRitardo];
+             } else cell.orario.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:partenza.orarioPartenza]];
+             
              [cell setRitardo:partenza.ritardo];
          } else {
              cell.treno.text = @"";
@@ -204,7 +209,12 @@
              Treno *arrivo = [self.treniArrivo objectAtIndex:indexPath.row];
              cell.treno.text = [arrivo stringaDescrizione];
              cell.info.text = arrivo.origine.nome;
-             cell.orario.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:arrivo.orarioArrivo]];
+             
+             if(arrivo.ritardo > 0) {
+                 NSString *stringaRitardo = [NSString stringWithFormat:@"Ritardo %ld min",arrivo.ritardo];
+                 cell.orario.text = [NSString stringWithFormat:@"%@ - %@",[[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:arrivo.orarioArrivo]],stringaRitardo];
+             } else cell.orario.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:arrivo.orarioArrivo]];
+             
              [cell setRitardo:arrivo.ritardo];
          } else {
              cell.treno.text = @"Nessun treno in arrivo";
