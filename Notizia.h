@@ -14,4 +14,6 @@
 @property (strong,nonatomic) NSString *data;
 @property (strong,nonatomic) NSString *testo;
 
+@property BOOL primopiano;
+
 @end

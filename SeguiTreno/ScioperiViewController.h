@@ -12,5 +12,6 @@
 @interface ScioperiViewController : UITableViewController
 
 @property (strong,nonatomic) NSMutableArray *scioperi;
+@property (strong,nonatomic) NSMutableArray *notizie;
 
 @end

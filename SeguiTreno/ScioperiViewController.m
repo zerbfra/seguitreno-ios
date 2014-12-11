@@ -25,9 +25,25 @@
 
     
     self.scioperi = [[NSMutableArray alloc] init];
+    self.notizie = [[NSMutableArray alloc] init];
 
+    [self requestInfo:YES completion:^{
+        [self.tableView reloadData];
+    }];
     
-    [[APIClient sharedClient] requestWithPath:@"scioperi" andParams:@{@"numero":@"0"} completion:^(NSArray *response) {
+    
+}
+
+
+-(void) requestInfo:(BOOL)update completion:(void (^)(void))completionBlock {
+    
+    NSNumber* up = [NSNumber numberWithBool:update];
+    
+    // creo un gruppo di dispatch
+    dispatch_group_t group = dispatch_group_create();
+    
+    dispatch_group_enter(group);
+    [[APIClient sharedClient] requestWithPath:@"scioperi" andParams:@{@"update":up} completion:^(NSArray *response) {
         //NSLog(@"Response: %@", response);
         
         
@@ -35,12 +51,12 @@
             
             Notizia *sciopero = [[Notizia alloc] init];
             
-
+            
             
             
             sciopero.titolo = [scioperoDict objectForKey:@"titolo"];
-            sciopero.titolo = [sciopero.titolo stringByReplacingOccurrencesOfString:@" - " withString:@"\n"];
-
+            //sciopero.titolo = [sciopero.titolo stringByReplacingOccurrencesOfString:@" - " withString:@"\n"];
+            
             
             sciopero.data = [scioperoDict objectForKey:@"data"];
             sciopero.testo = [self formattaTesto:[scioperoDict objectForKey:@"testo"]];
@@ -49,12 +65,48 @@
             
         }
         
-        [self.tableView reloadData];
+        dispatch_group_leave(group);
         
         
         
     }];
+    
+    dispatch_group_enter(group);
+    [[APIClient sharedClient] requestWithPath:@"news" andParams:@{@"update":up} completion:^(NSArray *response) {
+        //NSLog(@"Response: %@", response);
+        
+        for (NSDictionary *newsDict in response) {
+            
+            Notizia *news = [[Notizia alloc] init];
+            
+            news.titolo = [newsDict objectForKey:@"titolo"];
+            
+            news.primopiano = [[newsDict objectForKey:@"primoPiano"] boolValue];
+            news.data = [newsDict objectForKey:@"data"];
+            news.testo = [newsDict objectForKey:@"testo"];
+            
+            [self.notizie addObject:news];
+            
+        }
+        
+        
+        
+        dispatch_group_leave(group);
+        
+        
+    }];
+    
+    
+    // Here we wait for all the requests to finish
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        // Do whatever you need to do when all requests are finished
+        NSLog(@"Finito le richieste al server");
+        // mando l'array
+        completionBlock();
+    });
+    
 }
+
 
 -(NSString*) formattaTesto:(NSString*) stringa {
     NSString *clean = stringa.lowercaseString;
@@ -68,32 +120,59 @@
     
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if(indexPath.section == 0) return 80.0f;
+    return 44.0f;
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.scioperi count];
+    if(section == 0) return [self.notizie count];
+    else return [self.scioperi count];
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if(section == 0) return @"News e scioperi effettivi";
+    else return @"Scioperi proclamati";
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ScioperoTableViewCell *cell = (ScioperoTableViewCell*) [tableView dequeueReusableCellWithIdentifier:@"scioperoCell" forIndexPath:indexPath];
     
-    cell.sciopero = [self.scioperi objectAtIndex:indexPath.row];
-    [cell disegna];
-    // Configure the cell...
     
-    return cell;
+    if(indexPath.section == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"notiziaCell" forIndexPath:indexPath];
+        Notizia *newsCell = [self.notizie objectAtIndex:indexPath.row];
+        cell.textLabel.text = newsCell.titolo;
+        cell.detailTextLabel.text = newsCell.testo;
+        if(newsCell.primopiano) cell.textLabel.textColor = RED;
+        //cell.sciopero = [self.notizie objectAtIndex:indexPath.row];
+        return cell;
+    }
+    else {
+        ScioperoTableViewCell *cell = (ScioperoTableViewCell*) [tableView dequeueReusableCellWithIdentifier:@"notiziaCell" forIndexPath:indexPath];
+        Notizia *scioperoCell = [self.scioperi objectAtIndex:indexPath.row];
+        cell.textLabel.text = scioperoCell.titolo;
+        cell.detailTextLabel.text = scioperoCell.testo;
+        return cell;
+    }
+    
+    
+ 
 }
 
 
