@@ -51,13 +51,7 @@
             
             Notizia *sciopero = [[Notizia alloc] init];
             
-            
-            
-            
             sciopero.titolo = [scioperoDict objectForKey:@"titolo"];
-            //sciopero.titolo = [sciopero.titolo stringByReplacingOccurrencesOfString:@" - " withString:@"\n"];
-            
-            
             sciopero.data = [scioperoDict objectForKey:@"data"];
             sciopero.testo = [self formattaTesto:[scioperoDict objectForKey:@"testo"]];
             
