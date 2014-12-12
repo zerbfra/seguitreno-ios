@@ -122,7 +122,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(indexPath.section == 0) return 80.0f;
+    if(indexPath.section == 0) return 88.0f;
     return 44.0f;
 }
 
@@ -148,12 +148,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
+    
     if(indexPath.section == 0) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"notiziaCell" forIndexPath:indexPath];
         Notizia *newsCell = [self.notizie objectAtIndex:indexPath.row];
         cell.textLabel.text = newsCell.titolo;
         cell.detailTextLabel.text = newsCell.testo;
-        if(newsCell.primopiano) cell.textLabel.textColor = RED;
+        cell.detailTextLabel.textColor = [UIColor darkGrayColor];
+        cell.textLabel.textColor = [UIColor darkGrayColor];
+        if([newsCell.testo containsString:@"sciopero"]) {
+            cell.detailTextLabel.textColor = RED;
+            cell.textLabel.textColor = RED;
+        }
+
         //cell.sciopero = [self.notizie objectAtIndex:indexPath.row];
         return cell;
     }
@@ -162,6 +169,9 @@
         Notizia *scioperoCell = [self.scioperi objectAtIndex:indexPath.row];
         cell.textLabel.text = scioperoCell.titolo;
         cell.detailTextLabel.text = scioperoCell.testo;
+        cell.textLabel.textColor = [UIColor darkGrayColor];
+        cell.detailTextLabel.textColor = [UIColor darkGrayColor];
+        
         return cell;
     }
     

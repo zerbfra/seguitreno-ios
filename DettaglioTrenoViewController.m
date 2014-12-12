@@ -158,7 +158,7 @@
     Stazione *rilevamento = [[Stazione alloc] init];
     rilevamento.nome = self.treno.stazioneUltimoRilevamento;
 
-    if([rilevamento.nome isEqualToString:@"--"]) self.ultimoRilevamento.text = @"NON ANCORA PARTITO";
+    if([rilevamento.nome isEqualToString:@"--"]) self.ultimoRilevamento.text = @"";
     else {
         if(self.treno.arrivato) self.ultimoRilevamento.text = @"ARRIVATO";
         else self.ultimoRilevamento.text = [NSString stringWithFormat:@"RILEVATO A %@",rilevamento.nome];
@@ -167,7 +167,7 @@
     self.ritardo.text = [self.treno stringaRitardo];
     
     } else {
-        self.ultimoRilevamento.text = @"NON ANCORA PARTITO";
+        self.ultimoRilevamento.text = @"";
         // siccome avrò impostata una data, visualizzo quella
         self.ritardo.text = [[DateUtils shared] showDateMedium:self.dataTreno];
     }

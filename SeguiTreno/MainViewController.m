@@ -269,7 +269,7 @@
         dispatch_group_enter(group);
         
         [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":treno.numero,@"origine":treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSArray *response) {
-            NSLog(@"%@",response);
+            //NSLog(@"%@",response);
             for(NSDictionary *trenoDict in response) {
                 // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
                 if([NSNull null] != [trenoDict objectForKey:@"ritardo"]) {
@@ -525,8 +525,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     SalvatoTableViewCell *cell  = (SalvatoTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
-    // solo se ho informazioni dalle API lo rendo cliccabile
-    if(!cell.treno.nonDisponibile && !cell.treno.soppresso) {
+    // solo se ho informazioni dalle API lo rendo cliccabile, inoltre son cliccabili solo quelli del giorno stesso
+    if(!cell.treno.nonDisponibile && !cell.treno.soppresso && [self.datepicker selectedIndex] == 0) {
         
         CWStatusBarNotification *notification = [CWStatusBarNotification new];
         notification.notificationLabelBackgroundColor = DARKGREY;
