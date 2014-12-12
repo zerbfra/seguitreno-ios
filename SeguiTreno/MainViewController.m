@@ -144,7 +144,13 @@
             NSLog(@"Recupero informazioni live...");
             [self requestGroupTrain:[self elencoTreni]  completion:^(NSArray *response) {
                 // aggiorno per le informazioni recuperate dal server
-                [self.treniTable reloadData];
+                // Reload table with a slight animation
+                [UIView transitionWithView:self.treniTable
+                                  duration:0.5f
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^(void) {
+                                    [self.treniTable reloadData];
+                                } completion:NULL];
             }];
         } else {
             NSLog(@"Stampo treni senza live...");
@@ -261,12 +267,12 @@
         dispatch_group_enter(group);
         
         [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":treno.numero,@"origine":treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSArray *response) {
-            //NSLog(@"%@",response);
+            NSLog(@"%@",response);
             for(NSDictionary *trenoDict in response) {
                 // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
                 if([NSNull null] != [trenoDict objectForKey:@"ritardo"]) {
                     treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
-                    treno.soppresso = [[trenoDict objectForKey:@"soppresso"] boolValue];
+                    treno.soppresso = [[trenoDict objectForKey:@"sopresso"] boolValue];
                     treno.arrivato = [[trenoDict objectForKey:@"arrivato"] boolValue];
                     treno.nonDisponibile = false;
                 } else {
@@ -488,7 +494,7 @@
     Viaggio *viaggio = [self.viaggi objectAtIndex:indexPath.section];
     
     cell.treno = [viaggio.tragitto objectAtIndex:indexPath.row];
-    
+
     
     cell.partenzaL.text = cell.treno.partenza.nome;
     cell.arrivoL.text = cell.treno.arrivo.nome;
@@ -500,8 +506,10 @@
     
     if([self.datepicker selectedIndex] == 0) {
         cell.ritardoL.text = [cell.treno stringaStatoTemporale];
+        
+        if(cell.treno.soppresso) cell.ritardoL.textColor = RED;
+        
     } else  cell.ritardoL.text = @"";
-  
 
     
     
@@ -515,7 +523,7 @@
     
     SalvatoTableViewCell *cell  = (SalvatoTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     // solo se ho informazioni dalle API lo rendo cliccabile
-    if(!cell.treno.nonDisponibile) {
+    if(!cell.treno.nonDisponibile && !cell.treno.soppresso) {
         
         CWStatusBarNotification *notification = [CWStatusBarNotification new];
         notification.notificationLabelBackgroundColor = DARKGREY;

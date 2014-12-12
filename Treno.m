@@ -75,6 +75,8 @@
 
 -(NSString*) stringaRitardo {
     int ritardo = abs((int)self.ritardo);
+
+    if(self.soppresso) return @"SOPPRESSO";
     
     if(self.nonDisponibile) return @"NON DISPONIBILE";
     
