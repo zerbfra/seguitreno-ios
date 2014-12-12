@@ -15,7 +15,8 @@
 @property (strong,nonatomic) NSString *nome;
 @property (strong,nonatomic) NSString *regione;
 
-
+@property (strong,nonatomic) NSMutableArray* treniArrivo;
+@property (strong,nonatomic) NSMutableArray* treniPartenza;
 
 // coordinate della stazione
 @property (nonatomic) float lat;
@@ -32,5 +33,8 @@
 -(void) formattaNome;
 // pulisce l'id della stazione (solitamente ha una lettera [A-Z] davanti al codice, utile in certe richieste a trenitalia, in altre no
 -(NSString*) cleanId;
+
+// carica treni in arrivo e partenza
+-(void) caricaTreniStazione:(void (^)(void))completionBlock;
 
 @end

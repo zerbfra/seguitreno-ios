@@ -33,13 +33,13 @@
     self.tableView.dataSource = self;
 
     
-    self.treniArrivo = [NSMutableArray array];
-    self.treniPartenza = [NSMutableArray array];
+    //self.treniArrivo = [NSMutableArray array];
+    //self.treniPartenza = [NSMutableArray array];
     
     self.navigationItem.title = self.stazione.nome;
 
-    
-    [self caricaTreni];
+    //[self.tableView reloadData];
+    //[self caricaTreni];
     
 }
 
@@ -158,11 +158,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
     if(section == 0) {
-        if([self.treniPartenza count] > 0) return [self.treniPartenza count];
+        if([self.stazione.treniPartenza count] > 0) return [self.stazione.treniPartenza count];
         else return 1;
     }
     else {
-        if([self.treniArrivo count] > 0) return [self.treniArrivo count];
+        if([self.stazione.treniArrivo count] > 0) return [self.stazione.treniArrivo count];
         else return 1;
     }
 }
@@ -187,8 +187,8 @@
      
      if(indexPath.section == 0) {
          //partenze
-         if([self.treniPartenza count] > 0) {
-             Treno *partenza = [self.treniPartenza objectAtIndex:indexPath.row];
+         if([self.stazione.treniPartenza count] > 0) {
+             Treno *partenza = [self.stazione.treniPartenza objectAtIndex:indexPath.row];
              cell.treno.text = [partenza stringaDescrizione];
              cell.info.text = partenza.destinazione.nome;
              
@@ -205,8 +205,8 @@
          
      } else {
          //arrivi
-         if([self.treniArrivo count] > 0) {
-             Treno *arrivo = [self.treniArrivo objectAtIndex:indexPath.row];
+         if([self.stazione.treniArrivo count] > 0) {
+             Treno *arrivo = [self.stazione.treniArrivo objectAtIndex:indexPath.row];
              cell.treno.text = [arrivo stringaDescrizione];
              cell.info.text = arrivo.origine.nome;
              
@@ -228,7 +228,7 @@
      return cell;
  }
 
-
+/*
 -(void) caricaTreni {
     
     NSLog(@"%@",self.stazione.idStazione);
@@ -309,7 +309,7 @@
     });
     
 }
-
+*/
 
 
 /*

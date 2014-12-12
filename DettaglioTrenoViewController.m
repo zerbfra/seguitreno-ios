@@ -248,7 +248,23 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     //NSLog(@"%@",self.treno.fermate[indexPath.row]);
-    [self performSegueWithIdentifier:@"dettaglioStazione" sender:self.treno.fermate[indexPath.row]];
+    Fermata *fermata = self.treno.fermate[indexPath.row];
+    Stazione *selezionata = fermata.stazione;
+    
+    
+    CWStatusBarNotification *notification = [CWStatusBarNotification new];
+    notification.notificationLabelBackgroundColor = DARKGREY;
+    notification.notificationLabelTextColor = [UIColor whiteColor];
+    notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
+    notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
+    
+    
+    [notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
+    
+    [selezionata caricaTreniStazione:^{
+        [notification dismissNotification];
+        [self performSegueWithIdentifier:@"dettaglioStazione" sender:selezionata];
+    }];
   
 }
 
@@ -296,8 +312,8 @@
     // Pass the selected object to the new view controller.
     if([segue.identifier  isEqual: @"dettaglioStazione"]) {
         DettaglioStazioneViewController *viewSegue = (DettaglioStazioneViewController*)[segue destinationViewController];
-        Fermata *fermata = (Fermata*)sender;
-        viewSegue.stazione = fermata.stazione;
+        Stazione *stazione = (Stazione*)sender;
+        viewSegue.stazione = stazione;
     }
     
     

@@ -10,7 +10,7 @@
 #import "DettaglioTrenoViewController.h"
 #import "NewTrainController.h"
 
-#import "CWStatusBarNotification.h"
+
 
 @implementation MainViewController
 

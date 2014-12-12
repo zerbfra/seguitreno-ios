@@ -221,7 +221,6 @@
     // Configure the cell...
     
     Stazione *stazione = [self.stazioniVicine objectAtIndex:indexPath.row];
-    
     cell.textLabel.text = stazione.nome;
     
     return cell;
@@ -230,7 +229,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     //NSLog(@"%@",self.treno.fermate[indexPath.row]);
-    [self performSegueWithIdentifier:@"dettaglioStazione" sender:self.stazioniVicine[indexPath.row]];
+    Stazione *selezionata = self.stazioniVicine[indexPath.row];
+    NSLog(@"lol");
+    CWStatusBarNotification *notification = [CWStatusBarNotification new];
+    notification.notificationLabelBackgroundColor = DARKGREY;
+    notification.notificationLabelTextColor = [UIColor whiteColor];
+    notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
+    notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
+    [notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
+    
+    [selezionata caricaTreniStazione:^{
+        [self performSegueWithIdentifier:@"dettaglioStazione" sender:selezionata];
+        [notification dismissNotification];
+    }];
+    
     
 }
 
