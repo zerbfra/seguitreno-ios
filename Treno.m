@@ -75,10 +75,14 @@
 
 -(NSString*) stringaRitardo {
     int ritardo = abs((int)self.ritardo);
+    
 
+    
     if(self.soppresso) return @"SOPPRESSO";
     
     if(self.nonDisponibile) return @"NON DISPONIBILE";
+    if([self.stazioneUltimoRilevamento isEqualToString:@"--"]) return @"NON ANCORA PARTITO";
+    
     
     if(self.ritardo < 0) return [NSString stringWithFormat:@"ANTICIPO %d MIN",ritardo];
     if(self.ritardo > 0) return [NSString stringWithFormat:@"RITARDO %d MIN",ritardo];

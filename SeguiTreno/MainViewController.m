@@ -129,6 +129,7 @@
         // qui sono di nuovo sul main thread
         NSLog(@"Ho caricato db");
         
+        
         // Aggiorno tabella con un'animazione (con i dati locali)
         [UIView transitionWithView:self.treniTable
                           duration:0.2f
@@ -136,7 +137,8 @@
                         animations:^(void) {
                             [self.treniTable reloadData];
                         } completion:NULL];
-        
+         
+        //[self.treniTable reloadData];
         
         // richiedo informazioni aggiuntive sui treni se sono quelli della giornata (quindi index = 0)
         
@@ -146,7 +148,7 @@
                 // aggiorno per le informazioni recuperate dal server
                 // Reload table with a slight animation
                 [UIView transitionWithView:self.treniTable
-                                  duration:0.5f
+                                  duration:0.2f
                                    options:UIViewAnimationOptionTransitionCrossDissolve
                                 animations:^(void) {
                                     [self.treniTable reloadData];
@@ -154,7 +156,7 @@
             }];
         } else {
             NSLog(@"Stampo treni senza live...");
-            [self.treniTable reloadData];
+            //[self.treniTable reloadData];
         }
     }];
 }
@@ -274,6 +276,7 @@
                     treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
                     treno.soppresso = [[trenoDict objectForKey:@"sopresso"] boolValue];
                     treno.arrivato = [[trenoDict objectForKey:@"arrivato"] boolValue];
+                    treno.stazioneUltimoRilevamento = [trenoDict objectForKey:@"stazioneUltimoRilevamento"];
                     treno.nonDisponibile = false;
                 } else {
                     treno.nonDisponibile = true;
