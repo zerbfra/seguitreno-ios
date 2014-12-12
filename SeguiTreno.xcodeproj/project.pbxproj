@@ -59,6 +59,7 @@
 		13EFA8351A34710E00AE98B3 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA8341A34710E00AE98B3 /* LocationManager.m */; };
 		13EFA8371A347E1700AE98B3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1397AB351A27C5870084D478 /* MapKit.framework */; };
 		13EFA83A1A347EBC00AE98B3 /* TrovaStazioniViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13EFA8391A347EBC00AE98B3 /* TrovaStazioniViewController.m */; };
+		13F59BDE1A3A63A20057ED70 /* CWStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F59BDD1A3A63A20057ED70 /* CWStatusBarNotification.m */; };
 		13FF514F1A0BCD59005A8409 /* SearchStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */; };
 		13FF51521A0BE88A005A8409 /* Treno.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF51511A0BE88A005A8409 /* Treno.m */; };
 		13FF51551A0BE898005A8409 /* Stazione.m in Sources */ = {isa = PBXBuildFile; fileRef = 13FF51541A0BE898005A8409 /* Stazione.m */; };
@@ -170,6 +171,8 @@
 		13EFA8341A34710E00AE98B3 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
 		13EFA8381A347EBC00AE98B3 /* TrovaStazioniViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrovaStazioniViewController.h; sourceTree = "<group>"; };
 		13EFA8391A347EBC00AE98B3 /* TrovaStazioniViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrovaStazioniViewController.m; sourceTree = "<group>"; };
+		13F59BDC1A3A63A20057ED70 /* CWStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStatusBarNotification.h; sourceTree = "<group>"; };
+		13F59BDD1A3A63A20057ED70 /* CWStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStatusBarNotification.m; sourceTree = "<group>"; };
 		13FF514D1A0BCD59005A8409 /* SearchStazioneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchStazioneViewController.h; sourceTree = "<group>"; };
 		13FF514E1A0BCD59005A8409 /* SearchStazioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchStazioneViewController.m; sourceTree = "<group>"; };
 		13FF51501A0BE88A005A8409 /* Treno.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Treno.h; sourceTree = "<group>"; };
@@ -380,6 +383,7 @@
 		13D01EEF1A0BC3BB00BDCD05 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				13F59BDB1A3A63A20057ED70 /* CWStatusBarNotification */,
 				13D01EDE1A0BC3B300BDCD05 /* fmdb */,
 			);
 			name = Libraries;
@@ -478,6 +482,15 @@
 				13EFA8341A34710E00AE98B3 /* LocationManager.m */,
 			);
 			name = LocationManager;
+			sourceTree = "<group>";
+		};
+		13F59BDB1A3A63A20057ED70 /* CWStatusBarNotification */ = {
+			isa = PBXGroup;
+			children = (
+				13F59BDC1A3A63A20057ED70 /* CWStatusBarNotification.h */,
+				13F59BDD1A3A63A20057ED70 /* CWStatusBarNotification.m */,
+			);
+			path = CWStatusBarNotification;
 			sourceTree = "<group>";
 		};
 		13FF51561A0BE8E6005A8409 /* Model */ = {
@@ -630,6 +643,7 @@
 				13EFA8351A34710E00AE98B3 /* LocationManager.m in Sources */,
 				1304EB201A0D0B0900C2DC12 /* Viaggio.m in Sources */,
 				1376AAA51A2CBAF400C55F6F /* RicercaViewController.m in Sources */,
+				13F59BDE1A3A63A20057ED70 /* CWStatusBarNotification.m in Sources */,
 				137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */,
 				13FF514F1A0BCD59005A8409 /* SearchStazioneViewController.m in Sources */,
 				1397AB3C1A27C6F10084D478 /* DettaglioStazioneViewController.m in Sources */,

@@ -150,5 +150,21 @@
     
 }
 
+-(void) createDBForSync {
+    
+    
+    NSString *query = [NSString stringWithFormat:@"SELECT t.numero,t.idOrigine,t.idDestinazione,v.orarioPartenza,v.orarioArrivo FROM viaggi AS v,treni AS t,'treni-viaggi' AS tv WHERE v.id=tv.idViaggio AND t.id=tv.idTreno"];
+    
+    NSArray *dbTreni = [[DBHelper sharedInstance] executeSQLStatement:query];
+
+#warning ovviamente da completare
+    // manca salvataggio token e id utente!
+    [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni} completion:^(NSArray *response) {
+        NSLog(@"Response: %@", response);
+        
+    }];
+    
+ 
+}
 
 @end

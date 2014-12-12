@@ -31,9 +31,8 @@
     [nc addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     self.tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapAnywhere:)];
-    
-
 }
+
 
 -(void) keyboardWillShow:(NSNotification *) note {
     [self.view addGestureRecognizer:self.tapRecognizer];

@@ -36,8 +36,8 @@
                                    action:@selector(flipView)];
     self.navigationItem.rightBarButtonItem = flipButton;
     
-    
-    [self loadInfo];
+
+    [self setData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -51,12 +51,18 @@
 
 -(void) refresh {
     [self.refreshControl endRefreshing];
-    [self loadInfo];
+    //[self loadInfo];
 }
+
 
 -(void) loadInfo {
     
     NSLog(@"%@",self.treno.origine.idStazione);
+  //  [SVProgressHUD setForegroundColor:GREEN];
+   // [SVProgressHUD setBackgroundColor:[UIColor clearColor]];
+   // [SVProgressHUD show];
+
+    
     
     [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.treno.numero,@"origine":self.treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSArray *response) {
         //NSLog(@"Response: %@", response);
@@ -137,6 +143,7 @@
         }
         
         [self setData];
+       // [SVProgressHUD dismiss];
         
         
         
@@ -172,9 +179,9 @@
     self.stazioneA.text = self.treno.destinazione.nome;
     
 
-
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
     
 }
 

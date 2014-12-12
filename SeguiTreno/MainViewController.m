@@ -10,6 +10,7 @@
 #import "DettaglioTrenoViewController.h"
 #import "NewTrainController.h"
 
+#import "CWStatusBarNotification.h"
 
 @implementation MainViewController
 
@@ -57,9 +58,45 @@
     
 
     [self caricaViaggi];
+    //[self addProgressAnimation];
+    
+}
 
+
+/*potrebbe tornare utile */
+#warning e' tornata utile?
+-(void) addProgressAnimation:(UIView*) view {
+    
+    //[UIApplication sharedApplication].statusBar
+    //UINavigationBar *navbar = self.navigationController.navigationBar;
+    //UIView *bar =  [[UIView alloc] initWithFrame:CGRectMake(0, -20, view.bounds.size.width, 20)];
+    
+    //[
+    //bar.backgroundColor = RED;
+   // bar.tag = 10;
+    
+    //[view addSubview:bar];
+    
+    /*
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    animation.duration = 1.2;
+    animation.repeatCount = INFINITY;
+    animation.fromValue = [NSValue valueWithCGPoint:CGPointMake(0 , bar.center.y)];
+    animation.toValue = [NSValue valueWithCGPoint:CGPointMake(view.bounds.size.width,bar.center.y)];
+    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    animation.autoreverses = YES;
+    animation.removedOnCompletion = NO;
+    [bar.layer addAnimation:animation forKey:@"position"];
+     */
     
     
+    
+    
+}
+
+-(void) removeProgressAnimation:(UIView*) view {
+    UIView *removeView  = [self.view viewWithTag:10];
+    [removeView removeFromSuperview];
 }
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -302,7 +339,7 @@
     }
     
     UIView* head = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 22)];
-    
+ 
     UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(3, 20, tableView.frame.size.width, 22)];
     headerView.backgroundColor = [UIColor lightGrayColor];
     
@@ -312,9 +349,9 @@
     headerLabel.text = titolo;
     headerLabel.font = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
     headerLabel.textColor = [UIColor whiteColor];
+
     [headerView addSubview:headerLabel];
-    
-    
+
     return head;
 }
 
@@ -360,6 +397,8 @@
     [footer addSubview:button];
 
     button.frame = CGRectMake(tableView.frame.size.width/2 - 50, 3, 100, 32);
+    
+
     
     return footer;
     
@@ -462,6 +501,8 @@
     if([self.datepicker selectedIndex] == 0) {
         cell.ritardoL.text = [cell.treno stringaStatoTemporale];
     } else  cell.ritardoL.text = @"";
+  
+
     
     
     return cell;
@@ -469,9 +510,35 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    //deseleziono subito (effetto gradevole)
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     SalvatoTableViewCell *cell  = (SalvatoTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     // solo se ho informazioni dalle API lo rendo cliccabile
-    if(!cell.treno.nonDisponibile) [self performSegueWithIdentifier:@"dettaglioTreno" sender:cell];
+    if(!cell.treno.nonDisponibile) {
+        
+        CWStatusBarNotification *notification = [CWStatusBarNotification new];
+        notification.notificationLabelBackgroundColor = DARKGREY;
+        notification.notificationLabelTextColor = [UIColor whiteColor];
+        notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
+        notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
+        
+        
+        [notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
+        
+        //[self addProgressAnimation:self.navigationController.navigationBar];
+         //[tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+
+        //[SVProgressHUD show];
+        
+        [cell.treno caricaInfoComplete:^{
+            [notification dismissNotification];
+            [self performSegueWithIdentifier:@"dettaglioTreno" sender:cell];
+
+            
+            //[self removeProgressAnimation:self.tabBarController.tabBar];
+        }];
+    }
     else [self.treniTable deselectRowAtIndexPath:indexPath animated:YES];
     
 }
@@ -494,7 +561,6 @@
         else destination.attuale = NO;
         
         destination.dataTreno = self.datepicker.selectedDate;
-        
         
     }
     

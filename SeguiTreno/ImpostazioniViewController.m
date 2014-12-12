@@ -17,7 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [[DBHelper sharedInstance] createDBForSync];
     // status bar bianca
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     

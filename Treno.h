@@ -59,6 +59,9 @@
 //ritorna categoria e numero treno
 -(NSString*) stringaDescrizione;
 
+// carica informazioni complete del treno
+-(void) caricaInfoComplete:(void (^)(void))completionBlock;
+
 /*
 // formatta una stringa con orario o data data la nsdate
 -(NSString*) mostraOrario:(NSDate*) date;
