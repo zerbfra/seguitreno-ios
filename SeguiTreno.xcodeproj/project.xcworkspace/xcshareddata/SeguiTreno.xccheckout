@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>A0D09A68-8F2E-495C-87C7-5F1568C4C8F7</string>
+	<key>IDESourceControlProjectName</key>
+	<string>SeguiTreno</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>E387918BE5710CCEE5B8C49455C58EE855B2BC9F</key>
+		<string>https://bitbucket.org/zerbinatif/seguitreno.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>SeguiTreno.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>E387918BE5710CCEE5B8C49455C58EE855B2BC9F</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/zerbinatif/seguitreno.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>E387918BE5710CCEE5B8C49455C58EE855B2BC9F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E387918BE5710CCEE5B8C49455C58EE855B2BC9F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SeguiTreno</string>
+		</dict>
+	</array>
+</dict>
+</plist>
