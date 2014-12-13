@@ -234,7 +234,7 @@
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         // Do whatever you need to do when all requests are finished
         NSLog(@"Finito le richieste di salvataggio");
-        // invio la notifica globale che ho aggiunto dei treni BUG: deve essere conclusiva!
+        // invio la notifica globale che ho aggiunto dei treni 
         [[NSNotificationCenter defaultCenter] postNotificationName:@"update" object:nil];
     });
     

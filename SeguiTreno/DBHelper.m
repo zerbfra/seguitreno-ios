@@ -86,6 +86,10 @@
     
     NSLog(@"Importazione backup in corso...");
     
+    // azzero il db attuale
+    NSString *deleteQuery = @"TRUNCATE TABLE viaggi; TRUNCATE TABLE ripetizioni; TRUNCATE TABLE treni; TRUNCATE TABLE 'treni-viaggi';";
+    [[DBHelper sharedInstance] executeMultipleStatements:deleteQuery];
+    
     NSDictionary *backup = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
     NSArray *viaggi = [backup objectForKey:@"viaggi"];

@@ -106,7 +106,7 @@
 #warning Attenzione qui sistemare
         // queste funzioni non devono stare nella classe di dropbox, devono essere passate con un completion!
         [[DBHelper sharedInstance] importBackup:contents];
-
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"update" object:nil];
         
         
     }

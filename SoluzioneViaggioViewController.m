@@ -29,17 +29,26 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.soluzioniPossibili = [[NSMutableArray alloc] init];
     
-    [self trovaSoluzioniTreno];
+    
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    activityIndicator.hidesWhenStopped = YES;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    [activityIndicator startAnimating];
+    
+    [self trovaSoluzioniTreno:^{
+        [self.tableView reloadData];
+        [activityIndicator stopAnimating];
+    }];
     //NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
     //NSLog(@"%@ %@ %@",[self.query.origine cleanId],[self.query.destinazione cleanId],ts);
     
 }
 
--(void) trovaSoluzioniTreno {
+-(void) trovaSoluzioniTreno:(void (^)(void))completionBlock {
 
     NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
 
-    NSLog(@"%@ %@ %d",[self.query.partenza cleanId],[self.query.arrivo cleanId],[ts intValue]);
+    //NSLog(@"%@ %@ %d",[self.query.partenza cleanId],[self.query.arrivo cleanId],[ts intValue]);
     
     [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSArray *response) {
         //NSLog(@"Response: %@", response);
@@ -103,7 +112,8 @@
             
         }
         
-        [self.tableView reloadData];
+        completionBlock();
+     
         
         
         
