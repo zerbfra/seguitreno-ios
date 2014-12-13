@@ -31,7 +31,8 @@
     
 
     self.descTreno.text = [self.treno stringaDescrizione];
-        
+
+    
     
 }
 

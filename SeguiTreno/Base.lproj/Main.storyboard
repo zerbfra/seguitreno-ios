@@ -1477,8 +1477,12 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mdf-Va-JgX" id="wCg-uw-FoW">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="REG 2657" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OyD-TA-ibJ">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="REG 2657" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OyD-TA-ibJ">
                                             <rect key="frame" x="17" y="6" width="104" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="104" id="Wrg-gR-cAZ"/>
+                                                <constraint firstAttribute="height" constant="21" id="xen-oK-haW"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                             <color key="textColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -1508,6 +1512,10 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="OyD-TA-ibJ" firstAttribute="top" secondItem="wCg-uw-FoW" secondAttribute="top" constant="6" id="B8E-CI-9zS"/>
+                                        <constraint firstItem="OyD-TA-ibJ" firstAttribute="leading" secondItem="wCg-uw-FoW" secondAttribute="leading" constant="17" id="sQS-fA-lBT"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="arrivo" destination="g7a-Vu-QKS" id="iB8-gH-bBj"/>
@@ -1648,8 +1656,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Wzc-yb-yfU"/>
-        <segue reference="XZL-GM-sGO"/>
+        <segue reference="jZP-VW-fbP"/>
+        <segue reference="SFm-V2-Nqw"/>
         <segue reference="BSA-5i-RKd"/>
     </inferredMetricsTieBreakers>
 </document>

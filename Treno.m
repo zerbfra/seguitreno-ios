@@ -123,7 +123,7 @@
             self.ritardo = [[trenoDict objectForKey:@"ritardo"] integerValue];
             
             self.arrivato = [[trenoDict objectForKey:@"arrivato"] boolValue];
-            self.soppresso = [[trenoDict objectForKey:@"soppresso"] boolValue];
+            self.soppresso = [[trenoDict objectForKey:@"sopresso"] boolValue];
             
             NSDictionary *fermateDict = [trenoDict objectForKey:@"fermate"];
             

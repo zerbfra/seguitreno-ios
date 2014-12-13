@@ -230,18 +230,26 @@
     
     //NSLog(@"%@",self.treno.fermate[indexPath.row]);
     Stazione *selezionata = self.stazioniVicine[indexPath.row];
-    NSLog(@"lol");
-    CWStatusBarNotification *notification = [CWStatusBarNotification new];
-    notification.notificationLabelBackgroundColor = DARKGREY;
-    notification.notificationLabelTextColor = [UIColor whiteColor];
-    notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
-    notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
-    [notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
+    [self performSegueWithIdentifier:@"dettaglioStazione" sender:selezionata];
+    
+    //CWStatusBarNotification *notification = [CWStatusBarNotification new];
+    //notification.notificationLabelBackgroundColor = DARKGREY;
+    //notification.notificationLabelTextColor = [UIColor whiteColor];
+    //notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
+    //notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
+    //[notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
+    
+    /*
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    activityIndicator.hidesWhenStopped = YES;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    [activityIndicator startAnimating];
     
     [selezionata caricaTreniStazione:^{
         [self performSegueWithIdentifier:@"dettaglioStazione" sender:selezionata];
-        [notification dismissNotification];
+        [activityIndicator stopAnimating];
     }];
+     */
     
     
 }

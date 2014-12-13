@@ -29,12 +29,7 @@
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     [self.refreshControl setTintColor:GREEN];
     
-    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc]
-                                   initWithTitle:[self.treno stringaDescrizione]
-                                   style:UIBarButtonItemStyleBordered
-                                   target:self
-                                   action:@selector(flipView)];
-    self.navigationItem.rightBarButtonItem = flipButton;
+
     
 
     [self setData];
@@ -43,6 +38,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+    
+    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:[self.treno stringaDescrizione]
+                                   style:UIBarButtonItemStyleBordered
+                                   target:self
+                                   action:@selector(flipView)];
+    self.navigationItem.rightBarButtonItem = flipButton;
 }
 
 -(void) flipView {
@@ -164,6 +166,8 @@
         else self.ultimoRilevamento.text = [NSString stringWithFormat:@"RILEVATO A %@",rilevamento.nome];
 
     }
+    
+        
     self.ritardo.text = [self.treno stringaRitardo];
     
     } else {
@@ -252,19 +256,26 @@
     Stazione *selezionata = fermata.stazione;
     
     
-    CWStatusBarNotification *notification = [CWStatusBarNotification new];
-    notification.notificationLabelBackgroundColor = DARKGREY;
-    notification.notificationLabelTextColor = [UIColor whiteColor];
-    notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
-    notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
+    //CWStatusBarNotification *notification = [CWStatusBarNotification new];
+    //notification.notificationLabelBackgroundColor = DARKGREY;
+    //notification.notificationLabelTextColor = [UIColor whiteColor];
+    //notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
+    //notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
     
+    /*
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    activityIndicator.hidesWhenStopped = YES;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    [activityIndicator startAnimating];
     
-    [notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
+    //[notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
     
     [selezionata caricaTreniStazione:^{
-        [notification dismissNotification];
+        //[notification dismissNotification];
         [self performSegueWithIdentifier:@"dettaglioStazione" sender:selezionata];
-    }];
+        [activityIndicator stopAnimating];
+    }];*/
+    [self performSegueWithIdentifier:@"dettaglioStazione" sender:selezionata];
   
 }
 

@@ -24,10 +24,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //eseguo query al db per la mappa in background
-    [[ThreadHelper shared] executeInBackground:@selector(configuraMappa) of:self completion:^(BOOL success) {
-        [self zoomMapViewToFitAnnotations:self.mapView animated:NO];
-    }];
+
     //[self configuraMappa];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -37,7 +34,27 @@
     //self.treniPartenza = [NSMutableArray array];
     
     self.navigationItem.title = self.stazione.nome;
-
+    
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    activityIndicator.hidesWhenStopped = YES;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    [activityIndicator startAnimating];
+    
+    //[notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
+    
+    [self.stazione caricaTreniStazione:^{
+        //[notification dismissNotification];
+        [self.tableView reloadData];
+        
+        //eseguo query al db per la mappa in background
+        [[ThreadHelper shared] executeInBackground:@selector(configuraMappa) of:self completion:^(BOOL success) {
+            [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
+        }];
+        
+        
+        [activityIndicator stopAnimating];
+    }];
+    
     //[self.tableView reloadData];
     //[self caricaTreni];
     
@@ -143,8 +160,20 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
    
-    if(section == 0) return @"PARTENZE PER:";
-    else return @"ARRIVI DA:";
+    switch (section) {
+        case 0:
+            if([self.stazione.treniPartenza count] > 0)  return @"PARTENZE PER:";
+            else return nil;
+            break;
+        case 1:
+            if([self.stazione.treniArrivo count] > 0) return @"ARRIVI DA:";
+            else return nil;
+            break;
+            
+        default:
+            return  nil;
+            break;
+    }
     
 }
 
@@ -159,11 +188,11 @@
     // Return the number of rows in the section.
     if(section == 0) {
         if([self.stazione.treniPartenza count] > 0) return [self.stazione.treniPartenza count];
-        else return 1;
+        else return 0;
     }
     else {
         if([self.stazione.treniArrivo count] > 0) return [self.stazione.treniArrivo count];
-        else return 1;
+        else return 0;
     }
 }
 

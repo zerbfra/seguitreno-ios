@@ -19,10 +19,20 @@
     self.soluzioniPossibili = [[NSMutableArray alloc] init];
     
     // ovvero è stato inserito il numero del treno anzichè i dati delle stazioni
-    if([self.numeroTreno length] > 0) {
-        [self trovaTrenoDaNumero];
-        
-    }else [self trovaTrenoDaStazioni];
+    
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    activityIndicator.hidesWhenStopped = YES;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    [activityIndicator startAnimating];
+    
+    if([self.numeroTreno length] > 0) [self trovaTrenoDaNumero:^{
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+        [activityIndicator stopAnimating];
+    }];
+    else [self trovaTrenoDaStazioni:^{
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+        [activityIndicator stopAnimating];
+    }];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -58,7 +68,7 @@
     }
 }
 
--(void) trovaTrenoDaStazioni {
+-(void) trovaTrenoDaStazioni:(void (^)(void))completionBlock {
     
     NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
     
@@ -85,6 +95,7 @@
             treno.orarioArrivo = [[trenoDict objectForKey:@"orarioArrivo"] doubleValue];
             treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
             treno.categoria = [trenoDict objectForKey:@"categoria"];
+            treno.soppresso = [trenoDict objectForKey:@"sopresso"];
 
             treno.origine = partenza;
             treno.destinazione = arrivo;
@@ -95,8 +106,7 @@
             
         }
         
-        [self.tableView reloadData];
-        
+        completionBlock();
         
         
     }];
@@ -104,10 +114,10 @@
     
 }
 
--(void) trovaTrenoDaNumero {
+-(void) trovaTrenoDaNumero:(void (^)(void))completionBlock {
     
     [[APIClient sharedClient] requestWithPath:@"ricerca" andParams:@{@"numero":self.numeroTreno} completion:^(NSArray *response) {
-        //NSLog(@"Response: %@", response);
+        NSLog(@"Response: %@", response);
         
         
         for (NSDictionary *trenoDict in response) {
@@ -132,6 +142,7 @@
             treno.orarioArrivo = [[trenoDict objectForKey:@"orarioArrivo"] doubleValue];
             treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
             treno.categoria = [trenoDict objectForKey:@"categoria"];
+            treno.soppresso = [trenoDict objectForKey:@"sopresso"];
             treno.origine = partenza;
             treno.destinazione = arrivo;
             
@@ -141,9 +152,8 @@
             
         }
         
-        [self.tableView reloadData];
-        
-        
+        completionBlock();
+    
         
     }];
     
@@ -220,7 +230,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self performSegueWithIdentifier:@"dettaglioTreno" sender:[self.tableView cellForRowAtIndexPath:indexPath]];
+    RisultatoRicercaTableViewCell *cell  = (RisultatoRicercaTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    
+    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    activityIndicator.hidesWhenStopped = YES;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    [activityIndicator startAnimating];
+    [cell setUserInteractionEnabled:NO];
+
+    
+    [cell.treno caricaInfoComplete:^{
+        //[notification dismissNotification];
+        [self performSegueWithIdentifier:@"dettaglioTreno" sender:cell];
+        [activityIndicator stopAnimating];
+        [cell setUserInteractionEnabled:YES];
+
+    }];
+    
+
     
 }
 

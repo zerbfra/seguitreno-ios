@@ -29,9 +29,6 @@
     [self.datepicker selectDateAtIndex:0];
     
     
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     
@@ -60,6 +57,13 @@
     [self caricaViaggi];
     //[self addProgressAnimation];
     
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    
+    [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
 }
 
 
@@ -114,9 +118,7 @@
 
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
-}
+
 
 -(void) refresh {
     [self caricaViaggi];
@@ -522,31 +524,36 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     //deseleziono subito (effetto gradevole)
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     SalvatoTableViewCell *cell  = (SalvatoTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     // solo se ho informazioni dalle API lo rendo cliccabile, inoltre son cliccabili solo quelli del giorno stesso
     if(!cell.treno.nonDisponibile && !cell.treno.soppresso && [self.datepicker selectedIndex] == 0) {
         
-        CWStatusBarNotification *notification = [CWStatusBarNotification new];
-        notification.notificationLabelBackgroundColor = DARKGREY;
-        notification.notificationLabelTextColor = [UIColor whiteColor];
-        notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
-        notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
+        //CWStatusBarNotification *notification = [CWStatusBarNotification new];
+        //notification.notificationLabelBackgroundColor = DARKGREY;
+        //notification.notificationLabelTextColor = [UIColor whiteColor];
+        //notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
+        //notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
         
         
-        [notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
+        //[notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
         
+        UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        activityIndicator.hidesWhenStopped = YES;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+        [activityIndicator startAnimating];
+        [cell setUserInteractionEnabled:NO];
         //[self addProgressAnimation:self.navigationController.navigationBar];
          //[tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
 
         //[SVProgressHUD show];
         
         [cell.treno caricaInfoComplete:^{
-            [notification dismissNotification];
+            //[notification dismissNotification];
             [self performSegueWithIdentifier:@"dettaglioTreno" sender:cell];
-
-            
+            [activityIndicator stopAnimating];
+            [cell setUserInteractionEnabled:YES];
             //[self removeProgressAnimation:self.tabBarController.tabBar];
         }];
     }
