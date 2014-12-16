@@ -43,7 +43,7 @@
     dispatch_group_t group = dispatch_group_create();
     
     dispatch_group_enter(group);
-    [[APIClient sharedClient] requestWithPath:@"scioperi" andParams:@{@"update":up} completion:^(NSArray *response) {
+    [[APIClient sharedClient] requestWithPath:@"scioperi" andParams:@{@"update":up} completion:^(NSDictionary *response) {
         //NSLog(@"Response: %@", response);
         
         
@@ -66,7 +66,7 @@
     }];
     
     dispatch_group_enter(group);
-    [[APIClient sharedClient] requestWithPath:@"news" andParams:@{@"update":up} completion:^(NSArray *response) {
+    [[APIClient sharedClient] requestWithPath:@"news" andParams:@{@"update":up} completion:^(NSDictionary *response) {
         //NSLog(@"Response: %@", response);
         
         for (NSDictionary *newsDict in response) {

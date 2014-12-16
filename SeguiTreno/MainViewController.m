@@ -270,7 +270,7 @@
         
         dispatch_group_enter(group);
         
-        [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":treno.numero,@"origine":treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSArray *response) {
+        [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":treno.numero,@"origine":treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSDictionary *response) {
             //NSLog(@"%@",response);
             for(NSDictionary *trenoDict in response) {
                 // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)

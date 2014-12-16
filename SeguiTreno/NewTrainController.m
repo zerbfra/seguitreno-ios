@@ -185,7 +185,7 @@
         
         NSString  *numero = toDb.numero;
         
-        [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":numero,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSArray *response) {
+        [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":numero,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSDictionary *response) {
             //NSLog(@"Response: %@", response);
             
             for(NSDictionary *trenoDict in response) {

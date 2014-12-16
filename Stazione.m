@@ -54,7 +54,7 @@
     
     dispatch_group_enter(group);
     
-    [[APIClient sharedClient] requestWithPath:@"treniArrivo" andParams:@{@"stazione":self.idStazione} completion:^(NSArray *response) {
+    [[APIClient sharedClient] requestWithPath:@"treniArrivo" andParams:@{@"stazione":self.idStazione} completion:^(NSDictionary *response) {
         //NSLog(@"%@",response);
         
         for(NSDictionary *trenoDict in response) {
@@ -83,7 +83,7 @@
     
     dispatch_group_enter(group);
     
-    [[APIClient sharedClient] requestWithPath:@"treniPartenza" andParams:@{@"stazione":self.idStazione} completion:^(NSArray *response) {
+    [[APIClient sharedClient] requestWithPath:@"treniPartenza" andParams:@{@"stazione":self.idStazione} completion:^(NSDictionary *response) {
         //NSLog(@"%@",response);
         
         for(NSDictionary *trenoDict in response) {

@@ -61,6 +61,18 @@
     return YES;
 }
 
+-(NSDate*) date:(NSDate*) date At:(NSInteger)hour min:(NSInteger)min {
+    NSCalendar* myCalendar = [NSCalendar currentCalendar];
+    NSDateComponents* components = [myCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+                                                 fromDate:date];
+    [components setHour: hour];
+    [components setMinute: min];
+    [components setSecond: 0];
+    NSDate *myDate = [myCalendar dateFromComponents:components];
+    
+    return myDate;
+}
+
 -(NSDate*) date:(NSDate*) date At:(NSInteger) hour {
     NSCalendar* myCalendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [myCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit

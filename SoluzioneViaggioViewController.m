@@ -50,7 +50,7 @@
 
     //NSLog(@"%@ %@ %d",[self.query.partenza cleanId],[self.query.arrivo cleanId],[ts intValue]);
     
-    [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSArray *response) {
+    [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSDictionary *response) {
         //NSLog(@"Response: %@", response);
         
         

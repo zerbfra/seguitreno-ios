@@ -100,7 +100,7 @@
 // carica informazioni complete del treno
 -(void) caricaInfoComplete:(void (^)(void))completionBlock {
     
-    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.numero,@"origine":self.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSArray *response) {
+    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.numero,@"origine":self.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSDictionary *response) {
         //NSLog(@"Response: %@", response);
         
         for(NSDictionary *trenoDict in response) {

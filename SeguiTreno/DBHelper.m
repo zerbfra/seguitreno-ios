@@ -85,9 +85,9 @@
 -(void) importBackup:(NSData *)data {
     
     NSLog(@"Importazione backup in corso...");
-    
+#warning controllare esattezza svuotamento db (dovrebbe essere ok ora, 13/12)
     // azzero il db attuale
-    NSString *deleteQuery = @"TRUNCATE TABLE viaggi; TRUNCATE TABLE ripetizioni; TRUNCATE TABLE treni; TRUNCATE TABLE 'treni-viaggi';";
+    NSString *deleteQuery = @"DELETE FROM viaggi; DELETE FROM ripetizioni; DELETE FROM treni; DELETE FROM 'treni-viaggi'; VACUUM;";
     [[DBHelper sharedInstance] executeMultipleStatements:deleteQuery];
     
     NSDictionary *backup = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -154,19 +154,62 @@
     
 }
 
--(void) createDBForSync {
+-(NSArray*) createDBForSync {
     
     
-    NSString *query = [NSString stringWithFormat:@"SELECT t.numero,t.idOrigine,t.idDestinazione,v.orarioPartenza,v.orarioArrivo FROM viaggi AS v,treni AS t,'treni-viaggi' AS tv WHERE v.id=tv.idViaggio AND t.id=tv.idTreno"];
+    //NSString *query = [NSString stringWithFormat:@"SELECT t.numero,t.idOrigine,t.idDestinazione,v.orarioPartenza,v.orarioArrivo FROM viaggi AS v,treni AS t,'treni-viaggi' AS tv WHERE v.id=tv.idViaggio AND t.id=tv.idTreno"];
     
-    NSArray *dbTreni = [[DBHelper sharedInstance] executeSQLStatement:query];
-
-#warning ovviamente da completare
-    // manca salvataggio token e id utente!
-    [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni} completion:^(NSArray *response) {
-        NSLog(@"Response: %@", response);
+    NSMutableArray *dbTreni = [NSMutableArray array];
+    
+  
+    
+    NSString *query = [NSString stringWithFormat:@"SELECT * FROM viaggi"];
+    
+    NSArray *dbViaggi = [[DBHelper sharedInstance] executeSQLStatement:query];
+    
+    
+    for (NSDictionary* viaggoSet in dbViaggi) {
+        Viaggio *viaggio = [[Viaggio alloc] init];
+        viaggio.idViaggio = [viaggoSet objectForKey:@"id"];
+        viaggio.data = [[DateUtils shared] dateFrom:[[viaggoSet objectForKey:@"orarioPartenza"] intValue]];
         
-    }];
+        NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%@') ORDER BY orarioPartenza",viaggio.idViaggio];
+        NSArray *treni = [[DBHelper sharedInstance] executeSQLStatement:stmt];
+        if([treni count] > 0) {
+            
+            
+            for (NSDictionary* trenoSet in treni) {
+                
+                
+                NSMutableDictionary *trovato = [NSMutableDictionary dictionary];
+                
+                [trovato setObject:[trenoSet objectForKey:@"numero"] forKey:@"numero"];
+
+                
+                [trovato setObject:[trenoSet objectForKey:@"idOrigine"] forKey:@"origine"];
+                
+
+                
+                NSDate *dataPartenza = [[DateUtils shared] dateFrom:[[trenoSet objectForKey:@"orarioPartenza"] intValue]];
+                NSCalendar *calendar = [NSCalendar currentCalendar];
+                NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:dataPartenza];
+                NSInteger hour = [components hour];
+                NSInteger minute = [components minute];
+                
+                NSDate* data = [[DateUtils shared] date:viaggio.data  At:hour min:minute];
+                NSNumber *dataInt = [NSNumber numberWithInt:[[DateUtils shared] timestampFrom:data]];
+                [trovato setObject:dataInt forKey:@"data"];
+                
+                
+                [dbTreni addObject:trovato];
+                
+            }
+        }
+    }
+
+    return dbTreni;
+    
+    
     
  
 }

@@ -26,10 +26,86 @@
     
     // Cancello vecchi file salvati nella Documents directory
     [self emptyCache];
-
+    
+    //registro per le notifiche push
+    [self registerPushNotifications];
+    
+    //azzero eventuali badge
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
     return YES;
 }
+
+
+-(void) registerPushNotifications {
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)])
+    {
+        // iOS 8
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+         (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"Did Register for Remote Notifications");
+    
+    NSString *tokenString;
+    // Preparo il token per la registrazione rimuovendo caratteri < > e spazi
+    tokenString = [[[[deviceToken description]
+                     stringByReplacingOccurrencesOfString:@"<"withString:@""]
+                    stringByReplacingOccurrencesOfString:@">" withString:@""]
+                   stringByReplacingOccurrencesOfString: @" " withString: @""];
+    
+    
+    UIDevice *dev = [UIDevice currentDevice];
+    NSString *appVersion =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    
+    
+    if(deviceToken != nil) {
+        
+        [[APIClient sharedClient] requestWithPath:@"registraUtente" andParams:@{@"token":tokenString,@"appVersion":appVersion,@"deviceModel":dev.model,@"systemVersion":dev.systemVersion} withTimeout:10 cacheLife:0 completion:^(NSDictionary *response) {
+
+            if([response objectForKey:@"id"] != nil) {
+             NSString *userID = [response objectForKey:@"id"];
+             NSLog(@"User ID: %@",userID);
+            
+             // procedo a salvare il token nuovo
+             [[NSUserDefaults standardUserDefaults] setObject: userID forKey: userIDKey];
+             [[NSUserDefaults standardUserDefaults] synchronize];
+            } else NSLog(@"Something went wrong with userID registration");
+
+            
+        }];
+        
+    }
+    
+    
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Did Fail to Register for Remote Notifications");
+    NSLog(@"%@, %@", error, error.localizedDescription);
+    
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    if (application.applicationState == UIApplicationStateActive) {
+        NSLog(@"%@",userInfo);
+        
+        NSDictionary* userInfoDict = [userInfo objectForKey:@"aps"];
+        
+        UIAlertView *notificationAlert = [[UIAlertView alloc] initWithTitle:[userInfoDict objectForKey:@"title"] message:[userInfoDict objectForKey:@"alert"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [notificationAlert show];
+    }
+
+    
+}
+
 
 // Dropbox
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url
@@ -76,9 +152,22 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-#warning qui sincro col server dei treni
     // invio database dei treni al server (questo per poter notificare all'utente i vari ritardi in base ai suoi treni)
-    [[DBHelper sharedInstance] createDBForSync];
+    
+    NSArray* dbTreni = [[DBHelper sharedInstance] createDBForSync];
+    
+    NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:userIDKey];
+    NSLog(@"%@",userID);
+    
+    NSLog(@"%@",dbTreni);
+    
+    // manca salvataggio token e id utente!
+    
+    [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni,@"idUtente":userID} completion:^(NSDictionary *response) {
+        NSLog(@"Response: %@", response);
+        
+    }];
+    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

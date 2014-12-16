@@ -72,7 +72,7 @@
     
     NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
     
-    [[APIClient sharedClient] requestWithPath:@"ricerca" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSArray *response) {
+    [[APIClient sharedClient] requestWithPath:@"ricerca" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSDictionary *response) {
         //NSLog(@"Response: %@", response);
         
         
@@ -116,7 +116,7 @@
 
 -(void) trovaTrenoDaNumero:(void (^)(void))completionBlock {
     
-    [[APIClient sharedClient] requestWithPath:@"ricerca" andParams:@{@"numero":self.numeroTreno} completion:^(NSArray *response) {
+    [[APIClient sharedClient] requestWithPath:@"ricerca" andParams:@{@"numero":self.numeroTreno} completion:^(NSDictionary *response) {
         NSLog(@"Response: %@", response);
         
         

@@ -21,6 +21,6 @@
 
 -(NSData*) getDatabaseBackup;
 -(void) importBackup:(NSData*) data;
--(void) createDBForSync;
+-(NSArray*) createDBForSync;
 
 @end

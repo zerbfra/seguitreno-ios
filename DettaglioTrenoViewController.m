@@ -66,7 +66,7 @@
 
     
     
-    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.treno.numero,@"origine":self.treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSArray *response) {
+    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.treno.numero,@"origine":self.treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSDictionary *response) {
         //NSLog(@"Response: %@", response);
         
         for(NSDictionary *trenoDict in response) {

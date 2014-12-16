@@ -21,12 +21,12 @@
 }
 
 
--(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters completion:(void (^)(NSArray *))completion {
+-(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters completion:(void (^)(NSDictionary *))completion {
     // di default timeout 20s e vita della cache di 3 minuti
     [self requestWithPath:path andParams:parameters withTimeout:20 cacheLife:3 completion:completion];
 }
 
--(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters withTimeout:(int) timeout cacheLife:(int) life completion:(void (^)(NSArray *))completion {
+-(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters withTimeout:(int) timeout cacheLife:(int) life completion:(void (^)(NSDictionary *))completion {
     
 
     __block NSData *jsonData;
@@ -66,9 +66,8 @@
     
     // caso in cui siano passati più di LIFE min oppure che il file non esista [o, caso meno probabile, che la data vada indietro]
     if(min > life || min < 0) {
-        NSLog(@"Download");
-        [self makeRequest:path withParams:parameters andTimeout:timeout completion:^(NSArray *result) {
-            
+        NSLog(@"Remote request for %@",path);
+        [self makeRequest:path withParams:parameters andTimeout:timeout completion:^(NSDictionary *result) {
             jsonData = [NSKeyedArchiver archivedDataWithRootObject:result];
             //scrivo su file
             [jsonData writeToFile:filePath atomically:YES];
@@ -90,7 +89,7 @@
 }
 
 
--(void) makeRequest:(NSString*) path withParams:(NSDictionary*) parameters andTimeout:(int) timeout completion:(void (^)(NSArray *))completion {
+-(void) makeRequest:(NSString*) path withParams:(NSDictionary*) parameters andTimeout:(int) timeout completion:(void (^)(NSDictionary *))completion {
     
     path = [NSString stringWithFormat:@"%@%@.php",BaseURLString,path];
     

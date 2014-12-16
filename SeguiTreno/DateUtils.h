@@ -22,6 +22,8 @@
 
 // ritorna l'NSDate di una data ad un ora stabilita
 -(NSDate*) date:(NSDate*) date At:(NSInteger) hour;
+// con anche minuto
+-(NSDate*) date:(NSDate*) date At:(NSInteger)hour min:(NSInteger)min;
 
 // ritorna un bool che dice se la data è compresa tra altre due
 - (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
