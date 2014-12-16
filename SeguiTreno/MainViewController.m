@@ -55,7 +55,7 @@
     
 
     [self caricaViaggi];
-    //[self addProgressAnimation];
+
     
 }
 
@@ -67,41 +67,6 @@
 }
 
 
-/*potrebbe tornare utile */
-#warning e' tornata utile?
--(void) addProgressAnimation:(UIView*) view {
-    
-    //[UIApplication sharedApplication].statusBar
-    //UINavigationBar *navbar = self.navigationController.navigationBar;
-    //UIView *bar =  [[UIView alloc] initWithFrame:CGRectMake(0, -20, view.bounds.size.width, 20)];
-    
-    //[
-    //bar.backgroundColor = RED;
-   // bar.tag = 10;
-    
-    //[view addSubview:bar];
-    
-    /*
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
-    animation.duration = 1.2;
-    animation.repeatCount = INFINITY;
-    animation.fromValue = [NSValue valueWithCGPoint:CGPointMake(0 , bar.center.y)];
-    animation.toValue = [NSValue valueWithCGPoint:CGPointMake(view.bounds.size.width,bar.center.y)];
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animation.autoreverses = YES;
-    animation.removedOnCompletion = NO;
-    [bar.layer addAnimation:animation forKey:@"position"];
-     */
-    
-    
-    
-    
-}
-
--(void) removeProgressAnimation:(UIView*) view {
-    UIView *removeView  = [self.view viewWithTag:10];
-    [removeView removeFromSuperview];
-}
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated {
     
@@ -121,16 +86,22 @@
 
 
 -(void) refresh {
-    [self caricaViaggi];
+    [self caricaViaggi:NO];
     [self.refreshControl endRefreshing];
 }
 
 -(void) caricaViaggi {
+    [self caricaViaggi:YES];
+}
+
+-(void) caricaViaggi:(BOOL) localFirst {
     // siccome il metodo carica viaggi implica vari caricamenti dal DB, lo mando su un secondo thread
     [[ThreadHelper shared] executeInBackground:@selector(recuperaViaggiDB) of:self completion:^(BOOL success) {
         // qui sono di nuovo sul main thread
         NSLog(@"Ho caricato db");
         
+        // se mi è specificato di dare subito un output do i dati locali (che poi aggiornerò)
+        if(localFirst) {
         
         // Aggiorno tabella con un'animazione (con i dati locali)
         [UIView transitionWithView:self.treniTable
@@ -139,16 +110,13 @@
                         animations:^(void) {
                             [self.treniTable reloadData];
                         } completion:NULL];
-         
-        //[self.treniTable reloadData];
+        }
         
         // richiedo informazioni aggiuntive sui treni se sono quelli della giornata (quindi index = 0)
-        
         if([self.datepicker selectedIndex] == 0) {
             NSLog(@"Recupero informazioni live...");
             [self requestGroupTrain:[self elencoTreni]  completion:^(NSArray *response) {
-                // aggiorno per le informazioni recuperate dal server
-                // Reload table with a slight animation
+                // aggiorno per le informazioni recuperate dal server, con una piccola animazione
                 [UIView transitionWithView:self.treniTable
                                   duration:0.2f
                                    options:UIViewAnimationOptionTransitionCrossDissolve
@@ -158,11 +126,11 @@
             }];
         } else {
             NSLog(@"Stampo treni senza live...");
-            //[self.treniTable reloadData];
         }
     }];
 }
 
+// funzione per il recupero dei viaggi dal database, vengono chiaramente selezionati i viaggi della giornata selezionata
 -(void) recuperaViaggiDB {
     
     NSInteger start,end;
@@ -179,7 +147,6 @@
     }
     
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM viaggi WHERE orarioPartenza BETWEEN '%tu' AND '%tu' ORDER BY orarioPartenza",start,end];
-    
     NSArray *dbViaggi = [[DBHelper sharedInstance] executeSQLStatement:query];
     
     
@@ -198,26 +165,19 @@
             
             for (NSDictionary* trenoSet in treni) {
                 
-                //viaggio.idViaggio = [trenoSet objectForKey:@"idSoluzione"];
-                
                 Treno *trovato = [[Treno alloc] init];
                 trovato.numero = [trenoSet objectForKey:@"numero"];
                 
                 trovato.idTreno = [trenoSet objectForKey:@"id"];
                 
-                //NSLog(@"Treno: %@",trovato.numero);
-                
+
                 Stazione *origine = [[Stazione alloc] init];
                 origine.idStazione = [trenoSet objectForKey:@"idOrigine"];
-                //Stazione *destinazione = [[Stazione alloc] init];
-                //destinazione.idStazione = [trenoSet objectForKey:@"idDestinazione"];
                 
                 trovato.origine = origine;
                 
                 Stazione *partenza = [[Stazione alloc] init];
                 partenza.nome = [trenoSet objectForKey:@"nomePartenza"];
-                
-                
                 
                 Stazione *arrivo = [[Stazione alloc] init];
                 arrivo.nome = [trenoSet objectForKey:@"nomeArrivo"];
@@ -244,6 +204,7 @@
     
 }
 
+// restituisce l'array dei treni presenti nella giornata selezionata
 -(NSMutableArray*) elencoTreni {
     
     NSMutableArray* treni = [NSMutableArray array];
@@ -257,7 +218,7 @@
     return treni;
 }
 
-
+// con un gruppo di dispatch, richiede le informazioni dei vari treni (dispatch_group per terminare tutto insieme)
 -(void) requestGroupTrain:(NSMutableArray*) batch completion:(void (^)(NSArray *))completion {
     
     // creo un gruppo di dispatch
@@ -271,7 +232,7 @@
         dispatch_group_enter(group);
         
         [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":treno.numero,@"origine":treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSDictionary *response) {
-            //NSLog(@"%@",response);
+
             for(NSDictionary *trenoDict in response) {
                 // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
                 if([NSNull null] != [trenoDict objectForKey:@"ritardo"]) {
@@ -293,9 +254,9 @@
     }
     
     
-    // Here we wait for all the requests to finish
+    //  qui aspetto che tutte le richieste son finite
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        // Do whatever you need to do when all requests are finished
+        // quando tutte sono stase eseguite
         NSLog(@"Finito le richieste al server");
         // mando l'array
         completion([final copy]);
@@ -303,6 +264,7 @@
     
 }
 
+// aggiornamento dovuto al fatto che cambio la scheda data
 - (void)updateSelectedDate
 {
     [self.viaggi removeAllObjects];
@@ -310,7 +272,7 @@
     
 }
 
-/* Apre la schermata di aggiunta prodotti */
+// apre la schermata di aggiunta prodotti
 - (void)addTrain:sender {
     [self performSegueWithIdentifier:@"addSegue" sender:sender];
 }
@@ -320,7 +282,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    // Return the number of sections: pari al numero di viaggi di una giornata (i treni sono raggruppati in viaggi)
+    // numero di sezioni: pari al numero di viaggi di una giornata (i treni sono raggruppati in viaggi)
     return [self.viaggi count];
 }
 
@@ -338,7 +300,7 @@
     
 }
 
-
+// imposta la grafica per l'header delle soluzioni viaggio
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     
@@ -373,19 +335,16 @@
     return 42.0;
 }
 
-
+// il footer è dinamico quindi ha altezza diversa a seconda che siamo in modalità di modifica o meno
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    
 
     if(self.editing)
     return 38.0f;
     else return 0.1f;
-    
 
-    
 }
 
-
+// vista per il footer (pulsante cancella)
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
     
     UIView *footer=[[UIView alloc] initWithFrame:CGRectMake(0.0f,0.0f,tableView.frame.size.width,38.0f)];
@@ -407,7 +366,7 @@
     [button addTarget:self action:@selector(deleteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [footer addSubview:button];
 
-    button.frame = CGRectMake(tableView.frame.size.width/2 - 50, 3, 100, 32);
+    button.frame = CGRectMake(5, 3, tableView.frame.size.width-10, 32);
     
 
     
@@ -416,9 +375,7 @@
     
 }
 
-
-
-
+// Metodo che gestisce il pulsante cancella e mostra un popup
 -(void)deleteButtonPressed:(id)sender {
     // devo rimuovere il viaggio
     UIButton *button = (UIButton*) sender;
@@ -433,8 +390,8 @@
     
 }
 
+// metodo che cancella una soluzione viaggio dato l'idViaggio
 -(void) cancellaSoluzioni:(NSNumber*) idViaggio {
-    
     
     NSString *query = [NSString stringWithFormat:@"SELECT idViaggio FROM ripetizioni where id = (SELECT id FROM ripetizioni  WHERE idViaggio = '%ld')",[idViaggio integerValue]];
     NSArray *idViaggi =  [[DBHelper sharedInstance] executeSQLStatement:query];
@@ -444,13 +401,14 @@
         NSNumber *idCancella = [cancella objectForKey:@"idViaggio"];
         
         [self cancellaViaggio:idCancella];
-        // nel caso di rimozione di cancellazioni di tutti, pulisco anche il treno //bugghino (potrebbero restarne - non me ne frega più di tanto)
+        // nel caso di rimozione di cancellazioni di tutti, pulisco anche il treno
         query = [NSString stringWithFormat:@"DELETE FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%ld')",[idCancella integerValue]];
         [[DBHelper sharedInstance] executeSQLStatement:query];
         
     }
 }
 
+// cancella il viaggio (chiamata da quella sopra)
 -(void) cancellaViaggio:(NSNumber*) idViaggio {
     
     NSString *query = [NSString stringWithFormat:@"DELETE FROM viaggi where id = '%ld'",[idViaggio integerValue]];
@@ -462,7 +420,7 @@
     
 }
 
-
+// metodo che chiama i vari metodi a seconda che si sia premuto un bottone o l'altro
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     // a seconda di cosa viene premuto cancello il viaggio corrispondente (intero salvato nel tag)
     NSNumber *tag = [NSNumber numberWithInteger:alertView.tag];
@@ -477,6 +435,7 @@
             method = @selector(cancellaSoluzioni:);
             break;
         default:
+            return;
             break;
     }
     
@@ -485,11 +444,9 @@
         [self caricaViaggi];
     }];
     
-    // quindi reload
-    //[self caricaViaggi];
 }
 
-
+// imposta ogni cella graficamente
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"trenoCell";
@@ -523,38 +480,23 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //deseleziono subito (effetto gradevole)
-    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     SalvatoTableViewCell *cell  = (SalvatoTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     // solo se ho informazioni dalle API lo rendo cliccabile, inoltre son cliccabili solo quelli del giorno stesso
     if(!cell.treno.nonDisponibile && !cell.treno.soppresso && [self.datepicker selectedIndex] == 0) {
-        
-        //CWStatusBarNotification *notification = [CWStatusBarNotification new];
-        //notification.notificationLabelBackgroundColor = DARKGREY;
-        //notification.notificationLabelTextColor = [UIColor whiteColor];
-        //notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
-        //notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
-        
-        
-        //[notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
-        
+
+        // attivo un indicatore che comunnica che sto lavorando per recuperare le info del treno
         UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         activityIndicator.hidesWhenStopped = YES;
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
         [activityIndicator startAnimating];
         [cell setUserInteractionEnabled:NO];
-        //[self addProgressAnimation:self.navigationController.navigationBar];
-         //[tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
 
-        //[SVProgressHUD show];
-        
+        // una volta che le info sono caricate mostro la nuova schermata con il dettaglio
         [cell.treno caricaInfoComplete:^{
-            //[notification dismissNotification];
             [self performSegueWithIdentifier:@"dettaglioTreno" sender:cell];
             [activityIndicator stopAnimating];
             [cell setUserInteractionEnabled:YES];
-            //[self removeProgressAnimation:self.tabBarController.tabBar];
         }];
     }
     else [self.treniTable deselectRowAtIndexPath:indexPath animated:YES];

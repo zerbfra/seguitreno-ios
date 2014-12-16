@@ -17,14 +17,15 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    // crea la copia del database sul file system locale
     [self createCopyOfDatabaseIfNeeded];
     
-    // Dropbox
+    // Dropbox: inizializzo con le mie credenziali
     DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:@"wwj9wcfcb2rnptz" secret:@"28f9g22ggv00l2d"];
     [DBAccountManager setSharedManager:accountManager];
     
-    // Cancello vecchi file salvati nella Documents directory
+    // Cancello vecchi file salvati nella Documents directory (file di cache scaduti)
     [self emptyCache];
     
     //registro per le notifiche push
@@ -64,20 +65,20 @@
     UIDevice *dev = [UIDevice currentDevice];
     NSString *appVersion =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     
-    
+    // invio la registrazione dell'utente quando il token è stato elaborato
     if(deviceToken != nil) {
         
         [[APIClient sharedClient] requestWithPath:@"registraUtente" andParams:@{@"token":tokenString,@"appVersion":appVersion,@"deviceModel":dev.model,@"systemVersion":dev.systemVersion} withTimeout:10 cacheLife:0 completion:^(NSDictionary *response) {
-
-            if([response objectForKey:@"id"] != nil) {
-             NSString *userID = [response objectForKey:@"id"];
-             NSLog(@"User ID: %@",userID);
             
-             // procedo a salvare il token nuovo
-             [[NSUserDefaults standardUserDefaults] setObject: userID forKey: userIDKey];
-             [[NSUserDefaults standardUserDefaults] synchronize];
+            if([response objectForKey:@"id"] != nil) {
+                NSString *userID = [response objectForKey:@"id"];
+                NSLog(@"User ID: %@",userID);
+                
+                // procedo a salvare il token nuovo
+                [[NSUserDefaults standardUserDefaults] setObject: userID forKey: userIDKey];
+                [[NSUserDefaults standardUserDefaults] synchronize];
             } else NSLog(@"Something went wrong with userID registration");
-
+            
             
         }];
         
@@ -87,13 +88,32 @@
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    NSLog(@"Did Fail to Register for Remote Notifications");
-    NSLog(@"%@, %@", error, error.localizedDescription);
+    
+    UIDevice *dev = [UIDevice currentDevice];
+    NSString *appVersion =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    
+    // in questo caso l'utente ha scelto di non ricevere le notifiche - lo registro comunque per fornire un id utente ma non ho il token
+    // il server si occupa di gestire la situazione nel caso un utente decida poi di abilitare le notifiche (verrà chiamato quindi il metodo didRegisterForRemoteNotificationsWithDeviceToken
+    [[APIClient sharedClient] requestWithPath:@"registraUtente" andParams:@{@"token":@"",@"appVersion":appVersion,@"deviceModel":dev.model,@"systemVersion":dev.systemVersion} withTimeout:10 cacheLife:0 completion:^(NSDictionary *response) {
+        
+        if([response objectForKey:@"id"] != nil) {
+            NSString *userID = [response objectForKey:@"id"];
+            NSLog(@"User ID: %@",userID);
+            
+            // procedo a salvare il token nuovo
+            [[NSUserDefaults standardUserDefaults] setObject: userID forKey: userIDKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        } else NSLog(@"Something went wrong with userID registration");
+        
+        
+    }];
+    
     
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    // se l'app è attiva (in foreground) mostro un semplice alert, in caso contrario viene visualizzato il classico banner di iOS
     if (application.applicationState == UIApplicationStateActive) {
         NSLog(@"%@",userInfo);
         
@@ -102,12 +122,12 @@
         UIAlertView *notificationAlert = [[UIAlertView alloc] initWithTitle:[userInfoDict objectForKey:@"title"] message:[userInfoDict objectForKey:@"alert"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [notificationAlert show];
     }
-
+    
     
 }
 
 
-// Dropbox
+// Metodo di Dropbox proprietario
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url
   sourceApplication:(NSString *)source annotation:(id)annotation {
     DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
@@ -118,6 +138,7 @@
     return NO;
 }
 
+// metodo che vuota la cache
 -(void) emptyCache {
     NSError *error;
     // Percorso della cartella Documents
@@ -145,13 +166,11 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
     // invio database dei treni al server (questo per poter notificare all'utente i vari ritardi in base ai suoi treni)
     
     NSArray* dbTreni = [[DBHelper sharedInstance] createDBForSync];
@@ -161,8 +180,7 @@
     
     NSLog(@"%@",dbTreni);
     
-    // manca salvataggio token e id utente!
-    
+    // faccio la richiesta
     [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni,@"idUtente":userID} completion:^(NSDictionary *response) {
         NSLog(@"Response: %@", response);
         
@@ -182,9 +200,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-// Function to Create a writable copy of the bundled default database in the application Documents directory.
+// Funzione per creare una copia scrivibile del databse nella directory Library
 - (BOOL)createCopyOfDatabaseIfNeeded {
-    // First, test for existence.
+  
     BOOL success;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;
@@ -194,6 +212,7 @@
     
     success = [fileManager fileExistsAtPath:appDBPath];
     
+    // per prima cosa ne testo l'esistenza
     if (success){
         //db già copiato
         NSLog(@"DB già copiato");
@@ -201,7 +220,7 @@
     }
     
     
-    // The writable database does not exist, so copy the default to the appropriate location.
+    // Se non essite, lo copio
     NSString *defaultDBPath =  [[NSBundle mainBundle] pathForResource:@"seguitreno" ofType:@"db"];
     
     success = [fileManager copyItemAtPath:defaultDBPath toPath:appDBPath error:&error];

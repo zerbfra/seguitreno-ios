@@ -1,8 +1,8 @@
 //
-//  APIClient.m
-//  PriceRadar
+//  APIClient.h
+//  SeguiTreno
 //
-//  Created by Francesco Zerbinati on 30/03/14.
+//  Created by Francesco Zerbinati on 30/11/14.
 //  Copyright (c) 2014 Francesco. All rights reserved.
 //
 
@@ -80,7 +80,7 @@
         //ritorno il file presente nel device
         NSLog(@"Retrieving local file data");
         NSData *storedData = [[NSMutableData alloc] initWithContentsOfFile:filePath];
-        NSArray *storedArray = [NSKeyedUnarchiver unarchiveObjectWithData:storedData];
+        NSDictionary *storedArray = [NSKeyedUnarchiver unarchiveObjectWithData:storedData];
         completion(storedArray);
     }
     
