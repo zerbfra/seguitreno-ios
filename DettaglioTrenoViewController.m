@@ -29,14 +29,13 @@
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     [self.refreshControl setTintColor:GREEN];
     
-
-    
-
+    // chiamo il metodo per impostare i dati sulla vista
     [self setData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    // tolgo qualsiasi selezione dalla tabella
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     
     UIBarButtonItem *flipButton = [[UIBarButtonItem alloc]
@@ -52,22 +51,21 @@
 }
 
 -(void) refresh {
-    [self.refreshControl endRefreshing];
-    //[self loadInfo];
+
+    [self.treno caricaInfoComplete:^{
+        [self setData];
+        [self.refreshControl endRefreshing];
+    }];
 }
-
-
+#warning cancellare qui se va tutto bene
+/*
+// carica le informazioni del treno (includendo ovviamente le fermate)
 -(void) loadInfo {
     
     NSLog(@"%@",self.treno.origine.idStazione);
-  //  [SVProgressHUD setForegroundColor:GREEN];
-   // [SVProgressHUD setBackgroundColor:[UIColor clearColor]];
-   // [SVProgressHUD show];
-
     
     
     [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.treno.numero,@"origine":self.treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSDictionary *response) {
-        //NSLog(@"Response: %@", response);
         
         for(NSDictionary *trenoDict in response) {
             Stazione *origine = [[Stazione alloc] init];
@@ -128,9 +126,7 @@
                 Stazione *stazFermata = [[Stazione alloc] init];
                 stazFermata.idStazione = [stazioneDict objectForKey:@"id"];
                 stazFermata.nome = [stazioneDict objectForKey:@"nome"];
-                // non forniti da questo JSON (rallenterebbero di molto le prestazioni del server)
-                //stazFermata.lat = [[stazioneDict objectForKey:@"lat"] floatValue];
-                //stazFermata.lon = [[stazioneDict objectForKey:@"lon"] floatValue];
+
                 [stazFermata formattaNome];
                 
                 fermata.stazione = stazFermata;
@@ -145,14 +141,13 @@
         }
         
         [self setData];
-       // [SVProgressHUD dismiss];
-        
-        
+
         
     }];
 
-}
+}*/
 
+// setta la schermata con i vari campi di testo
 -(void) setData {
     
     if(self.attuale) {
@@ -182,10 +177,8 @@
     self.stazioneP.text = self.treno.origine.nome;
     self.stazioneA.text = self.treno.destinazione.nome;
     
-
+    // ricarico la tabella
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    //[self.tableView reloadData];
     
 }
 
@@ -251,76 +244,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //NSLog(@"%@",self.treno.fermate[indexPath.row]);
     Fermata *fermata = self.treno.fermate[indexPath.row];
     Stazione *selezionata = fermata.stazione;
-    
-    
-    //CWStatusBarNotification *notification = [CWStatusBarNotification new];
-    //notification.notificationLabelBackgroundColor = DARKGREY;
-    //notification.notificationLabelTextColor = [UIColor whiteColor];
-    //notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
-    //notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
-    
-    /*
-    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    activityIndicator.hidesWhenStopped = YES;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
-    [activityIndicator startAnimating];
-    
-    //[notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
-    
-    [selezionata caricaTreniStazione:^{
-        //[notification dismissNotification];
-        [self performSegueWithIdentifier:@"dettaglioStazione" sender:selezionata];
-        [activityIndicator stopAnimating];
-    }];*/
+    // se seleziono una fermata mostro il dettaglio della stazione
     [self performSegueWithIdentifier:@"dettaglioStazione" sender:selezionata];
   
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
     if([segue.identifier  isEqual: @"dettaglioStazione"]) {
         DettaglioStazioneViewController *viewSegue = (DettaglioStazioneViewController*)[segue destinationViewController];
         Stazione *stazione = (Stazione*)sender;

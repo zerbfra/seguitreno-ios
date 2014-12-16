@@ -14,6 +14,8 @@
 #define ANNOTATION_REGION_PAD_FACTOR 1.15
 #define MAX_DEGREES_ARC 360
 
+#warning sistemare cosa mappa
+
 @interface DettaglioStazioneViewController ()
 
 @end
@@ -22,16 +24,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
 
-    //[self configuraMappa];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
 
-    
-    //self.treniArrivo = [NSMutableArray array];
-    //self.treniPartenza = [NSMutableArray array];
+
     
     self.navigationItem.title = self.stazione.nome;
     
@@ -40,10 +37,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
     [activityIndicator startAnimating];
     
-    //[notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
-    
+    // carico i treni della stazione, una volta completato gestisco la mappa
     [self.stazione caricaTreniStazione:^{
-        //[notification dismissNotification];
         [self.tableView reloadData];
         
         //eseguo query al db per la mappa in background
@@ -54,9 +49,6 @@
         
         [activityIndicator stopAnimating];
     }];
-    
-    //[self.tableView reloadData];
-    //[self caricaTreni];
     
 }
 
@@ -200,20 +192,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if(indexPath.section == 0)
-    [self performSegueWithIdentifier:@"dettaglioTreno" sender:[self.treniPartenza objectAtIndex:indexPath.row]];
-    else [self performSegueWithIdentifier:@"dettaglioTreno" sender:[self.treniArrivo objectAtIndex:indexPath.row]];
-
+    [self performSegueWithIdentifier:@"dettaglioTreno" sender:[self.stazione.treniPartenza objectAtIndex:indexPath.row]];
+    else [self performSegueWithIdentifier:@"dettaglioTreno" sender:[self.stazione.treniArrivo objectAtIndex:indexPath.row]];
     
 }
  */
 
 
+
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      TrenoStazioneTableViewCell *cell = (TrenoStazioneTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"trainCell" forIndexPath:indexPath];
- 
 
-
-     
      if(indexPath.section == 0) {
          //partenze
          if([self.stazione.treniPartenza count] > 0) {
@@ -256,158 +245,5 @@
 
      return cell;
  }
-
-/*
--(void) caricaTreni {
-    
-    NSLog(@"%@",self.stazione.idStazione);
-    
-    // creo un gruppo di dispatch
-    dispatch_group_t group = dispatch_group_create();
-
-        
-        dispatch_group_enter(group);
-        
-        [[APIClient sharedClient] requestWithPath:@"treniArrivo" andParams:@{@"stazione":self.stazione.idStazione} completion:^(NSArray *response) {
-            //NSLog(@"%@",response);
-            
-            for(NSDictionary *trenoDict in response) {
-                // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
-                Treno *treno = [[Treno alloc] init];
-                treno.categoria = [trenoDict objectForKey:@"categoria"];
-                treno.numero = [trenoDict objectForKey:@"numero"];
-                Stazione *origine = [[Stazione alloc] init];
-                origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
-                origine.nome = [trenoDict objectForKey:@"origine"];
-                
-                [origine formattaNome];
-                
-                treno.origine = origine;
-                treno.orarioArrivo = [[trenoDict objectForKey:@"orarioArrivo"] intValue];
-                treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
-                [self.treniArrivo addObject:treno];
-                
-            }
-            
-            
-            
-            dispatch_group_leave(group);
-            
-        }];
-        
-        dispatch_group_enter(group);
-        
-        [[APIClient sharedClient] requestWithPath:@"treniPartenza" andParams:@{@"stazione":self.stazione.idStazione} completion:^(NSArray *response) {
-            //NSLog(@"%@",response);
-            
-            for(NSDictionary *trenoDict in response) {
-                // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
-                Treno *treno = [[Treno alloc] init];
-                treno.categoria = [trenoDict objectForKey:@"categoria"];
-                treno.numero = [trenoDict objectForKey:@"numero"];
-                Stazione *destinazione = [[Stazione alloc] init];
-                destinazione.nome = [trenoDict objectForKey:@"destinazione"];
-                
-                Stazione *origine = [[Stazione alloc] init];
-                origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
-                
-                [destinazione formattaNome];
-                
-                treno.origine = origine;
-                treno.destinazione = destinazione;
-                
-                treno.ritardo = [[trenoDict objectForKey:@"ritardo"] intValue];
-                treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] intValue];
-                [self.treniPartenza addObject:treno];
-                
-            }
-            
-            dispatch_group_leave(group);
-            
-        }];
-        
-    
-    
-    
-    // Here we wait for all the requests to finish
-    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        // Do whatever you need to do when all requests are finished
-        NSLog(@"Finito le richieste al server");
-        [self.tableView reloadData];
- 
-    });
-    
-}
-*/
-
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
-
-/*
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([[segue identifier] isEqualToString:@"dettaglioTreno"]) {
-        
-
-        Treno * treno = (Treno*) sender;
-        
-        DettaglioTrenoViewController *destination = (DettaglioTrenoViewController*) [segue destinationViewController];
-        destination.treno = treno;
-        
-        // dico al dettaglio se è il treno della giornata attuale o meno
-        destination.attuale = YES;
-        
-        destination.dataTreno = [NSDate date];
-        
-        
-    }
-    
-
-}
-*/
 
 @end

@@ -22,25 +22,19 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.soluzioniPossibili = [[NSMutableArray alloc] init];
     
-    
+    // attivo indicatore loading
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     activityIndicator.hidesWhenStopped = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
     [activityIndicator startAnimating];
     
+    // chiamo per trovare soluzioni viaggio e al completamento aggiorno la vista
     [self trovaSoluzioniTreno:^{
         [self.tableView reloadData];
         [activityIndicator stopAnimating];
     }];
-    //NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
-    //NSLog(@"%@ %@ %@",[self.query.origine cleanId],[self.query.destinazione cleanId],ts);
     
 }
 
@@ -48,11 +42,8 @@
 
     NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
 
-    //NSLog(@"%@ %@ %d",[self.query.partenza cleanId],[self.query.arrivo cleanId],[ts intValue]);
-    
+    // richiedo soluzioni al server
     [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSDictionary *response) {
-        //NSLog(@"Response: %@", response);
-        
         
         for (NSDictionary *solDict in response) {
             
@@ -61,9 +52,6 @@
             Stazione *partenza = [[Stazione alloc] init];
             Stazione *arrivo = [[Stazione alloc] init];
             
-            //NSLog(@"%@",self.query.partenza.idStazione);
-            
-            
             partenza.nome = self.query.partenza.nome;
             
             arrivo.nome = self.query.arrivo.nome;
@@ -71,13 +59,8 @@
             partenza.idStazione            = self.query.partenza.idStazione;
             arrivo.idStazione       = self.query.arrivo.idStazione;
             
-            //partenza.nome      = [solDict objectForKey:@"origine"];
-            //arrivo.nome = [solDict objectForKey:@"destinazione"];
-            
             soluzione.partenza = partenza;
             soluzione.arrivo = arrivo;
-            
-            //soluzione.tragitto          = [solDict objectForKey:@"tragitto"];
             
             NSMutableArray *tmpTragitto = [[NSMutableArray alloc] init];
             
@@ -106,17 +89,14 @@
             
             soluzione.durata            = [solDict objectForKey:@"durata"];
             
-            // aggiungo l'oggetto agli oggetti remoti, solo con meno di 5 treni/4cambi (in teoria trenitalia non fornisce soluzioni più ampie, dummy di conseguenza)
+            // aggiungo l'oggetto agli oggetti remoti, solo con meno di 5 treni/4cambi (in teoria trenitalia non fornisce soluzioni più ampie)
             if([soluzione.tragitto count] < 5)
             [self.soluzioniPossibili addObject:soluzione];
             
         }
         
         completionBlock();
-     
-        
-        
-        
+
     }];
     
     
@@ -264,10 +244,10 @@
 
 #pragma mark - Funzioni ausiliari per le date e soluzioni viaggio
 
-
+// restituisce le sole soluzioni comprese tra due orari
 -(NSArray*)soluzioniTraOra:(NSInteger) inizio e:(NSInteger) fine {
     
-    NSDate *dataInizio = [[DateUtils shared] date:self.query.data At:inizio]; //[self todayAt:inizio];
+    NSDate *dataInizio = [[DateUtils shared] date:self.query.data At:inizio];
     NSDate *dataFine = [[DateUtils shared] date:self.query.data At:fine];
     
     NSMutableArray *viaggiCompresi = [[NSMutableArray alloc] init];
@@ -292,11 +272,10 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
     
     SoluzioneTableViewCell *senderCell = (SoluzioneTableViewCell*)sender;
     
+    // chiama il dettaglio
     if([segue.identifier  isEqual: @"dettaglioSoluzione"]) {
         
         DettaglioSoluzioneViewController *destination = (DettaglioSoluzioneViewController*)[segue destinationViewController];

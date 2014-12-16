@@ -36,6 +36,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+// salva l'elenco delle stazioni in un array
 -(void) elencoStazioni {
     
     NSArray* results  = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM stazioni"];
@@ -46,8 +47,6 @@
         
         stazione.idStazione = [set objectForKey:@"id"];
         stazione.nome       = [set objectForKey:@"nome"];
-        //[stazione formattaNome];
-        
         
         [stazioni addObject:stazione];
     }
@@ -63,13 +62,12 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    // Return the number of rows in the section.
     if (tableView == self.searchDisplayController.searchResultsTableView)
         return [self.risultatiRicerca count];
     else return [self.stazioni count];
 }
 
-
+// metodo che disegna le celle, fare attenzione che opera diversamente se si è in ricerca o semplice scrolling senza ricerca
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
@@ -80,7 +78,6 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    // Configure the cell...
     
     Stazione *stazione = nil;
     
@@ -96,6 +93,7 @@
     return cell;
 }
 
+// se la stazione viene selezionata la mando al viewcontroller precedente e faccio il pop dell'attuale
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.searchDisplayController.active) {
@@ -113,13 +111,14 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+// metodo che ricerca una soluzione
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
     NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"(nome CONTAINS[cd] %@)",searchText];
     self.risultatiRicerca = [self.stazioni filteredArrayUsingPredicate:resultPredicate];
 }
 
+// metodo che chiama il precedente e aggiorna la tabella ogni volta che si inserisce un carattere per la ricerca
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     [self filterContentForSearchText:searchString

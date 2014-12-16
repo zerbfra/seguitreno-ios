@@ -12,9 +12,6 @@
 
 @property (strong,nonatomic) Stazione* stazione;
 
-//@property (strong,nonatomic) NSMutableArray* treniArrivo;
-//@property (strong,nonatomic) NSMutableArray* treniPartenza;
-
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 

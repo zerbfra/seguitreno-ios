@@ -39,7 +39,7 @@
     self.viaggio.data = [[DateUtils shared] date:self.dataIniziale At:0];
     
     
-    self.soluzioneViaggio.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8
+    self.soluzioneViaggio.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8.1
     
     [self.pickDataViaggio setDatePickerMode:UIDatePickerModeDate];
     [self.pickDataViaggio addTarget:self action:@selector(datePickerChanged:) forControlEvents:UIControlEventValueChanged];
@@ -59,37 +59,29 @@
 
 -(void) datePickerChanged:(UIDatePicker *)datePicker {
     self.viaggio.data = [[DateUtils shared] date:datePicker.date At:0];
-    //NSLog(@"Salvo data: %@",self.viaggio.data);
-    
 }
 
-
+// imposto sull'oggetto stazione P
 - (void) impostaStazioneP:(Stazione *) stazioneP {
-    // imposto sull'oggetto stazione P
     self.viaggio.partenza = stazioneP;
 }
+
+// imposto sull'oggetto stazione A
 - (void) impostaStazioneA:(Stazione *)stazioneA {
-    // imposto sull'oggetto stazione A
     self.viaggio.arrivo = stazioneA;
 }
 
+// imposta la soluzione selezionata
 - (void) impostaSoluzione:(Viaggio *) soluzioneSelezionata {
     // imposto sull'oggetto stazione P
     self.viaggio = soluzioneSelezionata;
     // importo la data
     self.viaggio.data = [self.viaggio orarioPartenza];
-    // orario selezionato
-    //self.soluzioneViaggio.detailTextLabel.text =  [[DateUtils shared] showHHmm:[self.viaggio orarioPartenza]];
-    
-    
-    
-    self.trenoCompilato = TRUE;
 
-    
+    self.trenoCompilato = TRUE; // il treno è ora compilato
+
     [self.tableView reloadData];
-    
-    
-    
+
     //aggiorno la fine ripetizione in base a quello che è selezionato
     [self gestisciRipetizione:self.ripetizioneSel];
     
@@ -116,25 +108,22 @@
     }
 }
 
+// metodo che invoca il metodo per salvare il treno in background
 -(void) salvaTreno {
     
     if(self.trenoCompilato) {
         // siccome il metodo salva implica molte query lo mando su un secondo thread
-        [[ThreadHelper shared] executeInBackground:@selector(salva) of:self completion:^(BOOL success) {
-
-        }];
+        [[ThreadHelper shared] executeInBackground:@selector(salva) of:self completion:^(BOOL success) {}];
         [self dismissViewControllerAnimated:YES completion:nil];
+        
     } else {
         UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"" message:@"Seleziona un treno per salvarlo!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
         [alertView show];
-        
     }
 }
 
 -(void)salva {
-    
 
-    
     NSMutableArray *viaggiInseriti = [NSMutableArray array];
     
     NSInteger tsPartenza, tsArrivo;
@@ -143,9 +132,9 @@
     NSDate *nextArrivo = [self.viaggio orarioArrivo];
     
     // SALVO VIAGGI
+    // ciclo inserimento viaggi fino alla fine delle ripetizioni
     do {
-        // ciclo inserimento viaggi fino alla fine delle ripetizioni
-        
+
         tsPartenza = [[NSNumber numberWithDouble:[nextPartenza timeIntervalSince1970]] intValue];
         tsArrivo = [[NSNumber numberWithDouble:[nextArrivo timeIntervalSince1970]] intValue];
         
@@ -186,7 +175,6 @@
         NSString  *numero = toDb.numero;
         
         [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":numero,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSDictionary *response) {
-            //NSLog(@"Response: %@", response);
             
             for(NSDictionary *trenoDict in response) {
                 Stazione *origine = [[Stazione alloc] init];
@@ -230,9 +218,8 @@
         
     }
     
-    // Here we wait for all the requests to finish
+    // tutti finiti, quindi dico alla schermata principale (MainViewController) di aggiornare la grafica
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        // Do whatever you need to do when all requests are finished
         NSLog(@"Finito le richieste di salvataggio");
         // invio la notifica globale che ho aggiunto dei treni 
         [[NSNotificationCenter defaultCenter] postNotificationName:@"update" object:nil];
@@ -272,22 +259,14 @@
         }
     }
     
-    
-    
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-
-
-
+// metodo che chiude il modal view controller
 -(void)close:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
@@ -319,11 +298,10 @@
     
 }
 
-
+// disegna le varie celle del tragitto
 -(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    
-    
+
     if(indexPath.section == 1 && self.trenoCompilato) {
         
         static NSString *cellIdentifier = @"cellTragitto";
@@ -350,10 +328,9 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
     if([segue.identifier  isEqual: @"selezionaStazione"]) {
-        
+        // per selezionare la stazione
         SearchStazioneViewController *destination = (SearchStazioneViewController*)[segue destinationViewController];
         destination.delegate = self;
         destination.settaDestinazione = [sender tag];
@@ -361,7 +338,6 @@
     }
     
     if([segue.identifier  isEqual: @"selezionaTreno"]) {
-        NSLog(@"%@ %@",self.viaggio.partenza.idStazione,self.viaggio.arrivo.idStazione);
         
         SoluzioneViaggioViewController *destination = (SoluzioneViaggioViewController*) [segue destinationViewController];
         //ogni richiesta viene fatta alla mezza del giorno (se devo fare richiesta "nuova" resetto)
@@ -379,10 +355,11 @@
     if(!self.trenoCompilato && indexPath.section == 1 && indexPath.row == 0) {
         return 180.0;
     }
-    
+    // altrimenti visualizzo i treni selezionati
     return 44;
 }
 
+// metodo che ridisegna il picker della data se si preme il cambio della soluzione
 - (IBAction)ridisegnaPicker:(id)sender {
     
     self.trenoCompilato = FALSE;
@@ -443,8 +420,7 @@
         default:
             break;
     }
-    
-    NSLog(@"%@",self.viaggio.fineRipetizione);
+
 }
 
 @end

@@ -470,6 +470,7 @@
         cell.ritardoL.text = [cell.treno stringaStatoTemporale];
         
         if(cell.treno.soppresso) cell.ritardoL.textColor = RED;
+        else cell.ritardoL.textColor = DARKGREY;
         
     } else  cell.ritardoL.text = @"";
 

@@ -11,6 +11,8 @@
 #define ANNOTATION_REGION_PAD_FACTOR 1.3
 #define MAX_DEGREES_ARC 360
 
+#warning sistemare cosa mappa
+
 @implementation TrovaStazioniViewController
 
 - (void)viewDidLoad {
@@ -228,28 +230,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //NSLog(@"%@",self.treno.fermate[indexPath.row]);
+    
     Stazione *selezionata = self.stazioniVicine[indexPath.row];
     [self performSegueWithIdentifier:@"dettaglioStazione" sender:selezionata];
     
-    //CWStatusBarNotification *notification = [CWStatusBarNotification new];
-    //notification.notificationLabelBackgroundColor = DARKGREY;
-    //notification.notificationLabelTextColor = [UIColor whiteColor];
-    //notification.notificationAnimationInStyle = CWNotificationAnimationStyleTop;
-    //notification.notificationAnimationOutStyle = CWNotificationAnimationStyleTop;
-    //[notification displayNotificationWithMessage:@"Caricamento..." completion:nil];
-    
-    /*
-    UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    activityIndicator.hidesWhenStopped = YES;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
-    [activityIndicator startAnimating];
-    
-    [selezionata caricaTreniStazione:^{
-        [self performSegueWithIdentifier:@"dettaglioStazione" sender:selezionata];
-        [activityIndicator stopAnimating];
-    }];
-     */
     
     
 }

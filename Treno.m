@@ -101,7 +101,6 @@
 -(void) caricaInfoComplete:(void (^)(void))completionBlock {
     
     [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.numero,@"origine":self.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSDictionary *response) {
-        //NSLog(@"Response: %@", response);
         
         for(NSDictionary *trenoDict in response) {
             Stazione *origine = [[Stazione alloc] init];
@@ -162,9 +161,7 @@
                 Stazione *stazFermata = [[Stazione alloc] init];
                 stazFermata.idStazione = [stazioneDict objectForKey:@"id"];
                 stazFermata.nome = [stazioneDict objectForKey:@"nome"];
-                // non forniti da questo JSON (rallenterebbero di molto le prestazioni del server)
-                //stazFermata.lat = [[stazioneDict objectForKey:@"lat"] floatValue];
-                //stazFermata.lon = [[stazioneDict objectForKey:@"lon"] floatValue];
+
                 [stazFermata formattaNome];
                 
                 fermata.stazione = stazFermata;

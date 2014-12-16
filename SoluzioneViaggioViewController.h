@@ -15,7 +15,4 @@
 
 @property (strong,nonatomic) Viaggio *query;
 
-
-//-(void) trovaSoluzioniTreno;
-
 @end
