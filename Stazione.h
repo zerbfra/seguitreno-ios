@@ -31,6 +31,7 @@
 //-(NSArray*) elencoStazioni;
 // formatta il nome (deprecata)
 -(void) formattaNome;
+
 // pulisce l'id della stazione (solitamente ha una lettera [A-Z] davanti al codice, utile in certe richieste a trenitalia, in altre no
 -(NSString*) cleanId;
 

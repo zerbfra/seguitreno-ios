@@ -1,6 +1,6 @@
 //
 //  DBHelper.m
-//  PriceRadar
+//  SeguiTreno
 //
 //  Created by Francesco Zerbinati on 14/04/14.
 //  Copyright (c) 2014 Francesco. All rights reserved.
@@ -156,12 +156,8 @@
 
 -(NSArray*) createDBForSync {
     
-    
-    //NSString *query = [NSString stringWithFormat:@"SELECT t.numero,t.idOrigine,t.idDestinazione,v.orarioPartenza,v.orarioArrivo FROM viaggi AS v,treni AS t,'treni-viaggi' AS tv WHERE v.id=tv.idViaggio AND t.id=tv.idTreno"];
-    
     NSMutableArray *dbTreni = [NSMutableArray array];
-    
-  
+
     
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM viaggi"];
     

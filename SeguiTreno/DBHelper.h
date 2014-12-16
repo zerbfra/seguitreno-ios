@@ -1,6 +1,6 @@
 //
 //  DBHelper.h
-//  PriceRadar
+//  SeguiTreno
 //
 //  Created by Francesco Zerbinati on 14/04/14.
 //  Copyright (c) 2014 Francesco. All rights reserved.

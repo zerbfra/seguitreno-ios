@@ -18,7 +18,6 @@
     
     Treno *temp = self.tragitto[0];
     NSDate *partenza = [[DateUtils shared] dateFrom:temp.orarioPartenza];
-    //NSDate *partenza = [NSDate dateWithTimeIntervalSince1970:temp.partenza.orarioPartenza];
     return partenza;
 }
 
@@ -28,7 +27,6 @@
     
     Treno *temp = self.tragitto[cambi];
     NSDate *arrivo = [[DateUtils shared] dateFrom:temp.orarioArrivo];
-    //NSDate *arrivo = [NSDate dateWithTimeIntervalSince1970:temp.arrivo.orarioArrivo];
     return arrivo;
 }
 

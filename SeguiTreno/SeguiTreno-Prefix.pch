@@ -16,7 +16,6 @@
 #import "FMDatabase.h"
 #import "FMDatabaseQueue.h"
 #import "FMResultSet.h"
-#import "CWStatusBarNotification.h"
 
 #import "APIClient.h"
 #import "DBHelper.h"

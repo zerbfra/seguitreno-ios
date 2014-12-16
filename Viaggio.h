@@ -39,11 +39,6 @@
 -(NSString*) luogoPartenza;
 -(NSString*) luogoArrivo;
 
-/*
--(NSString*) mostraOrario:(NSDate*) date;
--(NSString*) mostraData:(NSDate*) date;
- */
-
 // formatta l'array tragitto considerando solo i numeri treno
 -(NSArray*) jsonCompatibile;
 

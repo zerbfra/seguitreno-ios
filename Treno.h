@@ -62,14 +62,6 @@
 // carica informazioni complete del treno
 -(void) caricaInfoComplete:(void (^)(void))completionBlock;
 
-/*
-// formatta una stringa con orario o data data la nsdate
--(NSString*) mostraOrario:(NSDate*) date;
--(NSString*) mostraData:(NSDate*) date;
 
-// Ritorna l'NSDate da orarioPartenza di stazione partenza e orarioArrivo di stazione arrivo
--(NSDate*) dataPartenza;
--(NSDate*) dataArrivo;
-*/
 
 @end

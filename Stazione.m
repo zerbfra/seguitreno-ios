@@ -44,7 +44,6 @@
 
 -(void) caricaTreniStazione:(void (^)(void))completionBlock {
     
-    //NSLog(@"%@",self.stazione.idStazione);
     self.treniArrivo = [NSMutableArray array];
     self.treniPartenza = [NSMutableArray array];
     
@@ -55,7 +54,6 @@
     dispatch_group_enter(group);
     
     [[APIClient sharedClient] requestWithPath:@"treniArrivo" andParams:@{@"stazione":self.idStazione} completion:^(NSDictionary *response) {
-        //NSLog(@"%@",response);
         
         for(NSDictionary *trenoDict in response) {
             // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
@@ -84,7 +82,6 @@
     dispatch_group_enter(group);
     
     [[APIClient sharedClient] requestWithPath:@"treniPartenza" andParams:@{@"stazione":self.idStazione} completion:^(NSDictionary *response) {
-        //NSLog(@"%@",response);
         
         for(NSDictionary *trenoDict in response) {
             // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
@@ -112,12 +109,9 @@
         
     }];
     
-    
-    
-    
-    // Here we wait for all the requests to finish
+
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        // Do whatever you need to do when all requests are finished
+        // tutte le richieste completate
         NSLog(@"Finito le richieste al server");
         completionBlock();
         
