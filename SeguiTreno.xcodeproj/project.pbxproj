@@ -43,6 +43,7 @@
 		1398B9D71A388CBF005D6F31 /* DropboxClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1398B9D61A388CBF005D6F31 /* DropboxClient.m */; };
 		13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */; };
 		13B24A4D1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B24A4C1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m */; };
+		13CFF38D1A423DC0009ED46F /* NotificheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CFF38C1A423DC0009ED46F /* NotificheViewController.m */; };
 		13D01EEA1A0BC3B300BDCD05 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */; };
 		13D01EEB1A0BC3B300BDCD05 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE21A0BC3B300BDCD05 /* FMDatabaseAdditions.m */; };
 		13D01EEC1A0BC3B300BDCD05 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 13D01EE41A0BC3B300BDCD05 /* FMDatabasePool.m */; };
@@ -140,6 +141,8 @@
 		13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalvatoTableViewCell.m; sourceTree = "<group>"; };
 		13B24A4B1A28E479009EEFB4 /* TrenoStazioneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrenoStazioneTableViewCell.h; path = ../TrenoStazioneTableViewCell.h; sourceTree = "<group>"; };
 		13B24A4C1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrenoStazioneTableViewCell.m; path = ../TrenoStazioneTableViewCell.m; sourceTree = "<group>"; };
+		13CFF38B1A423DC0009ED46F /* NotificheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificheViewController.h; sourceTree = "<group>"; };
+		13CFF38C1A423DC0009ED46F /* NotificheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificheViewController.m; sourceTree = "<group>"; };
 		13D01EDF1A0BC3B300BDCD05 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		13D01EE01A0BC3B300BDCD05 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		13D01EE11A0BC3B300BDCD05 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -311,6 +314,8 @@
 				13EFA8391A347EBC00AE98B3 /* TrovaStazioniViewController.m */,
 				137E5F8F1A376DA600AC291B /* ImpostazioniViewController.h */,
 				137E5F901A376DA600AC291B /* ImpostazioniViewController.m */,
+				13CFF38B1A423DC0009ED46F /* NotificheViewController.h */,
+				13CFF38C1A423DC0009ED46F /* NotificheViewController.m */,
 				13EFA82C1A33240800AE98B3 /* Scioperi */,
 				1376AAA91A2D1DEA00C55F6F /* Cerca Treno */,
 				13D829C11A0CBA07008433E6 /* Custom cells */,
@@ -626,6 +631,7 @@
 				137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */,
 				13D01EEB1A0BC3B300BDCD05 /* FMDatabaseAdditions.m in Sources */,
 				1309253B1A1A17A3003DCD52 /* JourneyProgressView.m in Sources */,
+				13CFF38D1A423DC0009ED46F /* NotificheViewController.m in Sources */,
 				137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */,
 				13EFA8351A34710E00AE98B3 /* LocationManager.m in Sources */,
 				1304EB201A0D0B0900C2DC12 /* Viaggio.m in Sources */,

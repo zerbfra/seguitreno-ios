@@ -46,6 +46,7 @@
     
     switch (indexPath.section) {
         case 0:
+            [self performSegueWithIdentifier:@"notificaSegue" sender:nil];
             break;
         case 1:
             [self manageDropbox];
