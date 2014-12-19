@@ -25,14 +25,21 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
     [activityIndicator startAnimating];
     
-    if([self.numeroTreno length] > 0) [self trovaTrenoDaNumero:^{
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-        [activityIndicator stopAnimating];
-    }];
-    else [self trovaTrenoDaStazioni:^{
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
-        [activityIndicator stopAnimating];
-    }];
+    if([self.numeroTreno length] > 0) {
+        NSLog(@"da numero");
+        [self trovaTrenoDaNumero:^{
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            [activityIndicator stopAnimating];
+        }];
+    }
+    else {
+        NSLog(@"da stazioni");
+        [self trovaTrenoDaStazioni:^{
+            
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            [activityIndicator stopAnimating];
+        }];
+    }
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -87,8 +94,8 @@
             
             partenza.nome = self.query.partenza.nome;
             arrivo.nome = self.query.arrivo.nome;
-            partenza.idStazione = [self.query.partenza cleanId];
-            arrivo.idStazione   = [self.query.arrivo cleanId];
+            partenza.idStazione = self.query.partenza.idStazione;
+            arrivo.idStazione   = self.query.arrivo.idStazione;
 
             
             treno.numero = [trenoDict objectForKey:@"numero"];
@@ -240,7 +247,6 @@
 
     
     [cell.treno caricaInfoComplete:^{
-        //[notification dismissNotification];
         [self performSegueWithIdentifier:@"dettaglioTreno" sender:cell];
         [activityIndicator stopAnimating];
         [cell setUserInteractionEnabled:YES];
