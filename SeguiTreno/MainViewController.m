@@ -31,10 +31,6 @@
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
-    // bottone di aggiunta nuovi treni
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    
     
     self.treniTable.delegate = self;
     self.treniTable.dataSource = self;
@@ -65,7 +61,10 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated {
-
+    // bottone di aggiunta nuovi treni, qui perchè altrimenti potrebbe sparire per lasciar posto al loading
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    
     [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
 }
 
