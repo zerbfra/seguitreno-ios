@@ -17,7 +17,7 @@
 
 -(NSTimeInterval) timestampFrom:(NSDate*) date;
 
-// ottiene giorno della prossima settimana
+// ottiene giorno della prossima settimana corrispondente (es: lunedi --> lunedi settimana dopo)
 -(NSDate*) getNexWeekDateFor:(NSDate*) date until:(NSDate*) finish;
 
 // ritorna l'NSDate di una data ad un ora stabilita

@@ -22,11 +22,10 @@ extern const CGFloat kFZDetepickerHeight;
 
 // UI
 @property (strong, nonatomic) UIColor *bottomLineColor;
-//@property (strong, nonatomic) UIColor *selectedDateBottomLineColor;
 
-// methods
+
+// metodi
 - (void)fillDatesFromCurrentDate:(NSInteger)nextDatesCount;
-//- (void)fillDatesFromDate:(NSDate *)fromDate numberOfDays:(NSInteger)nextDatesCount;
 
 - (void)selectDate:(NSDate *)date;
 - (void)selectDateAtIndex:(NSUInteger)index;

@@ -28,7 +28,7 @@
         // pragma per pulire il warning
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        // eseguo il metodo
+        // ESEGUO il metodo
         [target performSelector:taskMethod];
         #pragma clang diagnostic pop
         

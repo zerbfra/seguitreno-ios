@@ -12,8 +12,9 @@
 
 +(ThreadHelper *)shared;
 
-
+// segue il metodo "taskMethod" in background
 -(void) executeInBackground:(SEL)taskMethod of:(id)target completion:(void (^)(BOOL success))completionBlock;
+// come sopra con parametri
 -(void) executeInBackground:(SEL)taskMethod of:(id)target withParam:(id)param completion:(void (^)(BOOL success))completionBlock;
 
 

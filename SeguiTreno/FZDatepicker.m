@@ -91,21 +91,8 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
     return _datesScrollView;
 }
 
-/*
-- (void)setSelectedDateBottomLineColor:(UIColor *)selectedDateBottomLineColor
-{
-    _selectedDateBottomLineColor = selectedDateBottomLineColor;
 
-    for (id subview in self.datesScrollView.subviews) {
-        if ([subview isKindOfClass:[FZDatepickerDateView class]]) {
-            FZDatepickerDateView *dateView = (FZDatepickerDateView *)subview;
-            [dateView setItemSelectionColor:selectedDateBottomLineColor];
-        }
-    }
-}*/
-
-
-#pragma mark Public methods
+#pragma mark Metodi pubblici
 
 - (void)fillDatesFromCurrentDate:(NSInteger)nextDatesCount
 {
@@ -175,7 +162,7 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
         FZDatepickerDateView *dateView = [[FZDatepickerDateView alloc] initWithFrame:CGRectMake(currentItemXPosition, 0, kFZDatepickerItemWidth, self.frame.size.height)];
         dateView.date = date;
         dateView.selected = [date isEqualToDate:self.selectedDate];
-        //[dateView setItemSelectionColor:self.selectedDateBottomLineColor];
+
         [dateView addTarget:self action:@selector(updateSelectedDate:) forControlEvents:UIControlEventValueChanged];
 
         [self.datesScrollView addSubview:dateView];

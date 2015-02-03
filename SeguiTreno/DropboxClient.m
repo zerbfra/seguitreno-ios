@@ -38,7 +38,7 @@
     }
 }
 
-
+// collega/scollega l'account dropbox
 -(DBAccountManager*) manageDropbox:(UIViewController*) viewController {
     
     DBAccountManager *manager = [DBAccountManager sharedManager];

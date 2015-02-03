@@ -24,7 +24,6 @@ extern const CGFloat kFZDatepickerSelectionLineWidth;
 @property (strong, nonatomic) UILabel *dateLabel;
 @property (nonatomic, strong) UIView *selectionView;
 
-// methods
-//- (void)setItemSelectionColor:(UIColor *)itemSelectionColor;
+
 
 @end

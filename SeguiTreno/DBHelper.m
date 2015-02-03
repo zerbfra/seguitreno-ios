@@ -52,6 +52,7 @@
     
 }
 
+// esegue statement multipli (viene usato dalle procedure di backup)
 -(void) executeMultipleStatements:(NSString*)sql {
     
     [self.queue inDatabase:^(FMDatabase *db) {
@@ -60,11 +61,7 @@
     
 }
 
-- (NSString*) dayFromNumber:(NSInteger) num {
-    NSArray *week = @[@"lun",@"mar",@"mer",@"gio",@"ven",@"sab",@"dom"];
-    return week[num];
-    
-}
+
 
 -(NSData*) getDatabaseBackup {
     NSData *backup;
@@ -85,7 +82,7 @@
 -(void) importBackup:(NSData *)data {
     
     NSLog(@"Importazione backup in corso...");
-#warning controllare esattezza svuotamento db (dovrebbe essere ok ora, 13/12)
+
     // azzero il db attuale
     NSString *deleteQuery = @"DELETE FROM viaggi; DELETE FROM ripetizioni; DELETE FROM treni; DELETE FROM 'treni-viaggi'; VACUUM;";
     [[DBHelper sharedInstance] executeMultipleStatements:deleteQuery];
@@ -154,6 +151,7 @@
     
 }
 
+// crea un array compatibile con json per l'invio al server dei treni dell'utente (per poterne poi gestire le notifiche con un cronjob sul server)
 -(NSArray*) createDBForSync {
     
     NSMutableArray *dbTreni = [NSMutableArray array];

@@ -11,6 +11,7 @@
 
 @interface JourneyProgressView : UIView
 
+// disegna l'elemento grafico
 - (id)initWithRow:(int)stop andMax:(int) max andCurrentStatus:(int) status andFrame:(CGRect)frame;
 
 @end

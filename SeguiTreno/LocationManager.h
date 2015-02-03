@@ -24,11 +24,14 @@ typedef NS_ENUM(NSUInteger, LocationManageraAuthType) {
     LocationManageraAuthTypeAlways
 };
 
+// singleton
 + (LocationManager *)sharedInstance;
 
+// avvia la localizzaione
 - (void) startWithAuthType:(LocationManageraAuthType)authType filterDistance:(CLLocationDistance)distanceFilter accuracy:(CLLocationAccuracy)accuracy
        completionBlock:(void(^)(CLLocation *newLocation, Error error))completionBlock;
 
+// ferma la localizzazione
 - (void) stopUpdate;
 
 @property (nonatomic, copy) void (^completionBlock)(CLLocation *newLocation, Error error);

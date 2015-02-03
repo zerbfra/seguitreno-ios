@@ -118,27 +118,9 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
 }
 
 
-/*
-- (void)setItemSelectionColor:(UIColor *)itemSelectionColor
-{
-    self.selectionView.backgroundColor = itemSelectionColor;
-}
- */
-
-/*
-- (void)setHighlighted:(BOOL)highlighted
-{
-    [super setHighlighted:highlighted];
-    if (highlighted) {
-        self.selectionView.alpha = self.isSelected ? 1 : .5;
-    } else {
-        self.selectionView.alpha = self.isSelected ? 1 : 0;
-    }
-}
- */
 
 
-#pragma mark    Other methods
+#pragma mark    Altri metodi
 
 - (BOOL)isSunday:(NSDate *)date
 {
@@ -156,7 +138,7 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
     [self sendActionsForControlEvents:UIControlEventValueChanged];
 }
 
-#pragma mark    UI elements
+#pragma mark    UI 
 
 - (UILabel *)dateLabel
 {

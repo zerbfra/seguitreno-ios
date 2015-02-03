@@ -41,7 +41,8 @@
     if (![[NSFileManager defaultManager] fileExistsAtPath:jsonPath])
         [[NSFileManager defaultManager] createDirectoryAtPath:jsonPath withIntermediateDirectories:NO attributes:nil error:&error];
     
-    NSString *stringParams = [self dictionaryToString:parameters];
+    NSString *stringParams = [self dictionaryToString:parameters]; //converto il dizionario a una stringa
+    // il json è specifico per ogni richiesta (path della stessa-parametri)
     NSString *fileName = [NSString stringWithFormat:@"/json_%@-%@",path,stringParams];
     NSString *filePath = [jsonPath stringByAppendingString:fileName];
     
@@ -63,19 +64,20 @@
     
     // caso in cui siano passati più di LIFE min oppure che il file non esista [o, caso meno probabile, che la data vada indietro]
     // si considera anche il caso in cui life sia pari a 0
+    // DUNQUE AGGIORNO COLLEGANDOMI AL SERVER
     if(min > life || min < 0 || life == 0) {
         NSLog(@"Remote request for %@",path);
         [self makeRequest:path withParams:parameters andTimeout:timeout completion:^(NSDictionary *result) {
             jsonData = [NSKeyedArchiver archivedDataWithRootObject:result];
             //scrivo su file
             [jsonData writeToFile:filePath atomically:YES];
-            // rispondo
+            //rispondo
             
             completion(result);
         }];
 
     } else {
-        //ritorno il file presente nel device
+        // ALTRIMENTI *NON* MI COLLEGO AL SERVER: ritorno il file presente nel device
         NSLog(@"Retrieving local file data");
         NSData *storedData = [[NSMutableData alloc] initWithContentsOfFile:filePath];
         NSDictionary *storedArray = [NSKeyedUnarchiver unarchiveObjectWithData:storedData];
@@ -86,7 +88,7 @@
     
 }
 
-
+// imposta la richiesta http con il path assegnato e i vari parametri
 -(void) makeRequest:(NSString*) path withParams:(NSDictionary*) parameters andTimeout:(int) timeout completion:(void (^)(NSDictionary *))completion {
     
     path = [NSString stringWithFormat:@"%@%@.php",BaseURLString,path];
@@ -102,12 +104,13 @@
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
-    
+    // mando la richiesta in post con un body JSON, cosi è tutto incapsulato e non girano parametri nell'url
     [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters  options:NSJSONWritingPrettyPrinted error:&error]];
     [request setTimeoutInterval:timeout];
     
-    
+    // attivo l'indicatore network
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    // procedo con un task per la richiesta
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     
@@ -125,6 +128,7 @@
                                                                 // se non ho errore nello status passo l'object response
                                                                 if(![status isEqualToString:@"error"]) {
                                                                     NSLog(@"%@ --> %@",path,status);
+                                                                    // COMPLETO LA RICHIESTA POSITIVAMENTE!
                                                                     completion([jsonDict objectForKey:@"response"]);
                                                                 }
                                                                 else NSLog(@"Response status for %@ error: %@",path,jsonDict);
@@ -146,7 +150,7 @@
                                                     
                                                 }];
     
-    
+    // avvio il task
     [dataTask resume];
 }
 

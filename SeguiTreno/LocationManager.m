@@ -34,17 +34,18 @@
         [self startUpdatingLocation:authType];
 }
 
+// prima di tutto richiede l'autorizzazione ad usare la posizione all'utente e poi inizia a controllare la posizione sul locationamanger
 - (void)startUpdatingLocation:(LocationManageraAuthType)authType {
     switch (authType) {
         case LocationManageraAuthTypeWhenInUse: {
-            // Check for iOS 8.
+            // Check per iOS 8.
             if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
                 [self.locationManager requestWhenInUseAuthorization];
             }
             break;
         }
         case LocationManageraAuthTypeAlways: {
-            // Check for iOS 8.
+            // Check per iOS 8.
             if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
                 [self.locationManager requestAlwaysAuthorization];
             }

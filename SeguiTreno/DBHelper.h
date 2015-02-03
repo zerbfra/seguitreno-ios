@@ -14,13 +14,17 @@
 
 + (DBHelper *)sharedInstance;
 
-
+// esegue un istruzione SQL
 -(NSMutableArray*) executeSQLStatement:(NSString*)stmt;
 
-- (NSString*) dayFromNumber:(NSInteger) num;
 
+// DROPBOX: crea un NSData contente i treni come backup da mandare a dropbox
 -(NSData*) getDatabaseBackup;
+
+// DROPBOX: importa un backup da dropbox, inserendo i vari dati nel database
 -(void) importBackup:(NSData*) data;
+
+// SERVER: crea un array compatibile con json per l'invio al server dei treni dell'utente (per poterne poi gestire le notifiche con un cronjob sul server)
 -(NSArray*) createDBForSync;
 
 @end

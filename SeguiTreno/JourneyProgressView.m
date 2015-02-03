@@ -29,11 +29,11 @@ const float CIRCLE_RADIUS = 6.0;
 }
 
 
-
+// i specifica se si è iniziale, finale o intermedio (finale i==max)
 - (void)drawTimelineWith:(int)i currentStatus:(int)currentStatus max:(int)max {
     
     
-
+    // il colore cambia in verde se la fermata è stata raggiunta
     UIColor *strokeColor = 1 ==  currentStatus ? GREEN : [UIColor lightGrayColor];
     CGPoint toPoint;
     CGPoint fromPoint;
@@ -86,6 +86,9 @@ const float CIRCLE_RADIUS = 6.0;
  
 }
 
+#pragma mark Gestore elementi grafici
+
+// specifica il layer della linea (colore, spessore...)
 - (CAShapeLayer *)getLayerWithLine:(UIBezierPath *)line andStrokeColor:(UIColor *)strokeColor {
     CAShapeLayer *lineLayer = [CAShapeLayer layer];
     lineLayer.path = line.CGPath;
@@ -95,7 +98,7 @@ const float CIRCLE_RADIUS = 6.0;
     
     return lineLayer;
 }
-
+// specifica il contorno e i parametri geometrici della linea
 - (UIBezierPath *)getLineWithStartPoint:(CGPoint)start endPoint:(CGPoint)end {
     UIBezierPath *line = [UIBezierPath bezierPath];
     [line moveToPoint:start];
@@ -103,7 +106,7 @@ const float CIRCLE_RADIUS = 6.0;
     
     return line;
 }
-
+// specifica il layer del cerchio (colore, spessore...)
 - (CAShapeLayer *)getLayerWithCircle:(UIBezierPath *)circle andStrokeColor:(UIColor *)strokeColor {
     CAShapeLayer *circleLayer = [CAShapeLayer layer];
     
@@ -116,7 +119,7 @@ const float CIRCLE_RADIUS = 6.0;
     
     return circleLayer;
 }
-
+// specifica il contorno e i parametri geometrici del cerchio
 - (UIBezierPath*) circleWithCenterY:(CGFloat)centerY {
     
     UIBezierPath *circle = [UIBezierPath bezierPath];

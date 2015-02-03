@@ -23,13 +23,13 @@
     }
 }
 
-
+// restituisce NSDate dato un NSTimeInterval
 -(NSDate*) dataPartenza   {
 
     NSDate *partenza = [NSDate dateWithTimeIntervalSince1970:self.orarioPartenza];
     return partenza;
 }
-
+// restituisce NSDate dato un NSTimeInterval
 -(NSDate*) dataArrivo {
 
     NSDate *arrivo = [NSDate dateWithTimeIntervalSince1970:self.orarioArrivo];
@@ -59,7 +59,7 @@
     
     return dateString;
 }
-
+// soppresso o arrivato?
 -(NSString*) stringaStatoTemporale {
     
     if(!self.soppresso && !self.arrivato) {
@@ -73,7 +73,7 @@
     return @"--";
     
 }
-
+// crea la stringa del ritardo
 -(NSString*) stringaRitardo {
     int ritardo = abs((int)self.ritardo);
     
@@ -96,7 +96,7 @@
 -(NSString*) stringaDescrizione {
     return [NSString stringWithFormat:@"%@ %@",self.categoria,self.numero];
 }
-
+// carica le informazioni complete del treno (di solito tiene cache di 3 minuti)
 -(void) caricaInfoComplete:(void (^)(void))completionBlock {
     // di default passo 3 minuti
     [self caricaInfoComplete:3 completion:^{
@@ -105,7 +105,7 @@
 }
 
 
-// carica informazioni complete del treno
+// carica informazioni complete del treno, potendo specificare la vita della cache
 -(void) caricaInfoComplete:(int) life completion:(void (^)(void))completionBlock{
 
     [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.numero,@"origine":self.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} withTimeout:20 cacheLife:life completion:^(NSDictionary *response) {

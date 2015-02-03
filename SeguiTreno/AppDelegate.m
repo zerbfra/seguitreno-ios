@@ -171,10 +171,10 @@
 
 }
 
+// invio database dei treni al server (questo per poter notificare all'utente i vari ritardi in base ai suoi treni)
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
-    // invio database dei treni al server (questo per poter notificare all'utente i vari ritardi in base ai suoi treni)
-    
+    // creo array dei treni
     NSArray* dbTreni = [[DBHelper sharedInstance] createDBForSync];
     
     NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:userIDKey];
@@ -182,7 +182,7 @@
     
     NSLog(@"%@",dbTreni);
     
-    // faccio la richiesta
+    // faccio la richiesta, inviando il db dei treni e l'idutente
     [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni,@"idUtente":userID} completion:^(NSDictionary *response) {
         NSLog(@"Response: %@", response);
         

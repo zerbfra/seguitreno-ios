@@ -10,6 +10,7 @@
 
 @implementation Stazione
 
+// formatta il nome della stazione
 -(void) formattaNome {
     NSString *clean = self.nome.lowercaseString;
     
@@ -36,12 +37,12 @@
     self.nome = clean;
     
 }
-
+// pulisce ID della stazione, a volte trenitalia ritorna l'ID con una "S" davanti
 -(NSString*) cleanId {
     return [self.idStazione substringFromIndex:1];
 }
 
-
+// carico i treni in arrivo  e in partenza dell'oggetto stazione
 -(void) caricaTreniStazione:(void (^)(void))completionBlock {
     
     self.treniArrivo = [NSMutableArray array];
