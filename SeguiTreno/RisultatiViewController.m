@@ -18,13 +18,14 @@
     [super viewDidLoad];
     self.soluzioniPossibili = [[NSMutableArray alloc] init];
     
-    // ovvero è stato inserito il numero del treno anzichè i dati delle stazioni
+
     
     UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     activityIndicator.hidesWhenStopped = YES;
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
     [activityIndicator startAnimating];
     
+    // ovvero è stato inserito il numero del treno anzichè i dati delle stazioni
     if([self.numeroTreno length] > 0) {
         NSLog(@"da numero");
         [self trovaTrenoDaNumero:^{
@@ -75,12 +76,12 @@
     }
 }
 
+// metodo che recupera i treni dati la stazione e la data
 -(void) trovaTrenoDaStazioni:(void (^)(void))completionBlock {
     
     NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];
     
     [[APIClient sharedClient] requestWithPath:@"ricerca" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSDictionary *response) {
-        //NSLog(@"Response: %@", response);
         
         
         for (NSDictionary *trenoDict in response) {
@@ -102,7 +103,7 @@
             treno.orarioArrivo = [[trenoDict objectForKey:@"orarioArrivo"] doubleValue];
             treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
             treno.categoria = [trenoDict objectForKey:@"categoria"];
-            treno.soppresso = [trenoDict objectForKey:@"sopresso"];
+
 
             treno.origine = partenza;
             treno.destinazione = arrivo;
@@ -121,6 +122,7 @@
     
 }
 
+// trova un treno dato il suo numero (possono esserci più treni con lo stesso numero
 -(void) trovaTrenoDaNumero:(void (^)(void))completionBlock {
     
     [[APIClient sharedClient] requestWithPath:@"ricerca" andParams:@{@"numero":self.numeroTreno} completion:^(NSDictionary *response) {
@@ -149,7 +151,7 @@
             treno.orarioArrivo = [[trenoDict objectForKey:@"orarioArrivo"] doubleValue];
             treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
             treno.categoria = [trenoDict objectForKey:@"categoria"];
-            treno.soppresso = [trenoDict objectForKey:@"sopresso"];
+            treno.soppresso = [[trenoDict objectForKey:@"sopresso"] boolValue];
             treno.origine = partenza;
             treno.destinazione = arrivo;
             
@@ -173,6 +175,7 @@
     return 90.0f;
 }
 
+// mostra i treni della fascia oraria selezionata in precedenza
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     RisultatoRicercaTableViewCell  *cell = (RisultatoRicercaTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"risultatoRicerca" forIndexPath:indexPath];
     
@@ -213,7 +216,7 @@
 
 -(NSArray*)treniTraOra:(NSInteger) inizio e:(NSInteger) fine {
     
-    NSDate *dataInizio = [[DateUtils shared] date:self.query.data At:inizio]; //[self todayAt:inizio];
+    NSDate *dataInizio = [[DateUtils shared] date:self.query.data At:inizio];
     NSDate *dataFine = [[DateUtils shared] date:self.query.data At:fine];
     
     NSMutableArray *treniCompresi = [[NSMutableArray alloc] init];
@@ -260,7 +263,7 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
+// manda al dettaglio del treno
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([[segue identifier] isEqualToString:@"dettaglioTreno"]) {

@@ -10,11 +10,10 @@
 #import "DettaglioTrenoViewController.h"
 #import "TrenoStazioneTableViewCell.h"
 
-#define MINIMUM_ZOOM_ARC 0.014 //approximately 1 miles (1 degree of arc ~= 69 miles)
+#define MINIMUM_ZOOM_ARC 0.014
 #define ANNOTATION_REGION_PAD_FACTOR 1.15
 #define MAX_DEGREES_ARC 360
 
-#warning sistemare cosa mappa
 
 @interface DettaglioStazioneViewController ()
 
@@ -51,7 +50,7 @@
     }];
     
 }
-
+// configura la mappa con i vari pin delle coordinate
 -(void) configuraMappa {
     
     self.mapView.delegate = self;
@@ -76,6 +75,7 @@
     
 }
 
+// aggiunge informazoni alla mappa, in particolare per quanto riguarda le annotazioni (pin)
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
     // tutte tranne la user location
@@ -88,7 +88,7 @@
         MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation
                                                                         reuseIdentifier:SFAnnotationIdentifier];
         UIImage *flagImage = [UIImage imageNamed:@"logofs"];
-        // You may need to resize the image here.
+        
         annotationView.image = flagImage;
         annotationView.canShowCallout = YES;
         return annotationView;
@@ -106,7 +106,7 @@
 }
 
 
-//size the mapView region to fit its annotations
+// sistema la mappa in modo che le annotazioni siano centrali
 - (void)zoomMapViewToFitAnnotations:(MKMapView *)mapView animated:(BOOL)animated
 {
     NSArray *annotations = mapView.annotations;
@@ -188,17 +188,6 @@
     }
 }
 
-/*
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if(indexPath.section == 0)
-    [self performSegueWithIdentifier:@"dettaglioTreno" sender:[self.stazione.treniPartenza objectAtIndex:indexPath.row]];
-    else [self performSegueWithIdentifier:@"dettaglioTreno" sender:[self.stazione.treniArrivo objectAtIndex:indexPath.row]];
-    
-}
- */
-
-
 
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
      TrenoStazioneTableViewCell *cell = (TrenoStazioneTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"trainCell" forIndexPath:indexPath];
@@ -211,10 +200,11 @@
              cell.info.text = partenza.destinazione.nome;
              
              if(partenza.ritardo > 0) {
-                 NSString *stringaRitardo = [NSString stringWithFormat:@"Ritardo %ld min",partenza.ritardo];
+                 NSString *stringaRitardo = [NSString stringWithFormat:@"Ritardo %lu min",(long)partenza.ritardo];
                  cell.orario.text = [NSString stringWithFormat:@"%@ - %@",[[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:partenza.orarioPartenza]],stringaRitardo];
              } else cell.orario.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:partenza.orarioPartenza]];
              
+             // coloro il pallino a seconda del ritardo del treno
              [cell setRitardo:partenza.ritardo];
          } else {
              cell.treno.text = @"";
@@ -229,7 +219,7 @@
              cell.info.text = arrivo.origine.nome;
              
              if(arrivo.ritardo > 0) {
-                 NSString *stringaRitardo = [NSString stringWithFormat:@"Ritardo %ld min",arrivo.ritardo];
+                 NSString *stringaRitardo = [NSString stringWithFormat:@"Ritardo %ld min",(long)arrivo.ritardo];
                  cell.orario.text = [NSString stringWithFormat:@"%@ - %@",[[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:arrivo.orarioArrivo]],stringaRitardo];
              } else cell.orario.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:arrivo.orarioArrivo]];
              

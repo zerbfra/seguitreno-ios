@@ -37,7 +37,7 @@
     }];
     
 }
-
+// richiede le soluzioni viaggio recuperate dal server
 -(void) trovaSoluzioniTreno:(void (^)(void))completionBlock {
 
     NSNumber *ts = [NSNumber numberWithDouble:[self.query.data timeIntervalSince1970]];

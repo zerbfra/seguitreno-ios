@@ -62,7 +62,8 @@
     } else min = -1;
     
     // caso in cui siano passati più di LIFE min oppure che il file non esista [o, caso meno probabile, che la data vada indietro]
-    if(min > life || min < 0) {
+    // si considera anche il caso in cui life sia pari a 0
+    if(min > life || min < 0 || life == 0) {
         NSLog(@"Remote request for %@",path);
         [self makeRequest:path withParams:parameters andTimeout:timeout completion:^(NSDictionary *result) {
             jsonData = [NSKeyedArchiver archivedDataWithRootObject:result];
@@ -123,20 +124,20 @@
                                                                 NSString *status = [jsonDict objectForKey:@"status"];
                                                                 // se non ho errore nello status passo l'object response
                                                                 if(![status isEqualToString:@"error"]) {
-                                                                    TRC_DBG(@"%@ --> %@",path,status);
+                                                                    NSLog(@"%@ --> %@",path,status);
                                                                     completion([jsonDict objectForKey:@"response"]);
                                                                 }
-                                                                else TRC_ALT(@"Response status for %@ error: %@",path,jsonDict);
+                                                                else NSLog(@"Response status for %@ error: %@",path,jsonDict);
                                                             }
-                                                            else  TRC_ALT(@"Bad Server JSON: %@",httpResp);
+                                                            else  NSLog(@"Bad Server JSON: %@",httpResp);
                                                             
                                                         } else {
                                                             // HANDLE BAD RESPONSE //
-                                                            TRC_ERR(@"Bad Server response: %@",httpResp);
+                                                            NSLog(@"Bad Server response: %@",httpResp);
                                                         }
                                                     } else {
                                                         // HANDLE ERROR //
-                                                        TRC_ERR(@"Error with the request %@",error);
+                                                        NSLog(@"Error with the request %@",error);
                                                     }
                                                     
                                                     dispatch_async(dispatch_get_main_queue(), ^{

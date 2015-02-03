@@ -1,5 +1,9 @@
 //
-//  Created by Dmitry Ivanenko on 15.04.14.
+//  FZDatePickerDateView.h
+//
+//  Created by Francesco Zerbinati on 01/12/14.
+//  Copyright (c) 2014 Francesco Zerbinati. All rights reserved.
+//
 //  Copyright (c) 2014 Dmitry Ivanenko. All rights reserved.
 //
 
@@ -16,7 +20,11 @@ extern const CGFloat kFZDatepickerSelectionLineWidth;
 @property (strong, nonatomic) NSDate *date;
 @property (assign, nonatomic) BOOL isSelected;
 
+// ui
+@property (strong, nonatomic) UILabel *dateLabel;
+@property (nonatomic, strong) UIView *selectionView;
+
 // methods
-- (void)setItemSelectionColor:(UIColor *)itemSelectionColor;
+//- (void)setItemSelectionColor:(UIColor *)itemSelectionColor;
 
 @end

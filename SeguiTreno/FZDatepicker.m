@@ -1,8 +1,11 @@
 //
-//  Created by Dmitry Ivanenko on 14.04.14.
+//  FZDatePicker.m
+//
+//  Created by Francesco Zerbinati on 01/12/14.
+//  Copyright (c) 2014 Francesco Zerbinati. All rights reserved.
+//
 //  Copyright (c) 2014 Dmitry Ivanenko. All rights reserved.
 //
-
 #import "FZDatepicker.h"
 #import "FZDatepickerDateView.h"
 
@@ -42,7 +45,7 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.backgroundColor = [UIColor whiteColor];
    
-    self.selectedDateBottomLineColor = COLOR_WITH_RGB(255,78,80);
+    //self.selectedDateBottomLineColor = COLOR_WITH_RGB(255,78,80);
 }
 
 
@@ -88,6 +91,7 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
     return _datesScrollView;
 }
 
+/*
 - (void)setSelectedDateBottomLineColor:(UIColor *)selectedDateBottomLineColor
 {
     _selectedDateBottomLineColor = selectedDateBottomLineColor;
@@ -98,7 +102,7 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
             [dateView setItemSelectionColor:selectedDateBottomLineColor];
         }
     }
-}
+}*/
 
 
 #pragma mark Public methods
@@ -171,7 +175,7 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
         FZDatepickerDateView *dateView = [[FZDatepickerDateView alloc] initWithFrame:CGRectMake(currentItemXPosition, 0, kFZDatepickerItemWidth, self.frame.size.height)];
         dateView.date = date;
         dateView.selected = [date isEqualToDate:self.selectedDate];
-        [dateView setItemSelectionColor:self.selectedDateBottomLineColor];
+        //[dateView setItemSelectionColor:self.selectedDateBottomLineColor];
         [dateView addTarget:self action:@selector(updateSelectedDate:) forControlEvents:UIControlEventValueChanged];
 
         [self.datesScrollView addSubview:dateView];

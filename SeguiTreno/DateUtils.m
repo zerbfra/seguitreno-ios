@@ -106,7 +106,7 @@
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
     timeFormatter.dateFormat = @"HH:mm";
     
-    [timeFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [timeFormatter setDateStyle:NSDateFormatterShortStyle];
     
     [timeFormatter setTimeStyle:NSDateFormatterShortStyle];
     

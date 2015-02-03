@@ -7,7 +7,7 @@
 //
 
 #import "ScioperiViewController.h"
-#import "ScioperoTableViewCell.h"
+//#import "ScioperoTableViewCell.h"
 
 @interface ScioperiViewController ()
 
@@ -34,7 +34,7 @@
     
 }
 
-
+// richiedo informazioni al server, sia per scioperi che news (due chiamate diverse)
 -(void) requestInfo:(BOOL)update completion:(void (^)(void))completionBlock {
     
     NSNumber* up = [NSNumber numberWithBool:update];
@@ -88,9 +88,9 @@
     }];
     
     
-    // Here we wait for all the requests to finish
+    // quando finito eseguo il completionBlock
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        // Do whatever you need to do when all requests are finished
+
         NSLog(@"Finito le richieste al server");
         // mando l'array
         completionBlock();
@@ -104,8 +104,6 @@
     
     // pulisco accenti trenitalia
     clean = [clean stringByReplacingOccurrencesOfString:@"`" withString:@"'"];
-    
-
     
     return clean;
     
@@ -158,11 +156,10 @@
             cell.textLabel.textColor = RED;
         }
 
-        //cell.sciopero = [self.notizie objectAtIndex:indexPath.row];
         return cell;
     }
     else {
-        ScioperoTableViewCell *cell = (ScioperoTableViewCell*) [tableView dequeueReusableCellWithIdentifier:@"notiziaCell" forIndexPath:indexPath];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"notiziaCell" forIndexPath:indexPath];
         Notizia *scioperoCell = [self.scioperi objectAtIndex:indexPath.row];
         cell.textLabel.text = scioperoCell.titolo;
         cell.detailTextLabel.text = scioperoCell.testo;
@@ -175,50 +172,5 @@
     
  
 }
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

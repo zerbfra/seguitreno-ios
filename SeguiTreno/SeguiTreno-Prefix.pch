@@ -48,9 +48,7 @@
 #define BaseURLString @"http://54.85.215.70/seguitreno/" //amazon aws
 
 
-/*****************************************************************************/
-/* DEBUG MACROS                                                              */
-/*****************************************************************************/
+/****************************************************************************
 
 #ifndef TRC_LEVEL
 #if TARGET_IPHONE_SIMULATOR != 0
@@ -60,9 +58,7 @@
 #endif
 #endif
 
-/*****************************************************************************/
-/* Entry/exit trace macros                                                   */
-/*****************************************************************************/
+
 #if TRC_LEVEL == 0
 #define TRC_ENTRY    NSLog(@"ENTRY: %s:%d:", __PRETTY_FUNCTION__,__LINE__);
 #define TRC_EXIT     NSLog(@"EXIT:  %s:%d:", __PRETTY_FUNCTION__,__LINE__);
@@ -71,9 +67,7 @@
 #define TRC_EXIT
 #endif
 
-/*****************************************************************************/
-/* Debug trace macros                                                        */
-/*****************************************************************************/
+
 #if (TRC_LEVEL <= 1)
 #define TRC_DBG(A, ...) NSLog(@"DEBUG: %s:%d:%@", __PRETTY_FUNCTION__,__LINE__,[NSString stringWithFormat:A, ## __VA_ARGS__]);
 #else
@@ -97,3 +91,5 @@
 #else
 #define TRC_ERR(A, ...)
 #endif
+
+*/

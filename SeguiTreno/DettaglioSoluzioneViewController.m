@@ -38,7 +38,7 @@
     
     self.durataSoluzione.text = self.soluzione.durata;
     
-    self.numeroCambi.text = [NSString stringWithFormat:@"%lu",[self.soluzione numeroCambi]];
+    self.numeroCambi.text = [NSString stringWithFormat:@"%lu",(unsigned long)[self.soluzione numeroCambi]];
 }
 
 // salva la soluzione se viene confermata

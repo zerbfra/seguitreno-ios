@@ -29,6 +29,14 @@
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     [self.refreshControl setTintColor:GREEN];
     
+    // bottone che mostra il numero del treno (con metodo per future implementazioni)
+    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:[self.treno stringaDescrizione]
+                                   style:UIBarButtonItemStyleBordered
+                                   target:self
+                                   action:@selector(flipView)];
+    self.navigationItem.rightBarButtonItem = flipButton;
+    
     // chiamo il metodo per impostare i dati sulla vista
     [self setData];
 }
@@ -38,114 +46,20 @@
     // tolgo qualsiasi selezione dalla tabella
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     
-    UIBarButtonItem *flipButton = [[UIBarButtonItem alloc]
-                                   initWithTitle:[self.treno stringaDescrizione]
-                                   style:UIBarButtonItemStyleBordered
-                                   target:self
-                                   action:@selector(flipView)];
-    self.navigationItem.rightBarButtonItem = flipButton;
+
 }
 
 -(void) flipView {
-    
+    // future implementazioni possibili(?)
 }
 
 -(void) refresh {
-
-    [self.treno caricaInfoComplete:^{
+    // carico il tutto subito con cacheLife = 0 (questo perchè l'utente ha richiesto il refresh)
+    [self.treno caricaInfoComplete:0 completion:^{
         [self setData];
         [self.refreshControl endRefreshing];
     }];
 }
-#warning cancellare qui se va tutto bene
-/*
-// carica le informazioni del treno (includendo ovviamente le fermate)
--(void) loadInfo {
-    
-    NSLog(@"%@",self.treno.origine.idStazione);
-    
-    
-    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.treno.numero,@"origine":self.treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSDictionary *response) {
-        
-        for(NSDictionary *trenoDict in response) {
-            Stazione *origine = [[Stazione alloc] init];
-            Stazione *destinazione = [[Stazione alloc] init];
-            origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
-            origine.nome =  [trenoDict objectForKey:@"origine"];
-            destinazione.idStazione = [trenoDict objectForKey:@"idDestinazione"];
-            destinazione.nome =  [trenoDict objectForKey:@"destinazione"];
-            [origine formattaNome];
-            [destinazione formattaNome];
-            self.treno.origine = origine;
-            self.treno.destinazione = destinazione;
-            self.treno.categoria = [trenoDict objectForKey:@"categoria"];
-            self.treno.stazioneUltimoRilevamento = [trenoDict objectForKey:@"stazioneUltimoRilevamento"];
-            self.treno.oraUltimoRilevamento = [trenoDict objectForKey:@"oraUltimoRilevamento"];
-            
-            self.treno.orarioArrivo = [[trenoDict objectForKey:@"orarioArrivo"] doubleValue];
-            self.treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
-            self.treno.ritardo = [[trenoDict objectForKey:@"ritardo"] integerValue];
-            
-            self.treno.arrivato = [[trenoDict objectForKey:@"arrivato"] boolValue];
-            self.treno.soppresso = [[trenoDict objectForKey:@"soppresso"] boolValue];
-            
-            NSDictionary *fermateDict = [trenoDict objectForKey:@"fermate"];
-            
-            NSMutableArray *fermateArray = [NSMutableArray array];
-            
-            for(NSDictionary *fermate in fermateDict) {
-                
-                
-                Fermata *fermata = [[Fermata alloc] init];
-                
-                fermata.binarioEffettivo = [fermate objectForKey:@"binarioProgrammato"];
-                fermata.binarioProgrammato = [fermate objectForKey:@"binarioEffettivo"];
-                
-                if([fermata.binarioEffettivo isEqualToString:@""]) fermata.binarioEffettivo = nil;
-                if([fermata.binarioProgrammato isEqualToString:@""]) fermata.binarioProgrammato = nil;
-                
-                fermata.orarioProgrammato = [[fermate objectForKey:@"programmata"] doubleValue];
-                fermata.raggiunta = [[fermate objectForKey:@"raggiunta"] boolValue];
-                
-                fermata.orarioEffettivo = [[fermate objectForKey:@"effettiva"] doubleValue];
-                
-                fermata.progressivo = [[fermate objectForKey:@"progressivo"] intValue];
-                
-                
-                if(fermata.raggiunta == true) {
-                    fermata.orarioEffettivo = [[fermate objectForKey:@"effettiva"] doubleValue]; // caso i cui sia effettiva (e quindi treno arrivato li)
-                }
-                else  {
-                    fermata.orarioEffettivo = fermata.orarioProgrammato + self.treno.ritardo*60; // caso in cui non cè effettiva, stimo l'orario con il ritardo
-                    
-                }
-                
-                
-                
-                NSDictionary *stazioneDict = [fermate objectForKey:@"stazione"];
-                Stazione *stazFermata = [[Stazione alloc] init];
-                stazFermata.idStazione = [stazioneDict objectForKey:@"id"];
-                stazFermata.nome = [stazioneDict objectForKey:@"nome"];
-
-                [stazFermata formattaNome];
-                
-                fermata.stazione = stazFermata;
-                
-                [fermateArray addObject:fermata];
-                
-            }
-            
-            self.treno.fermate = fermateArray;
-            
-            
-        }
-        
-        [self setData];
-
-        
-    }];
-
-}*/
 
 // setta la schermata con i vari campi di testo
 -(void) setData {
@@ -217,6 +131,8 @@
     
     // cancello l'immagine precedente a causa della reusable cell ;)
     [self deleteSubviews:cell.progressView];
+    
+    // disegno il progress view (pallini e linee del tragitto)
     JourneyProgressView *timeline = [[JourneyProgressView alloc] initWithRow:(int)indexPath.row andMax:(int)[self.treno.fermate count]-1 andCurrentStatus:cell.fermata.raggiunta andFrame:cell.progressView.frame];
     [cell.progressView addSubview:timeline];
 

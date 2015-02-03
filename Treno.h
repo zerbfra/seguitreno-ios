@@ -59,6 +59,9 @@
 //ritorna categoria e numero treno
 -(NSString*) stringaDescrizione;
 
+// carica informazioni complete del treno con un tempo di vita del dato locale
+-(void) caricaInfoComplete:(int) life completion:(void (^)(void))completionBlock;
+
 // carica informazioni complete del treno
 -(void) caricaInfoComplete:(void (^)(void))completionBlock;
 

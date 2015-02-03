@@ -17,15 +17,9 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
 }
 
-- (IBAction)vediDettaglio:(id)sender {
-}
-
-- (IBAction)seleziona:(id)sender {
-}
-
+// disegna la cella
 -(void) disegna {
     
     self.durataTreno.text = self.soluzione.durata;
@@ -34,8 +28,8 @@
     
     NSUInteger cambi = [self.soluzione numeroCambi];
 
-    self.orarioP.text = [[DateUtils shared] showHHmm:[self.soluzione orarioPartenza]]; //[self.soluzione mostraOrario:[self.soluzione orarioPartenza]];
-    self.orarioA.text = [[DateUtils shared] showHHmm:[self.soluzione orarioArrivo]];//[self.soluzione mostraOrario:[self.soluzione orarioArrivo]];
+    self.orarioP.text = [[DateUtils shared] showHHmm:[self.soluzione orarioPartenza]];
+    self.orarioA.text = [[DateUtils shared] showHHmm:[self.soluzione orarioArrivo]];
     
     if(cambi == 0) {
         // nessun cambio
@@ -43,8 +37,8 @@
         self.soluzioneTreno.text = [NSString stringWithFormat:@"%@ %@",primo.categoria,primo.numero ];
         
     } else {
-        if(cambi == 1) self.soluzioneTreno.text = [NSString stringWithFormat:@"Soluzione con %lu cambio",cambi];
-        else self.soluzioneTreno.text = [NSString stringWithFormat:@"Soluzione con %lu cambi",cambi];
+        if(cambi == 1) self.soluzioneTreno.text = [NSString stringWithFormat:@"Soluzione con %lu cambio",(unsigned long)cambi];
+        else self.soluzioneTreno.text = [NSString stringWithFormat:@"Soluzione con %ld cambi",(long)cambi];
 
     }
     

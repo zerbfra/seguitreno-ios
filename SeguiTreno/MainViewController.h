@@ -14,12 +14,12 @@
 
 @property (weak, nonatomic) IBOutlet FZDatepicker *datepicker;
 @property (weak, nonatomic) IBOutlet UITableView *treniTable;
-
-@property (strong,nonatomic) NSMutableArray *viaggi;
-
 @property (strong,nonatomic) UIRefreshControl *refreshControl;
 
-@property NSString *text;
+
+// contiene i viaggi della data attuale
+@property (strong,nonatomic) NSMutableArray *viaggi;
+
 
 
 @end

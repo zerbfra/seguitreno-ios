@@ -23,13 +23,17 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    
+    // imposto il datepicker per visualizzare i prossimi 15 giorni
     [self.datepicker fillDatesFromCurrentDate:15];
-    
+    // selezione della prima data (la corrente)
     [self.datepicker selectDateAtIndex:0];
     
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    // bottone di aggiunta nuovi treni
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
+    self.navigationItem.rightBarButtonItem = addButton;
     
     
     self.treniTable.delegate = self;
@@ -37,11 +41,12 @@
     self.treniTable.backgroundColor = BACKGROUND_COLOR;
     self.treniTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    // aggiungo il target per il datepicker, per aggiornare i treni di ogni data selezionata
     [self.datepicker addTarget:self action:@selector(updateSelectedDate) forControlEvents:UIControlEventValueChanged];
     
     self.viaggi = [NSMutableArray array];
     
-    // rispondo alla notifica aggiornando tutti i viaggi
+    // rispondo alla notifica "update" aggiornando tutti i viaggi
     [[NSNotificationCenter defaultCenter]   addObserver:self
                                                selector:@selector(caricaViaggi)
                                                    name:@"update"
@@ -53,16 +58,14 @@
     [self.treniTable addSubview:self.refreshControl];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
-
+    // di default carico i viaggi
     [self caricaViaggi];
 
     
 }
 
 -(void) viewWillAppear:(BOOL)animated {
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
-    self.navigationItem.rightBarButtonItem = addButton;
-    
+
     [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
 }
 
@@ -84,9 +87,9 @@
 }
 
 
-
+// aggiorna i viaggi senza tener conto della cache
 -(void) refresh {
-    [self caricaViaggi:NO];
+    [self caricaViaggi:NO withCache:0];
     [self.refreshControl endRefreshing];
 }
 
@@ -94,7 +97,13 @@
     [self caricaViaggi:YES];
 }
 
+// di default chiamato dal metodo sopra, localFirst fornisce prima di tutto i dati locali ed ignora il server
 -(void) caricaViaggi:(BOOL) localFirst {
+    [self caricaViaggi:localFirst withCache:3];
+}
+
+
+-(void) caricaViaggi:(BOOL) localFirst withCache:(int)cache {
     // siccome il metodo carica viaggi implica vari caricamenti dal DB, lo mando su un secondo thread
     [[ThreadHelper shared] executeInBackground:@selector(recuperaViaggiDB) of:self completion:^(BOOL success) {
         // qui sono di nuovo sul main thread
@@ -112,10 +121,10 @@
                         } completion:NULL];
         }
         
-        // richiedo informazioni aggiuntive sui treni se sono quelli della giornata (quindi index = 0)
+        // richiedo informazioni aggiuntive sui treni se sono quelli della giornata corrente (quindi index = 0) AL SERVER --> in background
         if([self.datepicker selectedIndex] == 0) {
             NSLog(@"Recupero informazioni live...");
-            [self requestGroupTrain:[self elencoTreni]  completion:^(NSArray *response) {
+            [self requestGroupTrain:[self elencoTreni] withChache:cache completion:^(NSArray *response) {
                 // aggiorno per le informazioni recuperate dal server, con una piccola animazione
                 [UIView transitionWithView:self.treniTable
                                   duration:0.2f
@@ -130,7 +139,7 @@
     }];
 }
 
-// funzione per il recupero dei viaggi dal database, vengono chiaramente selezionati i viaggi della giornata selezionata
+// funzione per il recupero dei viaggi dal database, vengono chiaramente selezionati *SOLO* i viaggi della giornata selezionata - FUNZIONA IN BACKGROUND
 -(void) recuperaViaggiDB {
     
     NSInteger start,end;
@@ -138,18 +147,21 @@
     [self.viaggi removeAllObjects];
     
     if(self.datepicker.selectedDate == nil) {
+        //se la data del datepicker è null prendo di default la data di oggi
         start = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:[NSDate date] At:0]];
         end = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:[NSDate date] At:24]];
     }
     else {
+        // altrimenti recupero i timestamp della data selezionata
         start = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:self.datepicker.selectedDate At:0]];
         end = [[DateUtils shared] timestampFrom:[[DateUtils shared] date:self.datepicker.selectedDate At:24]];
     }
     
+    // query al db sulla data attuale, sulla tabella viaggi
     NSString *query = [NSString stringWithFormat:@"SELECT * FROM viaggi WHERE orarioPartenza BETWEEN '%tu' AND '%tu' ORDER BY orarioPartenza",start,end];
     NSArray *dbViaggi = [[DBHelper sharedInstance] executeSQLStatement:query];
     
-    
+    // per ogni viaggio vedo a recuperare i vari treni
     for (NSDictionary* viaggoSet in dbViaggi) {
         Viaggio *viaggio = [[Viaggio alloc] init];
         viaggio.idViaggio = [viaggoSet objectForKey:@"id"];
@@ -191,7 +203,7 @@
                 trovato.categoria =  [trenoSet objectForKey:@"categoria"];
                 
                 
-                
+                // il tragitto di un viaggio contiene i vari treni
                 [tragitto addObject:trovato];
                 
             }
@@ -219,8 +231,8 @@
 }
 
 // con un gruppo di dispatch, richiede le informazioni dei vari treni (dispatch_group per terminare tutto insieme)
--(void) requestGroupTrain:(NSMutableArray*) batch completion:(void (^)(NSArray *))completion {
-    
+-(void) requestGroupTrain:(NSMutableArray*) batch withChache:(int)cache completion:(void (^)(NSArray *))completion {
+
     // creo un gruppo di dispatch
     dispatch_group_t group = dispatch_group_create();
     
@@ -228,10 +240,10 @@
     
     for(Treno *treno in batch)
     {
-        
+        // per ogni treno dell'array richiedo l'informazione
         dispatch_group_enter(group);
         
-        [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":treno.numero,@"origine":treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSDictionary *response) {
+        [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":treno.numero,@"origine":treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:false]}  withTimeout:20 cacheLife:cache completion:^(NSDictionary *response) {
 
             for(NSDictionary *trenoDict in response) {
                 // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
@@ -254,7 +266,7 @@
     }
     
     
-    //  qui aspetto che tutte le richieste son finite
+    //  qui aspetto che tutte le richieste siano finite
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         // quando tutte sono stase eseguite
         NSLog(@"Finito le richieste al server");
@@ -393,7 +405,7 @@
 // metodo che cancella una soluzione viaggio dato l'idViaggio
 -(void) cancellaSoluzioni:(NSNumber*) idViaggio {
     
-    NSString *query = [NSString stringWithFormat:@"SELECT idViaggio FROM ripetizioni where id = (SELECT id FROM ripetizioni  WHERE idViaggio = '%ld')",[idViaggio integerValue]];
+    NSString *query = [NSString stringWithFormat:@"SELECT idViaggio FROM ripetizioni where id = (SELECT id FROM ripetizioni  WHERE idViaggio = '%lu')",(long)[idViaggio integerValue]];
     NSArray *idViaggi =  [[DBHelper sharedInstance] executeSQLStatement:query];
     
     for (NSDictionary* cancella in idViaggi) {
@@ -402,7 +414,7 @@
         
         [self cancellaViaggio:idCancella];
         // nel caso di rimozione di cancellazioni di tutti, pulisco anche il treno
-        query = [NSString stringWithFormat:@"DELETE FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%ld')",[idCancella integerValue]];
+        query = [NSString stringWithFormat:@"DELETE FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%lu')",(long)[idCancella integerValue]];
         [[DBHelper sharedInstance] executeSQLStatement:query];
         
     }
@@ -411,16 +423,16 @@
 // cancella il viaggio (chiamata da quella sopra)
 -(void) cancellaViaggio:(NSNumber*) idViaggio {
     
-    NSString *query = [NSString stringWithFormat:@"DELETE FROM viaggi where id = '%ld'",[idViaggio integerValue]];
+    NSString *query = [NSString stringWithFormat:@"DELETE FROM viaggi where id = '%lu'",(long)[idViaggio integerValue]];
     [[DBHelper sharedInstance] executeSQLStatement:query];
-    query =  [NSString stringWithFormat:@"DELETE FROM ripetizioni WHERE idViaggio = '%ld'",[idViaggio integerValue]];
+    query =  [NSString stringWithFormat:@"DELETE FROM ripetizioni WHERE idViaggio = '%lu'",(long)[idViaggio integerValue]];
     [[DBHelper sharedInstance] executeSQLStatement:query];
-    query =  [NSString stringWithFormat:@"DELETE FROM 'treni-viaggi' WHERE idViaggio = '%ld'",[idViaggio integerValue]];
+    query =  [NSString stringWithFormat:@"DELETE FROM 'treni-viaggi' WHERE idViaggio = '%lu'",(long)[idViaggio integerValue]];
     [[DBHelper sharedInstance] executeSQLStatement:query];
     
 }
 
-// metodo che chiama i vari metodi a seconda che si sia premuto un bottone o l'altro
+// metodo che chiama i vari metodi a seconda che si sia premuto un bottone o l'altro (cancella solo uno o tutti)
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     // a seconda di cosa viene premuto cancello il viaggio corrispondente (intero salvato nel tag)
     NSNumber *tag = [NSNumber numberWithInteger:alertView.tag];
@@ -441,6 +453,7 @@
     
     [[ThreadHelper shared] executeInBackground:method of:self withParam:tag completion:^(BOOL success) {
         NSLog(@"Cancellato tutto");
+        // ricarico i viaggi
         [self caricaViaggi];
     }];
     
@@ -484,6 +497,7 @@
     
     SalvatoTableViewCell *cell  = (SalvatoTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
     // solo se ho informazioni dalle API lo rendo cliccabile, inoltre son cliccabili solo quelli del giorno stesso
+
     if(!cell.treno.nonDisponibile && !cell.treno.soppresso && [self.datepicker selectedIndex] == 0) {
 
         // attivo un indicatore che comunnica che sto lavorando per recuperare le info del treno
@@ -510,6 +524,7 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
+    // DETTAGLIO TRENO
     if ([[segue identifier] isEqualToString:@"dettaglioTreno"]) {
         
         SalvatoTableViewCell *trenocell = (SalvatoTableViewCell*) sender;
@@ -525,7 +540,7 @@
         
     }
     
-    
+    // AGGIUNTA TRENO
     if([[segue identifier] isEqualToString:@"addSegue"]) {
         
         UINavigationController *navController = segue.destinationViewController;

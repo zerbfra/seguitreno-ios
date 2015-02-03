@@ -60,7 +60,7 @@
     // Return the number of sections.
     return 1;
 }
-
+// metodo che differenzia il numero di righe se si è in searchDisplayController o meno
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (tableView == self.searchDisplayController.searchResultsTableView)
         return [self.risultatiRicerca count];

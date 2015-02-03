@@ -7,11 +7,10 @@
 //
 
 #import "TrovaStazioniViewController.h"
-#define MINIMUM_ZOOM_ARC 0.014 //approximately 1 miles (1 degree of arc ~= 69 miles)
+#define MINIMUM_ZOOM_ARC 0.014 
 #define ANNOTATION_REGION_PAD_FACTOR 1.3
 #define MAX_DEGREES_ARC 360
 
-#warning sistemare cosa mappa
 
 @implementation TrovaStazioniViewController
 
@@ -35,7 +34,7 @@
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
-
+// metodo che localizza l'utente tramite il GPS
 -(void) localizza {
     [[LocationManager sharedInstance] startWithAuthType:LocationManageraAuthTypeWhenInUse
                                          filterDistance:kCLDistanceFilterNone
@@ -58,7 +57,7 @@
                                             [[LocationManager sharedInstance] stopUpdate];
                                         }];
 }
-
+// aggiunge i punti sulla mappa relativi alle stazioni vicine
 -(void) configuraMappa {
     
     self.mapView.delegate = self;
@@ -89,6 +88,7 @@
     
 }
 
+// sistema la vista per il pin
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
     // tutte tranne la user location
@@ -101,7 +101,6 @@
         MKAnnotationView *annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation
                                                                         reuseIdentifier:SFAnnotationIdentifier];
         UIImage *flagImage = [UIImage imageNamed:@"logofs"];
-        // You may need to resize the image here.
         annotationView.image = flagImage;
         annotationView.canShowCallout = YES;
         return annotationView;
@@ -112,7 +111,7 @@
     }
     return pinView;
 }
-
+// ritorna l'elenco delle stazioni vicine a un oggetto CLLOcation (scrive su self.stazionivicine)
 -(void) elencoStazioniVicineA:(CLLocation *) currentLocation {
     
     NSArray* results  = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM stazioni"];
@@ -151,7 +150,7 @@
 }
 
 
-//size the mapView region to fit its annotations
+// sistema la mappa in modo che le annotazioni siano centrali
 - (void)zoomMapViewToFitAnnotations:(MKMapView *)mapView animated:(BOOL)animated
 {
     NSArray *annotations = mapView.annotations;

@@ -122,6 +122,7 @@
     }
 }
 
+// Metodo per il salvataggio del treno (funzionamento in background)
 -(void)salva {
 
     NSMutableArray *viaggiInseriti = [NSMutableArray array];
@@ -138,7 +139,7 @@
         tsPartenza = [[NSNumber numberWithDouble:[nextPartenza timeIntervalSince1970]] intValue];
         tsArrivo = [[NSNumber numberWithDouble:[nextArrivo timeIntervalSince1970]] intValue];
         
-        NSString *query = [NSString stringWithFormat:@"INSERT INTO viaggi (nomePartenza,nomeArrivo, orarioPartenza,orarioArrivo,durata) VALUES ('%@','%@','%ld','%ld','%@')",self.viaggio.partenza.nome,self.viaggio.arrivo.nome,tsPartenza,tsArrivo,self.viaggio.durata];
+        NSString *query = [NSString stringWithFormat:@"INSERT INTO viaggi (nomePartenza,nomeArrivo, orarioPartenza,orarioArrivo,durata) VALUES ('%@','%@','%ld','%ld','%@')",self.viaggio.partenza.nome,self.viaggio.arrivo.nome,(long)tsPartenza,(long)tsArrivo,self.viaggio.durata];
         
         [[DBHelper sharedInstance] executeSQLStatement:query];
         
@@ -191,7 +192,7 @@
             NSInteger tsArrivo = [[NSNumber numberWithDouble:toDb.orarioArrivo] intValue];
             
             
-            NSString *query = [NSString stringWithFormat:@"INSERT INTO treni (numero,idOrigine,idDestinazione,categoria,nomePartenza,nomeArrivo,orarioPartenza,orarioArrivo) VALUES ('%@','%@','%@','%@','%@','%@','%ld','%ld')",toDb.numero,toDb.origine.idStazione,toDb.destinazione.idStazione,toDb.categoria,toDb.partenza.nome,toDb.arrivo.nome,tsPartenza,tsArrivo];
+            NSString *query = [NSString stringWithFormat:@"INSERT INTO treni (numero,idOrigine,idDestinazione,categoria,nomePartenza,nomeArrivo,orarioPartenza,orarioArrivo) VALUES ('%@','%@','%@','%@','%@','%@','%ld','%ld')",toDb.numero,toDb.origine.idStazione,toDb.destinazione.idStazione,toDb.categoria,toDb.partenza.nome,toDb.arrivo.nome,(long)tsPartenza,(long)tsArrivo];
             
             [[DBHelper sharedInstance] executeSQLStatement:query];
             NSString *dbTreno =  [[[[DBHelper sharedInstance] executeSQLStatement:@"SELECT last_insert_rowid() AS id"] objectAtIndex:0] objectForKey:@"id"];

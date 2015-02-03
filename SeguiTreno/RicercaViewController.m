@@ -26,7 +26,7 @@
     [self settaFasciaBaseOrario];
     
     
-    // aggiungo il riconoscitore di tap per chiudere la tastiera
+    // aggiungo il riconoscitore di tap sullo sfondo per chiudere la tastiera e per gestire lo slide della vista sui device piccoli (iphone 5 in giu)
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [nc addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -38,8 +38,6 @@
     [self.view addGestureRecognizer:self.tapRecognizer];
     
     if (self.view.frame.origin.y >= 0) [self setViewMovedUp:YES];
-    
-
     
 }
 
@@ -75,14 +73,15 @@
 }
 
 
-
+// dismiss della tastiera se tappo in giro
 -(void)didTapAnywhere: (UITapGestureRecognizer*) recognizer {
     [self.numeroTreno resignFirstResponder];
 }
 
+
+// selezione del segmento (e della fascia oraria) a seconda del momento della giornata
 -(void) settaFasciaBaseOrario {
-    
-    //selezione del segmento (e della fascia oraria) a seconda del momento della giornata
+
     
     if([[DateUtils shared] date:[NSDate date] isBetweenDate:[[DateUtils shared] date:[NSDate date] At:0]  andDate:[[DateUtils shared] date:[NSDate date] At:12]]) {
         [self.fasciaOraria setSelectedSegmentIndex:0];
@@ -164,7 +163,7 @@
 }
 
 
-
+// dopo aver fatto i dovuti controlli (altrimenti mostra messaggio) cerca la soluzione
 - (IBAction)search:(id)sender {
     
     if([self.numeroTreno.text length] > 0 || (self.viaggio.partenza != nil && self.viaggio.arrivo != nil)) [self performSegueWithIdentifier:@"cercaSoluzione" sender:nil];
@@ -176,6 +175,7 @@
     
 }
 
+// risponde al segmented controller
 - (IBAction)selezioneFascia:(id)sender {
     
     NSLog(@"Selezione fascia oraria");
@@ -205,7 +205,7 @@
 
  #pragma mark - Navigation
  
- // In a storyboard-based application, you will often want to do a little preparation before navigation
+ // gestisce la navifazione per selezionare la stazione o per il bottone cerca
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
      
      if([segue.identifier  isEqual: @"selezionaStazione"]) {

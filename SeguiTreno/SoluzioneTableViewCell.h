@@ -23,7 +23,5 @@
 
 -(void) disegna;
 
-- (IBAction)vediDettaglio:(id)sender;
-- (IBAction)seleziona:(id)sender;
 
 @end

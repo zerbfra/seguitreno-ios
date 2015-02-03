@@ -13,6 +13,7 @@
 
 @synthesize categoria = _categoria;
 
+// setta la categoria (se non presente, assegna REG)
 -(void) setCategoria:(NSString *)categoria {
     
     if([categoria isEqualToString:@""]) {
@@ -96,11 +97,18 @@
     return [NSString stringWithFormat:@"%@ %@",self.categoria,self.numero];
 }
 
+-(void) caricaInfoComplete:(void (^)(void))completionBlock {
+    // di default passo 3 minuti
+    [self caricaInfoComplete:3 completion:^{
+        completionBlock();
+    }];
+}
+
 
 // carica informazioni complete del treno
--(void) caricaInfoComplete:(void (^)(void))completionBlock {
+-(void) caricaInfoComplete:(int) life completion:(void (^)(void))completionBlock{
 
-    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.numero,@"origine":self.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} completion:^(NSDictionary *response) {
+    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.numero,@"origine":self.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} withTimeout:20 cacheLife:life completion:^(NSDictionary *response) {
 
         for(NSDictionary *trenoDict in response) {
             Stazione *origine = [[Stazione alloc] init];

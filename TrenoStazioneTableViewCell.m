@@ -17,10 +17,9 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
 }
 
-
+// il pallino a fianco del treno si colora a seconda del ritardo
 -(void) setRitardo:(NSInteger) ritardo {
     self.status.layer.cornerRadius = 4;
     if(ritardo >= 30) self.status.backgroundColor = RED;

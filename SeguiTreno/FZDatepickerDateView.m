@@ -1,5 +1,9 @@
 //
-//  Created by Dmitry Ivanenko on 15.04.14.
+//  FZDatePickerDateView.m
+//
+//  Created by Francesco Zerbinati on 01/12/14.
+//  Copyright (c) 2014 Francesco Zerbinati. All rights reserved.
+//
 //  Copyright (c) 2014 Dmitry Ivanenko. All rights reserved.
 //
 
@@ -9,11 +13,7 @@
 const CGFloat kFZDatepickerItemWidth = 46;
 const CGFloat kFZDatepickerSelectionLineWidth = 51;
 
-
 @interface FZDatepickerDateView ()
-
-@property (strong, nonatomic) UILabel *dateLabel;
-@property (nonatomic, strong) UIView *selectionView;
 
 @end
 
@@ -32,6 +32,9 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
 
 - (void)setupViews
 {
+
+    self.selectionView.backgroundColor = COLOR_WITH_RGB(255,78,80);
+    self.selectionView.alpha = 0;
     [self addTarget:self action:@selector(dateWasSelected) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -88,16 +91,14 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
                                     }
                             range:NSMakeRange(0, dayFormattedString.length)];
         
-
-        
     }
+
 
     [dateString addAttributes:@{
                                 NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:8],
-                                NSForegroundColorAttributeName: [UIColor colorWithRed:153./255. green:153./255. blue:153./255. alpha:1.]
+                                NSForegroundColorAttributeName: COLOR_WITH_RGB(153, 153, 153)
                                 }
                         range:NSMakeRange(dateString.string.length - dayInWeekFormattedString.length, dayInWeekFormattedString.length)];
-
 
 
     self.dateLabel.attributedText = dateString;
@@ -106,38 +107,25 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
 - (void)setIsSelected:(BOOL)isSelected
 {
     _isSelected = isSelected;
-
-    self.selectionView.alpha = (int)_isSelected;
+    
+    // animo il cambio di selezione
+    [UIView transitionWithView:self.selectionView
+                      duration:0.2f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^(void) {
+                           self.selectionView.alpha = (int)_isSelected;
+                    } completion:NULL];
 }
 
-- (UILabel *)dateLabel
-{
-    if (!_dateLabel) {
-        _dateLabel = [[UILabel alloc] initWithFrame:self.bounds];
-        _dateLabel.numberOfLines = 2;
-        _dateLabel.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:_dateLabel];
-    }
 
-    return _dateLabel;
-}
-
-- (UIView *)selectionView
-{
-    if (!_selectionView) {
- 
-        _selectionView = [[UIView alloc] initWithFrame:CGRectMake((self.frame.size.width - 51) / 2, self.frame.size.height - 3, 51, 3)];
-        [self addSubview:_selectionView];
-    }
-
-    return _selectionView;
-}
-
+/*
 - (void)setItemSelectionColor:(UIColor *)itemSelectionColor
 {
     self.selectionView.backgroundColor = itemSelectionColor;
 }
+ */
 
+/*
 - (void)setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];
@@ -147,9 +135,10 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
         self.selectionView.alpha = self.isSelected ? 1 : 0;
     }
 }
+ */
 
 
-#pragma mark Other methods
+#pragma mark    Other methods
 
 - (BOOL)isSunday:(NSDate *)date
 {
@@ -165,6 +154,31 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
     self.isSelected = YES;
 
     [self sendActionsForControlEvents:UIControlEventValueChanged];
+}
+
+#pragma mark    UI elements
+
+- (UILabel *)dateLabel
+{
+    if (!_dateLabel) {
+        _dateLabel = [[UILabel alloc] initWithFrame:self.bounds];
+        _dateLabel.numberOfLines = 2;
+        _dateLabel.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:_dateLabel];
+    }
+    
+    return _dateLabel;
+}
+
+- (UIView *)selectionView
+{
+    if (!_selectionView) {
+        
+        _selectionView = [[UIView alloc] initWithFrame:CGRectMake((self.frame.size.width - 51) / 2, self.frame.size.height - 3, 51, 3)];
+        [self addSubview:_selectionView];
+    }
+    
+    return _selectionView;
 }
 
 @end

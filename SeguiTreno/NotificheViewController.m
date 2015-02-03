@@ -59,7 +59,7 @@
 
    
 }
-
+// quando scompare la vista comunico al server le impostazioni push
 -(void) viewDidDisappear:(BOOL)animated {
     // aggiorno impostazioni notifiche per l'utente sul server
     NSLog(@"Notifiche => 5: %d 10: %d 15: %d 30: %d",self.push5,self.push10,self.push15,self.push30);
@@ -110,16 +110,5 @@
     
 }
 
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -25,7 +25,7 @@
     
     [self updateDropboxLabel];
     
-    // inizializzo gli spinner
+    // inizializzo gli spinner che indicano l'attività di dropbox (di fianco a celle importa/esporta)
     self.spinnerExport = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinnerImport = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinnerExport.frame = CGRectMake(0, 0, 24, 24);
@@ -54,7 +54,7 @@
         case 2:
             if(indexPath.row == 0) {
                 [self.spinnerExport startAnimating];
-                //esporta su dropbox (upload)
+                //esporta su dropbox (upload, rimuovendo il file precedente)
                 [[DropboxClient shared] startTransfer:@"data.stdb" isItADownlaod:NO andReplace:YES completion:^{
                     [self.spinnerExport stopAnimating];
                 }];
@@ -110,6 +110,7 @@
                     } completion:NULL];
 }
 
+// sistema il numero di righe considerando il fatto se dropbox è collegato o meno (scollegato 1 riga, scollegato aggiunge sezione con 2 righe)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     if([[DropboxClient shared] isDropboxLinked]) {
@@ -149,6 +150,7 @@
     
 }
 
+// visualizza una stringa diversa a seconda che dropbox sia collegato o meno
 -(void) updateDropboxLabel {
     
     if(![[DropboxClient shared] isDropboxLinked]) {
@@ -175,12 +177,8 @@
 - (void)sendFeedback {
     // Email Subject
     NSString *emailTitle = @"SeguiTreno Feedback";
-    
     // To address
-    NSArray *toRecipents = [NSArray arrayWithObject:@"francesco@zerbinatifrancesco.it"];
-    
-    //NSString *token = [[NSUserDefaults standardUserDefaults] objectForKey: deviceTokenKey];
-    //NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    NSArray *toRecipents = [NSArray arrayWithObject:@"me@zerbinatifrancesco.it"];
     
     
     MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
@@ -188,7 +186,6 @@
     [mc setToRecipients:toRecipents];
     
     mc.mailComposeDelegate = self;
-    // Present mail view controller on screen
     
     if ([MFMailComposeViewController canSendMail]) {
         [self presentViewController:mc animated:YES completion:NULL];

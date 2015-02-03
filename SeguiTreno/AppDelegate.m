@@ -37,7 +37,7 @@
     return YES;
 }
 
-
+// Avvia la registrazione per le notifiche, sia su iOS8 che inferiori
 -(void) registerPushNotifications {
     if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)])
     {
@@ -51,6 +51,7 @@
     }
 }
 
+// Metodo di accettazione della notifica - utente ha autorizzato l'invio di notifiche
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"Did Register for Remote Notifications");
     
@@ -65,7 +66,7 @@
     UIDevice *dev = [UIDevice currentDevice];
     NSString *appVersion =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     
-    // invio la registrazione dell'utente quando il token è stato elaborato
+    // invio la registrazione dell'utente al server quando il token è stato elaborato
     if(deviceToken != nil) {
         
         [[APIClient sharedClient] requestWithPath:@"registraUtente" andParams:@{@"token":tokenString,@"appVersion":appVersion,@"deviceModel":dev.model,@"systemVersion":dev.systemVersion} withTimeout:10 cacheLife:0 completion:^(NSDictionary *response) {
@@ -74,7 +75,7 @@
                 NSString *userID = [response objectForKey:@"id"];
                 NSLog(@"User ID: %@",userID);
                 
-                // procedo a salvare il token nuovo
+                // procedo a salvare il token nuovo, su NSUSerDefaults
                 [[NSUserDefaults standardUserDefaults] setObject: userID forKey: userIDKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
             } else NSLog(@"Something went wrong with userID registration");
@@ -87,6 +88,7 @@
     
 }
 
+// Metodo di non accettazione delle notifiche - utente ha rifiutato l'invio delle notifiche
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     
     UIDevice *dev = [UIDevice currentDevice];
@@ -138,7 +140,7 @@
     return NO;
 }
 
-// metodo che vuota la cache
+// metodo che vuota la cache, cancella la cache con vita maggiore a 30 minuti
 -(void) emptyCache {
     NSError *error;
     // Percorso della cartella Documents
@@ -200,7 +202,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-// Funzione per creare una copia scrivibile del databse nella directory Library
+// Funzione per creare una copia scrivibile del databse nella directory Library, chiaramente al primo avvio
 - (BOOL)createCopyOfDatabaseIfNeeded {
   
     BOOL success;
@@ -220,7 +222,7 @@
     }
     
     
-    // Se non essite, lo copio
+    // Se non esiste, lo copio
     NSString *defaultDBPath =  [[NSBundle mainBundle] pathForResource:@"seguitreno" ofType:@"db"];
     
     success = [fileManager copyItemAtPath:defaultDBPath toPath:appDBPath error:&error];
