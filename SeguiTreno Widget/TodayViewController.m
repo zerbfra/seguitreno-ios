@@ -94,6 +94,14 @@
     
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSURL *url = [NSURL URLWithString:@"seguitreno://"];
+    [self.extensionContext openURL:url completionHandler:nil];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+}
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     

@@ -1025,6 +1025,7 @@
 				13A4FBE11A82375E00EFAA35 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
