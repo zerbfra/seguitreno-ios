@@ -41,6 +41,10 @@
 		137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DF31A135E5200B9E77E /* DateUtils.m */; };
 		1397AB3C1A27C6F10084D478 /* DettaglioStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */; };
 		1398B9D71A388CBF005D6F31 /* DropboxClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1398B9D61A388CBF005D6F31 /* DropboxClient.m */; };
+		13A4FBD41A82375E00EFAA35 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13A4FBD31A82375E00EFAA35 /* NotificationCenter.framework */; };
+		13A4FBDA1A82375E00EFAA35 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A4FBD91A82375E00EFAA35 /* TodayViewController.m */; };
+		13A4FBDC1A82375E00EFAA35 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13A4FBDB1A82375E00EFAA35 /* MainInterface.storyboard */; };
+		13A4FBDF1A82375E00EFAA35 /* SeguiTreno Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 13A4FBD11A82375E00EFAA35 /* SeguiTreno Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */; };
 		13B24A4D1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B24A4C1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m */; };
 		13CFF38D1A423DC0009ED46F /* NotificheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CFF38C1A423DC0009ED46F /* NotificheViewController.m */; };
@@ -72,7 +76,28 @@
 			remoteGlobalIDString = 135CC3AF1A0A1F3B0074D079;
 			remoteInfo = SeguiTreno;
 		};
+		13A4FBDD1A82375E00EFAA35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 135CC3A81A0A1F3B0074D079 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13A4FBD01A82375E00EFAA35;
+			remoteInfo = "SeguiTreno Widget";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		13A4FBE31A82375E00EFAA35 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				13A4FBDF1A82375E00EFAA35 /* SeguiTreno Widget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1304EB1E1A0D0B0900C2DC12 /* Viaggio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Viaggio.h; sourceTree = "<group>"; };
@@ -136,6 +161,14 @@
 		1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioStazioneViewController.m; sourceTree = "<group>"; };
 		1398B9D51A388CBF005D6F31 /* DropboxClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxClient.h; sourceTree = "<group>"; };
 		1398B9D61A388CBF005D6F31 /* DropboxClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxClient.m; sourceTree = "<group>"; };
+		13A4FBD11A82375E00EFAA35 /* SeguiTreno Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "SeguiTreno Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13A4FBD31A82375E00EFAA35 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		13A4FBD71A82375E00EFAA35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		13A4FBD81A82375E00EFAA35 /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		13A4FBD91A82375E00EFAA35 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		13A4FBDB1A82375E00EFAA35 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
+		13A4FBE41A82439F00EFAA35 /* SeguiTreno.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SeguiTreno.entitlements; sourceTree = "<group>"; };
+		13A4FBE51A8243D200EFAA35 /* SeguiTreno Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "SeguiTreno Widget.entitlements"; sourceTree = "<group>"; };
 		13AC56591A14B3BC00492CB6 /* SalvatoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SalvatoTableViewCell.h; sourceTree = "<group>"; };
 		13AC565A1A14B3BC00492CB6 /* SalvatoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SalvatoTableViewCell.m; sourceTree = "<group>"; };
 		13B24A4B1A28E479009EEFB4 /* TrenoStazioneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrenoStazioneTableViewCell.h; path = ../TrenoStazioneTableViewCell.h; sourceTree = "<group>"; };
@@ -203,6 +236,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		13A4FBCE1A82375E00EFAA35 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				13A4FBD41A82375E00EFAA35 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -220,6 +261,8 @@
 			children = (
 				135CC3B21A0A1F3B0074D079 /* SeguiTreno */,
 				135CC3CC1A0A1F3B0074D079 /* SeguiTrenoTests */,
+				13A4FBD51A82375E00EFAA35 /* SeguiTreno Widget */,
+				13A4FBD21A82375E00EFAA35 /* Frameworks */,
 				135CC3B11A0A1F3B0074D079 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -229,6 +272,7 @@
 			children = (
 				135CC3B01A0A1F3B0074D079 /* SeguiTreno.app */,
 				135CC3C91A0A1F3B0074D079 /* SeguiTrenoTests.xctest */,
+				13A4FBD11A82375E00EFAA35 /* SeguiTreno Widget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -236,6 +280,7 @@
 		135CC3B21A0A1F3B0074D079 /* SeguiTreno */ = {
 			isa = PBXGroup;
 			children = (
+				13A4FBE41A82439F00EFAA35 /* SeguiTreno.entitlements */,
 				135CC3B71A0A1F3B0074D079 /* AppDelegate.h */,
 				135CC3B81A0A1F3B0074D079 /* AppDelegate.m */,
 				135CC3E31A0A1FC70074D079 /* Views */,
@@ -358,6 +403,34 @@
 				1398B9D61A388CBF005D6F31 /* DropboxClient.m */,
 			);
 			name = DropboxClient;
+			sourceTree = "<group>";
+		};
+		13A4FBD21A82375E00EFAA35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				13A4FBD31A82375E00EFAA35 /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		13A4FBD51A82375E00EFAA35 /* SeguiTreno Widget */ = {
+			isa = PBXGroup;
+			children = (
+				13A4FBE51A8243D200EFAA35 /* SeguiTreno Widget.entitlements */,
+				13A4FBD81A82375E00EFAA35 /* TodayViewController.h */,
+				13A4FBD91A82375E00EFAA35 /* TodayViewController.m */,
+				13A4FBDB1A82375E00EFAA35 /* MainInterface.storyboard */,
+				13A4FBD61A82375E00EFAA35 /* Supporting Files */,
+			);
+			path = "SeguiTreno Widget";
+			sourceTree = "<group>";
+		};
+		13A4FBD61A82375E00EFAA35 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				13A4FBD71A82375E00EFAA35 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		13D01EDE1A0BC3B300BDCD05 /* fmdb */ = {
@@ -508,10 +581,12 @@
 				135CC3AC1A0A1F3B0074D079 /* Sources */,
 				135CC3AD1A0A1F3B0074D079 /* Frameworks */,
 				135CC3AE1A0A1F3B0074D079 /* Resources */,
+				13A4FBE31A82375E00EFAA35 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				13A4FBDE1A82375E00EFAA35 /* PBXTargetDependency */,
 			);
 			name = SeguiTreno;
 			productName = SeguiTreno;
@@ -536,6 +611,23 @@
 			productReference = 135CC3C91A0A1F3B0074D079 /* SeguiTrenoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		13A4FBD01A82375E00EFAA35 /* SeguiTreno Widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 13A4FBE21A82375E00EFAA35 /* Build configuration list for PBXNativeTarget "SeguiTreno Widget" */;
+			buildPhases = (
+				13A4FBCD1A82375E00EFAA35 /* Sources */,
+				13A4FBCE1A82375E00EFAA35 /* Frameworks */,
+				13A4FBCF1A82375E00EFAA35 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SeguiTreno Widget";
+			productName = "SeguiTreno Widget";
+			productReference = 13A4FBD11A82375E00EFAA35 /* SeguiTreno Widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -548,10 +640,24 @@
 					135CC3AF1A0A1F3B0074D079 = {
 						CreatedOnToolsVersion = 6.1;
 						DevelopmentTeam = 9AXZE37QMU;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					135CC3C81A0A1F3B0074D079 = {
 						CreatedOnToolsVersion = 6.1;
 						TestTargetID = 135CC3AF1A0A1F3B0074D079;
+					};
+					13A4FBD01A82375E00EFAA35 = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 9AXZE37QMU;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -569,6 +675,7 @@
 			targets = (
 				135CC3AF1A0A1F3B0074D079 /* SeguiTreno */,
 				135CC3C81A0A1F3B0074D079 /* SeguiTrenoTests */,
+				13A4FBD01A82375E00EFAA35 /* SeguiTreno Widget */,
 			);
 		};
 /* End PBXProject section */
@@ -588,6 +695,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13A4FBCF1A82375E00EFAA35 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				13A4FBDC1A82375E00EFAA35 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,6 +765,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		13A4FBCD1A82375E00EFAA35 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				13A4FBDA1A82375E00EFAA35 /* TodayViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -657,6 +780,11 @@
 			isa = PBXTargetDependency;
 			target = 135CC3AF1A0A1F3B0074D079 /* SeguiTreno */;
 			targetProxy = 135CC3CA1A0A1F3B0074D079 /* PBXContainerItemProxy */;
+		};
+		13A4FBDE1A82375E00EFAA35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13A4FBD01A82375E00EFAA35 /* SeguiTreno Widget */;
+			targetProxy = 13A4FBDD1A82375E00EFAA35 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -759,7 +887,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iOS Development: Francesco Zerbinati (8S44Z3362T)";
+				CODE_SIGN_ENTITLEMENTS = SeguiTreno/SeguiTreno.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SeguiTreno",
@@ -768,7 +898,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5b607c2c-1897-49e7-989e-fc8885cd4969";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -777,7 +907,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Francesco Zerbinati (9AXZE37QMU)";
+				CODE_SIGN_ENTITLEMENTS = SeguiTreno/SeguiTreno.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SeguiTreno",
@@ -786,7 +918,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b9f332a1-90c6-4fad-80d8-38ad7aed80fe";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -824,6 +956,38 @@
 			};
 			name = Release;
 		};
+		13A4FBE01A82375E00EFAA35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "SeguiTreno Widget/SeguiTreno Widget.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "SeguiTreno Widget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		13A4FBE11A82375E00EFAA35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "SeguiTreno Widget/SeguiTreno Widget.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = "SeguiTreno Widget/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -853,6 +1017,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		13A4FBE21A82375E00EFAA35 /* Build configuration list for PBXNativeTarget "SeguiTreno Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				13A4FBE01A82375E00EFAA35 /* Debug */,
+				13A4FBE11A82375E00EFAA35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

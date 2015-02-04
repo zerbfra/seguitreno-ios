@@ -182,6 +182,9 @@
     
     NSLog(@"%@",dbTreni);
     
+    //salvo per le estensioni
+    [[DBHelper sharedInstance] storeDBForExtensions:dbTreni];
+    
     // faccio la richiesta, inviando il db dei treni e l'idutente
     [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni,@"idUtente":userID} completion:^(NSDictionary *response) {
         NSLog(@"Response: %@", response);

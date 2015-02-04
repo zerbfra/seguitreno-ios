@@ -27,4 +27,7 @@
 // SERVER: crea un array compatibile con json per l'invio al server dei treni dell'utente (per poterne poi gestire le notifiche con un cronjob sul server)
 -(NSArray*) createDBForSync;
 
+// WIDGET: crea il db in nsuserdefaults del gruppo
+-(void) storeDBForExtensions:(NSArray*) dbTreni;
+
 @end

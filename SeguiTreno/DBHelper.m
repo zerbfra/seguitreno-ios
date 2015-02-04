@@ -182,6 +182,7 @@
                 
                 [trovato setObject:[trenoSet objectForKey:@"idOrigine"] forKey:@"origine"];
                 
+                [trovato setObject:[trenoSet objectForKey:@"categoria"] forKey:@"categoria"];
 
                 
                 NSDate *dataPartenza = [[DateUtils shared] dateFrom:[[trenoSet objectForKey:@"orarioPartenza"] intValue]];
@@ -203,9 +204,14 @@
 
     return dbTreni;
     
-    
-    
- 
+}
+
+-(void) storeDBForExtensions:(NSArray*) dbTreni {
+
+    NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.it.zerbinatifrancesco.SeguiTreno"];
+    // se nullo, lo creo!
+    if(dbTreni == nil) dbTreni = [self createDBForSync];
+    [sharedDefaults setObject:dbTreni forKey:@"treniDBKey"];
 }
 
 @end
