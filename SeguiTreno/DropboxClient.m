@@ -103,8 +103,8 @@
         
         DBFile *file = [[DBFilesystem sharedFilesystem] openFile:existingPath error:nil];
         NSData *contents = [file readData:nil];
-#warning Attenzione qui sistemare
-        // queste funzioni non devono stare nella classe di dropbox, devono essere passate con un completion!
+
+        // mando una notifica quando ho completato!
         [[DBHelper sharedInstance] importBackup:contents];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"update" object:nil];
         
