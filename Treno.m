@@ -141,12 +141,12 @@
                 
                 Fermata *fermata = [[Fermata alloc] init];
                 
-                fermata.binarioEffettivo = [fermate objectForKey:@"binarioProgrammato"];
-                fermata.binarioProgrammato = [fermate objectForKey:@"binarioEffettivo"];
-                
+                fermata.binarioEffettivo = [fermate objectForKey:@"binarioEffettivo"];
+                fermata.binarioProgrammato = [fermate objectForKey:@"binarioProgrammato"];
+           
                 if([fermata.binarioEffettivo isEqualToString:@""]) fermata.binarioEffettivo = nil;
                 if([fermata.binarioProgrammato isEqualToString:@""]) fermata.binarioProgrammato = nil;
-                
+        
                 fermata.orarioProgrammato = [[fermate objectForKey:@"programmata"] doubleValue];
                 fermata.raggiunta = [[fermate objectForKey:@"raggiunta"] boolValue];
                 

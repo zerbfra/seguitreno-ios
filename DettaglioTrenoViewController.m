@@ -142,8 +142,8 @@
     cell.orarioEffettivo.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:cell.fermata.orarioEffettivo]];
     cell.orarioEffettivo.textColor = cell.fermata.raggiunta == TRUE ? GREEN : DARKGREY;
     
-    if(cell.fermata.binarioEffettivo == nil && cell.fermata.binarioProgrammato != nil) cell.binario.text = [NSString stringWithFormat:@"BINARIO %@",cell.fermata.binarioProgrammato];
-    else if(cell.fermata.binarioEffettivo != nil) cell.binario.text = [NSString stringWithFormat:@"BINARIO %@",cell.fermata.binarioEffettivo];
+    if(cell.fermata.binarioEffettivo) cell.binario.text = [NSString stringWithFormat:@"BINARIO %@",cell.fermata.binarioEffettivo];
+    else cell.binario.text = [NSString stringWithFormat:@"BINARIO %@",cell.fermata.binarioProgrammato];
     
     return cell;
 }
