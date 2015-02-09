@@ -24,6 +24,11 @@
     
     // grafica
     self.wdgTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.wdgTable.frame.size.width, 1)];
+    
+    // dimensione a 0 di default
+    CGSize size = self.preferredContentSize;
+    size.height = 0.0f;
+    self.preferredContentSize = size;
 
 }
 
