@@ -143,7 +143,8 @@
     cell.orarioEffettivo.textColor = cell.fermata.raggiunta == TRUE ? GREEN : DARKGREY;
     
     if(cell.fermata.binarioEffettivo) cell.binario.text = [NSString stringWithFormat:@"BINARIO %@",cell.fermata.binarioEffettivo];
-    else cell.binario.text = [NSString stringWithFormat:@"BINARIO %@",cell.fermata.binarioProgrammato];
+    else if(cell.fermata.binarioProgrammato) cell.binario.text = [NSString stringWithFormat:@"BINARIO %@",cell.fermata.binarioProgrammato];
+    else cell.binario.text = [NSString stringWithFormat:@"BINARIO N/D"];
     
     return cell;
 }

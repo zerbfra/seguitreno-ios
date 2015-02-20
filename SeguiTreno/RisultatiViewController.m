@@ -83,9 +83,9 @@
     
     [[APIClient sharedClient] requestWithPath:@"ricerca" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSDictionary *response) {
         
-        
+        NSLog(@"%@",response);
         for (NSDictionary *trenoDict in response) {
-            
+
             Treno *treno = [[Treno alloc] init];
             
             Stazione *partenza = [[Stazione alloc] init];
@@ -104,11 +104,9 @@
             treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
             treno.categoria = [trenoDict objectForKey:@"categoria"];
 
-
-            treno.origine = partenza;
-            treno.destinazione = arrivo;
             
-            
+            treno.partenza = partenza;
+            treno.arrivo = arrivo;
             
             [self.soluzioniPossibili addObject:treno];
             
@@ -152,9 +150,12 @@
             treno.orarioPartenza = [[trenoDict objectForKey:@"orarioPartenza"] doubleValue];
             treno.categoria = [trenoDict objectForKey:@"categoria"];
             treno.soppresso = [[trenoDict objectForKey:@"sopresso"] boolValue];
+            
+            // origine e destinazione concidenti con partenza e arrivo in quanto ricerca per numero
             treno.origine = partenza;
             treno.destinazione = arrivo;
-            
+            treno.partenza = partenza;
+            treno.arrivo = arrivo;
             
             
             [self.soluzioniPossibili addObject:treno];

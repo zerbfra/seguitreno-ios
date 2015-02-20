@@ -22,8 +22,8 @@
 
 -(void) disegna {
     
-    self.partenza.text = self.treno.origine.nome;
-    self.arrivo.text = self.treno.destinazione.nome;
+    self.partenza.text = self.treno.partenza.nome;
+    self.arrivo.text = self.treno.arrivo.nome;
 
     
     self.orarioP.text = [[DateUtils shared] showHHmm:[[DateUtils shared] dateFrom:self.treno.orarioPartenza]];

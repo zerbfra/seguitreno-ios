@@ -107,9 +107,13 @@
 
 // carica informazioni complete del treno, potendo specificare la vita della cache
 -(void) caricaInfoComplete:(int) life completion:(void (^)(void))completionBlock{
+    NSLog(@"%@ %@",self.numero,self.origine.idStazione);
+    NSDictionary *params;
+    if(self.origine) params = @{@"numero":self.numero,@"origine":self.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]};
+    else  params = @{@"numero":self.numero,@"includiFermate":[NSNumber numberWithBool:true]};
 
-    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":self.numero,@"origine":self.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:true]} withTimeout:20 cacheLife:life completion:^(NSDictionary *response) {
-
+    [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:params withTimeout:20 cacheLife:life completion:^(NSDictionary *response) {
+        NSLog(@"%@",response);
         for(NSDictionary *trenoDict in response) {
             Stazione *origine = [[Stazione alloc] init];
             Stazione *destinazione = [[Stazione alloc] init];
