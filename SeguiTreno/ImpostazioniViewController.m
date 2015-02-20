@@ -178,7 +178,7 @@
     // Email Subject
     NSString *emailTitle = @"SeguiTreno Feedback";
     // To address
-    NSArray *toRecipents = [NSArray arrayWithObject:@"me@zerbinatifrancesco.it"];
+    NSArray *toRecipents = [NSArray arrayWithObject:@"support@zerbinatifrancesco.it"];
     
     
     MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];

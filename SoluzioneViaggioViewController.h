@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface SoluzioneViaggioViewController : UITableViewController
+@interface SoluzioneViaggioViewController : UITableViewController <UIAlertViewDelegate>
 
 @property (strong,nonatomic) NSMutableArray *soluzioniPossibili;
 

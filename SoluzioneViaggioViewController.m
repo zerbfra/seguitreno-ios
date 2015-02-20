@@ -32,11 +32,27 @@
     
     // chiamo per trovare soluzioni viaggio e al completamento aggiorno la vista
     [self trovaSoluzioniTreno:^{
-        [self.tableView reloadData];
+        if([self.soluzioniPossibili count] > 0) {
+            [self.tableView reloadData];
+        } else {
+            // soluzioni non trovate
+            NSLog(@"non trovo niente");
+            
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Non trovo nessuna soluzione viaggio" message:@"Probabilmente il tragitto che cerchi non è ancora supportato dall'app (maledetta Trenitalia).\n\nProva a contattare lo sviluppatore dalle impostazioni dell'app specificando che tragitto stai cercando e che società gestisce il trasporto." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+        }
         [activityIndicator stopAnimating];
     }];
     
 }
+
+// mi torna indietro se compare alert e clicco su ok
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+
 // richiede le soluzioni viaggio recuperate dal server
 -(void) trovaSoluzioniTreno:(void (^)(void))completionBlock {
 
