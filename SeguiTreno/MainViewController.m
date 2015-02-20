@@ -243,7 +243,7 @@
         dispatch_group_enter(group);
         
         [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":treno.numero,@"origine":treno.origine.idStazione,@"includiFermate":[NSNumber numberWithBool:false]}  withTimeout:20 cacheLife:cache completion:^(NSDictionary *response) {
-
+            NSLog(@"%@ %@",treno.numero,treno.origine.idStazione);
             for(NSDictionary *trenoDict in response) {
                 // controllo che non sia stato restituito un null (può succedere in casi eccezzionali)
                 if([NSNull null] != [trenoDict objectForKey:@"ritardo"]) {

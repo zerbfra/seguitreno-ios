@@ -44,7 +44,8 @@
 
     // richiedo soluzioni al server
     [[APIClient sharedClient] requestWithPath:@"soluzioniViaggio" andParams:@{@"partenza":[self.query.partenza cleanId],@"arrivo":[self.query.arrivo cleanId],@"data":ts} completion:^(NSDictionary *response) {
-        
+        NSLog(@"%@",ts);
+        NSLog(@"%@",response);
         for (NSDictionary *solDict in response) {
             
             Viaggio  *soluzione = [[Viaggio alloc] init];

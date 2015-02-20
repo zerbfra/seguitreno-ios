@@ -118,7 +118,8 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if(indexPath.section == 0) return 88.0f;
-    return 44.0f;
+    return 64.0f;
+    
 }
 
 #pragma mark - Table view data source
