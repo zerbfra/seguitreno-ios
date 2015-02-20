@@ -10,7 +10,7 @@
 #import "RisultatoRicercaTableViewCell.h"
 #import "DettaglioTrenoViewController.h"
 
-@interface RisultatiViewController : UITableViewController
+@interface RisultatiViewController : UITableViewController <UIAlertViewDelegate>
 
 @property (strong,nonatomic) NSMutableArray *soluzioniPossibili;
 

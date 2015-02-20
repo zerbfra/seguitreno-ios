@@ -29,21 +29,38 @@
     if([self.numeroTreno length] > 0) {
         NSLog(@"da numero");
         [self trovaTrenoDaNumero:^{
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            [self disegnaRisultati];
             [activityIndicator stopAnimating];
         }];
     }
     else {
         NSLog(@"da stazioni");
         [self trovaTrenoDaStazioni:^{
-            
-            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+            [self disegnaRisultati];
             [activityIndicator stopAnimating];
         }];
     }
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
+
+-(void) disegnaRisultati {
+    if([self.soluzioniPossibili count] > 0) {
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    } else {
+        // soluzioni non trovate
+        NSLog(@"non trovo niente");
+        
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Non trovo nessuna soluzione viaggio" message:@"Probabilmente il tragitto che cerchi non è ancora supportato dall'app.\n\nProva a contattare lo sviluppatore dalle impostazioni dell'app specificando che tragitto stai cercando e che società gestisce il trasporto." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+    }
+}
+
+// mi torna indietro se compare alert e clicco su ok
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
