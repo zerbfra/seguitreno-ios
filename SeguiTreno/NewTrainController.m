@@ -124,24 +124,6 @@
 
 // Metodo per il salvataggio del treno (funzionamento in background)
 -(void)salva {
-    
-    for(Treno *testDuplicati in self.viaggio.tragitto) {
-        [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":testDuplicati.numero,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSDictionary *response) {
-            NSLog(@"%@",response);
-            
-            NSMutableArray *destinazioniPossibili = [NSMutableArray array];
-            for(NSDictionary *trenoDict in response) {
-                NSString *trenoStringa = [NSString stringWithFormat:@"Treno %@ per %@",[trenoDict objectForKey:@"numero"],[trenoDict objectForKey:@"destinazione"]];
-                [destinazioniPossibili addObject:trenoStringa];
-            }
-            // se più treni compaiono con lo stesso numero, devo far selezionare quale è quello corretto
-            if([response count] > 1) {
-                // chiedo all'utente
-                #warning problema treni doppi, come risolvere? chiedo all'utente?
-                
-            }
-        }];
-    }
 
     NSMutableArray *viaggiInseriti = [NSMutableArray array];
     
@@ -192,9 +174,22 @@
         dispatch_group_enter(group);
         
         NSString  *numero = toDb.numero;
-
+#warning problema treni doppi, come risolvere? chiedo all'utente? --> al momento favorisco il primo risultato (come fa viaggiatreno)
         [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":numero,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSDictionary *response) {
             
+            // prendo il primo, come fa viaggiatreno, fanculo i successivi
+            NSArray* resp = (NSArray*) response;
+            NSDictionary *trenoDict = [resp objectAtIndex:0];
+            
+            Stazione *origine = [[Stazione alloc] init];
+            Stazione *destinazione = [[Stazione alloc] init];
+            origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
+            destinazione.idStazione = [trenoDict objectForKey:@"idDestinazione"];
+            toDb.origine = origine;
+            toDb.destinazione = destinazione;
+            toDb.categoria = [trenoDict objectForKey:@"categoria"];
+            
+            /*
             for(NSDictionary *trenoDict in response) {
                 Stazione *origine = [[Stazione alloc] init];
                 Stazione *destinazione = [[Stazione alloc] init];
@@ -204,6 +199,7 @@
                 toDb.destinazione = destinazione;
                 toDb.categoria = [trenoDict objectForKey:@"categoria"];
             }
+             */
             
             
             NSInteger tsPartenza = [[NSNumber numberWithDouble:toDb.orarioPartenza] intValue];
