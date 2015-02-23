@@ -44,6 +44,47 @@
     
 }
 
+-(NSArray*) arrayOfNextWeekDays:(NSInteger) weekday startingFrom:(NSDate*) today to:(NSDate*) end {
+    
+    NSMutableArray *nexts = [NSMutableArray array];
+    
+    NSDate *nextDate = [self dateForNextWeekday:weekday startingFrom:today];
+    // finchè la nextdate è minore della fine vado avanti
+    while ([nextDate compare:end] == NSOrderedAscending || [nextDate compare:end] == NSOrderedSame) {
+        
+        [nexts addObject:nextDate];
+        
+        nextDate = [self dateForNextWeekday:weekday startingFrom:nextDate];
+    }
+    
+    
+    return nexts;
+}
+
+- (NSDate *) dateForNextWeekday: (NSInteger)weekday startingFrom:(NSDate*)today {
+    
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    // Get the weekday component of the current date
+    NSDateComponents *weekdayComponents = [gregorian components:NSWeekdayCalendarUnit
+                                                       fromDate:today];
+    
+    /*
+     Add components to get to the weekday we want
+     */
+    NSDateComponents *componentsToSubtract = [[NSDateComponents alloc] init];
+    NSInteger dif = weekday-weekdayComponents.weekday;
+    if (dif<=0) dif += 7;
+    [componentsToSubtract setDay:dif];
+    
+    NSDate *beginningOfWeek = [gregorian dateByAddingComponents:componentsToSubtract
+                                                         toDate:today options:0];
+    
+    return beginningOfWeek;
+}
+
+
 -(NSDate*) addDays:(int) days toDate:(NSDate*) date {
     NSDate *nextDate = [date dateByAddingTimeInterval:days*24*3600];
     return nextDate;

@@ -17,8 +17,18 @@
 
 -(NSTimeInterval) timestampFrom:(NSDate*) date;
 
+// restituisce un array di giorni della settimana (es: domenica = 1, sabato = 7) da una data all'altra
+// ESEMPIO:     NSArray *prova = [[DateUtils shared] arrayOfNextWeekDays:1 startingFrom:[NSDate date] to:[[DateUtils shared] addDays:90 toDate:[NSDate date] ]];
+-(NSArray*) arrayOfNextWeekDays:(NSInteger) weekday startingFrom:(NSDate*) today to:(NSDate*) end;
+
+
 // ottiene giorno della prossima settimana corrispondente (es: lunedi --> lunedi settimana dopo)
+// domenica = 1
+// esempio:     NSDate *prova = [[DateUtils shared] dateForNextWeekday:2 startingFrom:[NSDate date]]; NSLog(@"%@",[[DateUtils shared] showDateFull:prova]);
 -(NSDate*) getNexWeekDateFor:(NSDate*) date until:(NSDate*) finish;
+
+// ottiene il prossimo lunedi/martedi/mercoledi... a partire dalla data today
+- (NSDate *) dateForNextWeekday: (NSInteger)weekday startingFrom:(NSDate*)today;
 
 // ritorna l'NSDate di una data ad un ora stabilita
 -(NSDate*) date:(NSDate*) date At:(NSInteger) hour;
