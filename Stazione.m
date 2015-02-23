@@ -25,7 +25,7 @@
     clean = [clean stringByReplacingOccurrencesOfString:@"u'" withString:@"ù"];
     
     // maiuscolo inizio parole
-    CFStringCapitalize((CFMutableStringRef)clean, NULL);
+    //CFStringCapitalize((CFMutableStringRef)clean, NULL);
     
     // sistemo gli apostrofi
     clean = [clean stringByReplacingOccurrencesOfString:@"'a" withString:@"'A"];
@@ -33,6 +33,19 @@
     clean = [clean stringByReplacingOccurrencesOfString:@"'i" withString:@"'I"];
     clean = [clean stringByReplacingOccurrencesOfString:@"'o" withString:@"'O"];
     clean = [clean stringByReplacingOccurrencesOfString:@"'u" withString:@"'U"];
+    
+    // punto
+    clean = [clean stringByReplacingOccurrencesOfString:@"." withString:@". "];
+    // trattino
+    clean = [clean stringByReplacingOccurrencesOfString:@" - " withString:@"-"];
+    clean = [clean stringByReplacingOccurrencesOfString:@"- " withString:@"-"];
+    clean = [clean stringByReplacingOccurrencesOfString:@" -" withString:@"-"];
+    clean = [clean stringByReplacingOccurrencesOfString:@"-" withString:@" - "];
+    
+    //clean = [clean capitalizedStringWithLocale:[NSLocale currentLocale]];
+    
+    // maiuscolo inizio parole
+    CFStringCapitalize((CFMutableStringRef)clean, NULL);
     
     self.nome = clean;
     

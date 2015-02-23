@@ -128,7 +128,7 @@
         stazione.lon       = [[set objectForKey:@"lon"] floatValue];
         CLLocation *location = [[CLLocation alloc] initWithLatitude:stazione.lat longitude:stazione.lon];
         stazione.posizione = location;
-        
+        [stazione formattaNome];
         [stazioni addObject:stazione];
     }
     

@@ -48,6 +48,8 @@
         stazione.idStazione = [set objectForKey:@"id"];
         stazione.nome       = [set objectForKey:@"nome"];
         
+        [stazione formattaNome];
+        
         [stazioni addObject:stazione];
     }
     
