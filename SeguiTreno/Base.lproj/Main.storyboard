@@ -127,7 +127,7 @@
             </objects>
             <point key="canvasLocation" x="2735" y="157"/>
         </scene>
-        <!--Nuovo treno-->
+        <!--Nuovo viaggio-->
         <scene sceneID="dgX-KC-FUh">
             <objects>
                 <tableViewController id="kii-7n-TWc" customClass="NewTrainController" sceneMemberID="viewController">
@@ -354,26 +354,25 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="ripetizione" footerTitle="Gli orari dei treni potrebbero cambiare durante il periodo di ripetizione: ti avviseremo per tempo se noteremo modifiche." id="wtw-e5-PEQ">
+                            <tableViewSection headerTitle="ripetizione" footerTitle="Il tuo viaggio verrà ripetuto tutti i giorni selezionati per il periodo di validità attuale dei quadri orario di Trenitalia" id="wtw-e5-PEQ">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="z4M-3A-3v9">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z4M-3A-3v9" id="imi-Xk-caC">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GNT-or-FaQ">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="GNT-or-FaQ" customClass="MultiSelectSegmentedControl">
                                                     <rect key="frame" x="8" y="8" width="584" height="29"/>
                                                     <segments>
-                                                        <segment title="Mai"/>
-                                                        <segment title="Settimana"/>
-                                                        <segment title="1 mese"/>
-                                                        <segment title="3 mesi"/>
-                                                        <segment title="6 mesi"/>
+                                                        <segment title="dom"/>
+                                                        <segment title="lun"/>
+                                                        <segment title="mar"/>
+                                                        <segment title="mer"/>
+                                                        <segment title="gio"/>
+                                                        <segment title="ven"/>
+                                                        <segment title="sab"/>
                                                     </segments>
                                                     <color key="tintColor" red="0.43529411759999997" green="0.76078431369999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <connections>
-                                                        <action selector="selezioneRipetizione:" destination="kii-7n-TWc" eventType="valueChanged" id="FcU-2F-0XO"/>
-                                                    </connections>
                                                 </segmentedControl>
                                             </subviews>
                                             <constraints>
@@ -392,10 +391,11 @@
                             <outlet property="delegate" destination="kii-7n-TWc" id="p6Y-we-LdH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Nuovo treno" id="gbe-BE-dE7"/>
+                    <navigationItem key="navigationItem" title="Nuovo viaggio" id="gbe-BE-dE7"/>
                     <connections>
                         <outlet property="dataViaggio" destination="3VO-W4-Hyx" id="1bJ-Do-igg"/>
                         <outlet property="pickDataViaggio" destination="rly-6I-Jt8" id="S1O-wk-2Rk"/>
+                        <outlet property="selettoreRipetizione" destination="GNT-or-FaQ" id="UfO-k9-Yer"/>
                         <outlet property="soluzioneViaggio" destination="O47-tc-Fql" id="PId-ze-hzQ"/>
                         <outlet property="stazioneDestinazione" destination="1rR-Fk-oUX" id="i2q-7Z-6Pe"/>
                         <outlet property="stazionePartenza" destination="BWa-lI-ytv" id="Zbu-wu-Ftl"/>

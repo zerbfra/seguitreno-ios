@@ -48,6 +48,9 @@
     
     NSMutableArray *nexts = [NSMutableArray array];
     
+    //aggiungo oggi
+    //[nexts addObject:today];
+    
     NSDate *nextDate = [self dateForNextWeekday:weekday startingFrom:today];
     // finchè la nextdate è minore della fine vado avanti
     while ([nextDate compare:end] == NSOrderedAscending || [nextDate compare:end] == NSOrderedSame) {

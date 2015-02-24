@@ -34,10 +34,14 @@
     self.viaggio = [[Viaggio alloc] init];
     
     self.trenoCompilato = FALSE;
-    self.ripetizioneSel = 0;
+    //self.ripetizioneSel = 0;
     
     self.viaggio.data = [[DateUtils shared] date:self.dataIniziale At:0];
     
+    self.selettoreRipetizione.delegate = self;
+    
+    // giorni della ripetizione, inizialmente tutti a 0
+    self.giorni = [NSMutableArray arrayWithObjects:@"0",@"0",@"0",@"0",@"0",@"0",@"0",nil];
     
     self.soluzioneViaggio.detailTextLabel.attributedText = [[NSAttributedString alloc] initWithString:@" "]; // BUG IOS8.1
     
@@ -81,9 +85,9 @@
     self.trenoCompilato = TRUE; // il treno è ora compilato
 
     [self.tableView reloadData];
-
+#warning qui che faccio? -- non penso ci sia bisogno di metterlo ;)
     //aggiorno la fine ripetizione in base a quello che è selezionato
-    [self gestisciRipetizione:self.ripetizioneSel];
+    //[self gestisciRipetizione:self.ripetizioneSel];
     
 }
 
@@ -113,7 +117,7 @@
     
     if(self.trenoCompilato) {
         // siccome il metodo salva implica molte query lo mando su un secondo thread
-        [[ThreadHelper shared] executeInBackground:@selector(salva) of:self completion:^(BOOL success) {}];
+        [[ThreadHelper shared] executeInBackground:@selector(salvaConGiorni) of:self completion:^(BOOL success) {}];
         [self dismissViewControllerAnimated:YES completion:nil];
         
     } else {
@@ -122,9 +126,77 @@
     }
 }
 
-// Metodo per il salvataggio del treno (funzionamento in background)
--(void)salva {
+-(void) salvaConGiorni {
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF != %@", @"0"];
+    
+    NSArray *giorniDaRipetere = [self.giorni filteredArrayUsingPredicate:predicate];
+    
+    NSLog(@"%@",giorniDaRipetere);
+    
+    // setto la fine della ripetizione != nil se ho delle ripetizioni
+    if([giorniDaRipetere count] > 0) [self setFineRipetizione];
+    
+    NSLog(@"FINE RIPETIZIONE: %@",self.viaggio.fineRipetizione);
+    
+    NSMutableArray *viaggiInseriti = [NSMutableArray array];
+    
+    NSInteger tsPartenza, tsArrivo;
+    
+    NSMutableArray *arrayPartenza = [NSMutableArray array], *arrayArrivo = [NSMutableArray array];
+    
+    NSArray *arrayPartenzaTemp;
+    NSArray *arrayArrivoTemp;
+    
+    // aggiungo la data selezionata per il picker
+    
+    [arrayPartenza addObject:[self.viaggio orarioPartenza]];
+    [arrayArrivo addObject:[self.viaggio orarioArrivo]];
+    
+    for(NSString *idGiorno in giorniDaRipetere) {
+        
+        NSInteger idG = [idGiorno intValue];
+        
+        if(self.viaggio.fineRipetizione != nil) {
+            arrayPartenzaTemp = [[DateUtils shared] arrayOfNextWeekDays:idG startingFrom:[self.viaggio orarioPartenza] to:self.viaggio.fineRipetizione];
+            arrayArrivoTemp = [[DateUtils shared] arrayOfNextWeekDays:idG startingFrom:[self.viaggio orarioPartenza] to:self.viaggio.fineRipetizione];
+        }
+        /*else {
+            arrayPartenzaTemp = [[DateUtils shared] arrayOfNextWeekDays:idG startingFrom:[self.viaggio orarioPartenza] to:[self.viaggio orarioPartenza]];
+            arrayArrivoTemp = [[DateUtils shared] arrayOfNextWeekDays:idG startingFrom:[self.viaggio orarioPartenza] to:[self.viaggio orarioArrivo]];
+        }*/
+        
+    
+        
+        [arrayPartenza addObjectsFromArray:arrayPartenzaTemp];
+        [arrayArrivo addObjectsFromArray:arrayArrivoTemp];
+    
+    }
+    
+    // SALVO VIAGGI
+    // ciclo inserimento viaggi fino alla fine delle ripetizioni
+    
+    for(int i = 0; i < [arrayPartenza count]; i++) {
+        
+        tsPartenza = [[NSNumber numberWithDouble:[[arrayPartenza objectAtIndex:i] timeIntervalSince1970]] intValue];
+        tsArrivo = [[NSNumber numberWithDouble:[[arrayArrivo objectAtIndex:i] timeIntervalSince1970]] intValue];
+        
+        NSString *query = [NSString stringWithFormat:@"INSERT INTO viaggi (nomePartenza,nomeArrivo, orarioPartenza,orarioArrivo,durata) VALUES ('%@','%@','%ld','%ld','%@')",self.viaggio.partenza.nome,self.viaggio.arrivo.nome,(long)tsPartenza,(long)tsArrivo,self.viaggio.durata];
+        
+        [[DBHelper sharedInstance] executeSQLStatement:query];
+        
+        NSString *dbViaggio =  [[[[DBHelper sharedInstance] executeSQLStatement:@"SELECT last_insert_rowid() AS id"] objectAtIndex:0] objectForKey:@"id"];
+        NSLog(@"Viaggio %@ salvato: %@",dbViaggio,[[DateUtils shared] showDateAndHHmm:[arrayPartenza objectAtIndex:i]]);
+        [viaggiInseriti addObject:dbViaggio];
+    }
+    
+    [self salva:viaggiInseriti];
+    
+    
+}
 
+-(void) salvaConRipetizioneStandard {
+    
     NSMutableArray *viaggiInseriti = [NSMutableArray array];
     
     NSInteger tsPartenza, tsArrivo;
@@ -135,7 +207,7 @@
     // SALVO VIAGGI
     // ciclo inserimento viaggi fino alla fine delle ripetizioni
     do {
-
+        
         tsPartenza = [[NSNumber numberWithDouble:[nextPartenza timeIntervalSince1970]] intValue];
         tsArrivo = [[NSNumber numberWithDouble:[nextArrivo timeIntervalSince1970]] intValue];
         
@@ -154,6 +226,13 @@
         
     }
     while(nextPartenza != nil);
+    
+    [self salva:viaggiInseriti];
+    
+}
+
+// Metodo per il salvataggio del treno (funzionamento in background)
+-(void)salva:(NSArray*) viaggiInseriti {
     
     // salvo ripetizioni
     for (NSUInteger index = 0; index < viaggiInseriti.count; index++) {
@@ -399,6 +478,31 @@
     [self.tableView endUpdates];
 }
 
+-(void)multiSelect:(MultiSelectSegmentedControl *)multiSelecSegmendedControl didChangeValue:(BOOL)value atIndex:(NSUInteger)index{
+    
+    if (value) {
+        // selezionato
+        [self.giorni replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%d",index+1]];
+        
+    } else {
+        // deselzionato
+        [self.giorni replaceObjectAtIndex:index withObject:@"0"];
+
+    }
+    NSLog(@"%@",self.giorni);
+    
+    
+ 
+}
+
+-(void) setFineRipetizione {
+#warning qui sarebbe utile fissarla a una data di cambio orario treni, visibile qui: http://www.trenitalia.com/cms/v/?vgnextoid=cb62fa94067a7310VgnVCM1000008916f90aRCRD
+    self.viaggio.fineRipetizione = [[DateUtils shared] addDays:60 toDate:self.viaggio.data];
+}
+
+
+
+/*
 - (IBAction)selezioneRipetizione:(UISegmentedControl *)sender {
     [self gestisciRipetizione:sender.selectedSegmentIndex];
 }
@@ -436,6 +540,6 @@
             break;
     }
 
-}
+}*/
 
 @end

@@ -20,6 +20,7 @@
 		131926771A37677300F16A37 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926761A37677300F16A37 /* QuartzCore.framework */; };
 		131926791A37677F00F16A37 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926781A37677F00F16A37 /* libc++.dylib */; };
 		1319267B1A37678700F16A37 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1319267A1A37678700F16A37 /* libz.dylib */; };
+		135C210A1A9BC489007AE646 /* MultiSelectSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 135C21091A9BC489007AE646 /* MultiSelectSegmentedControl.m */; };
 		135CC3B61A0A1F3B0074D079 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B51A0A1F3B0074D079 /* main.m */; };
 		135CC3B91A0A1F3B0074D079 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B81A0A1F3B0074D079 /* AppDelegate.m */; };
 		135CC3BF1A0A1F3B0074D079 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 135CC3BD1A0A1F3B0074D079 /* Main.storyboard */; };
@@ -119,6 +120,8 @@
 		131926761A37677300F16A37 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		131926781A37677F00F16A37 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		1319267A1A37678700F16A37 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		135C21081A9BC489007AE646 /* MultiSelectSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiSelectSegmentedControl.h; sourceTree = "<group>"; };
+		135C21091A9BC489007AE646 /* MultiSelectSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiSelectSegmentedControl.m; sourceTree = "<group>"; };
 		135CC3B01A0A1F3B0074D079 /* SeguiTreno.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeguiTreno.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		135CC3B41A0A1F3B0074D079 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		135CC3B51A0A1F3B0074D079 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -256,6 +259,15 @@
 			name = JourneyProgress;
 			sourceTree = "<group>";
 		};
+		135C210B1A9BC490007AE646 /* MultipleSelectSegmentedControl */ = {
+			isa = PBXGroup;
+			children = (
+				135C21081A9BC489007AE646 /* MultiSelectSegmentedControl.h */,
+				135C21091A9BC489007AE646 /* MultiSelectSegmentedControl.m */,
+			);
+			name = MultipleSelectSegmentedControl;
+			sourceTree = "<group>";
+		};
 		135CC3A71A0A1F3B0074D079 = {
 			isa = PBXGroup;
 			children = (
@@ -370,6 +382,7 @@
 		13650BB51A0A654D000F2F51 /* UI Elements */ = {
 			isa = PBXGroup;
 			children = (
+				135C210B1A9BC490007AE646 /* MultipleSelectSegmentedControl */,
 				1309253C1A1A17A7003DCD52 /* JourneyProgress */,
 				135CC3DF1A0A1F730074D079 /* Datepicker */,
 			);
@@ -721,6 +734,7 @@
 				137E5F911A376DA600AC291B /* ImpostazioniViewController.m in Sources */,
 				13D01EEC1A0BC3B300BDCD05 /* FMDatabasePool.m in Sources */,
 				13D01EEE1A0BC3B300BDCD05 /* FMResultSet.m in Sources */,
+				135C210A1A9BC489007AE646 /* MultiSelectSegmentedControl.m in Sources */,
 				13DA1CD21A0A360F00AE6160 /* APIClient.m in Sources */,
 				135CC3B91A0A1F3B0074D079 /* AppDelegate.m in Sources */,
 				13FF51551A0BE898005A8409 /* Stazione.m in Sources */,

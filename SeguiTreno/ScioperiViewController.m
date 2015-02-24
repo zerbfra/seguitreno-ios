@@ -115,12 +115,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+/*
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(indexPath.section == 0) return 88.0f;
-    return 64.0f;
+    return 88.0f;
     
-}
+    
+}*/
 
 #pragma mark - Table view data source
 
@@ -140,6 +141,31 @@
     else return @"Scioperi proclamati";
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    Notizia *cell;
+    NSString *misura;
+    
+    if(indexPath.section == 0)  {
+        cell = [self.notizie objectAtIndex:indexPath.row];
+        misura = cell.testo;
+    }
+    else {
+        cell = [self.scioperi objectAtIndex:indexPath.row];
+        misura = cell.titolo;
+    }
+        
+        UIFont *cellFont = [UIFont fontWithName:@"Helvetica" size:17.0];
+        CGSize constraintSize = CGSizeMake(self.view.frame.size.width, 400.0f);
+        
+        CGRect textRect = [misura boundingRectWithSize:constraintSize
+                                                 options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                              attributes:@{NSFontAttributeName:cellFont}
+                                                 context:nil];
+        
+        return textRect.size.height + 20;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     

@@ -11,9 +11,10 @@
 #import "SearchStazioneViewController.h"
 #import "SoluzioneViaggioViewController.h"
 #import "DettaglioSoluzioneViewController.h"
+#import "MultiSelectSegmentedControl.h"
 
 
-@interface NewTrainController : UITableViewController <UIActionSheetDelegate,SearchStazioneDelegate,SoluzioneViaggioDelegate>
+@interface NewTrainController : UITableViewController <UIActionSheetDelegate,SearchStazioneDelegate,SoluzioneViaggioDelegate,MultiSelectSegmentedControlDelegate>
 
 @property BOOL trenoCompilato;
 
@@ -29,10 +30,15 @@
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *pickDataViaggio;
 
+@property (weak, nonatomic) IBOutlet MultiSelectSegmentedControl *selettoreRipetizione;
+
+
+@property (strong,nonatomic) NSMutableArray *giorni;
+
 - (IBAction)ridisegnaPicker:(id)sender;
 
 
-- (IBAction)selezioneRipetizione:(UISegmentedControl *)sender;
+//- (IBAction)selezioneRipetizione:(UISegmentedControl *)sender;
 
 @property (strong,nonatomic) Viaggio *viaggio;
 
