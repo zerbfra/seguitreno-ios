@@ -64,6 +64,7 @@
     // bottone di aggiunta nuovi treni, qui perchè altrimenti potrebbe sparire per lasciar posto al loading
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
     self.navigationItem.rightBarButtonItem = addButton;
+
     
     [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
 }
@@ -285,6 +286,8 @@
 
 // apre la schermata di aggiunta prodotti
 - (void)addTrain:sender {
+    
+    [self setEditing:NO animated:NO];
     [self performSegueWithIdentifier:@"addSegue" sender:sender];
 }
 
