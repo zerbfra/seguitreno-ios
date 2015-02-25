@@ -9,6 +9,7 @@
 #import "SoluzioneViaggioViewController.h"
 #import "SoluzioneTableViewCell.h"
 #import "DettaglioSoluzioneViewController.h"
+#import "TFHpple.h"
 
 @interface SoluzioneViaggioViewController ()
 
@@ -36,7 +37,9 @@
             [self.tableView reloadData];
         } else {
             // soluzioni non trovate
-            NSLog(@"non trovo niente");
+            NSLog(@"non trovo niente, cerco con orario trenitalia...");
+            
+            [self soluzioniOrarioTrenitalia];
             
             UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Non trovo nessuna soluzione viaggio" message:@"Probabilmente il tragitto che cerchi non è ancora supportato dall'app.\n\nProva a contattare lo sviluppatore dalle impostazioni dell'app specificando che tragitto stai cercando e che società gestisce il trasporto." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
@@ -52,6 +55,72 @@
 }
 
 
+-(void) soluzioniOrarioTrenitalia {
+
+    NSString *day = [[DateUtils shared] getDayNumber:self.query.data];
+    NSString *month = [[DateUtils shared] getMonthNumber:self.query.data];
+    NSString *year = [[DateUtils shared] getYearNumber:self.query.data];
+    
+    NSString *stringaOrario = [NSString stringWithFormat:@"http://orario.trenitalia.com/b2c/nppPriceTravelSolutions.do?lang=it&stazin=%@&stazout=%@&datag=%@&datam=%@&dataa=%@&timsh=1&timsm=0&nreq=25&npag=1&sort=0&economy=1&det=&solotreno=0&noreservation=0&traintype=&car=0",self.query.partenza.nome,self.query.arrivo.nome,day,month,year];
+    
+        stringaOrario = [stringaOrario stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"URL orario trenitalia: %@",stringaOrario);
+
+    
+    NSURL *url = [NSURL URLWithString:stringaOrario];
+    
+
+
+    
+    NSData *data = [NSData dataWithContentsOfURL:url];
+
+    TFHpple *tutorialsParser = [TFHpple hppleWithHTMLData:data];
+
+    NSString *XpathQueryString = @"//tbody/tr[@class='odd' or @class='even']//td";
+    NSArray *nodes = [tutorialsParser searchWithXPathQuery:XpathQueryString];
+    
+    NSMutableArray *treniValidi = [NSMutableArray array];
+    
+    for (TFHppleElement *element in nodes) {
+        //NSLog(@"Elemento: %@",[[element firstChild] content]);
+        
+        NSString *content =[[element firstChild] content];
+        
+        if(![content containsString:@"ND"] && ![content containsString:@"\n"] && [content length]>0) {
+            [treniValidi addObject:[[element firstChild] content]];
+        }
+    }
+  
+    /* QUI RIMUOVO QUELLI COL CAMBIO, esempio da asso a bovisa:
+     "04:45",
+     "06:13",
+     "01:28",
+     "2610A ",
+     "05:37", => cambio
+     "12610 ",
+     "06:05",
+     "07:13",
+     */
+    
+    NSMutableArray *discardedItems = [NSMutableArray array];
+    
+    for(int i=4;i<[treniValidi count]-1; i++) {
+        if ([treniValidi[i] containsString:@":"] && ![treniValidi[i-1] containsString:@":"] && ![treniValidi[i+1] containsString:@":"]) {
+            
+            [discardedItems addObject:treniValidi[i-4]];
+            [discardedItems addObject:treniValidi[i-3]];
+            [discardedItems addObject:treniValidi[i-2]];
+            [discardedItems addObject:treniValidi[i-1]];
+            [discardedItems addObject:treniValidi[i-0]];
+            [discardedItems addObject:treniValidi[i+1]];
+            
+        }
+    }
+
+    [treniValidi removeObjectsInArray:discardedItems];
+      NSLog(@"%@",treniValidi);
+    
+}
 
 // richiede le soluzioni viaggio recuperate dal server
 -(void) trovaSoluzioniTreno:(void (^)(void))completionBlock {

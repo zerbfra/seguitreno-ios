@@ -52,4 +52,9 @@
 // ritorna la data che si ottiene aggiungendo n giorni ad una data di partenza
 -(NSDate*) addDays:(int) days toDate:(NSDate*) date;
 
+// ritorna i vari numeri (giorno,mese,anno) tipo: 25 02 2015:
+-(NSString*) getDayNumber:(NSDate*) date;
+-(NSString*) getMonthNumber:(NSDate*) date;
+-(NSString*) getYearNumber:(NSDate*) date;
+
 @end

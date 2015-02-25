@@ -20,6 +20,10 @@
 		131926771A37677300F16A37 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926761A37677300F16A37 /* QuartzCore.framework */; };
 		131926791A37677F00F16A37 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926781A37677F00F16A37 /* libc++.dylib */; };
 		1319267B1A37678700F16A37 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1319267A1A37678700F16A37 /* libz.dylib */; };
+		1331F56A1A9E750F007E34ED /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 1331F5651A9E750F007E34ED /* TFHpple.m */; };
+		1331F56B1A9E750F007E34ED /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 1331F5671A9E750F007E34ED /* TFHppleElement.m */; };
+		1331F56C1A9E750F007E34ED /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 1331F5691A9E750F007E34ED /* XPathQuery.m */; };
+		1331F56E1A9E760C007E34ED /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1331F56D1A9E760C007E34ED /* libxml2.2.dylib */; };
 		135C210A1A9BC489007AE646 /* MultiSelectSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 135C21091A9BC489007AE646 /* MultiSelectSegmentedControl.m */; };
 		135CC3B61A0A1F3B0074D079 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B51A0A1F3B0074D079 /* main.m */; };
 		135CC3B91A0A1F3B0074D079 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 135CC3B81A0A1F3B0074D079 /* AppDelegate.m */; };
@@ -120,6 +124,13 @@
 		131926761A37677300F16A37 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		131926781A37677F00F16A37 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		1319267A1A37678700F16A37 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		1331F5641A9E750F007E34ED /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		1331F5651A9E750F007E34ED /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		1331F5661A9E750F007E34ED /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		1331F5671A9E750F007E34ED /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		1331F5681A9E750F007E34ED /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		1331F5691A9E750F007E34ED /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		1331F56D1A9E760C007E34ED /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		135C21081A9BC489007AE646 /* MultiSelectSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiSelectSegmentedControl.h; sourceTree = "<group>"; };
 		135C21091A9BC489007AE646 /* MultiSelectSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiSelectSegmentedControl.m; sourceTree = "<group>"; };
 		135CC3B01A0A1F3B0074D079 /* SeguiTreno.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeguiTreno.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +230,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1331F56E1A9E760C007E34ED /* libxml2.2.dylib in Frameworks */,
 				137E5F931A37702800AC291B /* MessageUI.framework in Frameworks */,
 				1319267B1A37678700F16A37 /* libz.dylib in Frameworks */,
 				131926791A37677F00F16A37 /* libc++.dylib in Frameworks */,
@@ -257,6 +269,19 @@
 				1309253A1A1A17A3003DCD52 /* JourneyProgressView.h */,
 			);
 			name = JourneyProgress;
+			sourceTree = "<group>";
+		};
+		1331F5631A9E750F007E34ED /* TFHpple */ = {
+			isa = PBXGroup;
+			children = (
+				1331F5641A9E750F007E34ED /* TFHpple.h */,
+				1331F5651A9E750F007E34ED /* TFHpple.m */,
+				1331F5661A9E750F007E34ED /* TFHppleElement.h */,
+				1331F5671A9E750F007E34ED /* TFHppleElement.m */,
+				1331F5681A9E750F007E34ED /* XPathQuery.h */,
+				1331F5691A9E750F007E34ED /* XPathQuery.m */,
+			);
+			path = TFHpple;
 			sourceTree = "<group>";
 		};
 		135C210B1A9BC490007AE646 /* MultipleSelectSegmentedControl */ = {
@@ -421,6 +446,7 @@
 		13A4FBD21A82375E00EFAA35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1331F56D1A9E760C007E34ED /* libxml2.2.dylib */,
 				13A4FBD31A82375E00EFAA35 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
@@ -467,6 +493,7 @@
 		13D01EEF1A0BC3BB00BDCD05 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				1331F5631A9E750F007E34ED /* TFHpple */,
 				13D01EDE1A0BC3B300BDCD05 /* fmdb */,
 			);
 			name = Libraries;
@@ -729,6 +756,7 @@
 				13FF51521A0BE88A005A8409 /* Treno.m in Sources */,
 				130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */,
 				135CC3DD1A0A1F6D0074D079 /* FZDatepicker.m in Sources */,
+				1331F56A1A9E750F007E34ED /* TFHpple.m in Sources */,
 				1398B9D71A388CBF005D6F31 /* DropboxClient.m in Sources */,
 				13EFA8271A31F56E00AE98B3 /* ThreadHelper.m in Sources */,
 				137E5F911A376DA600AC291B /* ImpostazioniViewController.m in Sources */,
@@ -747,6 +775,7 @@
 				13B24A4D1A28E479009EEFB4 /* TrenoStazioneTableViewCell.m in Sources */,
 				1309253F1A1A24A2003DCD52 /* FermataTableViewCell.m in Sources */,
 				13AC565B1A14B3BC00492CB6 /* SalvatoTableViewCell.m in Sources */,
+				1331F56C1A9E750F007E34ED /* XPathQuery.m in Sources */,
 				1376AAAC1A2D1E1000C55F6F /* RisultatiViewController.m in Sources */,
 				130925481A1A3FE4003DCD52 /* Fermata.m in Sources */,
 				137F4DEC1A0E4F8C00B9E77E /* DettaglioSoluzioneViewController.m in Sources */,
@@ -757,6 +786,7 @@
 				13CFF38D1A423DC0009ED46F /* NotificheViewController.m in Sources */,
 				137D86D61A0CB9A900D31838 /* SoluzioneViaggioViewController.m in Sources */,
 				13EFA8351A34710E00AE98B3 /* LocationManager.m in Sources */,
+				1331F56B1A9E750F007E34ED /* TFHppleElement.m in Sources */,
 				1304EB201A0D0B0900C2DC12 /* Viaggio.m in Sources */,
 				1376AAA51A2CBAF400C55F6F /* RicercaViewController.m in Sources */,
 				137D86D01A0CB65E00D31838 /* MainViewController.m in Sources */,
@@ -908,6 +938,11 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SeguiTreno",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SDKROOT)/usr/include/libxml2",
+				);
 				INFOPLIST_FILE = SeguiTreno/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -927,6 +962,11 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SeguiTreno",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SDKROOT)/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = SeguiTreno/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

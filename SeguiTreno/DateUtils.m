@@ -194,4 +194,25 @@
     return dayName;
 }
 
+-(NSString*) getDayNumber:(NSDate*) date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"dd"];
+    NSString *dayName = [dateFormatter stringFromDate:date];
+    return dayName;
+}
+
+-(NSString*) getMonthNumber:(NSDate*) date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM"];
+    NSString *dayName = [dateFormatter stringFromDate:date];
+    return dayName;
+}
+
+-(NSString*) getYearNumber:(NSDate*) date {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy"];
+    NSString *dayName = [dateFormatter stringFromDate:date];
+    return dayName;
+}
+
 @end
