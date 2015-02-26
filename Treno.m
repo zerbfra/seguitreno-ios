@@ -13,6 +13,19 @@
 
 @synthesize categoria = _categoria;
 
+
+
+- (id)init
+{
+    self = [super init];
+    if (self)
+    {
+        // tutti i treni di default presi da viaggiatreno
+        self.daOrarioTrenitalia = false;
+    }
+    return self;
+}
+
 // setta la categoria (se non presente, assegna REG)
 -(void) setCategoria:(NSString *)categoria {
     

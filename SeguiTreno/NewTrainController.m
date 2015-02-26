@@ -253,12 +253,18 @@
         dispatch_group_enter(group);
         
         NSString  *numero = toDb.numero;
-#warning problema treni doppi, come risolvere? chiedo all'utente? --> al momento favorisco il primo risultato (come fa viaggiatreno)
+
         [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":numero,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSDictionary *response) {
             
-            // prendo il primo, come fa viaggiatreno, fanculo i successivi
+            // prendo il primo, come fa viaggiatreno se viene dalla sua API, altrimenti prendo il secondo (perchè viene da orario trenitalia), fanculo i successivi
             NSArray* resp = (NSArray*) response;
-            NSDictionary *trenoDict = [resp objectAtIndex:0];
+            NSDictionary *trenoDict;
+            
+            // se ho più di un elemento nella risposta
+            if([resp count] > 1) {
+                if(!toDb.daOrarioTrenitalia) trenoDict = [resp objectAtIndex:0];
+                else trenoDict = [resp objectAtIndex:1];
+            } else trenoDict  = [resp objectAtIndex:0];
             
             Stazione *origine = [[Stazione alloc] init];
             Stazione *destinazione = [[Stazione alloc] init];

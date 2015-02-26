@@ -14,6 +14,9 @@
 
 @property (strong,nonatomic) NSString *numero;
 
+// questa voce va a true se il treno è stato recuperato da orario trenitalia e non da viaggiatreno
+@property BOOL daOrarioTrenitalia;
+
 // tratta del treno da origine a destinazione
 @property (strong,nonatomic) Stazione *origine;
 @property (strong,nonatomic) Stazione *destinazione;
