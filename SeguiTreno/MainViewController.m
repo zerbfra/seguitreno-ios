@@ -26,6 +26,16 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     
     
+    /*** Aggiornamento datePicker ***/
+    
+    // imposto il datepicker per visualizzare i prossimi 15 giorni
+    [self.datepicker fillDatesFromCurrentDate:15];
+    // selezione della prima data (la corrente)
+    [self.datepicker selectDateAtIndex:0];
+    
+    /*** Fine aggiornamento ***/
+    
+    
     self.treniTable.delegate = self;
     self.treniTable.dataSource = self;
     self.treniTable.backgroundColor = BACKGROUND_COLOR;
@@ -55,16 +65,6 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated {
-    
-    /*** Aggiornamento datePicker ***/
-    
-    // imposto il datepicker per visualizzare i prossimi 15 giorni
-    [self.datepicker fillDatesFromCurrentDate:15];
-    // selezione della prima data (la corrente)
-    [self.datepicker selectDateAtIndex:0];
-    
-    /*** Fine aggiornamento ***/
-    
     
     // bottone di aggiunta nuovi treni, qui perchè altrimenti potrebbe sparire per lasciar posto al loading
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
