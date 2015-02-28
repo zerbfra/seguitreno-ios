@@ -70,8 +70,10 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTrain:)];
     self.navigationItem.rightBarButtonItem = addButton;
 
-    
     [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
+    
+    // aggiorno (guardo ovviamente prima in cache oppure rinfresco i dati se troppo vecchi)
+    [self caricaViaggi];
 }
 
 
