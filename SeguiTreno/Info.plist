@@ -30,6 +30,16 @@
 				<string>seguitreno</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>it.zerbinatifrancesco.SeguiTreno</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>db-wwj9wcfcb2rnptz</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>

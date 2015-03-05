@@ -73,7 +73,7 @@
     [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
     
     // aggiorno (guardo ovviamente prima in cache oppure rinfresco i dati se troppo vecchi)
-    [self caricaViaggi];
+    //[self caricaViaggi];
 }
 
 

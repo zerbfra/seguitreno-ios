@@ -45,6 +45,9 @@
 }
 
 -(void) disegnaRisultati {
+    
+    NSLog(@"%@",self.soluzioniPossibili);
+    
     if([self.soluzioniPossibili count] > 0) {
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     } else {
