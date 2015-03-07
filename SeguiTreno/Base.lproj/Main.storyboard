@@ -986,8 +986,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="NOTIFICA SULLO STATO DEL TRENO" id="8QH-JQ-hXv">
-                                <string key="footerTitle">Puoi impostare di ricevere le notifiche 5, 10, 15, 30 minuti prima della partenza. Seleziona le opzioni di tuo gradimento (sono concesse anche scelte multiple)</string>
+                            <tableViewSection headerTitle="NOTIFICA SULLO STATO DEL TRENO" footerTitle="Puoi impostare di ricevere le notifiche a partire da 5, 10, 15, 30 minuti prima della partenza. " id="8QH-JQ-hXv">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" textLabel="LgZ-US-oEe" style="IBUITableViewCellStyleDefault" id="MM3-Ss-tML">
                                         <autoresizingMask key="autoresizingMask"/>

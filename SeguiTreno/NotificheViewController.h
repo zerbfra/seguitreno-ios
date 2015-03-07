@@ -10,11 +10,6 @@
 
 @interface NotificheViewController : UITableViewController
 
-@property BOOL push5;
-@property BOOL push10;
-@property BOOL push15;
-@property BOOL push30;
-
-
+@property int push;
 
 @end
