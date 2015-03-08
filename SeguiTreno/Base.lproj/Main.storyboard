@@ -1698,11 +1698,11 @@
             </objects>
             <point key="canvasLocation" x="1794" y="-753"/>
         </scene>
-        <!--Stazioni vicine-->
+        <!--Stazioni-->
         <scene sceneID="YxH-op-UUq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1OO-P9-0bp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Stazioni vicine" id="DOP-iF-BaE"/>
+                    <tabBarItem key="tabBarItem" title="Stazioni" id="DOP-iF-BaE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dfx-xa-pgc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
