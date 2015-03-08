@@ -37,15 +37,13 @@
 #define COLOR_WITH_RGBA(r,g,b,a)    [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
 
 #define BACKGROUND_COLOR            [UIColor colorWithRed:247.0/255.0f green:247.0/255.0f blue:247.0/255.0f alpha:1.0f]
-//#define GREEN                       [UIColor colorWithRed:111.0/255.0f green:194.0/255.0f blue:59.0/255.0f alpha:1.0f]
-//#define GREEN2                      [UIColor colorWithRed:136.0/255.0f green:196.0/255.0f blue:37.0/255.0f alpha:1.0f]
+
+
 #define GREEN                       [UIColor colorWithRed:0/255.0f green:179/255.0f blue:113/255.0f alpha:1.0f]
 #define RED                         [UIColor colorWithRed:251.0/255.0f green:52.0/255.0f blue:63.0/255.0f alpha:1.0f]
 #define DARKGREY                    [UIColor colorWithRed:64.0/255.0f green:64.0/255.0f blue:64.0/255.0f alpha:1.0f]
 
-//#define BaseURLString @"http://178.62.75.8/trenitalia_api/" //DigitalOcean
-//#define BaseURLString @"http://localhost:8888/trenitalia_api/" //localhost
 
-#define BaseURLString @"http://54.85.215.70/seguitreno/" //amazon aws
 
+#define BaseURLString @"http://seguitreno.zerbinatifrancesco.it/" // VPS OVH
 

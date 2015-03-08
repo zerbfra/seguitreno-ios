@@ -10,8 +10,6 @@
 
 #define pushInterval   @"pushInterval"
 
-#define NSStringFromBOOL(aBOOL)    aBOOL? @"1" : @"0"
-
 @interface NotificheViewController ()
 
 @end
@@ -60,12 +58,12 @@
     NSLog(@"Notifica %d",self.push);
     
     NSString *idUtente = [[NSUserDefaults standardUserDefaults] objectForKey:userIDKey];
+    NSLog(@"%@",idUtente);
     
-    /*
-    [[APIClient sharedClient] requestWithPath:@"setNotifiche" andParams:@{@"id":idUtente,@"push5":NSStringFromBOOL(self.push5),@"push10":NSStringFromBOOL(self.push10),@"push15":NSStringFromBOOL(self.push15),@"push30":NSStringFromBOOL(self.push30)} withTimeout:10 cacheLife:0 completion:^(NSDictionary *response){
+    [[APIClient sharedClient] requestWithPath:@"setNotifiche" andParams:@{@"id":idUtente,@"push":[NSNumber numberWithInt:self.push]} withTimeout:10 cacheLife:0 completion:^(NSDictionary *response){
         
         NSLog(@"impostazioni notifiche salvate sul server");
-    }];*/
+    }];
 
     
 }
