@@ -488,7 +488,7 @@
     
     if (value) {
         // selezionato
-        [self.giorni replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%u",index+1]];
+        [self.giorni replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%lu",index+1]];
         
     } else {
         // deselzionato
