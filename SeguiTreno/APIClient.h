@@ -18,6 +18,6 @@
 // richiesta remota specificando timeout, vita della cache
 -(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters withTimeout:(int) timeout cacheLife:(int) life completion:(void (^)(NSDictionary *))completion;
 
-
+-(void) getPageWithURL:(NSString*)urlString completion:(void (^)(NSData*))completion;
 
 @end

@@ -59,7 +59,7 @@
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
     // di default carico i viaggi
-    [self caricaViaggi];
+    //[self caricaViaggi];
 
     
 }
@@ -73,7 +73,8 @@
     [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
     
     // aggiorno (guardo ovviamente prima in cache oppure rinfresco i dati se troppo vecchi)
-    //[self caricaViaggi];
+#warning l'ho spostato qui ma non so se causa bug
+    [self caricaViaggi];
 }
 
 

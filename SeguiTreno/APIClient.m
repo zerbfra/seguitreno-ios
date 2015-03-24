@@ -154,6 +154,51 @@
     [dataTask resume];
 }
 
+-(void) getPageWithURL:(NSString*)urlString completion:(void (^)(NSData*))completion {
+    
+    
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSURL * url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setTimeoutInterval:20];
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    
+                                                    
+                                                    if (!error) {
+                                                        NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+                                                        
+                                                        if (httpResp.statusCode == 200) {
+                                                            
+                                                            
+                                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                                [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                                                            });
+                                                            completion(data);
+                                                            
+                                                        } else {
+                                                            // HANDLE BAD RESPONSE //
+                                                            NSLog(@"Bad Server response: %@",httpResp);
+                                                        }
+                                                    } else {
+                                                        // HANDLE ERROR //
+                                                        NSLog(@"Error with the request %@",error);
+                                                    }
+                                                    
+                                                }];
+    
+    
+    [dataTask resume];
+    
+    
+}
+
+
 -(NSString*) dictionaryToString:(NSDictionary*) dict {
     
     NSString *stringParam = [dict description];

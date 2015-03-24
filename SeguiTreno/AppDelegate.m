@@ -183,10 +183,10 @@
     [[DBHelper sharedInstance] storeDBForExtensions:dbTreni];
     
     // faccio la richiesta, inviando il db dei treni e l'idutente
-    [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni,@"idUtente":userID} completion:^(NSDictionary *response) {
-        NSLog(@"Response: %@", response);
-        
+    [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni,@"idUtente":userID} withTimeout:20 cacheLife:0 completion:^(NSDictionary *response) {
+         NSLog(@"Response: %@", response);
     }];
+
     
 }
 

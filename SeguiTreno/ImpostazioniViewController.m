@@ -42,11 +42,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void) showAlertNotifiche {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Hey!" message:@"Le notifiche arriveranno con il prossimo aggiornamento, sto lavorando molto sull'integrazione delle notifiche per tutti i treni italiani. Intanto ti ringrazio di aver acquistato l'app. Se hai domande scrivimi pure!" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alertView show];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (indexPath.section) {
         case 0:
-            [self performSegueWithIdentifier:@"notificaSegue" sender:nil];
+            //[self performSegueWithIdentifier:@"notificaSegue" sender:nil];
+            [self showAlertNotifiche];
             break;
         case 1:
             [self manageDropbox];

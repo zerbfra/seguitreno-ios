@@ -72,9 +72,17 @@
     stringaOrario = [stringaOrario stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"URL orario trenitalia: %@",stringaOrario);
     
-    NSURL *url = [NSURL URLWithString:stringaOrario];
-    NSData *data = [NSData dataWithContentsOfURL:url];
+    [[APIClient sharedClient] getPageWithURL:stringaOrario completion:^(NSData *data) {
+        // parso il contenuto della pagina
+        [self parseTrenitalia:data];
+        completionBlock();
+        
+    }];
+    
+}
 
+-(void) parseTrenitalia:(NSData*) data {
+    
     TFHpple *tutorialsParser = [TFHpple hppleWithHTMLData:data];
     
     // path di ricerca
@@ -92,7 +100,7 @@
             [treniValidi addObject:[[element firstChild] content]];
         }
     }
-  
+    
     /* QUI RIMUOVO QUELLI COL CAMBIO, esempio da asso a bovisa:
      "04:45",
      "06:13",
@@ -117,7 +125,7 @@
             
         }
     }
-
+    
     [treniValidi removeObjectsInArray:discardedItems];
     
     // a questo punto ho l'array dei treni validi, lo sistemo
@@ -162,11 +170,8 @@
         [tmpTragitto addObject:treno];
         soluzione.tragitto = [tmpTragitto copy];
         [self.soluzioniPossibili addObject:soluzione];
-
+        
     }
-    
-    completionBlock();
-    
 }
 
 // richiede le soluzioni viaggio recuperate dal server
