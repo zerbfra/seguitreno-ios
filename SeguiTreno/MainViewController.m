@@ -58,6 +58,11 @@
     [self.treniTable addSubview:self.refreshControl];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
+    
+    // setup orientation notifications
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
+    
     // di default carico i viaggi
     //[self caricaViaggi];
 
@@ -77,6 +82,13 @@
     [self caricaViaggi];
 }
 
+//********** ORIENTATION CHANGED **********
+- (void)orientationChanged:(NSNotification *)note
+{
+    NSLog(@"Orientation  has changed");
+    [self.treniTable reloadData];
+    
+}
 
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated {
