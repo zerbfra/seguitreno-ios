@@ -34,7 +34,26 @@ const CGFloat kFZDatepickerSelectionLineWidth = 51;
 
     self.selectionView.backgroundColor = COLOR_WITH_RGB(255,78,80);
     self.selectionView.alpha = 0;
-    [self addTarget:self action:@selector(dateWasSelected) forControlEvents:UIControlEventTouchUpInside];
+    
+    //[self addTarget:self action:@selector(dateWasSelected) forControlEvents:UIControlEventTouchUpInside];
+    
+    // with singleTap I will go to the touched date
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dateWasSelected)];
+    singleTap.numberOfTapsRequired = 1;
+    [self addGestureRecognizer:singleTap];
+    
+    // with a doubleTap I will reset to today
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resetToToday)];
+    doubleTap.numberOfTapsRequired = 2;
+    [self addGestureRecognizer:doubleTap];
+    
+    [singleTap requireGestureRecognizerToFail:doubleTap];
+    
+}
+
+-(void) resetToToday {
+    // invia la notifica a FZDatepicker per il reset ad oggi
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"datePickerToToday" object:nil];
 }
 
 - (void)setDate:(NSDate *)date

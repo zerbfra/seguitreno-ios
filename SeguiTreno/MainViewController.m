@@ -31,7 +31,7 @@
     // imposto il datepicker per visualizzare i prossimi 15 giorni
     [self.datepicker fillDatesFromCurrentDate:15];
     // selezione della prima data (la corrente)
-    [self.datepicker selectDateAtIndex:0];
+    [self.datepicker selectToday];
     
     /*** Fine aggiornamento ***/
     
@@ -64,7 +64,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:[UIDevice currentDevice]];
     
     // di default carico i viaggi
-    //[self caricaViaggi];
+    [self caricaViaggi];
 
     
 }
@@ -78,8 +78,8 @@
     [self.treniTable deselectRowAtIndexPath:[self.treniTable indexPathForSelectedRow] animated:YES];
     
     // aggiorno (guardo ovviamente prima in cache oppure rinfresco i dati se troppo vecchi)
-#warning l'ho spostato qui ma non so se causa bug
-    [self caricaViaggi];
+    //#warning l'ho spostato qui ma non so se causa bug
+    //[self caricaViaggi];
 }
 
 //********** ORIENTATION CHANGED **********

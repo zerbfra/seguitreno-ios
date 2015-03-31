@@ -43,6 +43,9 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
 {
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.backgroundColor = [UIColor whiteColor];
+    
+    // riceve notifica per la selezione di oggi (con double tap)
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectToday) name:@"datePickerToToday" object:nil];
    
     //self.selectedDateBottomLineColor = COLOR_WITH_RGB(255,78,80);
 }
@@ -124,6 +127,10 @@ const CGFloat kFZDatepickerSpaceBetweenItems = 15;
     NSAssert([self.dates indexOfObject:date] != NSNotFound, @"Date not found in dates array");
 
     self.selectedDate = date;
+}
+
+-(void) selectToday {
+    [self selectDateAtIndex:0];
 }
 
 - (void)selectDateAtIndex:(NSUInteger)index
