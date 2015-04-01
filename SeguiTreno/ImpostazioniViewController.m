@@ -168,7 +168,7 @@
 
 /* Apre app store per la recensione */
 - (void)leaveReview {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id790926556"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id952362017"]];
 }
 
 /* Avvia app di twitter/apre sito web */
