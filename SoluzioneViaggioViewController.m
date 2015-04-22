@@ -89,6 +89,12 @@
     NSString *XpathQueryString = @"//tbody/tr[@class='odd' or @class='even']//td";
     NSArray *nodes = [tutorialsParser searchWithXPathQuery:XpathQueryString];
     
+    if([nodes count] <= 0) {
+        NSLog(@"Errore su ricerca orario trenitalia");
+#warning comunicare un messaggio all'utente (segnalazione malpelo, qua faceva crashare)
+        return;
+    }
+    
     NSMutableArray *treniValidi = [NSMutableArray array];
     
     for (TFHppleElement *element in nodes) {
