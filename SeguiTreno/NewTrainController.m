@@ -258,13 +258,31 @@
             
             // prendo il primo, come fa viaggiatreno se viene dalla sua API, altrimenti prendo il secondo (perchè viene da orario trenitalia), fanculo i successivi
             NSArray* resp = (NSArray*) response;
-            NSDictionary *trenoDict;
+            __block NSDictionary *trenoDict;
             
-            // se ho più di un elemento nella risposta
+            // controllare se uno dei due contiene la stazione inserita dall'utente (partenza o arrivo inseriti controllo con fermate del treno)
+            // di default metto lo 0, poi valuto
+            trenoDict  = [resp objectAtIndex:0];
+            
             if([resp count] > 1) {
-                if(!toDb.daOrarioTrenitalia) trenoDict = [resp objectAtIndex:0];
-                else trenoDict = [resp objectAtIndex:1];
-            } else trenoDict  = [resp objectAtIndex:0];
+                NSLog(@"Treno non univoco: %@",numero);
+                [resp enumerateObjectsUsingBlock:^(NSDictionary *tPossibile, NSUInteger idx,BOOL *stop) {
+
+                    [[APIClient sharedClient] syncRequest:@"trovaFermateTreno" withParams:@{@"numero":numero,@"origine":[tPossibile objectForKey:@"idOrigine"]} andTimeout:20 completion:^(NSDictionary *response) {
+                        NSArray *stringheStazioni = (NSArray*) response;
+                        NSLog(@"%@",stringheStazioni);
+                        for (NSString *stringa in stringheStazioni) {
+                            if ([stringa caseInsensitiveCompare:self.viaggio.partenza.nome] == NSOrderedSame || [stringa caseInsensitiveCompare:self.viaggio.arrivo.nome] == NSOrderedSame) {
+                                // il treno alla posizione idx è quello corretto
+                                NSLog(@"Trovata corrispondenza stazioni - treno %ld",idx);
+                                trenoDict = [resp objectAtIndex:idx];
+                                *stop = true;
+                            }
+                        }
+                    }];
+                    
+                }];
+            }
             
             Stazione *origine = [[Stazione alloc] init];
             Stazione *destinazione = [[Stazione alloc] init];
@@ -273,18 +291,6 @@
             toDb.origine = origine;
             toDb.destinazione = destinazione;
             toDb.categoria = [trenoDict objectForKey:@"categoria"];
-            
-            /*
-            for(NSDictionary *trenoDict in response) {
-                Stazione *origine = [[Stazione alloc] init];
-                Stazione *destinazione = [[Stazione alloc] init];
-                origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
-                destinazione.idStazione = [trenoDict objectForKey:@"idDestinazione"];
-                toDb.origine = origine;
-                toDb.destinazione = destinazione;
-                toDb.categoria = [trenoDict objectForKey:@"categoria"];
-            }
-             */
             
             
             NSInteger tsPartenza = [[NSNumber numberWithDouble:toDb.orarioPartenza] intValue];

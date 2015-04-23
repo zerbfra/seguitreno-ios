@@ -221,9 +221,11 @@
     if (success){
         //db già copiato
         NSLog(@"DB già copiato");
+        
+#warning mettere il coso x aggiornare le stazioni con le nuove!
+        
         return success;
     }
-    
     
     // Se non esiste, lo copio
     NSString *defaultDBPath =  [[NSBundle mainBundle] pathForResource:@"seguitreno" ofType:@"db"];

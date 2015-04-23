@@ -28,7 +28,7 @@
 
 -(void) requestWithPath:(NSString*) path andParams:(NSDictionary*)parameters withTimeout:(int) timeout cacheLife:(int) life completion:(void (^)(NSDictionary *))completion {
     
-
+    
     __block NSData *jsonData;
     
     // Percorso della cartella Documents
@@ -75,7 +75,7 @@
             
             completion(result);
         }];
-
+        
     } else {
         // ALTRIMENTI *NON* MI COLLEGO AL SERVER: ritorno il file presente nel device
         NSLog(@"Retrieving local file data");
@@ -152,6 +152,60 @@
     
     // avvio il task
     [dataTask resume];
+}
+
+-(void) syncRequest:(NSString*) path withParams:(NSDictionary*) parameters andTimeout:(int) timeout completion:(void (^)(NSDictionary *))completion {
+    
+    path = [NSString stringWithFormat:@"%@%@.php",BaseURLString,path];
+    
+    NSURL * url = [NSURL URLWithString:path];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSError *error = nil;
+    
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    // mando la richiesta in post con un body JSON, cosi è tutto incapsulato e non girano parametri nell'url
+    [request setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters  options:NSJSONWritingPrettyPrinted error:&error]];
+    [request setTimeoutInterval:timeout];
+    
+    // attivo l'indicatore network
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    // procedo con un task per la richiesta
+    NSURLResponse* response;
+    NSData* data = [NSURLConnection sendSynchronousRequest:request  returningResponse:&response error:&error];
+    
+    if (!error) {
+        NSHTTPURLResponse *httpResp = (NSHTTPURLResponse*) response;
+        if (httpResp.statusCode == 200) {
+            NSError *jsonParsingError = nil;
+            NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParsingError];
+            
+            if(!jsonParsingError) {
+                
+                NSString *status = [jsonDict objectForKey:@"status"];
+                // se non ho errore nello status passo l'object response
+                if(![status isEqualToString:@"error"]) {
+                    NSLog(@"%@ --> %@",path,status);
+                    // COMPLETO LA RICHIESTA POSITIVAMENTE!
+                    completion([jsonDict objectForKey:@"response"]);
+                }
+                else NSLog(@"Response status for %@ error: %@",path,jsonDict);
+            }
+            else  NSLog(@"Bad Server JSON: %@",httpResp);
+            
+        } else {
+            // HANDLE BAD RESPONSE //
+            NSLog(@"Bad Server response: %@",httpResp);
+        }
+    } else {
+        // HANDLE ERROR //
+        NSLog(@"Error with the request %@",error);
+    }
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+
+    
 }
 
 -(void) getPageWithURL:(NSString*)urlString completion:(void (^)(NSData*))completion {
