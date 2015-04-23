@@ -37,17 +37,18 @@
             [self.tableView reloadData];
         } else {
             // soluzioni non trovate
-            NSLog(@"non trovo niente, cerco con orario trenitalia...");
+            NSLog(@"non trovo niente...");
             
-            /*
-            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Non trovo nessuna soluzione viaggio" message:@"Probabilmente il tragitto che cerchi non è ancora supportato dall'app.\n\nProva a contattare lo sviluppatore dalle impostazioni dell'app specificando che tragitto stai cercando e che società gestisce il trasporto." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Non trovo nessuna soluzione viaggio" message:@"Probabilmente il tragitto che cerchi non è ancora supportato dall'app.\n\nContatta lo sviluppatore dalle impostazioni dell'app specificando che tragitto stai cercando e che società gestisce il trasporto. Grazie!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
-            */
-             
+            
+            /* ELIMINATO CAUSA NUOVE API PRONTOTRENO *******
             [self soluzioniOrarioTrenitalia:^{
                     NSLog(@"Aggiorno tabella");
                     [self.tableView reloadData];
             }];
+            ***********************************************/
 
         }
         [activityIndicator stopAnimating];
@@ -60,125 +61,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-// metodo che ricerca le soluzioni su orario.trenitalia.com (per i treni trenord/lenord e compagnia)
--(void) soluzioniOrarioTrenitalia:(void (^)(void))completionBlock {
 
-    NSString *day = [[DateUtils shared] getDayNumber:self.query.data];
-    NSString *month = [[DateUtils shared] getMonthNumber:self.query.data];
-    NSString *year = [[DateUtils shared] getYearNumber:self.query.data];
-    
-    NSString *stringaOrario = [NSString stringWithFormat:@"http://orario.trenitalia.com/b2c/nppPriceTravelSolutions.do?lang=it&stazin=%@&stazout=%@&datag=%@&datam=%@&dataa=%@&timsh=1&timsm=0&nreq=25&npag=1&sort=0&economy=1&det=&solotreno=0&noreservation=0&traintype=&car=0",self.query.partenza.nome,self.query.arrivo.nome,day,month,year];
-    
-    stringaOrario = [stringaOrario stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"URL orario trenitalia: %@",stringaOrario);
-    
-    [[APIClient sharedClient] getPageWithURL:stringaOrario completion:^(NSData *data) {
-        // parso il contenuto della pagina
-        [self parseTrenitalia:data];
-        completionBlock();
-        
-    }];
-    
-}
-
--(void) parseTrenitalia:(NSData*) data {
-    
-    TFHpple *tutorialsParser = [TFHpple hppleWithHTMLData:data];
-    
-    // path di ricerca
-    NSString *XpathQueryString = @"//tbody/tr[@class='odd' or @class='even']//td";
-    NSArray *nodes = [tutorialsParser searchWithXPathQuery:XpathQueryString];
-    
-    if([nodes count] <= 0) {
-        NSLog(@"Errore su ricerca orario trenitalia");
-#warning comunicare un messaggio all'utente (segnalazione malpelo, qua faceva crashare)
-        return;
-    }
-    
-    NSMutableArray *treniValidi = [NSMutableArray array];
-    
-    for (TFHppleElement *element in nodes) {
-        //NSLog(@"Elemento: %@",[[element firstChild] content]);
-        
-        NSString *content =[[element firstChild] content];
-        // rimuovo schifezze
-        if(![content containsString:@"ND"] && ![content containsString:@"\n"] && [content length]>0) {
-            [treniValidi addObject:[[element firstChild] content]];
-        }
-    }
-    
-    /* QUI RIMUOVO QUELLI COL CAMBIO, esempio da asso a bovisa:
-     "04:45",
-     "06:13",
-     "01:28",
-     "2610A ",
-     "05:37", => cambio
-     "12610 ",
-     "06:05",
-     "07:13",
-     */
-    
-    NSMutableArray *discardedItems = [NSMutableArray array];
-    for(int i=4;i<[treniValidi count]-1; i++) {
-        if ([treniValidi[i] containsString:@":"] && ![treniValidi[i-1] containsString:@":"] && ![treniValidi[i+1] containsString:@":"]) {
-            
-            [discardedItems addObject:treniValidi[i-4]];
-            [discardedItems addObject:treniValidi[i-3]];
-            [discardedItems addObject:treniValidi[i-2]];
-            [discardedItems addObject:treniValidi[i-1]];
-            [discardedItems addObject:treniValidi[i-0]];
-            [discardedItems addObject:treniValidi[i+1]];
-            
-        }
-    }
-    
-    [treniValidi removeObjectsInArray:discardedItems];
-    
-    // a questo punto ho l'array dei treni validi, lo sistemo
-    for(int i=0; i <[treniValidi count]; i+=4) {
-        
-        Viaggio  *soluzione = [[Viaggio alloc] init];
-        Treno *treno = [[Treno alloc] init];
-        
-        // viene da orario trenitalia, setto il flag!
-        treno.daOrarioTrenitalia = true;
-        
-        NSMutableArray *tmpTragitto = [[NSMutableArray alloc] init];
-        
-        Stazione *partenza = [[Stazione alloc] init];
-        Stazione *arrivo = [[Stazione alloc] init];
-        
-        partenza.nome = self.query.partenza.nome;
-        
-        arrivo.nome = self.query.arrivo.nome;
-        
-        soluzione.partenza = partenza;
-        soluzione.arrivo  = arrivo;
-        
-        soluzione.durata = [treniValidi objectAtIndex:i+2];
-        
-        treno.numero = [treniValidi objectAtIndex:i+3];
-        
-        // a 0 HH e a 1 mm
-        NSArray *orarioArrivo = [[treniValidi objectAtIndex:i+1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
-        NSArray *orarioPartenza = [[treniValidi objectAtIndex:i] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
-        NSDate *orarioADate = [[DateUtils shared] date:self.query.data At:[orarioArrivo[0] doubleValue] min:[orarioArrivo[1] doubleValue]];
-        NSDate *orarioPDate = [[DateUtils shared] date:self.query.data At:[orarioPartenza[0] doubleValue] min:[orarioPartenza[1] doubleValue]];
-        
-        treno.orarioArrivo = [[DateUtils shared] timestampFrom:orarioADate];
-        treno.orarioPartenza = [[DateUtils shared] timestampFrom:orarioPDate];
-        
-        treno.partenza = partenza;
-        treno.arrivo = arrivo;
-        
-        treno.categoria = @"";
-        
-        [tmpTragitto addObject:treno];
-        soluzione.tragitto = [tmpTragitto copy];
-        [self.soluzioniPossibili addObject:soluzione];
-        
-    }
-}
 
 // richiede le soluzioni viaggio recuperate dal server
 -(void) trovaSoluzioniTreno:(void (^)(void))completionBlock {
@@ -432,5 +315,122 @@
     
     
 }
+
+
+
+
+/**** VECCHIO METODO CON SCRAPING ORARIO TRENITALIA *******/
+
+/*
+ // metodo che ricerca le soluzioni su orario.trenitalia.com (per i treni trenord/lenord e compagnia)
+ -(void) soluzioniOrarioTrenitalia:(void (^)(void))completionBlock {
+ 
+ NSString *day = [[DateUtils shared] getDayNumber:self.query.data];
+ NSString *month = [[DateUtils shared] getMonthNumber:self.query.data];
+ NSString *year = [[DateUtils shared] getYearNumber:self.query.data];
+ 
+ NSString *stringaOrario = [NSString stringWithFormat:@"http://orario.trenitalia.com/b2c/nppPriceTravelSolutions.do?lang=it&stazin=%@&stazout=%@&datag=%@&datam=%@&dataa=%@&timsh=1&timsm=0&nreq=25&npag=1&sort=0&economy=1&det=&solotreno=0&noreservation=0&traintype=&car=0",self.query.partenza.nome,self.query.arrivo.nome,day,month,year];
+ 
+ stringaOrario = [stringaOrario stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+ NSLog(@"URL orario trenitalia: %@",stringaOrario);
+ 
+ [[APIClient sharedClient] getPageWithURL:stringaOrario completion:^(NSData *data) {
+ // parso il contenuto della pagina
+ [self parseTrenitalia:data];
+ completionBlock();
+ 
+ }];
+ 
+ }
+ 
+ -(void) parseTrenitalia:(NSData*) data {
+ 
+ TFHpple *tutorialsParser = [TFHpple hppleWithHTMLData:data];
+ 
+ // path di ricerca
+ NSString *XpathQueryString = @"//tbody/tr[@class='odd' or @class='even']//td";
+ NSArray *nodes = [tutorialsParser searchWithXPathQuery:XpathQueryString];
+ 
+ if([nodes count] <= 0) {
+ NSLog(@"Errore su ricerca orario trenitalia");
+ #warning comunicare un messaggio all'utente (segnalazione malpelo, qua faceva crashare)
+ return;
+ }
+ 
+ NSMutableArray *treniValidi = [NSMutableArray array];
+ 
+ for (TFHppleElement *element in nodes) {
+ //NSLog(@"Elemento: %@",[[element firstChild] content]);
+ 
+ NSString *content =[[element firstChild] content];
+ // rimuovo schifezze
+ if(![content containsString:@"ND"] && ![content containsString:@"\n"] && [content length]>0) {
+ [treniValidi addObject:[[element firstChild] content]];
+ }
+ }
+ 
+ 
+ NSMutableArray *discardedItems = [NSMutableArray array];
+ for(int i=4;i<[treniValidi count]-1; i++) {
+ if ([treniValidi[i] containsString:@":"] && ![treniValidi[i-1] containsString:@":"] && ![treniValidi[i+1] containsString:@":"]) {
+ 
+ [discardedItems addObject:treniValidi[i-4]];
+ [discardedItems addObject:treniValidi[i-3]];
+ [discardedItems addObject:treniValidi[i-2]];
+ [discardedItems addObject:treniValidi[i-1]];
+ [discardedItems addObject:treniValidi[i-0]];
+ [discardedItems addObject:treniValidi[i+1]];
+ 
+ }
+ }
+ 
+ [treniValidi removeObjectsInArray:discardedItems];
+ 
+ // a questo punto ho l'array dei treni validi, lo sistemo
+ for(int i=0; i <[treniValidi count]; i+=4) {
+ 
+ Viaggio  *soluzione = [[Viaggio alloc] init];
+ Treno *treno = [[Treno alloc] init];
+ 
+ // viene da orario trenitalia, setto il flag!
+ treno.daOrarioTrenitalia = true;
+ 
+ NSMutableArray *tmpTragitto = [[NSMutableArray alloc] init];
+ 
+ Stazione *partenza = [[Stazione alloc] init];
+ Stazione *arrivo = [[Stazione alloc] init];
+ 
+ partenza.nome = self.query.partenza.nome;
+ 
+ arrivo.nome = self.query.arrivo.nome;
+ 
+ soluzione.partenza = partenza;
+ soluzione.arrivo  = arrivo;
+ 
+ soluzione.durata = [treniValidi objectAtIndex:i+2];
+ 
+ treno.numero = [treniValidi objectAtIndex:i+3];
+ 
+ // a 0 HH e a 1 mm
+ NSArray *orarioArrivo = [[treniValidi objectAtIndex:i+1] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
+ NSArray *orarioPartenza = [[treniValidi objectAtIndex:i] componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
+ NSDate *orarioADate = [[DateUtils shared] date:self.query.data At:[orarioArrivo[0] doubleValue] min:[orarioArrivo[1] doubleValue]];
+ NSDate *orarioPDate = [[DateUtils shared] date:self.query.data At:[orarioPartenza[0] doubleValue] min:[orarioPartenza[1] doubleValue]];
+ 
+ treno.orarioArrivo = [[DateUtils shared] timestampFrom:orarioADate];
+ treno.orarioPartenza = [[DateUtils shared] timestampFrom:orarioPDate];
+ 
+ treno.partenza = partenza;
+ treno.arrivo = arrivo;
+ 
+ treno.categoria = @"";
+ 
+ [tmpTragitto addObject:treno];
+ soluzione.tragitto = [tmpTragitto copy];
+ [self.soluzioniPossibili addObject:soluzione];
+ 
+ }
+ }
+ */
 
 @end
