@@ -81,9 +81,9 @@
     self.viaggio = soluzioneSelezionata;
     // importo la data
     self.viaggio.data = [self.viaggio orarioPartenza];
-
+    
     self.trenoCompilato = TRUE; // il treno è ora compilato
-
+    
     [self.tableView reloadData];
 #warning qui che faccio? -- non penso ci sia bisogno di metterlo ;)
     //aggiorno la fine ripetizione in base a quello che è selezionato
@@ -162,15 +162,15 @@
             arrayArrivoTemp = [[DateUtils shared] arrayOfNextWeekDays:idG startingFrom:[self.viaggio orarioPartenza] to:self.viaggio.fineRipetizione];
         }
         /*else {
-            arrayPartenzaTemp = [[DateUtils shared] arrayOfNextWeekDays:idG startingFrom:[self.viaggio orarioPartenza] to:[self.viaggio orarioPartenza]];
-            arrayArrivoTemp = [[DateUtils shared] arrayOfNextWeekDays:idG startingFrom:[self.viaggio orarioPartenza] to:[self.viaggio orarioArrivo]];
-        }*/
+         arrayPartenzaTemp = [[DateUtils shared] arrayOfNextWeekDays:idG startingFrom:[self.viaggio orarioPartenza] to:[self.viaggio orarioPartenza]];
+         arrayArrivoTemp = [[DateUtils shared] arrayOfNextWeekDays:idG startingFrom:[self.viaggio orarioPartenza] to:[self.viaggio orarioArrivo]];
+         }*/
         
-    
+        
         
         [arrayPartenza addObjectsFromArray:arrayPartenzaTemp];
         [arrayArrivo addObjectsFromArray:arrayArrivoTemp];
-    
+        
     }
     
     // SALVO VIAGGI
@@ -253,67 +253,76 @@
         dispatch_group_enter(group);
         
         NSString  *numero = toDb.numero;
-
+        
+        self.presenzaMezziNonTreno = false;
+        
         [[APIClient sharedClient] requestWithPath:@"trovaTreno" andParams:@{@"numero":numero,@"includiFermate":[NSNumber numberWithBool:false]} completion:^(NSDictionary *response) {
             
-            // prendo il primo, come fa viaggiatreno se viene dalla sua API, altrimenti prendo il secondo (perchè viene da orario trenitalia), fanculo i successivi
             NSArray* resp = (NSArray*) response;
-            __block NSDictionary *trenoDict;
             
-            // controllare se uno dei due contiene la stazione inserita dall'utente (partenza o arrivo inseriti controllo con fermate del treno)
-            // di default metto lo 0, poi valuto
-            trenoDict  = [resp objectAtIndex:0];
-            
-            if([resp count] > 1) {
-                NSLog(@"Treno non univoco: %@",numero);
-                [resp enumerateObjectsUsingBlock:^(NSDictionary *tPossibile, NSUInteger idx,BOOL *stop) {
-
-                    [[APIClient sharedClient] syncRequest:@"trovaFermateTreno" withParams:@{@"numero":numero,@"origine":[tPossibile objectForKey:@"idOrigine"]} andTimeout:20 completion:^(NSDictionary *response) {
-                        NSArray *stringheStazioni = (NSArray*) response;
-                        NSLog(@"%@",stringheStazioni);
-                        for (NSString *stringa in stringheStazioni) {
-                            if ([stringa caseInsensitiveCompare:self.viaggio.partenza.nome] == NSOrderedSame || [stringa caseInsensitiveCompare:self.viaggio.arrivo.nome] == NSOrderedSame) {
-                                // il treno alla posizione idx è quello corretto
-                                NSLog(@"Trovata corrispondenza stazioni - treno %ld",idx);
-                                trenoDict = [resp objectAtIndex:idx];
-                                *stop = true;
+            // solo in questo caso ho qualcosa da analizzare
+            if([resp count] > 0) {
+                
+                __block NSDictionary *trenoDict;
+                
+                // controllare se uno dei due contiene la stazione inserita dall'utente (partenza o arrivo inseriti controllo con fermate del treno)
+                // di default metto lo 0, poi valuto
+                trenoDict  = [resp objectAtIndex:0];
+                
+                if([resp count] > 1) {
+                    NSLog(@"Treno non univoco: %@",numero);
+                    [resp enumerateObjectsUsingBlock:^(NSDictionary *tPossibile, NSUInteger idx,BOOL *stop) {
+                        
+                        [[APIClient sharedClient] syncRequest:@"trovaFermateTreno" withParams:@{@"numero":numero,@"origine":[tPossibile objectForKey:@"idOrigine"]} andTimeout:20 completion:^(NSDictionary *response) {
+                            NSArray *stringheStazioni = (NSArray*) response;
+                            NSLog(@"%@",stringheStazioni);
+                            for (NSString *stringa in stringheStazioni) {
+                                if ([stringa caseInsensitiveCompare:self.viaggio.partenza.nome] == NSOrderedSame || [stringa caseInsensitiveCompare:self.viaggio.arrivo.nome] == NSOrderedSame) {
+                                    // il treno alla posizione idx è quello corretto
+                                    NSLog(@"Trovata corrispondenza stazioni - treno %ld",idx);
+                                    trenoDict = [resp objectAtIndex:idx];
+                                    *stop = true;
+                                }
                             }
-                        }
+                        }];
+                        
                     }];
-                    
-                }];
-            }
-            
-            Stazione *origine = [[Stazione alloc] init];
-            Stazione *destinazione = [[Stazione alloc] init];
-            origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
-            destinazione.idStazione = [trenoDict objectForKey:@"idDestinazione"];
-            toDb.origine = origine;
-            toDb.destinazione = destinazione;
-            toDb.categoria = [trenoDict objectForKey:@"categoria"];
-            
-            
-            NSInteger tsPartenza = [[NSNumber numberWithDouble:toDb.orarioPartenza] intValue];
-            NSInteger tsArrivo = [[NSNumber numberWithDouble:toDb.orarioArrivo] intValue];
-            
-            
-            NSString *query = [NSString stringWithFormat:@"INSERT INTO treni (numero,idOrigine,idDestinazione,categoria,nomePartenza,nomeArrivo,orarioPartenza,orarioArrivo) VALUES ('%@','%@','%@','%@','%@','%@','%ld','%ld')",toDb.numero,toDb.origine.idStazione,toDb.destinazione.idStazione,toDb.categoria,toDb.partenza.nome,toDb.arrivo.nome,(long)tsPartenza,(long)tsArrivo];
-            
-            [[DBHelper sharedInstance] executeSQLStatement:query];
-            NSString *dbTreno =  [[[[DBHelper sharedInstance] executeSQLStatement:@"SELECT last_insert_rowid() AS id"] objectAtIndex:0] objectForKey:@"id"];
-            
-            [treniInseriti addObject:dbTreno];
-            NSLog(@"Treno %@ salvato: %@",dbTreno,toDb.numero);
-            
-            
-            // compilo la tabella che associa treni ai viaggi
-            for (NSUInteger indexV = 0; indexV < viaggiInseriti.count; indexV++) {
-                for (NSUInteger indexT = 0; indexT < treniInseriti.count; indexT++) {
-                    //NSLog(@"Inserisco viaggio-treno");
-                    NSString *query = [NSString stringWithFormat:@"INSERT INTO 'treni-viaggi' (idViaggio,idTreno) VALUES ('%@','%@')",viaggiInseriti[indexV],treniInseriti[indexT]];
-                    [[DBHelper sharedInstance] executeSQLStatement:query];
                 }
                 
+                Stazione *origine = [[Stazione alloc] init];
+                Stazione *destinazione = [[Stazione alloc] init];
+                origine.idStazione = [trenoDict objectForKey:@"idOrigine"];
+                destinazione.idStazione = [trenoDict objectForKey:@"idDestinazione"];
+                toDb.origine = origine;
+                toDb.destinazione = destinazione;
+                toDb.categoria = [trenoDict objectForKey:@"categoria"];
+                
+                
+                NSInteger tsPartenza = [[NSNumber numberWithDouble:toDb.orarioPartenza] intValue];
+                NSInteger tsArrivo = [[NSNumber numberWithDouble:toDb.orarioArrivo] intValue];
+                
+                
+                NSString *query = [NSString stringWithFormat:@"INSERT INTO treni (numero,idOrigine,idDestinazione,categoria,nomePartenza,nomeArrivo,orarioPartenza,orarioArrivo) VALUES ('%@','%@','%@','%@','%@','%@','%ld','%ld')",toDb.numero,toDb.origine.idStazione,toDb.destinazione.idStazione,toDb.categoria,toDb.partenza.nome,toDb.arrivo.nome,(long)tsPartenza,(long)tsArrivo];
+                
+                [[DBHelper sharedInstance] executeSQLStatement:query];
+                NSString *dbTreno =  [[[[DBHelper sharedInstance] executeSQLStatement:@"SELECT last_insert_rowid() AS id"] objectAtIndex:0] objectForKey:@"id"];
+                
+                [treniInseriti addObject:dbTreno];
+                NSLog(@"Treno %@ salvato: %@",dbTreno,toDb.numero);
+                
+                
+                // compilo la tabella che associa treni ai viaggi
+                for (NSUInteger indexV = 0; indexV < viaggiInseriti.count; indexV++) {
+                    for (NSUInteger indexT = 0; indexT < treniInseriti.count; indexT++) {
+                        //NSLog(@"Inserisco viaggio-treno");
+                        NSString *query = [NSString stringWithFormat:@"INSERT INTO 'treni-viaggi' (idViaggio,idTreno) VALUES ('%@','%@')",viaggiInseriti[indexV],treniInseriti[indexT]];
+                        [[DBHelper sharedInstance] executeSQLStatement:query];
+                    }
+                    
+                }
+            } else {
+                NSLog(@"Risultati del treno %@ vuoti",numero);
+                self.presenzaMezziNonTreno = true;
             }
             
             //esco
@@ -327,7 +336,13 @@
     // tutti finiti, quindi dico alla schermata principale (MainViewController) di aggiornare la grafica
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         NSLog(@"Finito le richieste di salvataggio");
-        // invio la notifica globale che ho aggiunto dei treni 
+        
+        if(self.presenzaMezziNonTreno) {
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Attenzione!" message:@"Alcuni dei mezzi di trasporto della tua tratta sono treni urbani oppure autobus, pertanto non sono stati aggiunti." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+            [alertView show];
+        }
+        
+        // invio la notifica globale che ho aggiunto dei treni
         [[NSNotificationCenter defaultCenter] postNotificationName:@"update" object:nil];
     });
     
@@ -407,7 +422,7 @@
 // disegna le varie celle del tragitto
 -(UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-
+    
     if(indexPath.section == 1 && self.trenoCompilato) {
         
         static NSString *cellIdentifier = @"cellTragitto";
@@ -434,7 +449,7 @@
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
+    
     if([segue.identifier  isEqual: @"selezionaStazione"]) {
         // per selezionare la stazione
         SearchStazioneViewController *destination = (SearchStazioneViewController*)[segue destinationViewController];
@@ -499,12 +514,12 @@
     } else {
         // deselzionato
         [self.giorni replaceObjectAtIndex:index withObject:@"0"];
-
+        
     }
     NSLog(@"%@",self.giorni);
     
     
- 
+    
 }
 
 -(void) setFineRipetizione {
@@ -515,43 +530,43 @@
 
 
 /*
-- (IBAction)selezioneRipetizione:(UISegmentedControl *)sender {
-    [self gestisciRipetizione:sender.selectedSegmentIndex];
-}
-
--(void) gestisciRipetizione:(NSInteger) selezionato {
-    
-    switch (selezionato) {
-        case 0:
-            //NSLog(@"Mai");
-            self.viaggio.fineRipetizione = nil;
-            self.ripetizioneSel = 0;
-            break;
-        case 1:
-            //NSLog(@"2 settimane");
-            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:7 toDate:self.viaggio.data];
-            self.ripetizioneSel = 1;
-            break;
-        case 2:
-            //NSLog(@"1 mese");
-            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:30 toDate:self.viaggio.data];
-            self.ripetizioneSel = 2;
-            break;
-        case 3:
-            //NSLog(@"3 mesi");
-            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:90 toDate:self.viaggio.data];
-            self.ripetizioneSel = 3;
-            break;
-        case 4:
-            //NSLog(@"6 mesi");
-            self.viaggio.fineRipetizione = [[DateUtils shared] addDays:180 toDate:self.viaggio.data];
-            self.ripetizioneSel = 4;
-            break;
-            
-        default:
-            break;
-    }
-
-}*/
+ - (IBAction)selezioneRipetizione:(UISegmentedControl *)sender {
+ [self gestisciRipetizione:sender.selectedSegmentIndex];
+ }
+ 
+ -(void) gestisciRipetizione:(NSInteger) selezionato {
+ 
+ switch (selezionato) {
+ case 0:
+ //NSLog(@"Mai");
+ self.viaggio.fineRipetizione = nil;
+ self.ripetizioneSel = 0;
+ break;
+ case 1:
+ //NSLog(@"2 settimane");
+ self.viaggio.fineRipetizione = [[DateUtils shared] addDays:7 toDate:self.viaggio.data];
+ self.ripetizioneSel = 1;
+ break;
+ case 2:
+ //NSLog(@"1 mese");
+ self.viaggio.fineRipetizione = [[DateUtils shared] addDays:30 toDate:self.viaggio.data];
+ self.ripetizioneSel = 2;
+ break;
+ case 3:
+ //NSLog(@"3 mesi");
+ self.viaggio.fineRipetizione = [[DateUtils shared] addDays:90 toDate:self.viaggio.data];
+ self.ripetizioneSel = 3;
+ break;
+ case 4:
+ //NSLog(@"6 mesi");
+ self.viaggio.fineRipetizione = [[DateUtils shared] addDays:180 toDate:self.viaggio.data];
+ self.ripetizioneSel = 4;
+ break;
+ 
+ default:
+ break;
+ }
+ 
+ }*/
 
 @end

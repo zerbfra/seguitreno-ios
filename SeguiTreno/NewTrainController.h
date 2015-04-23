@@ -17,6 +17,7 @@
 @interface NewTrainController : UITableViewController <UIActionSheetDelegate,SearchStazioneDelegate,SoluzioneViaggioDelegate,MultiSelectSegmentedControlDelegate>
 
 @property BOOL trenoCompilato;
+@property BOOL presenzaMezziNonTreno;
 
 @property NSInteger ripetizioneSel;
 
