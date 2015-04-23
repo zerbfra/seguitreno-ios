@@ -45,5 +45,6 @@
 
 
 
-#define BaseURLString @"http://seguitreno.zerbinatifrancesco.it/" // VPS OVH
+#warning RIMUOVERE BETA!
+#define BaseURLString @"http://seguitreno.zerbinatifrancesco.it/beta/" // VPS OVH
 
