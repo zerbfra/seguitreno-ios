@@ -40,7 +40,7 @@
             NSLog(@"non trovo niente...");
             
             
-            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Non trovo nessuna soluzione viaggio" message:@"Probabilmente il tragitto che cerchi non è ancora supportato dall'app.\n\nContatta lo sviluppatore dalle impostazioni dell'app specificando che tragitto stai cercando e che società gestisce il trasporto. Grazie!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"Non trovo nessuna soluzione viaggio" message:@"Probabilmente il tragitto che cerchi non è ancora supportato dall'app.\n\nContatta lo sviluppatore dalle impostazioni dell'app specificando che tragitto stai cercando indicando stazioni di partenza e arrivo. Grazie!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
             
             /* ELIMINATO CAUSA NUOVE API PRONTOTRENO *******
