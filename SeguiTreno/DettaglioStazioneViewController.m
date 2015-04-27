@@ -56,8 +56,15 @@
     self.mapView.delegate = self;
     self.mapView.mapType = MKMapTypeStandard;
     
-    NSString *query = [NSString stringWithFormat:@"SELECT lat,lon FROM stazioni WHERE id='%@'",self.stazione.idStazione];
-    NSArray *results = [[DBHelper sharedInstance] executeSQLStatement:query];
+    //NSString *query = [NSString stringWithFormat:@"SELECT lat,lon FROM stazioni WHERE id='%@'",self.stazione.idStazione];
+    //NSArray *results = [[DBHelper sharedInstance] executeSQLStatement:query];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"stazioni" ofType:@"plist"];
+    NSArray *plistData = [NSArray arrayWithContentsOfFile:path];
+    NSPredicate *filter = [NSPredicate predicateWithFormat:@"id = %@", self.stazione.idStazione];
+    NSArray *results = [plistData filteredArrayUsingPredicate:filter];
+
+    
     // non tutte le stazioni sono presenti nel db (limitazione data da trenitalia)
     if([results count] > 0) {
         NSDictionary *result= [results objectAtIndex:0];

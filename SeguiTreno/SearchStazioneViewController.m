@@ -39,8 +39,14 @@
 // salva l'elenco delle stazioni in un array
 -(void) elencoStazioni {
     
-    NSArray* results  = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM stazioni"];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"stazioni" ofType:@"plist"];
+    NSArray *results = [NSArray arrayWithContentsOfFile:path];
+
+    //NSArray* results  = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM stazioni"];
+
     NSMutableArray *stazioni = [[NSMutableArray alloc] init];
+
     
     for (NSDictionary* set in results) {
         Stazione *stazione = [[Stazione alloc] init];

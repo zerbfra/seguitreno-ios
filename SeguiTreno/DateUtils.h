@@ -38,6 +38,9 @@
 // ritorna un bool che dice se la data è compresa tra altre due
 - (BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate;
 
+// calcola il numero di giorni tra due NSDate
+- (int) daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime;
+
 // vedi solo ora
 -(NSString*) showHHmm:(NSDate*) date;
 // vedi data e ora

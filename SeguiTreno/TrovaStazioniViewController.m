@@ -114,7 +114,10 @@
 // ritorna l'elenco delle stazioni vicine a un oggetto CLLOcation (scrive su self.stazionivicine)
 -(void) elencoStazioniVicineA:(CLLocation *) currentLocation {
     
-    NSArray* results  = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM stazioni"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"stazioni" ofType:@"plist"];
+    NSArray *results = [NSArray arrayWithContentsOfFile:path];
+
+    //NSArray* results  = [[DBHelper sharedInstance] executeSQLStatement:@"SELECT * FROM stazioni"];
     NSMutableArray *stazioni = [[NSMutableArray alloc] init];
     NSMutableArray *vicine = [[NSMutableArray alloc] init];
     

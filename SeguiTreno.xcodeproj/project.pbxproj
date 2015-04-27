@@ -46,6 +46,7 @@
 		137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DF31A135E5200B9E77E /* DateUtils.m */; };
 		1397AB3C1A27C6F10084D478 /* DettaglioStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */; };
 		1398B9D71A388CBF005D6F31 /* DropboxClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1398B9D61A388CBF005D6F31 /* DropboxClient.m */; };
+		139CDC241AEE244E00D9A848 /* stazioni.plist in Resources */ = {isa = PBXBuildFile; fileRef = 139CDC231AEE244E00D9A848 /* stazioni.plist */; };
 		13A4FBD41A82375E00EFAA35 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13A4FBD31A82375E00EFAA35 /* NotificationCenter.framework */; };
 		13A4FBDA1A82375E00EFAA35 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A4FBD91A82375E00EFAA35 /* TodayViewController.m */; };
 		13A4FBDC1A82375E00EFAA35 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13A4FBDB1A82375E00EFAA35 /* MainInterface.storyboard */; };
@@ -175,6 +176,7 @@
 		1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioStazioneViewController.m; sourceTree = "<group>"; };
 		1398B9D51A388CBF005D6F31 /* DropboxClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxClient.h; sourceTree = "<group>"; };
 		1398B9D61A388CBF005D6F31 /* DropboxClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxClient.m; sourceTree = "<group>"; };
+		139CDC231AEE244E00D9A848 /* stazioni.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = stazioni.plist; sourceTree = "<group>"; };
 		13A4FBD11A82375E00EFAA35 /* SeguiTreno Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "SeguiTreno Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13A4FBD31A82375E00EFAA35 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		13A4FBD71A82375E00EFAA35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 			isa = PBXGroup;
 			children = (
 				137941F21A17CDC5000D45E1 /* seguitreno.db */,
+				139CDC231AEE244E00D9A848 /* stazioni.plist */,
 				135CC3C01A0A1F3B0074D079 /* Images.xcassets */,
 				135CC3E51A0A203C0074D079 /* SeguiTreno-Prefix.pch */,
 				135CC3B41A0A1F3B0074D079 /* Info.plist */,
@@ -726,6 +729,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				137941F31A17CFBB000D45E1 /* seguitreno.db in Resources */,
+				139CDC241AEE244E00D9A848 /* stazioni.plist in Resources */,
 				135CC3BF1A0A1F3B0074D079 /* Main.storyboard in Resources */,
 				135CC3C11A0A1F3B0074D079 /* Images.xcassets in Resources */,
 			);

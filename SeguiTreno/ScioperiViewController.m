@@ -178,7 +178,7 @@
         cell.detailTextLabel.text = newsCell.testo;
         cell.detailTextLabel.textColor = [UIColor darkGrayColor];
         cell.textLabel.textColor = [UIColor darkGrayColor];
-        if([newsCell.testo containsString:@"sciopero"]) {
+        if([newsCell.testo rangeOfString:@"sciopero"].location != NSNotFound) {
             cell.detailTextLabel.textColor = RED;
             cell.textLabel.textColor = RED;
         }

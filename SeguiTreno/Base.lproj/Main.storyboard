@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JKT-AF-CQT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JKT-AF-CQT">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--SeguiTreno-->
@@ -748,7 +748,7 @@
         <scene sceneID="pGv-Oj-HG4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gay-i4-UpN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Calendario" id="br8-H5-e3h"/>
+                    <tabBarItem key="tabBarItem" title="Calendario" image="calendarioTab" id="br8-H5-e3h"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="g5k-eU-qsn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -797,7 +797,6 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="07g-mL-1JX">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" red="0.53333333329999999" green="0.76862745099999996" blue="0.1450980392" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="gay-i4-UpN" kind="relationship" relationship="viewControllers" id="AG4-Ks-WDY"/>
@@ -1531,7 +1530,7 @@
         <scene sceneID="3QY-MB-OeB">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AdZ-U2-d3n" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Cerca Treno" id="Aea-hj-wHV"/>
+                    <tabBarItem key="tabBarItem" title="Cerca Treno" image="trenoTab" id="Aea-hj-wHV"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="u36-zL-09z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1681,7 +1680,7 @@
         <scene sceneID="2jb-wk-Qzi">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hhC-cS-W4D" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="News e Scioperi" id="JWg-La-p41"/>
+                    <tabBarItem key="tabBarItem" title="News e Scioperi" image="scioperoTab" id="JWg-La-p41"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zCO-Y7-0hw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1702,7 +1701,7 @@
         <scene sceneID="YxH-op-UUq">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1OO-P9-0bp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Stazioni" id="DOP-iF-BaE"/>
+                    <tabBarItem key="tabBarItem" title="Stazioni" image="stazioniTab" id="DOP-iF-BaE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Dfx-xa-pgc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1723,7 +1722,7 @@
         <scene sceneID="TLb-DC-mNp">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rrh-Gh-mBg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Impostazioni" id="vsN-OY-bh9"/>
+                    <tabBarItem key="tabBarItem" title="Impostazioni" image="settingsTab" id="vsN-OY-bh9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="aIY-D1-rIn">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1741,6 +1740,13 @@
             <point key="canvasLocation" x="131" y="2739"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="calendarioTab" width="30" height="30"/>
+        <image name="scioperoTab" width="30" height="30"/>
+        <image name="settingsTab" width="30" height="30"/>
+        <image name="stazioniTab" width="30" height="30"/>
+        <image name="trenoTab" width="30" height="30"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Wzc-yb-yfU"/>
         <segue reference="XZL-GM-sGO"/>

@@ -85,9 +85,6 @@
     self.trenoCompilato = TRUE; // il treno è ora compilato
     
     [self.tableView reloadData];
-#warning qui che faccio? -- non penso ci sia bisogno di metterlo ;)
-    //aggiorno la fine ripetizione in base a quello che è selezionato
-    //[self gestisciRipetizione:self.ripetizioneSel];
     
 }
 

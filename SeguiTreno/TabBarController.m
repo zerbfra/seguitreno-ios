@@ -18,15 +18,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [[UITabBar appearance] setTintColor:GREEN];
-    
-    // sistema gli oggetti con relative immagini per la tab bar
-    [[self.tabBar.items objectAtIndex:0] setFinishedSelectedImage:[UIImage imageNamed:@"calendarioTab"] withFinishedUnselectedImage:[UIImage imageNamed:@"calendarioTab"]];
-    [[self.tabBar.items objectAtIndex:1] setFinishedSelectedImage:[UIImage imageNamed:@"trenoTab"] withFinishedUnselectedImage:[UIImage imageNamed:@"trenoTab"]];
-    [[self.tabBar.items objectAtIndex:2] setFinishedSelectedImage:[UIImage imageNamed:@"scioperoTab"] withFinishedUnselectedImage:[UIImage imageNamed:@"scioperoTab"]];
-    [[self.tabBar.items objectAtIndex:3] setFinishedSelectedImage:[UIImage imageNamed:@"stazioniTab"] withFinishedUnselectedImage:[UIImage imageNamed:@"stazioniTab"]];
-    [[self.tabBar.items objectAtIndex:4] setFinishedSelectedImage:[UIImage imageNamed:@"settingsTab"] withFinishedUnselectedImage:[UIImage imageNamed:@"settingsTab"]];
-    
-    
+
 }
 
 - (void)didReceiveMemoryWarning {

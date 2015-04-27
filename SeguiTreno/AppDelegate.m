@@ -222,8 +222,6 @@
         //db già copiato
         NSLog(@"DB già copiato");
         
-#warning mettere il coso x aggiornare le stazioni con le nuove!
-        
         return success;
     }
     
