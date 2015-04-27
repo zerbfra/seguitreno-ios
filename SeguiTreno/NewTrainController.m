@@ -276,7 +276,7 @@
                             for (NSString *stringa in stringheStazioni) {
                                 if ([stringa caseInsensitiveCompare:self.viaggio.partenza.nome] == NSOrderedSame || [stringa caseInsensitiveCompare:self.viaggio.arrivo.nome] == NSOrderedSame) {
                                     // il treno alla posizione idx è quello corretto
-                                    NSLog(@"Trovata corrispondenza stazioni - treno %ld",idx);
+                                    NSLog(@"Trovata corrispondenza stazioni - treno");
                                     trenoDict = [resp objectAtIndex:idx];
                                     *stop = true;
                                 }

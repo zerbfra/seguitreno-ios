@@ -18,6 +18,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    // Splunk Mint
+    [[Mint sharedInstance] initAndStartSession:@"8b3dfc16"];
+    
     // crea la copia del database sul file system locale
     [self createCopyOfDatabaseIfNeeded];
     
