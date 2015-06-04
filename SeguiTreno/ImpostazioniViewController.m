@@ -51,12 +51,14 @@
     
     switch (indexPath.section) {
         case 0:
-            //[self performSegueWithIdentifier:@"notificaSegue" sender:nil];
-            [self showAlertNotifiche];
+            [self performSegueWithIdentifier:@"notificaSegue" sender:nil];
+            //[self showAlertNotifiche];
             break;
+              /*
         case 1:
             [self manageDropbox];
             break;
+          
         case 2:
             if(indexPath.row == 0) {
                 [self.spinnerExport startAnimating];
@@ -74,11 +76,12 @@
                 }];
             }
             break;
-        case 3:
+             */
+        case 1:
             if(indexPath.row == 0) [self sendFeedback];
             else [self twitterButton];
             break;
-        case 4:
+        case 2:
             if(indexPath.row == 1) [self leaveReview];
             break;
             
@@ -118,7 +121,7 @@
 
 // sistema il numero di righe considerando il fatto se dropbox è collegato o meno (scollegato 1 riga, scollegato aggiunge sezione con 2 righe)
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+    /*
     if([[DropboxClient shared] isDropboxLinked]) {
         
         switch (section) {
@@ -150,6 +153,21 @@
                 return 1;
                 break;
         }
+    }*/
+    
+    switch (section) {
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return 2;
+            break;
+        case 2:
+            return 2;
+            break;
+        default:
+            return 0;
+            break;
     }
     
     

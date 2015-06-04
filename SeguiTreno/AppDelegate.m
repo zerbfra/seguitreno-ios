@@ -68,7 +68,7 @@
     
     // invio la registrazione dell'utente al server quando il token è stato elaborato
     if(deviceToken != nil) {
-        
+ 
         [[APIClient sharedClient] requestWithPath:@"registraUtente" andParams:@{@"token":tokenString,@"appVersion":appVersion,@"deviceModel":dev.model,@"systemVersion":dev.systemVersion} withTimeout:10 cacheLife:0 completion:^(NSDictionary *response) {
             
             if([response objectForKey:@"id"] != nil) {

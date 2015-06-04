@@ -167,7 +167,7 @@
         viaggio.idViaggio = [viaggoSet objectForKey:@"id"];
         viaggio.data = [[DateUtils shared] dateFrom:[[viaggoSet objectForKey:@"orarioPartenza"] intValue]];
         
-        NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%@') ORDER BY orarioPartenza",viaggio.idViaggio];
+        NSString*stmt = [NSString stringWithFormat:@"SELECT * FROM treni WHERE id IN (SELECT idTreno FROM 'treni-viaggi' WHERE idViaggio = '%@') AND orarioPartenza >'%f' ORDER BY orarioPartenza",viaggio.idViaggio,[[NSDate date] timeIntervalSince1970]];
         NSArray *treni = [[DBHelper sharedInstance] executeSQLStatement:stmt];
         if([treni count] > 0) {
             
