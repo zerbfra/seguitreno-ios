@@ -68,7 +68,7 @@
     
     // invio la registrazione dell'utente al server quando il token è stato elaborato
     if(deviceToken != nil) {
- 
+        
         [[APIClient sharedClient] requestWithPath:@"registraUtente" andParams:@{@"token":tokenString,@"appVersion":appVersion,@"deviceModel":dev.model,@"systemVersion":dev.systemVersion} withTimeout:10 cacheLife:0 completion:^(NSDictionary *response) {
             
             if([response objectForKey:@"id"] != nil) {
@@ -168,28 +168,32 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-
+    
 }
 
 // invio database dei treni al server (questo per poter notificare all'utente i vari ritardi in base ai suoi treni)
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     
-    // creo array dei treni
-    NSArray* dbTreni = [[DBHelper sharedInstance] createDBForSync];
+    // se l'utente è registrato sul db esterno
+    if([[NSUserDefaults standardUserDefaults] objectForKey:userIDKey] != nil) {
+        
+        // creo array dei treni
+        NSArray* dbTreni = [[DBHelper sharedInstance] createDBForSync];
+        
+        NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:userIDKey];
+        NSLog(@"%@",userID);
+        
+        NSLog(@"%@",dbTreni);
+        
+        //salvo per le estensioni
+        [[DBHelper sharedInstance] storeDBForExtensions:dbTreni];
+        
+        // faccio la richiesta, inviando il db dei treni e l'idutente
+        [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni,@"idUtente":userID} withTimeout:20 cacheLife:0 completion:^(NSDictionary *response) {
+            NSLog(@"Response: %@", response);
+        }];
+    }
     
-    NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:userIDKey];
-    NSLog(@"%@",userID);
-    
-    NSLog(@"%@",dbTreni);
-    
-    //salvo per le estensioni
-    [[DBHelper sharedInstance] storeDBForExtensions:dbTreni];
-    
-    // faccio la richiesta, inviando il db dei treni e l'idutente
-    [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni,@"idUtente":userID} withTimeout:20 cacheLife:0 completion:^(NSDictionary *response) {
-         NSLog(@"Response: %@", response);
-    }];
-
     
 }
 
@@ -210,7 +214,7 @@
 
 // Funzione per creare una copia scrivibile del databse nella directory Library, chiaramente al primo avvio
 - (BOOL)createCopyOfDatabaseIfNeeded {
-  
+    
     BOOL success;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error;

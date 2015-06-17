@@ -21,7 +21,7 @@
     
     // recupero i dati dai defaults (non li ho messi nel db perchè non voglio farne il backup)
     self.push =  [[[NSUserDefaults standardUserDefaults] objectForKey:pushInterval] intValue];
-
+    
     
     
 }
@@ -30,7 +30,7 @@
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     BOOL setCheck = 0;
-
+    
     switch (indexPath.row) {
         case 0:
             if(self.push == 5) setCheck = 1;
@@ -49,22 +49,27 @@
     }
     
     if(setCheck) cell.accessoryType = UITableViewCellAccessoryCheckmark;
-
-   
+    
+    
 }
 // quando scompare la vista comunico al server le impostazioni push
 -(void) viewDidDisappear:(BOOL)animated {
     // aggiorno impostazioni notifiche per l'utente sul server
-    NSLog(@"Notifica %d",self.push);
     
-    NSString *idUtente = [[NSUserDefaults standardUserDefaults] objectForKey:userIDKey];
-    NSLog(@"%@",idUtente);
-    
-    [[APIClient sharedClient] requestWithPath:@"setNotifiche" andParams:@{@"id":idUtente,@"push":[NSNumber numberWithInt:self.push]} withTimeout:10 cacheLife:0 completion:^(NSDictionary *response){
+    if([[NSUserDefaults standardUserDefaults] objectForKey:userIDKey] != nil) {
         
-        NSLog(@"impostazioni notifiche salvate sul server");
-    }];
-
+        NSLog(@"Notifica %d",self.push);
+        
+        NSString *idUtente = [[NSUserDefaults standardUserDefaults] objectForKey:userIDKey];
+        NSLog(@"%@",idUtente);
+        
+        [[APIClient sharedClient] requestWithPath:@"setNotifiche" andParams:@{@"id":idUtente,@"push":[NSNumber numberWithInt:self.push]} withTimeout:10 cacheLife:0 completion:^(NSDictionary *response){
+            
+            NSLog(@"impostazioni notifiche salvate sul server");
+        }];
+        
+    } else NSLog(@"Problemi con id utente");
+    
     
 }
 
@@ -81,7 +86,7 @@
             break;
         case 2:
             self.push = 15;
-             break;
+            break;
         case 3:
             self.push = 30;
             break;
