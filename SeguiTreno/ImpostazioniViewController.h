@@ -8,15 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
-#import <Dropbox/Dropbox.h>
 
 @interface ImpostazioniViewController : UITableViewController <MFMailComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableViewCell *cellVersione;
-@property (weak, nonatomic) IBOutlet UITableViewCell *cellDropbox;
-
-@property (weak, nonatomic) IBOutlet UITableViewCell *cellExport;
-@property (weak, nonatomic) IBOutlet UITableViewCell *cellImport;
 
 @property (strong,nonatomic) UIActivityIndicatorView *spinnerExport;
 @property (strong,nonatomic) UIActivityIndicatorView *spinnerImport;

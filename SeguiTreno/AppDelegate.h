@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SplunkMint-iOS/SplunkMint-iOS.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

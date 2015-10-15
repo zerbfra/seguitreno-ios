@@ -45,7 +45,8 @@
     //clean = [clean capitalizedStringWithLocale:[NSLocale currentLocale]];
     
     // maiuscolo inizio parole
-    CFStringCapitalize((CFMutableStringRef)clean, NULL);
+    clean = [clean capitalizedString];
+    
     
     self.nome = clean;
     

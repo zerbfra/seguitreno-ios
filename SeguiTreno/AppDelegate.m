@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import <Dropbox/Dropbox.h>
 
 @interface AppDelegate ()
 
@@ -18,15 +17,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    // Splunk Mint
-    [[Mint sharedInstance] initAndStartSession:@"8b3dfc16"];
-    
     // crea la copia del database sul file system locale
     [self createCopyOfDatabaseIfNeeded];
-    
-    // Dropbox: inizializzo con le mie credenziali
-    DBAccountManager *accountManager = [[DBAccountManager alloc] initWithAppKey:@"wwj9wcfcb2rnptz" secret:@"28f9g22ggv00l2d"];
-    [DBAccountManager setSharedManager:accountManager];
     
     // Cancello vecchi file salvati nella Documents directory (file di cache scaduti)
     [self emptyCache];
@@ -129,16 +121,7 @@
 }
 
 
-// Metodo di Dropbox proprietario
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url
-  sourceApplication:(NSString *)source annotation:(id)annotation {
-    DBAccount *account = [[DBAccountManager sharedManager] handleOpenURL:url];
-    if (account) {
-        NSLog(@"App linked successfully!");
-        return YES;
-    }
-    return NO;
-}
+
 
 // metodo che vuota la cache, cancella la cache con vita maggiore a 30 minuti
 -(void) emptyCache {
@@ -189,9 +172,11 @@
         [[DBHelper sharedInstance] storeDBForExtensions:dbTreni];
         
         // faccio la richiesta, inviando il db dei treni e l'idutente
-        [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni,@"idUtente":userID} withTimeout:20 cacheLife:0 completion:^(NSDictionary *response) {
-            NSLog(@"Response: %@", response);
-        }];
+        if(dbTreni != nil && userID != nil) {
+            [[APIClient sharedClient] requestWithPath:@"salvaDatabase" andParams:@{@"treni":dbTreni,@"idUtente":userID} withTimeout:20 cacheLife:0 completion:^(NSDictionary *response) {
+                NSLog(@"Response: %@", response);
+            }];
+        }
     }
     
     

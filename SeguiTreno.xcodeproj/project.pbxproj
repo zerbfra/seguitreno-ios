@@ -13,7 +13,6 @@
 		130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925441A1A2512003DCD52 /* DettaglioTrenoViewController.m */; };
 		130925481A1A3FE4003DCD52 /* Fermata.m in Sources */ = {isa = PBXBuildFile; fileRef = 130925471A1A3FE4003DCD52 /* Fermata.m */; };
 		1319266D1A3604A800F16A37 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1319266C1A3604A800F16A37 /* TabBarController.m */; };
-		1319266F1A37673A00F16A37 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1319266E1A37673A00F16A37 /* Dropbox.framework */; };
 		131926711A37675B00F16A37 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926701A37675B00F16A37 /* CFNetwork.framework */; };
 		131926731A37676200F16A37 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926721A37676200F16A37 /* Security.framework */; };
 		131926751A37676A00F16A37 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 131926741A37676A00F16A37 /* SystemConfiguration.framework */; };
@@ -45,11 +44,9 @@
 		137F4DEF1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DEE1A0F839D00B9E77E /* DettaglioSoluzioneTableViewCell.m */; };
 		137F4DF41A135E5200B9E77E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 137F4DF31A135E5200B9E77E /* DateUtils.m */; };
 		1397AB3C1A27C6F10084D478 /* DettaglioStazioneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */; };
-		1398B9D71A388CBF005D6F31 /* DropboxClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 1398B9D61A388CBF005D6F31 /* DropboxClient.m */; };
 		139CDC241AEE244E00D9A848 /* stazioni.plist in Resources */ = {isa = PBXBuildFile; fileRef = 139CDC231AEE244E00D9A848 /* stazioni.plist */; };
 		139CDC281AEE398D00D9A848 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 139CDC271AEE398D00D9A848 /* CoreTelephony.framework */; };
 		139CDC2A1AEE399300D9A848 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 139CDC291AEE399300D9A848 /* WebKit.framework */; };
-		139CDC2C1AEE3C6600D9A848 /* SplunkMint-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 139CDC2B1AEE3C6600D9A848 /* SplunkMint-iOS.framework */; };
 		13A4FBD41A82375E00EFAA35 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13A4FBD31A82375E00EFAA35 /* NotificationCenter.framework */; };
 		13A4FBDA1A82375E00EFAA35 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13A4FBD91A82375E00EFAA35 /* TodayViewController.m */; };
 		13A4FBDC1A82375E00EFAA35 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13A4FBDB1A82375E00EFAA35 /* MainInterface.storyboard */; };
@@ -177,13 +174,9 @@
 		1397AB351A27C5870084D478 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		1397AB3A1A27C6F10084D478 /* DettaglioStazioneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DettaglioStazioneViewController.h; sourceTree = "<group>"; };
 		1397AB3B1A27C6F10084D478 /* DettaglioStazioneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DettaglioStazioneViewController.m; sourceTree = "<group>"; };
-		1398B9D51A388CBF005D6F31 /* DropboxClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropboxClient.h; sourceTree = "<group>"; };
-		1398B9D61A388CBF005D6F31 /* DropboxClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropboxClient.m; sourceTree = "<group>"; };
 		139CDC231AEE244E00D9A848 /* stazioni.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = stazioni.plist; sourceTree = "<group>"; };
-		139CDC251AEE396B00D9A848 /* SplunkMint-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "SplunkMint-iOS.framework"; path = "../../../Downloads/SplunkMint-iOS.framework"; sourceTree = "<group>"; };
 		139CDC271AEE398D00D9A848 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		139CDC291AEE399300D9A848 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		139CDC2B1AEE3C6600D9A848 /* SplunkMint-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "SplunkMint-iOS.framework"; path = "../SplunkMint-iOS.framework"; sourceTree = "<group>"; };
 		13A4FBD11A82375E00EFAA35 /* SeguiTreno Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "SeguiTreno Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13A4FBD31A82375E00EFAA35 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		13A4FBD71A82375E00EFAA35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -239,7 +232,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				139CDC2C1AEE3C6600D9A848 /* SplunkMint-iOS.framework in Frameworks */,
 				139CDC2A1AEE399300D9A848 /* WebKit.framework in Frameworks */,
 				139CDC281AEE398D00D9A848 /* CoreTelephony.framework in Frameworks */,
 				1331F56E1A9E760C007E34ED /* libxml2.2.dylib in Frameworks */,
@@ -251,7 +243,6 @@
 				131926731A37676200F16A37 /* Security.framework in Frameworks */,
 				131926711A37675B00F16A37 /* CFNetwork.framework in Frameworks */,
 				13EFA8371A347E1700AE98B3 /* MapKit.framework in Frameworks */,
-				1319266F1A37673A00F16A37 /* Dropbox.framework in Frameworks */,
 				13D01EF51A0BC43900BDCD05 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,22 +438,11 @@
 			name = DateUtils;
 			sourceTree = "<group>";
 		};
-		1398B9D81A388CD1005D6F31 /* DropboxClient */ = {
-			isa = PBXGroup;
-			children = (
-				1398B9D51A388CBF005D6F31 /* DropboxClient.h */,
-				1398B9D61A388CBF005D6F31 /* DropboxClient.m */,
-			);
-			name = DropboxClient;
-			sourceTree = "<group>";
-		};
 		13A4FBD21A82375E00EFAA35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				139CDC2B1AEE3C6600D9A848 /* SplunkMint-iOS.framework */,
 				139CDC291AEE399300D9A848 /* WebKit.framework */,
 				139CDC271AEE398D00D9A848 /* CoreTelephony.framework */,
-				139CDC251AEE396B00D9A848 /* SplunkMint-iOS.framework */,
 				1331F56D1A9E760C007E34ED /* libxml2.2.dylib */,
 				13A4FBD31A82375E00EFAA35 /* NotificationCenter.framework */,
 			);
@@ -564,7 +544,6 @@
 		13DA1CD31A0A361700AE6160 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				1398B9D81A388CD1005D6F31 /* DropboxClient */,
 				137F4DF51A135E5800B9E77E /* DateUtils */,
 				13D01EF31A0BC3DE00BDCD05 /* DBHelper */,
 				13DA1CD41A0A362400AE6160 /* APIClient */,
@@ -691,7 +670,7 @@
 		135CC3A81A0A1F3B0074D079 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Francesco Zerbinati";
 				TargetAttributes = {
 					135CC3AF1A0A1F3B0074D079 = {
@@ -775,7 +754,6 @@
 				130925451A1A2512003DCD52 /* DettaglioTrenoViewController.m in Sources */,
 				135CC3DD1A0A1F6D0074D079 /* FZDatepicker.m in Sources */,
 				1331F56A1A9E750F007E34ED /* TFHpple.m in Sources */,
-				1398B9D71A388CBF005D6F31 /* DropboxClient.m in Sources */,
 				13EFA8271A31F56E00AE98B3 /* ThreadHelper.m in Sources */,
 				137E5F911A376DA600AC291B /* ImpostazioniViewController.m in Sources */,
 				13D01EEC1A0BC3B300BDCD05 /* FMDatabasePool.m in Sources */,
@@ -883,6 +861,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -950,14 +929,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = SeguiTreno/SeguiTreno.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Francesco Zerbinati (8S44Z3362T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SeguiTreno",
 					/Users/Francesco/Downloads,
 					/Users/Francesco/Sviluppo/iOS,
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -971,8 +951,9 @@
 					"-ObjC",
 					"-all_load",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "it.zerbinatifrancesco.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "39a855b5-fdf2-4f44-b5b0-04f486455b18";
+				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Debug;
@@ -983,14 +964,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = SeguiTreno/SeguiTreno.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Francesco Zerbinati (8S44Z3362T)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SeguiTreno",
 					/Users/Francesco/Downloads,
 					/Users/Francesco/Sviluppo/iOS,
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1004,8 +986,9 @@
 					"-ObjC",
 					"-all_load",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "it.zerbinatifrancesco.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "39a855b5-fdf2-4f44-b5b0-04f486455b18";
+				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
@@ -1024,6 +1007,7 @@
 				);
 				INFOPLIST_FILE = SeguiTrenoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "it.zerbinatifrancesco.SeguiTreno.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SeguiTreno.app/SeguiTreno";
 			};
@@ -1039,6 +1023,7 @@
 				);
 				INFOPLIST_FILE = SeguiTrenoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "it.zerbinatifrancesco.SeguiTreno.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SeguiTreno.app/SeguiTreno";
 			};
@@ -1056,6 +1041,7 @@
 				);
 				INFOPLIST_FILE = "SeguiTreno Widget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "it.zerbinatifrancesco.SeguiTreno.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
@@ -1071,6 +1057,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "SeguiTreno Widget/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "it.zerbinatifrancesco.SeguiTreno.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;

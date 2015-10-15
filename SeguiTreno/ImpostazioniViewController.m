@@ -7,7 +7,7 @@
 //
 
 #import "ImpostazioniViewController.h"
-#import "DropboxClient.h"
+
 
 @interface ImpostazioniViewController ()
 
@@ -22,16 +22,6 @@
     
     NSString *versione = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     self.cellVersione.detailTextLabel.text = versione;
-    
-    [self updateDropboxLabel];
-    
-    // inizializzo gli spinner che indicano l'attività di dropbox (di fianco a celle importa/esporta)
-    self.spinnerExport = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.spinnerImport = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.spinnerExport.frame = CGRectMake(0, 0, 24, 24);
-    self.spinnerImport.frame = CGRectMake(0, 0, 24, 24);
-    self.cellExport.accessoryView = self.spinnerExport;
-    self.cellImport.accessoryView = self.spinnerImport;
     
     
 }
@@ -52,31 +42,7 @@
     switch (indexPath.section) {
         case 0:
             [self performSegueWithIdentifier:@"notificaSegue" sender:nil];
-            //[self showAlertNotifiche];
             break;
-              /*
-        case 1:
-            [self manageDropbox];
-            break;
-          
-        case 2:
-            if(indexPath.row == 0) {
-                [self.spinnerExport startAnimating];
-                //esporta su dropbox (upload, rimuovendo il file precedente)
-                [[DropboxClient shared] startTransfer:@"data.stdb" isItADownlaod:NO andReplace:YES completion:^{
-                    [self.spinnerExport stopAnimating];
-                }];
-                
-            }
-            else  {
-                [self.spinnerImport startAnimating];
-                // importa da dropbox (download)
-                [[DropboxClient shared] startTransfer:@"data.stdb" isItADownlaod:YES andReplace:YES completion:^{
-                    [self.spinnerImport stopAnimating];
-                }];
-            }
-            break;
-             */
         case 1:
             if(indexPath.row == 0) [self sendFeedback];
             else [self twitterButton];
@@ -93,24 +59,10 @@
     
 }
 
--(void) manageDropbox {
-    DBAccountManager *manager = [[DropboxClient shared] manageDropbox:self];
-    
-    // in ogni caso aggiorno (il manager non notifica in caso di unlink)
-    [self updateView];
-    
-    // se arriva notifica dal manager qualcosa è cambiato, aggiorno nuovamente!
-    [manager addObserver:self block:^(DBAccount *account) {
-        NSLog(@"DBAccountmanager changed");
-        [self updateView];
-    }];
-    
-    
-    
-}
+
 
 -(void) updateView {
-    [self updateDropboxLabel];
+ 
     [UIView transitionWithView:self.tableView
                       duration:0.1f
                        options:UIViewAnimationOptionTransitionCrossDissolve
@@ -119,41 +71,8 @@
                     } completion:NULL];
 }
 
-// sistema il numero di righe considerando il fatto se dropbox è collegato o meno (scollegato 1 riga, scollegato aggiunge sezione con 2 righe)
+// sistema il numero di righe
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    /*
-    if([[DropboxClient shared] isDropboxLinked]) {
-        
-        switch (section) {
-            case 2:
-                return 2;
-                break;
-            case 3:
-                return 2;
-                break;
-            default:
-                return 1;
-                break;
-        }
-        
-    } else {
-        
-        switch (section) {
-            case 2:
-                if([[DropboxClient shared] isDropboxLinked])  return 2;
-                else return 0;
-                break;
-            case 3:
-                return 2;
-                break;
-            case 4:
-                return 2;
-                break;
-            default:
-                return 1;
-                break;
-        }
-    }*/
     
     switch (section) {
         case 0:
@@ -174,15 +93,7 @@
     
 }
 
-// visualizza una stringa diversa a seconda che dropbox sia collegato o meno
--(void) updateDropboxLabel {
-    
-    if(![[DropboxClient shared] isDropboxLinked]) {
-        self.cellDropbox.textLabel.text = @"Collega a Dropbox";
-    } else {
-        self.cellDropbox.textLabel.text = @"Scollega Dropbox";
-    }
-}
+
 
 /* Apre app store per la recensione */
 - (void)leaveReview {
