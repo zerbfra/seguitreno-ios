@@ -38,8 +38,10 @@
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
     else {
+        /*
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
          (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+         */
     }
 }
 

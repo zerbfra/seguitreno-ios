@@ -504,9 +504,11 @@
 
 -(void)multiSelect:(MultiSelectSegmentedControl *)multiSelecSegmendedControl didChangeValue:(BOOL)value atIndex:(NSUInteger)index{
     
+    int indexInt = (int)index+1;
+    
     if (value) {
         // selezionato
-        [self.giorni replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%lu",index+1]];
+        [self.giorni replaceObjectAtIndex:index withObject:[NSString stringWithFormat:@"%d",indexInt]];
         
     } else {
         // deselzionato
@@ -520,50 +522,8 @@
 }
 
 -(void) setFineRipetizione {
-#warning qui sarebbe utile fissarla a una data di cambio orario treni, visibile qui: http://www.trenitalia.com/cms/v/?vgnextoid=cb62fa94067a7310VgnVCM1000008916f90aRCRD
     self.viaggio.fineRipetizione = [[DateUtils shared] addDays:60 toDate:self.viaggio.data];
 }
 
-
-
-/*
- - (IBAction)selezioneRipetizione:(UISegmentedControl *)sender {
- [self gestisciRipetizione:sender.selectedSegmentIndex];
- }
- 
- -(void) gestisciRipetizione:(NSInteger) selezionato {
- 
- switch (selezionato) {
- case 0:
- //NSLog(@"Mai");
- self.viaggio.fineRipetizione = nil;
- self.ripetizioneSel = 0;
- break;
- case 1:
- //NSLog(@"2 settimane");
- self.viaggio.fineRipetizione = [[DateUtils shared] addDays:7 toDate:self.viaggio.data];
- self.ripetizioneSel = 1;
- break;
- case 2:
- //NSLog(@"1 mese");
- self.viaggio.fineRipetizione = [[DateUtils shared] addDays:30 toDate:self.viaggio.data];
- self.ripetizioneSel = 2;
- break;
- case 3:
- //NSLog(@"3 mesi");
- self.viaggio.fineRipetizione = [[DateUtils shared] addDays:90 toDate:self.viaggio.data];
- self.ripetizioneSel = 3;
- break;
- case 4:
- //NSLog(@"6 mesi");
- self.viaggio.fineRipetizione = [[DateUtils shared] addDays:180 toDate:self.viaggio.data];
- self.ripetizioneSel = 4;
- break;
- 
- default:
- break;
- }
- 
- }*/
 
 @end

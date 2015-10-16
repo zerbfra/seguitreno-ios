@@ -32,7 +32,7 @@
     // bottone che mostra il numero del treno (con metodo per future implementazioni)
     UIBarButtonItem *flipButton = [[UIBarButtonItem alloc]
                                    initWithTitle:[self.treno stringaDescrizione]
-                                   style:UIBarButtonItemStyleBordered
+                                   style:UIBarButtonItemStylePlain
                                    target:self
                                    action:@selector(flipView)];
     self.navigationItem.rightBarButtonItem = flipButton;

@@ -187,7 +187,7 @@
                 
                 NSDate *dataPartenza = [[DateUtils shared] dateFrom:[[trenoSet objectForKey:@"orarioPartenza"] intValue]];
                 NSCalendar *calendar = [NSCalendar currentCalendar];
-                NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:dataPartenza];
+                NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:dataPartenza];
                 NSInteger hour = [components hour];
                 NSInteger minute = [components minute];
                 

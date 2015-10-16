@@ -66,11 +66,10 @@
 
 - (NSDate *) dateForNextWeekday: (NSInteger)weekday startingFrom:(NSDate*)today {
     
-    NSCalendar *gregorian = [[NSCalendar alloc]
-                             initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     
     // Get the weekday component of the current date
-    NSDateComponents *weekdayComponents = [gregorian components:NSWeekdayCalendarUnit
+    NSDateComponents *weekdayComponents = [gregorian components:NSCalendarUnitWeekday
                                                        fromDate:today];
     
     /*
@@ -124,7 +123,7 @@
 
 -(NSDate*) date:(NSDate*) date At:(NSInteger)hour min:(NSInteger)min {
     NSCalendar* myCalendar = [NSCalendar currentCalendar];
-    NSDateComponents* components = [myCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+    NSDateComponents* components = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay
                                                  fromDate:date];
     [components setHour: hour];
     [components setMinute: min];
@@ -136,7 +135,7 @@
 
 -(NSDate*) date:(NSDate*) date At:(NSInteger) hour {
     NSCalendar* myCalendar = [NSCalendar currentCalendar];
-    NSDateComponents* components = [myCalendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+    NSDateComponents* components = [myCalendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay
                                                  fromDate:date];
     [components setHour: hour];
     [components setMinute: 0];
