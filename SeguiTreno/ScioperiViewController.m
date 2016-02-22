@@ -189,7 +189,8 @@
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"notiziaCell" forIndexPath:indexPath];
         Notizia *scioperoCell = [self.scioperi objectAtIndex:indexPath.row];
         cell.textLabel.text = scioperoCell.titolo;
-        cell.detailTextLabel.text = scioperoCell.testo;
+        NSString *testoPrint = [NSString stringWithFormat:@"%@ [...]",[scioperoCell.testo substringToIndex: 50]];
+        cell.detailTextLabel.text  = testoPrint;
         cell.textLabel.textColor = [UIColor darkGrayColor];
         cell.detailTextLabel.textColor = [UIColor darkGrayColor];
         
